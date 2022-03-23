@@ -168,9 +168,15 @@ export class Block extends Component<BlockProps> {
       challenge => challenge.isCompleted === false
     );
 
+    console.log(challengesWithCompleted.length);
+    console.log(challengeCompleted.length);
+    /*
+    console.log('----------------------------');
     console.log(blockDashedName);
-    console.log(challengeCompleted[challengeCompleted.length - 1]);
-    console.log(challengeInCompleted[0]);
+    console.log(challengeCompleted);
+    console.log({ ...challengeInCompleted[0] });
+    console.log('----------------------------');
+    */
 
     const progressBarRender = (
       <div className='progress-wrapper'>
@@ -179,11 +185,51 @@ export class Block extends Component<BlockProps> {
       </div>
     );
 
+    /* console.log(challengeCompleted[0].dashedName); */
+
     const Block = (
       <>
         {isLastVisited ? (
           <>
-            <h1>Je suis là</h1>
+            {challengeCompleted.length != 0 &&
+              challengeCompleted.length <= challengesWithCompleted.length && (
+                <>
+                  <Spacer />
+                  <div className={`block open`}>
+                    <div className='block-header'>
+                      <div>
+                        <span className='bloc-index'>{blockIndex}</span> &nbsp;
+                        &nbsp;{' '}
+                      </div>
+                      <div>
+                        <a className='block-link' href={`#${blockDashedName}`}>
+                          <h3 className='big-block-title'>
+                            {blockTitle}
+                            <span className='block-link-icon'>#</span>
+                          </h3>
+                        </a>
+                      </div>
+                      {!isAuditedCert(curriculumLocale, superBlock) && (
+                        <div className='block-cta-wrapper'>
+                          <Link
+                            className='block-title-translation-cta'
+                            to={t('links:help-translate-link-url')}
+                          >
+                            {t('misc.translation-pending')}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                    <Challenges
+                      challengesWithCompleted={challengeInCompleted}
+                      isProjectBlock={isProjectBlock}
+                      superBlock={superBlock}
+                      isLastVisited={isLastVisited}
+                    />
+                  </div>
+                  <Spacer />
+                </>
+              )}
           </>
         ) : (
           <>
@@ -236,6 +282,7 @@ export class Block extends Component<BlockProps> {
                     challengesWithCompleted={challengesWithCompleted}
                     isProjectBlock={isProjectBlock}
                     superBlock={superBlock}
+                    isLastVisited={isLastVisited}
                   />
                 )}
               </div>
@@ -272,6 +319,7 @@ export class Block extends Component<BlockProps> {
               challengesWithCompleted={challengesWithCompleted}
               isProjectBlock={isProjectBlock}
               superBlock={superBlock}
+              isLastVisited={isLastVisited}
             />
           </div>
         </ScrollableAnchor>
@@ -317,6 +365,7 @@ export class Block extends Component<BlockProps> {
                   challengesWithCompleted={challengesWithCompleted}
                   isProjectBlock={isProjectBlock}
                   superBlock={superBlock}
+                  isLastVisited={isLastVisited}
                 />
               </>
             )}
@@ -366,7 +415,9 @@ export class Block extends Component<BlockProps> {
     return (
       <>
         {blockrenderer()}
-        {isNewResponsiveWebDesign && !isProjectBlock ? null : <Spacer />}
+        {isNewResponsiveWebDesign && !isProjectBlock ? null : !isLastVisited ? (
+          <Spacer />
+        ) : null}
       </>
     );
   }

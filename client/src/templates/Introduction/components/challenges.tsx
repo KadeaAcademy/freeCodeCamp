@@ -21,6 +21,7 @@ interface Challenges {
   executeGA: (payload: ExecuteGaArg) => void;
   isProjectBlock: boolean;
   superBlock: SuperBlocks;
+  isLastVisited: boolean;
 }
 
 const mapIconStyle = { height: '15px', marginRight: '10px', width: '15px' };
@@ -29,7 +30,8 @@ function Challenges({
   challengesWithCompleted,
   executeGA,
   isProjectBlock,
-  superBlock
+  superBlock,
+  isLastVisited
 }: Challenges): JSX.Element {
   const handleChallengeClick = (slug: string) =>
     executeGA({
@@ -49,7 +51,55 @@ function Challenges({
 
   const isGridMap = isNewRespCert(superBlock);
 
-  return isGridMap ? (
+  return isLastVisited ? (
+    <>
+      {challengesWithCompleted[0] ? (
+        <>
+          <ul className={`map-challenges-ul`}>
+            <li
+              className={`map-challenge-title ${
+                isProjectBlock ? 'map-project-wrap' : 'map-challenge-wrap'
+              }`}
+              id={challengesWithCompleted[0].dashedName}
+              key={'map-challenge' + challengesWithCompleted[0].fields.slug}
+            >
+              {!isProjectBlock ? (
+                <Link
+                  onClick={() =>
+                    handleChallengeClick(challengesWithCompleted[0].fields.slug)
+                  }
+                  to={challengesWithCompleted[0].fields.slug}
+                >
+                  <span className='badge map-badge'>
+                    {renderCheckMark(challengesWithCompleted[0].isCompleted)}
+                  </span>
+                  {challengesWithCompleted[0].title}
+                </Link>
+              ) : (
+                <Link
+                  onClick={() =>
+                    handleChallengeClick(challengesWithCompleted[0].fields.slug)
+                  }
+                  to={challengesWithCompleted[0].fields.slug}
+                >
+                  {challengesWithCompleted[0].title}
+                  <span className='badge map-badge map-project-checkmark'>
+                    {renderCheckMark(challengesWithCompleted[0].isCompleted)}
+                  </span>
+                </Link>
+              )}
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <div className='fw-bolder text-primary h3 p-4'>
+            <div>Fini</div>
+          </div>
+        </>
+      )}
+    </>
+  ) : isGridMap ? (
     <ul className={`map-challenges-ul map-challenges-grid `}>
       {challengesWithCompleted.map((challenge, i) => (
         <li

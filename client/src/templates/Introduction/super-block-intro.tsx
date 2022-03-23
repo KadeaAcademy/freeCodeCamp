@@ -185,24 +185,16 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
         <title>{i18nTitle} | freeCodeCamp.org</title>
       </Helmet>
       <Grid fluid={true} className='bg-light'>
-        <div>
-          <Spacer size={2} />
+        <Spacer size={2} />
+        <div className=''>
+          <Spacer size={1} />
           <Row className='super-block-intro-page'>
             <Col md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
-              <Spacer />
               <h2 className='big-subheading'>{'Module en cours'}</h2>
-              <Spacer />
             </Col>
-            <Col
-              className='bg-secondary'
-              md={10}
-              mdOffset={1}
-              sm={10}
-              smOffset={1}
-              xs={12}
-            >
-              <Spacer size={2} />
-              <div className='block-ui'>
+            <Col className='' md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
+              <Spacer size={1} />
+              <div className='block-ui bg-secondary'>
                 {defaultCurriculumNames.map((blockDashedName, index) => (
                   <Fragment key={blockDashedName}>
                     <Block
@@ -217,28 +209,20 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
                   </Fragment>
                 ))}
               </div>
+              <Spacer size={1} />
             </Col>
           </Row>
-          <Spacer size={2} />
+          <Spacer size={1} />
         </div>
-        <div>
-          <Spacer size={2} />
+        <div className=''>
+          <Spacer size={1} />
           <Row className='super-block-intro-page'>
             <Col md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
-              <Spacer />
               <h2 className='big-subheading'>{'Syllabus'}</h2>
-              <Spacer />
             </Col>
-            <Col
-              className='bg-secondary'
-              md={10}
-              mdOffset={1}
-              sm={10}
-              smOffset={1}
-              xs={12}
-            >
-              <Spacer size={2} />
-              <div className='block-ui'>
+            <Col className='' md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
+              <Spacer size={1} />
+              <div className='block-ui bg-secondary'>
                 {defaultCurriculumNames.map((blockDashedName, index) => (
                   <Fragment key={blockDashedName}>
                     <Block
@@ -253,9 +237,10 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
                   </Fragment>
                 ))}
               </div>
+              <Spacer size={1} />
             </Col>
           </Row>
-          <Spacer size={2} />
+          <Spacer size={1} />
         </div>
       </Grid>
       <DonateModal location={props.location} />
