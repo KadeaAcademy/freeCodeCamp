@@ -168,8 +168,6 @@ export class Block extends Component<BlockProps> {
       challenge => challenge.isCompleted === false
     );
 
-    console.log(challengesWithCompleted.length);
-    console.log(challengeCompleted.length);
     /*
     console.log('----------------------------');
     console.log(blockDashedName);
@@ -195,37 +193,24 @@ export class Block extends Component<BlockProps> {
               challengeCompleted.length <= challengesWithCompleted.length && (
                 <>
                   <Spacer />
-                  <div className={`block open`}>
-                    <div className='block-header'>
-                      <div>
-                        <span className='bloc-index'>{blockIndex}</span> &nbsp;
-                        &nbsp;{' '}
-                      </div>
-                      <div>
-                        <a className='block-link' href={`#${blockDashedName}`}>
-                          <h3 className='big-block-title'>
-                            {blockTitle}
-                            <span className='block-link-icon'>#</span>
-                          </h3>
-                        </a>
-                      </div>
-                      {!isAuditedCert(curriculumLocale, superBlock) && (
-                        <div className='block-cta-wrapper'>
-                          <Link
-                            className='block-title-translation-cta'
-                            to={t('links:help-translate-link-url')}
-                          >
-                            {t('misc.translation-pending')}
-                          </Link>
-                        </div>
-                      )}
+                  <div className='card-challenge-visited'>
+                    <div className='card-challenge-visited-index bloc-index'>
+                      {blockIndex}
                     </div>
-                    <Challenges
-                      challengesWithCompleted={challengeInCompleted}
-                      isProjectBlock={isProjectBlock}
-                      superBlock={superBlock}
-                      isLastVisited={isLastVisited}
-                    />
+                    <div className='card-challenge-visited-body'>
+                      <div className='card-challenge-visited-content'>
+                        <h3 className='big-block-title'>{blockTitle}</h3>
+                        {challengeInCompleted[0] && (
+                          <div>{challengeInCompleted[0].title}</div>
+                        )}
+                      </div>
+                      <Challenges
+                        challengesWithCompleted={challengeInCompleted}
+                        isProjectBlock={isProjectBlock}
+                        superBlock={superBlock}
+                        isLastVisited={isLastVisited}
+                      />
+                    </div>
                   </div>
                   <Spacer />
                 </>
@@ -237,17 +222,19 @@ export class Block extends Component<BlockProps> {
             <ScrollableAnchor id={blockDashedName}>
               <div className={`block ${isExpanded ? 'open' : ''}`}>
                 <div className='block-header'>
-                  <div>
-                    <span className='bloc-index'>{blockIndex}</span> &nbsp;
-                    &nbsp;{' '}
-                  </div>
-                  <div>
-                    <a className='block-link' href={`#${blockDashedName}`}>
-                      <h3 className='big-block-title'>
-                        {blockTitle}
-                        <span className='block-link-icon'>#</span>
-                      </h3>
-                    </a>
+                  <div className='card-challenge'>
+                    <div className=''>
+                      <span className='bloc-index'>{blockIndex}</span> &nbsp;
+                      &nbsp;{' '}
+                    </div>
+                    <div className=''>
+                      <a className='' href={`#${blockDashedName}`}>
+                        <h3 className='big-block-title'>
+                          {blockTitle}
+                          <span className='block-link-icon'>#</span>
+                        </h3>
+                      </a>
+                    </div>
                   </div>
                   {!isAuditedCert(curriculumLocale, superBlock) && (
                     <div className='block-cta-wrapper'>

@@ -58,6 +58,7 @@ a.cert-tag:active {
 }
 
 .bloc-index {
+  font-weight: bold;
   font-size: 3rem !important;
 }
 
@@ -443,4 +444,106 @@ button.map-title {
 
 .grid-project-block {
   margin-bottom: 50px;
+}
+
+/**/
+
+.card-challenge-visited {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  align-content: flex-start;
+}
+
+.card-challenge {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.card-challenge-visited .card-challenge-visited-index {
+  width: 15%;
+  padding: 10px;
+}
+
+.card-challenge-visited .card-challenge-visited-body {
+  display: flex;
+  align-items: center;
+  width: 85%;
+  padding: 10px;
+}
+
+.card-challenge-visited-body .card-challenge-visited-content {
+  width: 60%;
+  padding: 4px 10px 10px 10px;
+}
+
+.card-challenge-visited-body .card-challenge-visited-action {
+  width: 40%;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.card-challenge-visited-action .success {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+.card-challenge-visited-action .link-action {
+  border: solid 2px var(--primary-color);
+  background: rgba(255, 255, 255, 0);
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.card-challenge-visited-action .link-action:hover {
+  border: solid 2px var(--primary-color);
+  background: var(--primary-color);
+  color: var(--primary-background);
+}
+
+.fw-800 {
+  font-weight: bold;
+}
+@media (max-width: 769px) {
+  .card-challenge-visited-action .link-action {
+    font-size: 0.6rem;
+    padding: 5px;
+  }
+}
+
+@media (max-width: 426px) {
+  .bloc-index {
+    font-size: 1.17rem !important;
+  }
+  .card-challenge {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .card-challenge-visited .card-challenge-visited-index {
+    width: 10%;
+  }
+  .card-challenge-visited .card-challenge-visited-body {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 90%;
+  }
+  .card-challenge-visited-body .card-challenge-visited-content {
+    width: 100%;
+  }
+  .card-challenge-visited-body .card-challenge-visited-action {
+    text-align: left;
+    width: 100%;
+  }
+
+  .card-challenge-visited-action .link-action {
+    font-size: 0.5rem;
+  }
 }

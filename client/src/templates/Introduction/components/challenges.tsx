@@ -55,46 +55,38 @@ function Challenges({
     <>
       {challengesWithCompleted[0] ? (
         <>
-          <ul className={`map-challenges-ul`}>
-            <li
-              className={`map-challenge-title ${
-                isProjectBlock ? 'map-project-wrap' : 'map-challenge-wrap'
-              }`}
-              id={challengesWithCompleted[0].dashedName}
-              key={'map-challenge' + challengesWithCompleted[0].fields.slug}
-            >
-              {!isProjectBlock ? (
-                <Link
-                  onClick={() =>
-                    handleChallengeClick(challengesWithCompleted[0].fields.slug)
-                  }
-                  to={challengesWithCompleted[0].fields.slug}
-                >
-                  <span className='badge map-badge'>
-                    {renderCheckMark(challengesWithCompleted[0].isCompleted)}
-                  </span>
-                  {challengesWithCompleted[0].title}
-                </Link>
-              ) : (
-                <Link
-                  onClick={() =>
-                    handleChallengeClick(challengesWithCompleted[0].fields.slug)
-                  }
-                  to={challengesWithCompleted[0].fields.slug}
-                >
-                  {challengesWithCompleted[0].title}
-                  <span className='badge map-badge map-project-checkmark'>
-                    {renderCheckMark(challengesWithCompleted[0].isCompleted)}
-                  </span>
-                </Link>
-              )}
-            </li>
-          </ul>
+          <div
+            className='card-challenge-visited-action'
+            id={challengesWithCompleted[0].dashedName}
+            key={'map-challenge' + challengesWithCompleted[0].fields.slug}
+          >
+            {!isProjectBlock ? (
+              <Link
+                className='link-action'
+                onClick={() =>
+                  handleChallengeClick(challengesWithCompleted[0].fields.slug)
+                }
+                to={challengesWithCompleted[0].fields.slug}
+              >
+                Continuer la leçon
+              </Link>
+            ) : (
+              <Link
+                className='link-action'
+                onClick={() =>
+                  handleChallengeClick(challengesWithCompleted[0].fields.slug)
+                }
+                to={challengesWithCompleted[0].fields.slug}
+              >
+                Continuer la leçon
+              </Link>
+            )}
+          </div>
         </>
       ) : (
         <>
-          <div className='fw-bolder text-primary h3 p-4'>
-            <div>Fini</div>
+          <div className='card-challenge-visited-action'>
+            <span className='big-block-title text-success fw-800'>Fini</span>
           </div>
         </>
       )}

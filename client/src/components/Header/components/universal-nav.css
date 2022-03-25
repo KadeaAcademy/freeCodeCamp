@@ -64,7 +64,6 @@
   color: var(--gray-00);
   font-weight: 600;
   background: var(--love-light);
-  border-radius: 9px;
   transition: all 0.3s ease;
 }
 
