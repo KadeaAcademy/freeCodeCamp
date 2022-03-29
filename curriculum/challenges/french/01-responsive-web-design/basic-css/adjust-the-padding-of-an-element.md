@@ -1,6 +1,6 @@
 ---
 id: bad88fee1348bd9aedf08825
-title: Adjust the Padding of an Element
+title: Ajuster le padding d'un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cED8ZC2'
 forumTopicId: 301083
@@ -9,25 +9,25 @@ dashedName: adjust-the-padding-of-an-element
 
 # --description--
 
-Now let's put our Cat Photo App away for a little while and learn more about styling HTML.
+Mettons maintenant de côté notre application pour photos de chats pour un petit moment et apprenons-en plus sur le style HTML.
 
-You may have already noticed this, but all HTML elements are essentially little rectangles.
+Vous l'avez peut-être déjà remarqué, mais tous les éléments HTML sont essentiellement des petits rectangles.
 
-Three important properties control the space that surrounds each HTML element: `padding`, `border`, and `margin`.
+Trois propriétés importantes contrôlent l'espace qui entoure chaque élément HTML : `padding`, `border` et `margin`.
 
-An element's `padding` controls the amount of space between the element's content and its `border`.
+Le "padding" d'un élément contrôle la quantité d'espace entre le contenu de l'élément et sa "bordure".
 
-Here, we can see that the blue box and the red box are nested within the yellow box. Note that the red box has more `padding` than the blue box.
+Ici, nous pouvons voir que la boîte bleue et la boîte rouge sont imbriquées dans la boîte jaune. Notez que la boîte rouge a plus de `padding` que la boîte bleue.
 
-When you increase the blue box's `padding`, it will increase the distance (`padding`) between the text and the border around it.
+Lorsque vous augmentez le "padding" de l'encadré bleu, vous augmentez la distance (`padding`) entre le texte et la bordure qui l'entoure.
 
 # --instructions--
 
-Change the `padding` of your blue box to match that of your red box.
+Modifiez le `padding` de votre boîte bleue pour qu'il corresponde à celui de votre boîte rouge.
 
 # --hints--
 
-Your `blue-box` class should give elements `20px` of `padding`.
+Votre classe `blue-box` devrait donner aux éléments `20px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-top') === '20px');
