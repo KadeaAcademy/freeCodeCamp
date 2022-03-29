@@ -1,212 +1,220 @@
 {
   "responsive-web-design": {
-    "title": "Responsive Web Design",
+    "title": "Design Web Responsive",
     "intro": [
-      "In this Responsive Web Design Certification, you'll learn the languages that developers use to build webpages: HTML (Hypertext Markup Language) for content, and CSS (Cascading Style Sheets) for design.",
-      "First, you'll build a cat photo app to learn the basics of HTML and CSS. Later, you'll learn modern techniques like CSS variables by building a penguin, and best practices for accessibility by building a web form.",
-      "Finally, you'll learn how to make webpages that respond to different screen sizes by building a Twitter card with Flexbox, and a complex blog layout with CSS Grid."
+      "Dans cette certification Responsive Web Design, vous apprendrez les langages que les développeurs utilisent pour construire des pages web : HTML (Hypertext Markup Language) pour le contenu, et CSS (Cascading Style Sheets) pour le design",
+      "D'abord, vous construirez une application pour photos de chats afin d'apprendre les bases du HTML et du CSS. Plus tard, vous apprendrez des techniques modernes comme les variables CSS en construisant un pingouin, et les meilleures pratiques pour l'accessibilité en construisant un formulaire web.",
+      "Enfin, vous apprendrez à créer des pages Web qui répondent à différentes tailles d'écran en construisant une carte Twitter avec Flexbox et une mise en page de blog complexe avec CSS Grid."
     ],
-    "note": "Note: Some browser extensions, such as ad-blockers and dark mode extensions can interfere with the tests. If you face issues, we recommend disabling extensions that modify the content or layout of pages, while taking the course.",
+    "note": "Note: Certaines extensions de navigateur, telles que les bloqueurs de publicité et les extensions de mode sombre, peuvent interférer avec les tests. Si vous rencontrez des problèmes, nous vous recommandons de désactiver les extensions qui modifient le contenu ou la présentation des pages, tout en suivant le cours.",
     "blocks": {
       "basic-html-and-html5": {
-        "title": "Basic HTML and HTML5",
+        "title": "Bases de HTML et HTML5",
         "intro": [
-          "HTML is a markup language that uses a special syntax or notation to describe the structure of a webpage to the browser. HTML elements usually have opening and closing tags that surround and give meaning to content. For example, different elements can describe text as a heading, paragraph, or list item.",
-          "In this course, you'll build a cat photo app to learn some of the most common HTML elements — the building blocks of any webpage."
+          "Le HTML est un langage de balisage qui utilise une syntaxe ou une notation spéciale pour décrire la structure d'une page web au navigateur. Les éléments HTML ont généralement des balises d'ouverture et de fermeture qui entourent et donnent un sens au contenu. Par exemple, différents éléments peuvent décrire un texte comme un titre, un paragraphe ou un élément de liste.",
+          "Dans ce cours, vous construirez une application pour photos de chats afin d'apprendre certains des éléments HTML les plus courants - les blocs de construction de toute page Web."
         ]
       },
       "basic-css": {
-        "title": "Basic CSS",
+        "title": "CSS élémentaire",
         "intro": [
-          "CSS, or Cascading Style Sheets, tell the browser how to display the text and other content that you write in HTML. With CSS, you can control the color, font, size, spacing, and many other aspects of HTML elements.",
-          "Now that you've described the structure of your cat photo app, give it some style with CSS."
+          "CSS, ou feuilles de style en cascade, indique au navigateur comment afficher le texte et les autres contenus que vous écrivez en HTML. Avec CSS, vous pouvez contrôler la couleur, la police, la taille, l'espacement et bien d'autres aspects des éléments HTML.",
+          "Maintenant que vous avez décrit la structure de votre application pour photos de chats, donnez-lui un peu de style avec CSS".
         ]
       },
       "applied-visual-design": {
-        "title": "Applied Visual Design",
+        "title": "Design visuel appliqué",
         "intro": [
-          "Visual design is a combination of typography, color theory, graphics, animation, page layout, and more to help deliver your unique message.",
-          "In this course, you'll learn how to apply these different elements of visual design to your webpages."
+          "Le design visuel est une combinaison de la typographie, de la théorie des couleurs, du graphisme, de l'animation, de la mise en page, et plus encore, pour aider à délivrer votre message unique ",
+          "Dans ce cours, vous apprendrez comment appliquer ces différents éléments de conception visuelle à vos pages Web."
         ]
       },
       "applied-accessibility": {
-        "title": "Applied Accessibility",
+        "title": "Accessibilité appliquée",
         "intro": [
-          "In web development, accessibility refers to web content and a UI (user interface) that can be understood, navigated, and interacted with by a broad audience. This includes people with visual, auditory, mobility, or cognitive disabilities.",
-          "In this course, you'll learn best practices for building webpages that are accessible to everyone."
+          "Dans le développement web, l'accessibilité fait référence à un contenu web et à une IU (interface utilisateur) qui peuvent être compris, parcourus et avec lesquels un large public peut interagir. Cela inclut les personnes souffrant de handicaps visuels, auditifs, de mobilité ou cognitifs.",
+          "Dans ce cours, vous apprendrez les meilleures pratiques pour créer des pages Web accessibles à tous."
         ]
       },
       "responsive-web-design-principles": {
-        "title": "Responsive Web Design Principles",
+        "title": "Principes du Responsive Web Design",
         "intro": [
-          "There are many devices that can access the web, and they come in all shapes and sizes. Responsive web design is the practice of designing flexible websites that can respond to different screen sizes, orientations, and resolutions.",
-          "In this course, you'll learn how to use CSS to make your webpages look good, no matter what device they're viewed on."
+          "Il existe de nombreux appareils qui peuvent accéder au web, et ils sont de toutes formes et de toutes tailles. Le responsive web design est la pratique consistant à concevoir des sites Web flexibles qui peuvent répondre à différentes tailles, orientations et résolutions d'écran",
+          "Dans ce cours, vous apprendrez à utiliser le CSS pour que vos pages Web soient belles, quel que soit le périphérique sur lequel elles sont affichées."
         ]
       },
       "css-flexbox": {
         "title": "CSS Flexbox",
         "intro": [
-          "Flexbox is a powerful, well-supported layout method that was introduced with the latest version of CSS, CSS3. With flexbox, it's easy to center elements on the page and create dynamic user interfaces that shrink and expand automatically.",
-          "In this course, you'll learn the fundamentals of flexbox and dynamic layouts by building a Twitter card."
+          "Flexbox est une méthode de mise en page puissante et bien supportée qui a été introduite avec la dernière version de CSS, CSS3. Avec flexbox, il est facile de centrer des éléments sur la page et de créer des interfaces utilisateur dynamiques qui rétrécissent et s'étendent automatiquement.",
+          "Dans ce cours, vous apprendrez les principes fondamentaux de flexbox et des mises en page dynamiques en construisant une carte Twitter."
         ]
       },
       "css-grid": {
         "title": "CSS Grid",
         "intro": [
-          "The CSS grid is a newer standard that makes it easy to build complex responsive layouts. It works by turning an HTML element into a grid, and lets you place child elements anywhere within.",
-          "In this course, you'll learn the fundamentals of CSS grid by building different complex layouts, including a blog."
+          "Le grid CSS est une norme plus récente qui permet de construire facilement des mises en page complexes et réactives. Elle fonctionne en transformant un élément HTML en une grille, et vous permet de placer des éléments enfants n'importe où à l'intérieur.",
+          "Dans ce cours, vous apprendrez les principes fondamentaux de la grille CSS en construisant différentes mises en page complexes, notamment un blog."
         ]
       },
       "responsive-web-design-projects": {
-        "title": "Responsive Web Design Projects",
+        "title": "Projets de design web responsive",
         "intro": [
-          "Time to put your newly learnt skills to work. By working on these projects, you will get a chance to apply all of the skills, principles, and concepts you have learned so far: HTML, CSS, Visual Design, Accessibility, and more.",
-          "Complete the five web programming projects below to earn your Responsive Web Design certification."
+          "Il est temps de mettre en pratique les compétences que vous venez d'acquérir. En travaillant sur ces projets, vous aurez l'occasion d'appliquer toutes les compétences, les principes et les concepts que vous avez appris jusqu'à présent : HTML, CSS, conception visuelle, accessibilité, et plus encore.",
+          "Réalisez les cinq projets de programmation web ci-dessous pour obtenir votre certification Responsive Web Design."
         ]
       }
     }
   },
   "2022/responsive-web-design": {
-    "title": "Responsive Web Design (Beta)",
+    "title": "Design Web Responsive (Beta)",
     "intro": [
-      "In this Responsive Web Design Certification, you'll learn the languages that developers use to build webpages: HTML (Hypertext Markup Language) for content, and CSS (Cascading Style Sheets) for design.",
-      "First, you'll build a cat photo app to learn the basics of HTML and CSS. Later, you'll learn modern techniques like CSS variables by building a penguin, and best practices for accessibility by building a web form.",
-      "Finally, you'll learn how to make webpages that respond to different screen sizes by building a Twitter card with Flexbox, and a complex blog layout with CSS Grid."
+      "Dans cette certification de design web responsive, vous apprendrez les langages que les développeurs utilisent pour construire des pages web : HTML (Hypertext Markup Language) pour le contenu, et CSS (Cascading Style Sheets) pour le design",
+      "D'abord, vous construirez une application pour les photos de chats afin d'apprendre les bases du HTML et du CSS. Plus tard, vous apprendrez des techniques modernes comme les variables CSS en construisant un pingouin, et les meilleures pratiques pour l'accessibilité en construisant un formulaire web.",
+      "Enfin, vous apprendrez à créer des pages Web qui répondent à différentes tailles d'écran en construisant une carte Twitter avec Flexbox et une mise en page de blog complexe avec CSS Grid."
     ],
-    "note": "Note: Some browser extensions, such as ad-blockers and dark mode extensions can interfere with the tests. If you face issues, we recommend disabling extensions that modify the content or layout of pages, while taking the course.",
+    "note": "Remarque : certaines extensions de navigateur, telles que les bloqueurs de publicité et les extensions de mode sombre, peuvent interférer avec les tests. Si vous rencontrez des problèmes, nous vous recommandons de désactiver les extensions qui modifient le contenu ou la présentation des pages, tout en suivant le cours.",
     "blocks": {
       "build-a-tribute-page-project": {
-        "title": "Tribute Page",
+        "title": "Page d'hommage",
         "intro": [
-          "This is one of the required projects to earn your certification.",
-          "For this project, you will build a tribute page for a subject of your choosing, fictional or real."
+          "C'est l'un des projets requis pour obtenir votre certification.",
+          "Pour ce projet, vous allez construire une page d'hommage pour un sujet de votre choix, fictif ou réel."
         ] },
       "build-a-personal-portfolio-webpage-project": {
-        "title": "Personal Portfolio Webpage",
+        "title": "Page Web du Portfolio personnel",
         "intro": [
-          "This is one of the required projects to earn your certification.",
-          "For this project, you will build your own personal portfolio page."
+          "C'est l'un des projets requis pour obtenir votre certification.",
+          "Pour ce projet, vous allez construire votre propre page de portfolio personnel."
         ] },
       "build-a-product-landing-page-project": {
-        "title": "Product Landing Page",
+        "title": "Page d'accueil du produit",
         "intro": [
-          "This is one of the required projects to earn your certification.",
-          "For this project, you will build a product landing page to market a product of your choice."
+          "C'est l'un des projets requis pour obtenir votre certification.",
+          "Pour ce projet, vous allez construire une page de présentation de produit pour commercialiser un produit de votre choix."
         ] },
       "build-a-survey-form-project": {
-        "title": "Survey Form",
+        "title": "Formulaire d'enquête",
         "intro": [
-          "This is one of the required projects to earn your certification.",
-          "For this project, you will build a survey form to collect data from your users."
+          "C'est l'un des projets requis pour obtenir votre certification.",
+          "Pour ce projet, vous allez construire un formulaire d'enquête pour collecter des données auprès de vos utilisateurs."
         ] },
       "build-a-technical-documentation-page-project": {
-        "title": "Technical Documentation Page",
+        "title": "Page de documentation technique",
         "intro": [
-          "This is one of the required projects to earn your certification.",
-          "For this project, you will build a technical documentation page to serve as instruction or reference for a topic."
+          "C'est l'un des projets requis pour obtenir votre certification.",
+          "Pour ce projet, vous allez construire une page de documentation technique qui servira d'instruction ou de référence pour un sujet."
         ] },
       "learn-html-by-building-a-cat-photo-app": {
-        "title": "Learn HTML by Building a Cat Photo App",
+        "title": "Apprendre le HTML en créant une application pour les photos de chats",
         "intro": [
-          "HTML tags give a webpage its structure. You can use HTML tags to add photos, buttons, and other elements to your webpage.",
-          "In this course, you'll learn the most common HTML tags by building your own cat photo app."
+          "Les balises HTML donnent à une page web sa structure. Vous pouvez utiliser les balises HTML pour ajouter des photos, des boutons et d'autres éléments à votre page Web.",
+          "Dans ce cours, vous apprendrez les balises HTML les plus courantes en créant votre propre application pour photos de chats"
         ]
       },
       "learn-basic-css-by-building-a-cafe-menu": {
-        "title": "Learn Basic CSS by Building a Cafe Menu",
+        "title": "Apprendre les bases du CSS en faisant un menu de café",
         "intro": [
-          "CSS tells the browser how to display your webpage. You can use CSS to set the color, font, size, and other aspects of HTML elements.",
-          "In this course, you'll learn CSS by designing a menu page for a cafe webpage."
+          "CSS indique au navigateur comment afficher votre page Web. Vous pouvez utiliser CSS pour définir la couleur, la police, la taille et d'autres aspects des éléments HTML.",
+          "Dans ce cours, vous apprendrez les CSS en concevant une page de menu pour la page Web d'un café"
         ]
       },
       "learn-the-css-box-model-by-building-a-rothko-painting": {
-        "title": "Learn the CSS Box Model by Building a Rothko Painting",
+        "title": "Apprenez le Modèle de Boîte CSS en construisant une peinture de Rothko",
         "intro": [
-          "Every HTML element is its own box – with its own spacing and a border. This is called the Box Model.",
-          "In this course, you'll use CSS and the Box Model to create your own Rothko-style rectangular art pieces."
+          "Chaque élément HTML est sa propre boîte - avec son propre espacement et une bordure. C'est ce qu'on appelle le modèle de boîte",
+          "Dans ce cours, vous utiliserez CSS et le modèle de boîte pour créer vos propres œuvres d'art rectangulaires de style Rothko."
         ]
       },
       "learn-css-variables-by-building-a-city-skyline": {
-        "title": "Learn CSS Variables by Building a City Skyline",
+        "title": "Apprendre les variables CSS en construisant un horizon urbain",
         "intro": [
-          "CSS variables help you organize your styles and reuse them.",
-          "In this course, you'll build a city skyline. You'll learn how to configure CSS variables so you can reuse them whenever you want."
+          "Les variables CSS vous aident à organiser vos styles et à les réutiliser.",
+          "Dans ce cours, vous allez construire l'horizon d'une ville. Vous apprendrez à configurer les variables CSS afin de pouvoir les réutiliser quand vous le souhaitez. "
         ]
       },
       "learn-html-forms-by-building-a-registration-form": {
-        "title": "Learn HTML Forms by Building a Registration Form",
+        "title": "Apprendre les formulaires HTML en créant un formulaire d'inscription" ,
         "intro": [
-          "You can use HTML forms to collect information from people who visit your webpage.",
-          "In this course, you'll learn HTML forms by building a signup page. You'll learn how to control what types of data people can type into your form, and some new CSS tools for styling your page."
+          "Vous pouvez utiliser les formulaires HTML pour recueillir des informations sur les personnes qui visitent votre page Web.",
+          "Dans ce cours, vous apprendrez les formulaires HTML en créant une page d'inscription. Vous apprendrez à contrôler les types de données que les personnes peuvent saisir dans votre formulaire, ainsi que de nouveaux outils CSS pour styliser votre page. "
         ]
       },
       "learn-accessibility-by-building-a-quiz": {
-        "title": "Learn Accessibility by Building a Quiz",
+        "title": "Apprendre l'accessibilité en créant un quiz",
         "intro": [
-          "Accessibility is making your webpage easy for all people to use – even people with disabilities.",
-          "In this course, you'll build a quiz webpage. You'll learn accessibility tools such as keyboard shortcuts, ARIA attributes, and design best practices."
+          "L'accessibilité consiste à rendre votre page Web facile à utiliser pour tous, même pour les personnes handicapées.",
+          "Dans ce cours, vous allez créer une page Web pour un jeu de questions-réponses. Vous apprendrez les outils d'accessibilité tels que les raccourcis clavier, les attributs ARIA et les meilleures pratiques de conception. "
         ]
       },
       "learn-intermediate-css-by-building-a-picasso-painting": {
-        "title": "Learn Intermediate CSS by Building a Picasso Painting",
+        "title": "Apprendre le CSS intermédiaire en créant un tableau de Picasso",
         "intro": [
-          "In this course, you'll use learn some intermediate CSS techniques by coding your own Picasso painting webpage. You'll learn about SVG icons, CSS positioning, and review other CSS skills you've learned."
+          "Dans ce cours, vous apprendrez quelques techniques CSS intermédiaires en codant votre propre page Web de peinture Picasso. Vous découvrirez les icônes SVG, le positionnement CSS et passerez en revue les autres compétences CSS que vous avez acquises."
         ]
       },
       "learn-responsive-web-design-by-building-a-piano": {
-        "title": "Learn Responsive Web Design by Building a Piano",
+        "title": "Apprendre le Responsive Web Design en créant un piano",
         "intro": [
-          "Responsive Design tells your webpage how it should look on different-sized screens.",
-          "In this course, you'll use CSS and Responsive Design to code a piano. You'll also learn more about media queries and pseudo selectors."
+          "Le Responsive Design indique à votre page Web comment elle doit s'afficher sur des écrans de différentes tailles.",
+          "Dans ce cours, vous utiliserez le CSS et le Responsive Design pour coder un piano. Vous en saurez également plus sur les media queries et les pseudo-sélecteurs. "
         ]
       },
       "learn-css-flexbox-by-building-a-photo-gallery": {
-        "title": "Learn CSS Flexbox by Building a Photo Gallery",
+        "title": "Apprendre le CSS Flexbox en construisant une galerie de photos",
         "intro": [
-          "Flexbox helps you design your webpage so that it looks good on any screen size.",
-          "In this course, you'll use Flexbox to build a responsive photo gallery webpage."
+          "Flexbox vous aide à concevoir votre page Web de manière à ce qu'elle s'affiche bien sur n'importe quelle taille d'écran.",
+          "Dans ce cours, vous utiliserez Flexbox pour créer une page Web de galerie photo responsive."
         ]
       },
       "learn-css-grid-by-building-a-magazine": {
-        "title": "Learn CSS Grid by Building a Magazine",
+        "title": "Apprendre la grille CSS en construisant un magazine",
         "intro": [
-          "CSS Grid gives you control over the rows and columns of your webpage design.",
-          "In this course, you'll build a magazine article. You'll learn how to use CSS Grid, including concepts like grid rows and grid columns."
+          "CSS Grid vous permet de contrôler les lignes et les colonnes de la conception de votre page Web.",
+          "Dans ce cours, vous allez construire un article de magazine. Vous apprendrez à utiliser la grille CSS, y compris des concepts tels que les lignes et les colonnes de la grille. "
         ]
       },
       "learn-typography-by-building-a-nutrition-label": {
-        "title": "Learn Typography by Building a Nutrition Label",
+        "title": "Apprendre la typographie en créant une étiquette nutritionnelle",
         "intro": [
-          "Typography is the art of styling your text to be easily readable and suit its purpose.",
-          "In this course, you'll use typography to build a nutrition label webpage. You'll learn how to style text, adjust line height, and position your text using CSS."
+          "La typographie est l'art de styliser votre texte pour qu'il soit facilement lisible et convienne à son objectif.",
+          "Dans ce cours, vous utiliserez la typographie pour créer une page Web d'étiquettes nutritionnelles. Vous apprendrez à styliser le texte, à ajuster la hauteur des lignes et à positionner votre texte à l'aide de CSS. "
         ]
       },
-      "learn-css-transforms-by-building-a-penguin": { "title": "Learn CSS Transforms by Building a Penguin", "intro": [
-        "You can transform HTML elements to create appealing designs that draw your reader's eye. You can use transforms to rotate elements, scale them, and more.",
-        "In this course, you'll build a penguin. You'll use CSS transforms to position and resize the parts of your penguin, create a background, and animate your work."
+      "learn-css-transforms-by-building-a-penguin": {
+        "title": "Apprenez les transformations CSS en créant un Pingouin",
+        "intro": [
+          "Vous pouvez transformer les éléments HTML pour créer des conceptions attrayantes qui attirent l'œil de votre lecteur. Vous pouvez utiliser les transformations pour faire pivoter des éléments, les mettre à l'échelle, et bien plus encore.",
+          "Dans ce cours, vous allez construire un pingouin. Vous utiliserez les transformations CSS pour positionner et redimensionner les parties de votre pingouin, créer un arrière-plan et animer votre travail."
+
       ] },
-      "learn-css-animation-by-building-a-ferris-wheel": { "title": "Learn CSS Animation by Building a Ferris Wheel", "intro": [
-        "You can use CSS animation to draw attention to specific sections of your webpage and make it more engaging.",
-        "In this course, you'll build a Ferris wheel. You'll learn how to use CSS to animate elements, transform them, and adjust their speed."
+      "learn-css-animation-by-building-a-ferris-wheel": {
+        "title": "Apprendre l'animation CSS en fabriquant une grande roue",
+        "intro": [
+          "Vous pouvez utiliser l'animation CSS pour attirer l'attention sur des sections spécifiques de votre page Web et la rendre plus attrayante.",
+          "Dans ce cours, vous allez fabriquer une grande roue. Vous apprendrez à utiliser CSS pour animer des éléments, les transformer et ajuster leur vitesse."
       ] },
-      "learn-more-about-css-pseudo-selectors-by-building-a-balance-sheet": { "title": "Learn More About CSS Pseudo Selectors By Building A Balance Sheet", "intro": [
-        "You can use CSS pseudo selectors to change specific HTML elements.",
-        "In this course, you'll build a balance sheet using pseudo selectors. You'll learn how to change the style of an element when you hover over it with your mouse, and trigger other events on your webpage."
+      "learn-more-about-css-pseudo-selectors-by-building-a-balance-sheet": {
+        "title": "Apprenez-en plus sur les pseudo-sélecteurs CSS en élaborant un bilan",
+        "intro": [
+          "Vous pouvez utiliser les pseudo-sélecteurs CSS pour modifier des éléments HTML spécifiques.",
+          "Dans ce cours, vous allez concevoir un bilan à l'aide de pseudo sélecteurs. Vous apprendrez à modifier le style d'un élément lorsque vous le survolez avec votre souris, et à déclencher d'autres événements sur votre page Web. "
       ] },
       "learn-css-colors-by-building-a-set-of-colored-markers": {
-        "title": "Learn CSS Colors by Building a Set of Colored Markers",
+        "title": "Apprendre les couleurs CSS en construisant un jeu de marqueurs colorés",
         "intro": [
-          "Selecting the correct colors for your webpage can greatly improve the aesthetic appeal to your readers.",
-          "In this course, you'll build a set of colored markers. You'll learn different ways to set color values and how to pair colors with each other."
+          "Choisir les bonnes couleurs pour votre page Web peut améliorer considérablement l'attrait esthétique pour vos lecteurs.",
+          "Dans ce cours, vous construirez un ensemble de marqueurs colorés. Vous apprendrez les différentes façons de définir les valeurs de couleur et comment associer les couleurs entre elles."
       ] }
     }
   },
   "javascript-algorithms-and-data-structures": {
-    "title": "JavaScript Algorithms and Data Structures",
+    "title": "Algorithmes et structures de données JavaScript",
     "intro": [
-      "While HTML and CSS control the content and styling of a page, JavaScript is used to make it interactive. In the JavaScript Algorithm and Data Structures Certification, you'll learn the fundamentals of JavaScript including variables, arrays, objects, loops, and functions.",
-      "Once you have the fundamentals down, you'll apply that knowledge by creating algorithms to manipulate strings, factorialize numbers, and even calculate the orbit of the International Space Station.",
-      "Along the way, you'll also learn two important programming styles or paradigms: Object Oriented Programming (OOP) and Functional Programming (FP)."
+      "Alors que HTML et CSS contrôlent le contenu et le style d'une page, JavaScript est utilisé pour la rendre interactive. Dans le cadre de la certification JavaScript Algorithm and Data Structures, vous apprendrez les principes fondamentaux de JavaScript, notamment les variables, les tableaux, les objets, les boucles et les fonctions",
+      "Une fois que vous aurez maîtrisé les principes fondamentaux, vous appliquerez ces connaissances en créant des algorithmes pour manipuler des chaînes de caractères, factoriser des nombres et même calculer l'orbite de la station spatiale internationale",
+      "En cours de route, vous apprendrez également deux styles ou paradigmes de programmation importants : la programmation orientée objet (POO) et la programmation fonctionnelle (PF)."
+
     ],
     "note": "Note: Some browser extensions, such as ad-blockers and script-blockers can interfere with the tests. If you face issues, we recommend disabling extensions that modify or block the content of pages while taking the course.",
     "blocks": {
