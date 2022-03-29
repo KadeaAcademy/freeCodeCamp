@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08824
-title: Add Different Padding to Each Side of an Element
+title: Ajouter un padding différent sur chaque côté d'un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cB7mwUw'
 forumTopicId: 16634
@@ -9,35 +9,34 @@ dashedName: add-different-padding-to-each-side-of-an-element
 
 # --description--
 
-Sometimes you will want to customize an element so that it has different amounts of `padding` on each of its sides.
+Parfois, vous voudrez personnaliser un élément pour qu'il ait une quantité différente de "padding" sur chacun de ses côtés.
 
-CSS allows you to control the `padding` of all four individual sides of an element with the `padding-top`, `padding-right`, `padding-bottom`, and `padding-left` properties.
+CSS vous permet de contrôler le "padding" des quatre côtés individuels d'un élément avec les propriétés |`padding-top`, `padding-right`, `padding-bottom` et `padding-left`.
 
 # --instructions--
 
-Give the blue box a `padding` of `40px` on its top and left side, but only `20px` on its bottom and right side.
-
+Donnez à la boîte bleue un `padding` de `40px` sur son haut et son côté gauche, mais seulement `20px` sur son bas et son côté droit.
 # --hints--
 
-Your `blue-box` class should give the top of the elements `40px` of `padding`.
+Votre classe `blue-box` devrait donner au sommet des éléments `40px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-top') === '40px');
 ```
 
-Your `blue-box` class should give the right of the elements `20px` of `padding`.
+Votre classe `blue-box` devrait donner à la droite des éléments `20px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-right') === '20px');
 ```
 
-Your `blue-box` class should give the bottom of the elements `20px` of `padding`.
+Votre classe `blue-box` devrait donner au bas des éléments `20px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-bottom') === '20px');
 ```
 
-Your `blue-box` class should give the left of the elements `40px` of `padding`.
+Votre classe `blue-box` devrait donner à la gauche des éléments `40px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-left') === '40px');
