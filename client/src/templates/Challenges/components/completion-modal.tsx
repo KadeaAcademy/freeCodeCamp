@@ -238,27 +238,30 @@ export class CompletionModalInner extends Component<
         show={isOpen}
       >
         <Modal.Header
-          className='challenge-list-header fcc-modal'
+          className='challenge-list-header fcc-modal completion-header'
           closeButton={true}
         >
           <Modal.Title className='completion-message'>
             {'Félicitations !'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className='completion-modal-body'>
+
+        <Modal.Body className='completion-modal-body bg-light'>
           <CompletionModalBody
             block={block}
             completedPercent={completedPercent}
             superBlock={superBlock}
           />
         </Modal.Body>
-        <Modal.Footer>
+
+        <Modal.Footer className='bg-light'>
           {isSignedIn ? null : (
             <Login block={true}>
               {'Connectez-vous pour enregistrer votre progression'}
             </Login>
           )}
           <Button
+            className='action-btn'
             block={true}
             bsSize='large'
             bsStyle='primary'
@@ -271,10 +274,10 @@ export class CompletionModalInner extends Component<
           </Button>
           {this.state.downloadURL ? (
             <Button
+              className='action-btn'
               block={true}
               bsSize='lg'
               bsStyle='primary'
-              className='btn-invert'
               download={`${dashedName}.txt`}
               href={this.state.downloadURL}
             >

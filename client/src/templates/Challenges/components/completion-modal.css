@@ -133,3 +133,22 @@
     font-size: 1rem;
   }
 }
+
+.action-btn {
+  background: var(--love-light);
+  color: var(--gray-00);
+  font-weight: 600;
+  font-size: 0.8rem;
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 0) !important;
+  border: solid 2px var(--love-light) !important;
+}
+
+.completion-header {
+  background: #fff !important;
+}

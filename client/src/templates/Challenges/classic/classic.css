@@ -112,3 +112,13 @@ button.monaco-editor-tab:hover {
 .monaco-editor .squiggly-hint {
   background: none !important;
 }
+
+.padding-t-b-10 {
+  padding: 15px 0 40px 0;
+}
+
+.editor-border-top {
+  background: var(--quaternary-background);
+  height: 35px;
+  margin-bottom: 10px;
+}

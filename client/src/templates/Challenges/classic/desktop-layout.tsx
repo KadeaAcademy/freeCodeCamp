@@ -8,7 +8,6 @@ import {
   ChallengeFiles,
   ResizeProps
 } from '../../../redux/prop-types';
-import { Spacer } from '../../../components/helpers';
 import ActionRow from './action-row';
 
 type Pane = { flex: number };
@@ -107,9 +106,8 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
 
   return (
     <div className='desktop-layout'>
-      <Spacer size={2} />
       {(projectBasedChallenge || isMultiFileCertProject) && (
-        <div className='bg-info'>
+        <div className=''>
           <ActionRow
             block={block}
             hasNotes={hasNotes}
@@ -123,10 +121,16 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
       )}
       <ReflexContainer orientation='vertical'>
         {!projectBasedChallenge && (
-          <ReflexElement flex={instructionPane.flex} {...resizeProps}>
+          <ReflexElement
+            className='padding-t-b-10 bg-light'
+            flex={instructionPane.flex}
+            {...resizeProps}
+          >
+            <div className='editor-border-top'></div>
             {instructions}
           </ReflexElement>
         )}
+
         {!projectBasedChallenge && (
           <ReflexSplitter propagate={true} {...resizeProps} />
         )}
@@ -138,15 +142,19 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
               orientation='horizontal'
             >
               <ReflexElement
+                className='padding-t-b-10 bg-light'
                 flex={codePane.flex}
                 {...reflexProps}
                 {...resizeProps}
               >
+                <div className='editor-border-top'></div>
                 {editor}
               </ReflexElement>
+
               {displayConsole && (
                 <ReflexSplitter propagate={true} {...resizeProps} />
               )}
+
               {displayConsole && (
                 <ReflexElement
                   flex={testsPane.flex}
@@ -159,7 +167,9 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
             </ReflexContainer>
           )}
         </ReflexElement>
+
         {displayNotes && <ReflexSplitter propagate={true} {...resizeProps} />}
+
         {displayNotes && (
           <ReflexElement flex={notesPane.flex} {...resizeProps}>
             {notes}
@@ -168,7 +178,12 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
 
         {displayPreview && <ReflexSplitter propagate={true} {...resizeProps} />}
         {displayPreview && (
-          <ReflexElement flex={previewPane.flex} {...resizeProps}>
+          <ReflexElement
+            className='padding-t-b-10 bg-light'
+            flex={previewPane.flex}
+            {...resizeProps}
+          >
+            <div className='editor-border-top'></div>
             {preview}
           </ReflexElement>
         )}

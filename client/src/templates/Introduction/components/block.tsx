@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTranslation, TFunction } from 'react-i18next';
 import { ProgressBar } from '@freecodecamp/react-bootstrap';
 import { connect } from 'react-redux';
@@ -176,6 +178,13 @@ export class Block extends Component<BlockProps> {
     console.log('----------------------------');
     */
 
+    /*
+    console.log('----------------------------');
+    console.log(blockDashedName);
+    console.log(challengeCompleted);
+    console.log('----------------------------');
+    */
+
     const progressBarRender = (
       <div className='progress-wrapper'>
         <ProgressBar now={percentageComplated} />
@@ -189,10 +198,10 @@ export class Block extends Component<BlockProps> {
       <>
         {isLastVisited ? (
           <>
-            {challengeCompleted.length != 0 &&
-              challengeCompleted.length <= challengesWithCompleted.length && (
-                <>
-                  <Spacer />
+            {challengeCompleted.length != 0 && !isBlockCompleted && (
+              <>
+                <Spacer />
+                <div className={`block ${isExpanded ? 'open' : ''}`}>
                   <div className='card-challenge-visited'>
                     <div className='card-challenge-visited-index bloc-index'>
                       {blockIndex}
@@ -201,7 +210,18 @@ export class Block extends Component<BlockProps> {
                       <div className='card-challenge-visited-content'>
                         <h3 className='big-block-title'>{blockTitle}</h3>
                         {challengeInCompleted[0] && (
-                          <div>{challengeInCompleted[0].title}</div>
+                          <>
+                            <div className='block-lesson'>
+                              <div className='block-lesson-icon'>
+                                <FontAwesomeIcon
+                                  className=''
+                                  icon={faBookOpen}
+                                />
+                              </div>
+                              <div className=''>{' Leçon :'}</div>
+                            </div>
+                            <div>{challengeInCompleted[0].title}</div>
+                          </>
                         )}
                       </div>
                       <Challenges
@@ -212,9 +232,35 @@ export class Block extends Component<BlockProps> {
                       />
                     </div>
                   </div>
-                  <Spacer />
-                </>
-              )}
+                  <hr />
+                  <button
+                    aria-expanded={isExpanded}
+                    className='map-title'
+                    onClick={() => {
+                      this.handleBlockClick();
+                    }}
+                  >
+                    <Caret />
+                    <h4 className='course-title'>
+                      {`${isExpanded ? 'fermer' : 'voir plus de chapitres'}`}
+                    </h4>
+                    <div className='map-title-completed course-title'>
+                      {this.renderCheckMark(isBlockCompleted)}
+                      <span className='map-completed-count'>{`${completedCount}/${challengesWithCompleted.length}`}</span>
+                    </div>
+                  </button>
+                  {isExpanded && (
+                    <Challenges
+                      challengesWithCompleted={challengesWithCompleted}
+                      isProjectBlock={isProjectBlock}
+                      superBlock={superBlock}
+                      isLastVisited={false}
+                    />
+                  )}
+                </div>
+                <Spacer />
+              </>
+            )}
           </>
         ) : (
           <>

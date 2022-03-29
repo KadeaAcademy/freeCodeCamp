@@ -114,7 +114,7 @@ a.cert-tag:active {
   height: 100%;
   list-style: none;
   color: var(--secondary-color);
-  padding: 50px;
+  padding: 10%;
 }
 
 .block-ui a {
@@ -463,14 +463,14 @@ button.map-title {
 }
 
 .card-challenge-visited .card-challenge-visited-index {
-  width: 15%;
+  width: 13%;
   padding: 10px;
 }
 
 .card-challenge-visited .card-challenge-visited-body {
   display: flex;
   align-items: center;
-  width: 85%;
+  width: 87%;
   padding: 10px;
 }
 
@@ -482,7 +482,7 @@ button.map-title {
 .card-challenge-visited-body .card-challenge-visited-action {
   width: 40%;
   padding: 10px 0;
-  text-align: center;
+  text-align: right;
 }
 
 .card-challenge-visited-action .success {
@@ -493,32 +493,55 @@ button.map-title {
 }
 
 .card-challenge-visited-action .link-action {
-  border: solid 2px var(--primary-color);
-  background: rgba(255, 255, 255, 0);
-  color: var(--primary-color);
-  font-weight: bold;
-  font-size: 0.8rem;
   padding: 10px;
+  text-decoration: none;
+  color: var(--gray-00);
+  font-weight: 600;
+  font-size: 0.8rem;
+  background: var(--love-light);
+  border: solid 2px var(--love-light);
   transition: all 0.3s ease;
 }
 
-.card-challenge-visited-action .link-action:hover {
-  border: solid 2px var(--primary-color);
-  background: var(--primary-color);
-  color: var(--primary-background);
+.card-challenge-visited-action .link-action:hover,
+.card-challenge-visited-action .link-action:focus {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 0) !important;
 }
 
 .fw-800 {
   font-weight: bold;
 }
-@media (max-width: 769px) {
-  .card-challenge-visited-action .link-action {
-    font-size: 0.6rem;
-    padding: 5px;
-  }
+
+.block-lesson {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-weight: bold;
+  gap: 10px;
+  padding: 10px 0;
 }
 
-@media (max-width: 426px) {
+.block-lesson .block-lesson-icon {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: var(--primary-background);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  /* Set the hr color */
+  color: var(--secondary-background); /* old IE */
+  background-color: var(--secondary-background); /* Modern Browsers */
+}
+
+@media (max-width: 769px) {
   .bloc-index {
     font-size: 1.17rem !important;
   }
@@ -544,6 +567,6 @@ button.map-title {
   }
 
   .card-challenge-visited-action .link-action {
-    font-size: 0.5rem;
+    font-size: 0.8rem;
   }
 }
