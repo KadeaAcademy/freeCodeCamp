@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08803
-title: Change the Color of Text
+title: Modifier la couleur du texte
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cRkVmSm'
 forumTopicId: 16775
@@ -9,39 +9,39 @@ dashedName: change-the-color-of-text
 
 # --description--
 
-Now let's change the color of some of our text.
+Maintenant, changeons la couleur d'une partie de notre texte.
 
-We can do this by changing the `style` of your `h2` element.
+Nous pouvons le faire en modifiant le style de l'élément `h2`.
 
-The property that is responsible for the color of an element's text is the `color` style property.
+La propriété responsable de la couleur du texte d'un élément est la propriété de style `color`.
 
-Here's how you would set your `h2` element's text color to blue:
+Voici comment définir la couleur bleue du texte de l'élément `h2` :
 
 ```html
 <h2 style="color: blue;">CatPhotoApp</h2>
 ```
 
-Note that it is a good practice to end inline `style` declarations with a `;` .
+Notez que c'est une bonne pratique de terminer les déclarations inline `style` par un `;` .
 
 # --instructions--
 
-Change your `h2` element's style so that its text color is red.
+Modifiez le style de votre élément `h2` pour que la couleur de son texte soit rouge.
 
 # --hints--
 
-Your `h2` element should have a `style` declaration.
+Votre élément `h2` doit avoir une déclaration `style`.
 
 ```js
 assert($('h2').attr('style'));
 ```
 
-Your `h2` element should have color set to `red`.
+La couleur de votre élément `h2` devrait être réglée sur `red`.
 
 ```js
 assert($('h2')[0].style.color === 'red');
 ```
 
-Your `style` declaration should end with a `;` .
+Votre déclaration `style` doit se terminer par un `;` .
 
 ```js
 assert($('h2').attr('style') && $('h2').attr('style').endsWith(';'));
@@ -54,22 +54,22 @@ assert($('h2').attr('style') && $('h2').attr('style').endsWith(';'));
 ```html
 <h2>CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
@@ -80,7 +80,7 @@ assert($('h2').attr('style') && $('h2').attr('style').endsWith(';'));
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -90,22 +90,22 @@ assert($('h2').attr('style') && $('h2').attr('style').endsWith(';'));
 ```html
 <h2 style="color: red;">CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
@@ -116,7 +116,7 @@ assert($('h2').attr('style') && $('h2').attr('style').endsWith(';'));
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
