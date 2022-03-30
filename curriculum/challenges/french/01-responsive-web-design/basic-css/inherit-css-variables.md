@@ -1,6 +1,6 @@
 ---
 id: 5a9d7295424fe3d0e10cad14
-title: Inherit CSS Variables
+title: Hériter des variables CSS
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cyLZZhZ'
 forumTopicId: 301088
@@ -9,19 +9,19 @@ dashedName: inherit-css-variables
 
 # --description--
 
-When you create a variable, it is available for you to use inside the selector in which you create it. It also is available in any of that selector's descendants. This happens because CSS variables are inherited, just like ordinary properties.
+Lorsque vous créez une variable, vous pouvez l’utiliser dans le sélecteur dans lequel vous la créez. Il est également disponible dans n’importe lequel des descendants de ce sélecteur. Cela se produit parce que les variables CSS sont héritées, tout comme les propriétés ordinaires.
 
-To make use of inheritance, CSS variables are often defined in the <dfn>:root</dfn> element.
+Pour utiliser l’héritage, les variables CSS sont souvent définies dans l’élément <dfn>:root</dfn>.
 
-`:root` is a <dfn>pseudo-class</dfn> selector that matches the root element of the document, usually the `html` element. By creating your variables in `:root`, they will be available globally and can be accessed from any other selector in the style sheet.
+`:root` est un sélecteur <dfn>pseudo-classe</dfn> qui correspond à l’élément racine du document, généralement l’élément 'html'. En créant vos variables dans `:root`, elles seront disponibles globalement et accessibles à partir de n’importe quel autre sélecteur de la feuille de style.
 
 # --instructions--
 
-Define a variable named `--penguin-belly` in the `:root` selector and give it the value of `pink`. You can then see that the variable is inherited and that all the child elements which use it get pink backgrounds.
+Définissez une variable nommée `--penguin-belly` dans le sélecteur `:root` et donnez-lui la valeur `pink`. Vous pouvez alors voir que la variable est héritée et que tous les éléments enfants qui l'utilisent ont un fond rose.
 
 # --hints--
 
-The `--penguin-belly` variable should be declared in the `:root` and assigned the value `pink`.
+La variable `--penguin-belly` doit être déclarée dans le fichier `:root` et se voir attribuer la valeur `pink`.
 
 ```js
 assert(
