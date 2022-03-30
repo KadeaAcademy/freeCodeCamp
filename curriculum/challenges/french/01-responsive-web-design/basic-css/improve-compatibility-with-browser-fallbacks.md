@@ -1,6 +1,6 @@
 ---
 id: 5b7d72c338cd7e35b63f3e14
-title: Improve Compatibility with Browser Fallbacks
+title: Amélioration de la compatibilité avec les "Fallbacks" des navigateurs
 challengeType: 0
 videoUrl: ''
 forumTopicId: 301087
@@ -9,19 +9,19 @@ dashedName: improve-compatibility-with-browser-fallbacks
 
 # --description--
 
-When working with CSS you will likely run into browser compatibility issues at some point. This is why it's important to provide browser fallbacks to avoid potential problems.
+Lorsque vous travaillez avec des feuilles de style en cascade, vous rencontrerez probablement des problèmes de compatibilité avec les navigateurs à un moment ou à un autre. C'est pourquoi il est important de prévoir des solutions de repli pour éviter les problèmes potentiels.
 
-When your browser parses the CSS of a webpage, it ignores any properties that it doesn't recognize or support. For example, if you use a CSS variable to assign a background color on a site, Internet Explorer will ignore the background color because it does not support CSS variables. In that case, the browser will use whatever value it has for that property. If it can't find any other value set for that property, it will revert to the default value, which is typically not ideal.
+Lorsque votre navigateur analyse le CSS d'une page Web, il ignore toutes les propriétés qu'il ne reconnaît pas ou ne prend pas en charge. Par exemple, si vous utilisez une variable CSS pour attribuer une couleur d'arrière-plan à un site, Internet Explorer ignorera la couleur d'arrière-plan car il ne prend pas en charge les variables CSS. Dans ce cas, le navigateur utilisera la valeur qu'il possède pour cette propriété. S'il ne trouve aucune autre valeur définie pour cette propriété, il reviendra à la valeur par défaut, ce qui n'est généralement pas idéal.
 
-This means that if you do want to provide a browser fallback, it's as easy as providing another more widely supported value immediately before your declaration. That way an older browser will have something to fall back on, while a newer browser will just interpret whatever declaration comes later in the cascade.
+Cela signifie que si vous souhaitez fournir une solution de repli au navigateur, il vous suffit de fournir une autre valeur plus largement prise en charge immédiatement avant votre déclaration. Ainsi, un navigateur plus ancien aura quelque chose à quoi se raccrocher, tandis qu'un navigateur plus récent se contentera d'interpréter la déclaration qui se trouve plus loin dans la cascade.
 
 # --instructions--
 
-It looks like a variable is being used to set the background color of the `.red-box` class. Let's improve our browser compatibility by adding another `background` declaration right before the existing declaration and set its value to `red`.
+Il semble qu'une variable soit utilisée pour définir la couleur de fond de la classe `.red-box`. Améliorons la compatibilité avec le navigateur en ajoutant une autre déclaration `background` juste avant la déclaration existante et définissons sa valeur à `red`.
 
 # --hints--
 
-Your `.red-box` rule should include a fallback with the `background` set to `red` immediately before the existing `background` declaration.
+Votre règle `.red-box` devrait inclure un fallback avec le `background` défini à `red` immédiatement avant la déclaration `background` existante.
 
 ```js
 assert(
