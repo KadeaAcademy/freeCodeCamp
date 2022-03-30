@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08807
-title: Import a Google Font
+title: Importer une police Google
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cM9MRsJ'
 forumTopicId: 18200
@@ -9,41 +9,41 @@ dashedName: import-a-google-font
 
 # --description--
 
-In addition to specifying common fonts that are found on most operating systems, we can also specify non-standard, custom web fonts for use on our website. There are many sources for web fonts on the Internet. For this example we will focus on the Google Fonts library.
+En plus de spécifier les polices courantes que l'on trouve sur la plupart des systèmes d'exploitation, nous pouvons également spécifier des polices Web non standard et personnalisées à utiliser sur notre site Web. Il existe de nombreuses sources de polices Web sur l'Internet. Pour cet exemple, nous allons nous concentrer sur la bibliothèque Google Fonts.
 
-[Google Fonts](https://fonts.google.com/) is a free library of web fonts that you can use in your CSS by referencing the font's URL.
+[Google Fonts](https://fonts.google.com/) est une bibliothèque gratuite de polices Web que vous pouvez utiliser dans votre CSS en faisant référence à l'URL de la police.
 
-So, let's go ahead and import and apply a Google font (note that if Google is blocked in your country, you will need to skip this challenge).
+Nous allons donc importer et appliquer une police Google (notez que si Google est bloqué dans votre pays, vous devrez sauter ce défi).
 
-To import a Google Font, you can copy the font's URL from the Google Fonts library and then paste it in your HTML. For this challenge, we'll import the `Lobster` font. To do this, copy the following code snippet and paste it into the top of your code editor (before the opening `style` element):
+Pour importer une police Google, vous pouvez copier l'URL de la police depuis la bibliothèque Google Fonts, puis la coller dans votre HTML. Pour ce défi, nous allons importer la police `Lobster`. Pour ce faire, copiez l'extrait de code suivant et collez-le en haut de votre éditeur de code (avant l'élément `style` d'ouverture) :
+
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 ```
 
-Now you can use the `Lobster` font in your CSS by using `Lobster` as the FAMILY_NAME as in the following example:
+Vous pouvez maintenant utiliser la police `Lobster` dans votre CSS en utilisant `Lobster` comme FAMILY_NAME comme dans l'exemple suivant :
 
 ```css
 font-family: FAMILY_NAME, GENERIC_NAME;
 ```
 
-The GENERIC_NAME is optional, and is a fallback font in case the other specified font is not available. This is covered in the next challenge.
+Le nom générique (GENERIC_NAME) est facultatif et constitue une police de secours au cas où l'autre police spécifiée ne serait pas disponible. Ce point est abordé dans le prochain défi.
 
-Family names are case-sensitive and need to be wrapped in quotes if there is a space in the name. For example, you need quotes to use the `"Open Sans"` font, but not to use the `Lobster` font.
-
+Les noms de police sont sensibles à la casse et doivent être mis entre guillemets s'il y a un espace dans le nom. Par exemple, vous avez besoin de guillemets pour utiliser la police "Open Sans", mais pas pour utiliser la police "Lobster".
 # --instructions--
 
-Import the `Lobster` font to your web page. Then, use an element selector to set `Lobster` as the `font-family` for your `h2` element.
+Importez la police `Lobster` dans votre page Web. Ensuite, utilisez un sélecteur d'élément pour définir `Lobster` comme `font-family` pour votre élément `h2`.
 
 # --hints--
 
-You should import the `Lobster` font.
+Vous devez importer la police `Lobster`.
 
 ```js
 assert($('link[href*="googleapis" i]').length);
 ```
 
-Your `h2` element should use the font `Lobster`.
+Votre élément `h2` doit utiliser la police `Lobster`.
 
 ```js
 assert(
@@ -53,7 +53,7 @@ assert(
 );
 ```
 
-You should only use an `h2` element selector to change the font.
+Vous ne devez utiliser qu'un sélecteur d'élément `h2` pour changer la police.
 
 ```js
 assert(
@@ -63,7 +63,7 @@ assert(
 );
 ```
 
-Your `p` element should still use the font `monospace`.
+Votre élément `p` devrait toujours utiliser la police `monospace`.
 
 ```js
 assert(
@@ -91,22 +91,22 @@ assert(
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+   <p class="red-text">Cliquez ici pour voir d'autres <a href="#">photos de chats</a>.</p>.
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
@@ -117,7 +117,7 @@ assert(
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -148,17 +148,17 @@ assert(
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
@@ -169,7 +169,7 @@ assert(
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
