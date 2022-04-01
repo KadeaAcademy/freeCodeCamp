@@ -46,6 +46,7 @@ function ToolPanel({
         aria-label='Run the tests use shortcut Ctrl+enter'
         block={true}
         bsStyle='primary'
+        className='btn-primary'
         onClick={handleRunTests}
       >
         {isMobile ? 'Exécuter' : 'Exécuter les tests'}
@@ -54,7 +55,7 @@ function ToolPanel({
       <Button
         block={true}
         bsStyle='primary'
-        className='btn-invert'
+        className='btn-secondary'
         onClick={openResetModal}
       >
         {isMobile ? 'Réinitialiser' : 'Réinitialiser tout le code'}

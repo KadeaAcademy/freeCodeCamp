@@ -56,7 +56,7 @@ function Challenges({
       {challengesWithCompleted[0] ? (
         <>
           <div
-            className='card-challenge-visited-action'
+            className='card-challenge-action'
             id={challengesWithCompleted[0].dashedName}
             key={'map-challenge' + challengesWithCompleted[0].fields.slug}
           >

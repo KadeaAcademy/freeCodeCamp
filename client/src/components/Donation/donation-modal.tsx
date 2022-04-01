@@ -20,7 +20,6 @@ import {
 import { isLocationSuperBlock } from '../../utils/path-parsers';
 import { playTone } from '../../utils/tone';
 import { Spacer } from '../helpers';
-import DonateForm from './donate-form';
 
 const mapStateToProps = createSelector(
   isDonationModalOpenSelector,
@@ -60,24 +59,9 @@ function DonateModal({
   recentlyClaimedBlock,
   isAVariant
 }: DonateModalProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [closeLabel, setCloseLabel] = React.useState(false);
   const { t } = useTranslation();
-  const handleProcessing = (
-    duration: string,
-    amount: number,
-    action: string
-  ) => {
-    executeGA({
-      type: 'event',
-      data: {
-        category: 'Donation',
-        action: `Modal ${action}`,
-        label: duration,
-        value: amount
-      }
-    });
-    setCloseLabel(true);
-  };
 
   useEffect(() => {
     if (show) {
@@ -125,7 +109,7 @@ function DonateModal({
       <Row>
         {!closeLabel && (
           <Col sm={10} smOffset={1} xs={12}>
-            <b>{t('donate.nicely-done', { block: recentlyClaimedBlock })}</b>
+            <b>{'Bien joué. Vous venez de terminer!'}</b>
             <br />
             {getDonationText()}
           </Col>
@@ -136,7 +120,7 @@ function DonateModal({
 
   const renderABtestProgressText = () => {
     if (isAVariant) return getDonationText();
-    else <b>{t('donate.duration-5')}</b>;
+    else <b>{'Bien joué!'}</b>;
   };
 
   const progressDonationText = (
@@ -165,15 +149,6 @@ function DonateModal({
         {recentlyClaimedBlock ? blockDonationText : progressDonationText}
         <Spacer />
         <Row>
-          <Col xs={12}>
-            <DonateForm
-              handleProcessing={handleProcessing}
-              isMinimalForm={true}
-            />
-          </Col>
-        </Row>
-        <Spacer />
-        <Row>
           <Col sm={4} smOffset={4} xs={8} xsOffset={2}>
             <Button
               block={true}
@@ -183,7 +158,7 @@ function DonateModal({
               onClick={closeDonationModal}
               tabIndex='0'
             >
-              {closeLabel ? t('buttons.close') : t('buttons.ask-later')}
+              {closeLabel ? 'passer' : 'passer'}
             </Button>
           </Col>
         </Row>

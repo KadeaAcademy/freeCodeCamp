@@ -23,9 +23,32 @@
   font-size: 0.8rem;
 }
 
+.tool-panel-group .btn-primary {
+  background: var(--love-light);
+  color: var(--gray-00);
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.tool-panel-group .btn-primary:hover {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 0) !important;
+}
+
+.tool-panel-group .btn-secondary {
+  background: rgba(255, 255, 255, 0);
+  color: var(--love-light);
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.tool-panel-group .btn-secondary:hover {
+  color: var(--primary-background) !important;
+  background: var(--love-light) !important;
+}
+
 .tool-panel-group-mobile {
   display: flex;
-  flex-direction: row-reverse;
   position: fixed;
   width: 100%;
   bottom: 0px;

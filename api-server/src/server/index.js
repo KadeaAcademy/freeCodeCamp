@@ -70,7 +70,7 @@ app.start = _.once(function () {
   const server = app.listen(app.get('port'), function () {
     app.emit('started');
     log(
-      'freeCodeCamp server listening on port %d in %s',
+      'KDA learning platform server listening on port %d in %s',
       app.get('port'),
       app.get('env')
     );

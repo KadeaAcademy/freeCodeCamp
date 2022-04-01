@@ -148,13 +148,6 @@ export class Block extends Component<BlockProps> {
     );
     const blockTitle = blockIntroObj ? blockIntroObj.title : null;
     const blockIntroArr = blockIntroObj ? blockIntroObj.intro : [];
-    const {
-      expand: expandText,
-      collapse: collapseText
-    }: {
-      expand: string;
-      collapse: string;
-    } = t('intro:misc-text');
 
     const isBlockCompleted = completedCount === challengesWithCompleted.length;
 
@@ -166,24 +159,14 @@ export class Block extends Component<BlockProps> {
       challenge => challenge.isCompleted === true
     );
 
-    const challengeInCompleted = challengesWithCompleted.filter(
-      challenge => challenge.isCompleted === false
-    );
+    const lastVisitedChallenge = [];
 
-    /*
-    console.log('----------------------------');
-    console.log(blockDashedName);
-    console.log(challengeCompleted);
-    console.log({ ...challengeInCompleted[0] });
-    console.log('----------------------------');
-    */
-
-    /*
-    console.log('----------------------------');
-    console.log(blockDashedName);
-    console.log(challengeCompleted);
-    console.log('----------------------------');
-    */
+    for (let index = 0; index < challengesWithCompleted.length; index++) {
+      if (challengesWithCompleted[index].id === completedChallengeIds[0]) {
+        lastVisitedChallenge.push(challengesWithCompleted[index + 1]);
+        break;
+      }
+    }
 
     const progressBarRender = (
       <div className='progress-wrapper'>
@@ -192,88 +175,77 @@ export class Block extends Component<BlockProps> {
       </div>
     );
 
-    /* console.log(challengeCompleted[0].dashedName); */
-
     const Block = (
       <>
         {isLastVisited ? (
           <>
-            {challengeCompleted.length != 0 && !isBlockCompleted && (
-              <>
-                <Spacer />
-                <div className={`block ${isExpanded ? 'open' : ''}`}>
-                  <div className='card-challenge-visited'>
-                    <div className='card-challenge-visited-index bloc-index'>
-                      {blockIndex}
-                    </div>
-                    <div className='card-challenge-visited-body'>
-                      <div className='card-challenge-visited-content'>
-                        <h3 className='big-block-title'>{blockTitle}</h3>
-                        {challengeInCompleted[0] && (
-                          <>
-                            <div className='block-lesson'>
-                              <div className='block-lesson-icon'>
-                                <FontAwesomeIcon
-                                  className=''
-                                  icon={faBookOpen}
-                                />
-                              </div>
-                              <div className=''>{' Leçon :'}</div>
-                            </div>
-                            <div>{challengeInCompleted[0].title}</div>
-                          </>
-                        )}
+            {challengeCompleted.length != 0 &&
+              lastVisitedChallenge.length != 0 &&
+              !isBlockCompleted && (
+                <>
+                  <div className={`block ${isExpanded ? 'open' : ''}`}>
+                    <div className='card-challenge'>
+                      <div className='card-challenge-header'>
+                        <div className='card-challenge-index'>{blockIndex}</div>
+                        <h3 className='card-challenge-title'>{blockTitle}</h3>
                       </div>
+                      <div className='card-challenge-body'>
+                        <div className='card-challenge-icon'>
+                          <FontAwesomeIcon icon={faBookOpen} />
+                        </div>
+                        <div className='card-challenge-content'>
+                          {lastVisitedChallenge[0] && (
+                            <div className='card-challenge-description'>
+                              {`Leçon : ${lastVisitedChallenge[0].title}`}
+                            </div>
+                          )}
+                          <Challenges
+                            challengesWithCompleted={lastVisitedChallenge}
+                            isProjectBlock={isProjectBlock}
+                            superBlock={superBlock}
+                            isLastVisited={isLastVisited}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <button
+                      aria-expanded={isExpanded}
+                      className='map-title'
+                      onClick={() => {
+                        this.handleBlockClick();
+                      }}
+                    >
+                      <Caret />
+                      <h4 className='course-title'>
+                        {`${isExpanded ? 'fermer' : 'voir plus de chapitres'}`}
+                      </h4>
+                      <div className='map-title-completed course-title'>
+                        {this.renderCheckMark(isBlockCompleted)}
+                        <span className='map-completed-count'>{`${completedCount}/${challengesWithCompleted.length}`}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
                       <Challenges
-                        challengesWithCompleted={challengeInCompleted}
+                        challengesWithCompleted={challengesWithCompleted}
                         isProjectBlock={isProjectBlock}
                         superBlock={superBlock}
-                        isLastVisited={isLastVisited}
+                        isLastVisited={false}
                       />
-                    </div>
+                    )}
                   </div>
-                  <hr />
-                  <button
-                    aria-expanded={isExpanded}
-                    className='map-title'
-                    onClick={() => {
-                      this.handleBlockClick();
-                    }}
-                  >
-                    <Caret />
-                    <h4 className='course-title'>
-                      {`${isExpanded ? 'fermer' : 'voir plus de chapitres'}`}
-                    </h4>
-                    <div className='map-title-completed course-title'>
-                      {this.renderCheckMark(isBlockCompleted)}
-                      <span className='map-completed-count'>{`${completedCount}/${challengesWithCompleted.length}`}</span>
-                    </div>
-                  </button>
-                  {isExpanded && (
-                    <Challenges
-                      challengesWithCompleted={challengesWithCompleted}
-                      isProjectBlock={isProjectBlock}
-                      superBlock={superBlock}
-                      isLastVisited={false}
-                    />
-                  )}
-                </div>
-                <Spacer />
-              </>
-            )}
+                </>
+              )}
           </>
         ) : (
           <>
             {' '}
             <ScrollableAnchor id={blockDashedName}>
               <div className={`block ${isExpanded ? 'open' : ''}`}>
-                <div className='block-header'>
-                  <div className='card-challenge'>
-                    <div className=''>
-                      <span className='bloc-index'>{blockIndex}</span> &nbsp;
-                      &nbsp;{' '}
-                    </div>
-                    <div className=''>
+                <div className='card-challenge'>
+                  <div className='card-challenge-header'>
+                    <div className='card-challenge-index'>{blockIndex}</div>
+                    <div className='card-challenge-title'>
                       <a className='' href={`#${blockDashedName}`}>
                         <h3 className='big-block-title'>
                           {blockTitle}
@@ -292,8 +264,14 @@ export class Block extends Component<BlockProps> {
                       </Link>
                     </div>
                   )}
+                  <div className='card-challenge-body'>
+                    <div className='card-challenge-icon'></div>
+                    <div className='card-challenge-content'>
+                      {this.renderBlockIntros(blockIntroArr)}
+                    </div>
+                  </div>
                 </div>
-                {this.renderBlockIntros(blockIntroArr)}
+                <hr />
                 <button
                   aria-expanded={isExpanded}
                   className='map-title'
@@ -303,7 +281,7 @@ export class Block extends Component<BlockProps> {
                 >
                   <Caret />
                   <h4 className='course-title'>
-                    {`${isExpanded ? collapseText : expandText}`}
+                    {`${isExpanded ? 'fermer' : 'voir plus de chapitres'}`}
                   </h4>
                   <div className='map-title-completed course-title'>
                     {this.renderCheckMark(isBlockCompleted)}
