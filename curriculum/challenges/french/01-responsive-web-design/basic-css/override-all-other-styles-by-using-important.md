@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf07756
-title: Override All Other Styles by using Important
+title: Remplacez tous les autres styles en utilisant Important
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cm24rcp'
 forumTopicId: 18249
@@ -9,19 +9,19 @@ dashedName: override-all-other-styles-by-using-important
 
 # --description--
 
-Yay! We just proved that inline styles will override all the CSS declarations in your `style` element.
+Hourra ! Nous venons de prouver que les styles en ligne remplacent toutes les déclarations CSS de l'élément `style`.
 
-But wait. There's one last way to override CSS. This is the most powerful method of all. But before we do it, let's talk about why you would ever want to override CSS.
+Mais attendez. Il existe un dernier moyen de remplacer les CSS. C'est la méthode la plus puissante de toutes. Mais avant de le faire, voyons pourquoi vous souhaitez remplacer les feuilles de style CSS.
 
-In many situations, you will use CSS libraries. These may accidentally override your own CSS. So when you absolutely need to be sure that an element has specific CSS, you can use `!important`.
+Dans de nombreuses situations, vous utiliserez des bibliothèques CSS. Celles-ci peuvent accidentellement remplacer votre propre CSS. Ainsi, lorsque vous avez absolument besoin d'être sûr qu'un élément possède un CSS spécifique, vous pouvez utiliser `!important`.
 
-Let's go all the way back to our `pink-text` class declaration. Remember that our `pink-text` class was overridden by subsequent class declarations, id declarations, and inline styles.
+Revenons à notre déclaration de classe `pink-text`. Rappelez-vous que notre classe `pink-text` a été remplacée par des déclarations de classes, des déclarations d'identifiants et des styles en ligne ultérieurs.
 
 # --instructions--
 
-Let's add the keyword `!important` to your pink-text element's color declaration to make 100% sure that your `h1` element will be pink.
+Ajoutons le mot-clé `!important` à la déclaration de couleur de votre élément pink-text pour être sûr à 100% que votre élément `h1` sera rose.
 
-An example of how to do this is:
+Voici un exemple de la façon de procéder :
 
 ```css
 color: red !important;
@@ -29,31 +29,31 @@ color: red !important;
 
 # --hints--
 
-Your `h1` element should have the class `pink-text`.
+Votre élément `h1` doit avoir la classe `pink-text`.
 
 ```js
 assert($('h1').hasClass('pink-text'));
 ```
 
-Your `h1` element should have the class `blue-text`.
+Votre élément `h1` doit avoir la classe `blue-text`.
 
 ```js
 assert($('h1').hasClass('blue-text'));
 ```
 
-Your `h1` element should have the `id` of `orange-text`.
+Votre élément `h1` devrait avoir l'`id` de `orange-text`.
 
 ```js
 assert($('h1').attr('id') === 'orange-text');
 ```
 
-Your `h1` element should have the inline style of `color: white`.
+Votre élément `h1` devrait avoir le style en ligne de `color : white`.
 
 ```js
 assert(code.match(/<h1.*style/gi) && code.match(/<h1.*style.*color\s*?:/gi));
 ```
 
-Your `pink-text` class declaration should have the `!important` keyword to override all other declarations.
+Votre déclaration de classe `pink-text` devrait avoir le mot-clé `!important` pour remplacer toutes les autres déclarations.
 
 ```js
 assert(
@@ -61,7 +61,7 @@ assert(
 );
 ```
 
-Your `h1` element should be pink.
+Votre élément `h1` devrait être rose.
 
 ```js
 assert($('h1').css('color') === 'rgb(255, 192, 203)');
