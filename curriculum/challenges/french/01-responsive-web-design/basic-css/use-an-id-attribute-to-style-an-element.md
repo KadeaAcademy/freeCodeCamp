@@ -1,6 +1,6 @@
 ---
 id: bad87dee1348bd9aede07836
-title: Use an id Attribute to Style an Element
+title: Utiliser un attribut id pour styliser un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cakyZfL'
 forumTopicId: 18339
@@ -9,11 +9,11 @@ dashedName: use-an-id-attribute-to-style-an-element
 
 # --description--
 
-One cool thing about `id` attributes is that, like classes, you can style them using CSS.
+Ce qui est bien avec les attributs `id`, c'est que, comme les classes, vous pouvez les styliser à l'aide de CSS.
 
-However, an `id` is not reusable and should only be applied to one element. An `id` also has a higher specificity (importance) than a class so if both are applied to the same element and have conflicting styles, the styles of the `id` will be applied.
+Cependant, un `id` n'est pas réutilisable et ne doit être appliqué qu'à un seul élément. Un `id` a également une spécificité (importance) plus élevée qu'une classe, donc si les deux sont appliqués au même élément et ont des styles conflictuels, les styles du `id` seront appliqués.
 
-Here's an example of how you can take your element with the `id` attribute of `cat-photo-element` and give it the background color of green. In your `style` element:
+Voici un exemple de la façon dont vous pouvez prendre votre élément avec l'attribut `id` de `cat-photo-element` et lui donner la couleur de fond verte. Dans votre élément `style` :
 
 ```css
 #cat-photo-element {
@@ -21,27 +21,25 @@ Here's an example of how you can take your element with the `id` attribute of `c
 }
 ```
 
-Note that inside your `style` element, you always reference classes by putting a `.` in front of their names. You always reference ids by putting a `#` in front of their names.
-
+Notez qu'à l'intérieur de votre élément `style`, vous faites toujours référence aux classes en mettant un `.` devant leur nom. Vous faites toujours référence aux ids en mettant un `#` devant leurs noms.
 # --instructions--
 
-Try giving your form, which now has the `id` attribute of `cat-photo-form`, a green background.
-
+Essayez de donner à votre formulaire, qui a maintenant l'attribut `id` de `cat-photo-form`, un fond vert.
 # --hints--
 
-Your `form` element should have the id of `cat-photo-form`.
+Votre élément `form` devrait avoir l'id de `cat-photo-form`.
 
 ```js
 assert($('form').attr('id') === 'cat-photo-form');
 ```
 
-Your `form` element should have the `background-color` of green.
+Votre élément `form` devrait avoir la `background-color` de couleur verte.
 
 ```js
 assert($('#cat-photo-form').css('background-color') === 'rgb(0, 128, 0)');
 ```
 
-Your `form` element should have an `id` attribute.
+Votre élément `form` doit avoir un attribut `id`.
 
 ```js
 assert(
@@ -50,7 +48,7 @@ assert(
 );
 ```
 
-You should not give your `form` any `class` or `style` attributes.
+Vous ne devez pas donner à votre `form` des attributs `class` ou `style`.
 
 ```js
 assert(!code.match(/<form.*style.*>/gi) && !code.match(/<form.*class.*>/gi));
@@ -94,33 +92,34 @@ assert(!code.match(/<form.*style.*>/gi) && !code.match(/<form.*class.*>/gi));
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+   </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
-  <a href="#"><img class="smaller-image thick-green-border" src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
-  <div class="silver-background">
-    <p>Things cats love:</p>
+  <div>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
-  <form action="https://freecatphotoapp.com/submit-cat-photo" id="cat-photo-form">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+  <form action="https://freecatphotoapp.com/submit-cat-photo">
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
+  </form>
   </form>
 </main>
 ```
@@ -165,33 +164,33 @@ assert(!code.match(/<form.*style.*>/gi) && !code.match(/<form.*class.*>/gi));
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
-  
-  <a href="#"><img class="smaller-image thick-green-border" src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
-  
-  <div class="silver-background">
-    <p>Things cats love:</p>
+   </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
+
+  <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
+
+  <div>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
-  
-  <form action="https://freecatphotoapp.com/submit-cat-photo" id="cat-photo-form">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+
+  <form action="https://freecatphotoapp.com/submit-cat-photo">
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
