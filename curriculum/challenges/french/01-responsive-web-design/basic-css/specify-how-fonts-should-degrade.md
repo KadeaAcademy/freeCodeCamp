@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08808
-title: Specify How Fonts Should Degrade
+title: Spécifier comment les polices doivent se dégrader
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cpVKBfQ'
 forumTopicId: 18304
@@ -9,11 +9,11 @@ dashedName: specify-how-fonts-should-degrade
 
 # --description--
 
-There are several default fonts that are available in all browsers. These generic font families include `monospace`, `serif` and `sans-serif`.
+Il existe plusieurs polices par défaut, disponibles dans tous les navigateurs. Ces familles de polices génériques comprennent `monospace`, `serif` et `sans-serif`.
 
-When one font isn't available, you can tell the browser to "degrade" to another font.
+Lorsqu'une police n'est pas disponible, vous pouvez demander au navigateur de "rétrograder" vers une autre police.
 
-For example, if you wanted an element to use the `Helvetica` font, but degrade to the `sans-serif` font when `Helvetica` isn't available, you will specify it as follows:
+Par exemple, si vous voulez qu'un élément utilise la police `Helvetica`, mais qu'il passe à la police `sans-serif` lorsque `Helvetica` n'est pas disponible, vous le spécifierez comme suit :
 
 ```css
 p {
@@ -21,19 +21,19 @@ p {
 }
 ```
 
-Generic font family names are not case-sensitive. Also, they do not need quotes because they are CSS keywords.
+Les noms de famille de polices génériques ne sont pas sensibles à la casse. De plus, ils n'ont pas besoin de guillemets car ce sont des mots-clés CSS.
 
 # --instructions--
 
-To begin, apply the `monospace` font to the `h2` element, so that it now has two fonts - `Lobster` and `monospace`.
+Pour commencer, appliquez la police `monospace` à l'élément `h2`, de sorte qu'il possède maintenant deux polices - `Lobster` et `monospace`.
 
-In the last challenge, you imported the `Lobster` font using the `link` tag. Now comment out that import of the `Lobster` font (using the HTML comments you learned before) from Google Fonts so that it isn't available anymore. Notice how your `h2` element degrades to the `monospace` font.
+Dans le dernier défi, vous avez importé la police `Lobster` à l'aide de la balise `link`. Maintenant, commentez l'importation de la police `Lobster` (à l'aide des commentaires HTML que vous avez appris auparavant) à partir de Google Fonts pour qu'elle ne soit plus disponible. Remarquez comment votre élément `h2` se dégrade en police `monospace`.
 
-**Note:** If you have the `Lobster` font installed on your computer, you won't see the degradation because your browser is able to find the font.
+**Note:** Si la police `Lobster` est installée sur votre ordinateur, vous ne verrez pas la dégradation car votre navigateur est capable de trouver la police.
 
 # --hints--
 
-Your h2 element should use the font `Lobster`.
+Votre élément h2 doit utiliser la police `Lobster`.
 
 ```js
 assert(
@@ -43,7 +43,7 @@ assert(
 );
 ```
 
-Your h2 element should degrade to the font `monospace` when `Lobster` is not available.
+Votre élément h2 devrait se dégrader à la police `monospace` lorsque `Lobster` n'est pas disponible.
 
 ```js
 assert(
@@ -53,13 +53,13 @@ assert(
 );
 ```
 
-You should comment out your call to Google for the `Lobster` font by putting `<!--` in front of it.
+Vous devriez commenter votre appel à Google pour la police `Lobster` en mettant `<!--` devant.
 
 ```js
 assert(new RegExp('<!--[^fc]', 'gi').test(code));
 ```
 
-You should close your comment by adding `-->`.
+Vous devez fermer votre commentaire en ajoutant `-->`.
 
 ```js
 assert(new RegExp('[^fc]-->', 'gi').test(code));
@@ -88,33 +88,33 @@ assert(new RegExp('[^fc]-->', 'gi').test(code));
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+   </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -140,33 +140,33 @@ assert(new RegExp('[^fc]-->', 'gi').test(code));
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
-  
+   </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
+
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
-  
+
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
   
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
