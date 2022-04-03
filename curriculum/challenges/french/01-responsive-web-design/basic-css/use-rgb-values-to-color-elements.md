@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aede08718
-title: Use RGB values to Color Elements
+title: Utiliser les valeurs RGB pour colorer les éléments
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cRkp2fr'
 forumTopicId: 18369
