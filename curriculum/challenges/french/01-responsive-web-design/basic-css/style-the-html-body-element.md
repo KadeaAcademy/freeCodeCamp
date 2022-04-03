@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08736
-title: Style the HTML Body Element
+title: Styliser l'élément HTML Body
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cB77PHW'
 forumTopicId: 18313
@@ -9,15 +9,15 @@ dashedName: style-the-html-body-element
 
 # --description--
 
-Now let's start fresh and talk about CSS inheritance.
+Maintenant, recommençons à zéro et parlons de l'héritage CSS.
 
-Every HTML page has a `body` element.
+Chaque page HTML possède un élément `body`.
 
 # --instructions--
 
-We can prove that the `body` element exists here by giving it a `background-color` of black.
+Nous pouvons prouver que l'élément `body` existe ici en lui donnant une `background-color` de couleur noire.
 
-We can do this by adding the following to our `style` element:
+Nous pouvons le faire en ajoutant ce qui suit à notre élément `style` :
 
 ```css
 body {
@@ -27,13 +27,13 @@ body {
 
 # --hints--
 
-Your `body` element should have the `background-color` of black.
+Votre élément `body` devrait avoir la `background-color` noire.
 
 ```js
 assert($('body').css('background-color') === 'rgb(0, 0, 0)');
 ```
 
-Your CSS rule should be properly formatted with both opening and closing curly brackets.
+Votre règle CSS doit être correctement formatée avec des accolades ouvrantes et fermantes.
 
 ```js
 assert(
@@ -41,7 +41,7 @@ assert(
 );
 ```
 
-Your CSS rule should end with a semi-colon.
+Votre règle CSS doit se terminer par un point-virgule.
 
 ```js
 assert(
