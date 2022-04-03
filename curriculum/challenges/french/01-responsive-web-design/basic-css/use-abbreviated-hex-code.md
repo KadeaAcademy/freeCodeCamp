@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08719
-title: Use Abbreviated Hex Code
+title: Utiliser un code hexagonal abrégé
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cRkpKAm'
 forumTopicId: 18338
@@ -9,63 +9,63 @@ dashedName: use-abbreviated-hex-code
 
 # --description--
 
-Many people feel overwhelmed by the possibilities of more than 16 million colors. And it's difficult to remember hex code. Fortunately, you can shorten it.
+De nombreuses personnes se sentent dépassées par les possibilités offertes par plus de 16 millions de couleurs. Et il est difficile de se souvenir du code hexadécimal. Heureusement, vous pouvez le raccourcir.
 
-For example, red's hex code `#FF0000` can be shortened to `#F00`. This shortened form gives one digit for red, one digit for green, and one digit for blue.
+Par exemple, le code hexadécimal `#FF0000` du rouge peut être raccourci en `#F00`. Cette forme raccourcie donne un chiffre pour le rouge, un chiffre pour le vert et un chiffre pour le bleu.
 
-This reduces the total number of possible colors to around 4,000. But browsers will interpret `#FF0000` and `#F00` as exactly the same color.
+Cela réduit le nombre total de couleurs possibles à environ 4 000. Mais les navigateurs interpréteront `#FF0000` et `#F00` comme étant exactement la même couleur.
 
 # --instructions--
 
-Go ahead, try using the abbreviated hex codes to color the correct elements.
+Allez-y, essayez d'utiliser les codes hexadécimaux abrégés pour colorer les bons éléments.
 
 <table class='table table-striped'><tbody><tr><th>Color</th><th>Short Hex Code</th></tr><tr><td>Cyan</td><td><code>#0FF</code></td></tr><tr><td>Green</td><td><code>#0F0</code></td></tr><tr><td>Red</td><td><code>#F00</code></td></tr><tr><td>Fuchsia</td><td><code>#F0F</code></td></tr></tbody></table>
 
 # --hints--
 
-Your `h1` element with the text `I am red!` should be given the `color` red.
+Votre élément `h1` avec le texte `Je suis red!` devrait recevoir la `color` rouge.
 
 ```js
 assert($('.red-text').css('color') === 'rgb(255, 0, 0)');
 ```
 
-The abbreviated `hex code` for the color red should be used instead of the hex code `#FF0000`.
+Le code hexadécimal abrégé de la couleur rouge doit être utilisé à la place du code hexadécimal `#FF0000`.
 
 ```js
 assert(code.match(/\.red-text\s*?{\s*?color\s*:\s*?#F00\s*?;?\s*?}/gi));
 ```
 
-Your `h1` element with the text `I am green!` should be given the `color` green.
+Votre élément `h1` avec le texte `Je suis green!` devrait recevoir la `color` verte.
 
 ```js
 assert($('.green-text').css('color') === 'rgb(0, 255, 0)');
 ```
 
-The abbreviated `hex code` for the color green should be used instead of the hex code `#00FF00`.
+Il convient d'utiliser le `code hex` abrégé de la couleur verte au lieu du code hex `#00FF00`.
 
 ```js
 assert(code.match(/\.green-text\s*?{\s*?color\s*:\s*?#0F0\s*?;?\s*?}/gi));
 ```
 
-Your `h1` element with the text `I am cyan!` should be given the `color` cyan.
+Votre élément `h1` avec le texte `Je suis cyan!` doit recevoir la `color` cyan.
 
 ```js
 assert($('.cyan-text').css('color') === 'rgb(0, 255, 255)');
 ```
 
-The abbreviated `hex code` for the color cyan should be used instead of the hex code `#00FFFF`.
+Le code hexadécimal abrégé pour la couleur cyan doit être utilisé à la place du code hexadécimal `#00FFFF`.
 
 ```js
 assert(code.match(/\.cyan-text\s*?{\s*?color\s*:\s*?#0FF\s*?;?\s*?}/gi));
 ```
 
-Your `h1` element with the text `I am fuchsia!` should be given the `color` fuchsia.
+Votre élément `h1` contenant le texte `Je suis fuchsia!` doit recevoir la `color` fuchsia.
 
 ```js
 assert($('.fuchsia-text').css('color') === 'rgb(255, 0, 255)');
 ```
 
-The abbreviated `hex code` for the color fuchsia should be used instead of the hex code `#FF00FF`.
+Le code hexadécimal abrégé de la couleur fuchsia doit être utilisé à la place du code hexadécimal `#FF00FF`.
 
 ```js
 assert(code.match(/\.fuchsia-text\s*?{\s*?color\s*:\s*?#F0F\s*?;?\s*?}/gi));
@@ -91,13 +91,13 @@ assert(code.match(/\.fuchsia-text\s*?{\s*?color\s*:\s*?#F0F\s*?;?\s*?}/gi));
   }
 </style>
 
-<h1 class="red-text">I am red!</h1>
+<h1 class="red-text">Je suis red!</h1>
 
-<h1 class="fuchsia-text">I am fuchsia!</h1>
+<h1 class="fuchsia-text">Je suis fuchsia!</h1>
 
-<h1 class="cyan-text">I am cyan!</h1>
+<h1 class="cyan-text">Je suis cyan!</h1>
 
-<h1 class="green-text">I am green!</h1>
+<h1 class="green-text">Je suis green!</h1>
 ```
 
 # --solutions--
@@ -118,11 +118,11 @@ assert(code.match(/\.fuchsia-text\s*?{\s*?color\s*:\s*?#F0F\s*?;?\s*?}/gi));
   }
 </style>
 
-<h1 class="red-text">I am red!</h1>
+<h1 class="red-text">Je suis red!</h1>
 
-<h1 class="fuchsia-text">I am fuchsia!</h1>
+<h1 class="fuchsia-text">Je suis fuchsia!</h1>
 
-<h1 class="cyan-text">I am cyan!</h1>
+<h1 class="cyan-text">Je suis cyan!</h1>
 
-<h1 class="green-text">I am green!</h1>
+<h1 class="green-text">Je suis green!</h1>
 ```
