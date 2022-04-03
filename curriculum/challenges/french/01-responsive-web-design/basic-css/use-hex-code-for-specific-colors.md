@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08726
-title: Use Hex Code for Specific Colors
+title: Utiliser le code hexadécimal pour des couleurs spécifiques
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/c8W9mHM'
 forumTopicId: 18350
@@ -9,11 +9,11 @@ dashedName: use-hex-code-for-specific-colors
 
 # --description--
 
-Did you know there are other ways to represent colors in CSS? One of these ways is called hexadecimal code, or hex code for short.
+Saviez-vous qu’il existe d’autres façons de représenter les couleurs en CSS ? L’une de ces façons est appelée code hexadécimal, ou code hex en abrégé.
 
-We usually use <dfn>decimals</dfn>, or base 10 numbers, which use the symbols 0 to 9 for each digit. <dfn>Hexadecimals</dfn> (or <dfn>hex</dfn>) are base 16 numbers. This means it uses sixteen distinct symbols. Like decimals, the symbols 0-9 represent the values zero to nine. Then A,B,C,D,E,F represent the values ten to fifteen. Altogether, 0 to F can represent a digit in hexadecimal, giving us 16 total possible values. You can find more information about [hexadecimal numbers here](https://www.freecodecamp.org/news/hexadecimal-number-system/).
+Nous utilisons généralement <dfn>des décimales</dfn>, ou des nombres de base 10, qui utilisent les symboles 0 à 9 pour chaque chiffre. <dfn>Les hexadécimaux</dfn> (ou <dfn>hex</dfn>) sont des nombres de base 16. Cela signifie qu’il utilise seize symboles distincts. Comme les décimales, les symboles 0-9 représentent les valeurs de zéro à neuf. Alors A,B,C,D,E,F représentent les valeurs dix à quinze. Au total, 0 à F peut représenter un chiffre en hexadécimal, ce qui nous donne 16 valeurs totales possibles. Vous pouvez trouver plus d’informations sur [nombres hexadécimaux ici](https://www.freecodecamp.org/news/hexadecimal-number-system/).
 
-In CSS, we can use 6 hexadecimal digits to represent colors, two each for the red (R), green (G), and blue (B) components. For example, `#000000` is black and is also the lowest possible value. You can find more information about the [RGB color system here](https://www.freecodecamp.org/news/rgb-color-html-and-css-guide/#whatisthergbcolormodel).
+En CSS, nous pouvons utiliser 6 chiffres hexadécimaux pour représenter les couleurs, deux pour les composants rouge (R), vert (G) et bleu (B). Par exemple, '#000000' est noir et est également la valeur la plus basse possible. Vous pouvez trouver plus d’informations sur le [système de couleurs RGB ici](https://www.freecodecamp.org/news/rgb-color-html-and-css-guide/#whatisthergbcolormodel).
 
 ```css
 body {
@@ -23,17 +23,17 @@ body {
 
 # --instructions--
 
-Replace the word `black` in our `body` element's background-color with its hex code representation, `#000000`.
+Remplacez le mot `black` dans la couleur d'arrière-plan de notre élément `body` par sa représentation en code hexadécimal, `#000000`.
 
 # --hints--
 
-Your `body` element should have the background-color of black.
+Votre élément `body` doit avoir une couleur de fond noire.
 
 ```js
 assert($('body').css('background-color') === 'rgb(0, 0, 0)');
 ```
 
-The `hex code` for the color black should be used instead of the word `black`.
+Le code hexadécimal de la couleur noire doit être utilisé à la place du mot `noir`.
 
 ```js
 assert(
