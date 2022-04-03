@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd8aedf06756
-title: Override Class Declarations by Styling ID Attributes
+title: Remplacer les déclarations de classe par des attributs d'ID de style
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cRkpDhB'
 forumTopicId: 18251
@@ -9,23 +9,23 @@ dashedName: override-class-declarations-by-styling-id-attributes
 
 # --description--
 
-We just proved that browsers read CSS from top to bottom in order of their declaration. That means that, in the event of a conflict, the browser will use whichever CSS declaration came last. Notice that if we even had put `blue-text` before `pink-text` in our `h1` element's classes, it would still look at the declaration order and not the order of their use!
+Nous venons de prouver que les navigateurs lisent les CSS de haut en bas, dans l'ordre de leur déclaration. Cela signifie que, en cas de conflit, le navigateur utilisera la dernière déclaration CSS. Remarquez que même si nous avions mis `blue-text` avant `pink-text` dans les classes de notre élément `h1`, il regarderait toujours l'ordre de déclaration et non l'ordre d'utilisation !
 
-But we're not done yet. There are other ways that you can override CSS. Do you remember id attributes?
+Mais nous n'en sommes pas encore là. Il existe d'autres façons de remplacer les CSS. Vous vous souvenez des attributs id ?
 
-Let's override your `pink-text` and `blue-text` classes, and make your `h1` element orange, by giving the `h1` element an id and then styling that id.
+Surchargeons vos classes `pink-text` et `blue-text`, et rendons votre élément `h1` orange, en donnant à l'élément `h1` un id et en donnant un style à cet id.
 
 # --instructions--
 
-Give your `h1` element the `id` attribute of `orange-text`. Remember, id styles look like this:
+Donnez à votre élément `h1` l'attribut `id` égal à `orange-text`. Rappelez-vous que les styles id ressemblent à ceci :
 
 ```html
 <h1 id="orange-text">
 ```
 
-Leave the `blue-text` and `pink-text` classes on your `h1` element.
+Laissez les classes `blue-text` et `pink-text` sur votre élément `h1`.
 
-Create a CSS declaration for your `orange-text` id in your `style` element. Here's an example of what this looks like:
+Créez une déclaration CSS pour votre id `orange-text` dans votre élément `style`. Voici un exemple de ce à quoi cela ressemble :
 
 ```css
 #brown-text {
@@ -33,47 +33,47 @@ Create a CSS declaration for your `orange-text` id in your `style` element. Here
 }
 ```
 
-**Note:** It doesn't matter whether you declare this CSS above or below `pink-text` class, since the `id` attribute will always take precedence.
+**Note:** Il importe peu que vous déclariez ce CSS au-dessus ou au-dessous de la classe `pink-text`, puisque l'attribut `id` aura toujours la priorité.
 
 # --hints--
 
-Your `h1` element should have the class `pink-text`.
+Votre élément `h1` doit avoir la classe `pink-text`.
 
 ```js
 assert($('h1').hasClass('pink-text'));
 ```
 
-Your `h1` element should have the class `blue-text`.
+Votre élément `h1` doit avoir la classe `blue-text`.
 
 ```js
 assert($('h1').hasClass('blue-text'));
 ```
 
-Your `h1` element should have the id of `orange-text`.
+Votre élément `h1` devrait avoir l'id `orange-text`.
 
 ```js
 assert($('h1').attr('id') === 'orange-text');
 ```
 
-There should be only one `h1` element.
+Il ne doit y avoir qu'un seul élément `h1`.
 
 ```js
 assert($('h1').length === 1);
 ```
 
-Your `orange-text` id should have a CSS declaration.
+Votre id `orange-text` doit avoir une déclaration CSS.
 
 ```js
 assert(code.match(/#orange-text\s*{/gi));
 ```
 
-Your `h1` should not have any `style` attributes.
+Votre `h1` ne doit pas avoir d'attributs `style`.
 
 ```js
 assert(!code.match(/<h1.*style.*>/gi));
 ```
 
-Your `h1` element should be orange.
+Votre élément `h1` devrait être orange.
 
 ```js
 assert($('h1').css('color') === 'rgb(255, 165, 0)');
