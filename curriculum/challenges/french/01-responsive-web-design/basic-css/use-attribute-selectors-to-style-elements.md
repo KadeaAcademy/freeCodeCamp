@@ -1,6 +1,6 @@
 ---
 id: 58c383d33e2e3259241f3076
-title: Use Attribute Selectors to Style Elements
+title: Utiliser les sélecteurs d'attributs pour styliser les éléments
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cnpymfJ'
 forumTopicId: 301092
@@ -9,11 +9,11 @@ dashedName: use-attribute-selectors-to-style-elements
 
 # --description--
 
-You have been adding `id` or `class` attributes to elements that you wish to specifically style. These are known as ID and class selectors. There are other CSS Selectors you can use to select custom groups of elements to style.
+Vous avez ajouté les attributs `id` ou `class` aux éléments que vous souhaitez styliser spécifiquement. Il s'agit des sélecteurs ID et class. Il existe d'autres sélecteurs CSS que vous pouvez utiliser pour sélectionner des groupes personnalisés d'éléments à styliser.
 
-Let's bring out CatPhotoApp again to practice using CSS Selectors.
+Sortons à nouveau CatPhotoApp pour nous entraîner à utiliser les sélecteurs CSS.
 
-For this challenge, you will use the `[attr=value]` attribute selector to style the checkboxes in CatPhotoApp. This selector matches and styles elements with a specific attribute value. For example, the below code changes the margins of all elements with the attribute `type` and a corresponding value of `radio`:
+Pour ce défi, vous allez utiliser le sélecteur d'attribut `[attr=value]` pour styliser les cases à cocher de CatPhotoApp. Ce sélecteur correspond aux éléments ayant une valeur d'attribut spécifique et leur donne un style. Par exemple, le code ci-dessous modifie les marges de tous les éléments ayant l'attribut `type` et une valeur correspondante de `radio` :
 
 ```css
 [type='radio'] {
@@ -23,11 +23,11 @@ For this challenge, you will use the `[attr=value]` attribute selector to style 
 
 # --instructions--
 
-Using the `type` attribute selector, try to give the checkboxes in CatPhotoApp a top margin of 10px and a bottom margin of 15px.
+En utilisant le sélecteur d'attribut `type`, essayez de donner aux cases à cocher de CatPhotoApp une marge supérieure de 10px et une marge inférieure de 15px.
 
 # --hints--
 
-The `type` attribute selector should be used to select the checkboxes.
+Le sélecteur d'attribut `type` doit être utilisé pour sélectionner les cases à cocher.
 
 ```js
 assert(
@@ -37,7 +37,7 @@ assert(
 );
 ```
 
-The top margins of the checkboxes should be 10px.
+Les marges supérieures des cases à cocher doivent être de 10px.
 
 ```js
 assert(
@@ -53,7 +53,7 @@ assert(
 );
 ```
 
-The bottom margins of the checkboxes should be 15px.
+Les marges inférieures des cases à cocher doivent être de 15px.
 
 ```js
 assert(
@@ -107,33 +107,34 @@ assert(
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+  <p class="red-text">Cliquez ici pour voir d'autres <a href="#">photos de chats</a>.</p>.
 
   <a href="#"><img class="smaller-image thick-green-border" src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
-  <div class="silver-background">
-    <p>Things cats love:</p>
+
+  <div  class="silver-background">
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
-  <form action="https://freecatphotoapp.com/submit-cat-photo" id="cat-photo-form">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+  <form action="https://freecatphotoapp.com/submit-cat-photo">
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -178,33 +179,33 @@ assert(
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+  <p class="red-text">Cliquez ici pour voir d'autres <a href="#">photos de chats</a>.</p>.
   
   <a href="#"><img class="smaller-image thick-green-border" src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
   
-  <div class="silver-background">
-    <p>Things cats love:</p>
+  <div  class="silver-background">
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
   
-  <form action="https://freecatphotoapp.com/submit-cat-photo" id="cat-photo-form">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+  <form action="https://freecatphotoapp.com/submit-cat-photo">
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
