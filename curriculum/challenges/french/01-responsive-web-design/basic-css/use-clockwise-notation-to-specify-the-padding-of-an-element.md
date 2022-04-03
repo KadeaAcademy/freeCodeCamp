@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08826
-title: Use Clockwise Notation to Specify the Padding of an Element
+title: Utiliser la notation dans le sens des aiguilles d'une montre pour spécifier le padding d'un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cB7mBS9'
 forumTopicId: 18346
@@ -9,27 +9,26 @@ dashedName: use-clockwise-notation-to-specify-the-padding-of-an-element
 
 # --description--
 
-Instead of specifying an element's `padding-top`, `padding-right`, `padding-bottom`, and `padding-left` properties individually, you can specify them all in one line, like this:
+Au lieu de spécifier les propriétés `padding-top`, `padding-right`, `padding-bottom`, et `padding-left` d'un élément individuellement, vous pouvez les spécifier toutes sur une seule ligne, comme ceci :
 
 ```css
 padding: 10px 20px 10px 20px;
 ```
 
-These four values work like a clock: top, right, bottom, left, and will produce the exact same result as using the side-specific padding instructions.
-
+Ces quatre valeurs fonctionnent comme une horloge : haut, droite, bas, gauche, et produiront exactement le même résultat qu'en utilisant les instructions de padding spécifiques à chaque côté.
 # --instructions--
 
-Use Clockwise Notation to give the `.blue-box` class a `padding` of `40px` on its top and left side, but only `20px` on its bottom and right side.
+Utilisez la notation dans le sens des aiguilles d'une montre pour donner à la classe `.blue-box` un `padding` de `40px` en haut et à gauche, mais seulement `20px` en bas et à droite.
 
 # --hints--
 
-Your `blue-box` class should give the top of elements `40px` of `padding`.
+Votre classe `blue-box` devrait donner au haut des éléments `40px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-top') === '40px');
 ```
 
-Your `blue-box` class should give the right of elements `20px` of `padding`.
+Votre classe `blue-box` devrait donner à la droite des éléments `20px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-right') === '20px');
@@ -41,13 +40,13 @@ Your `blue-box` class should give the bottom of elements `20px` of `padding`.
 assert($('.blue-box').css('padding-bottom') === '20px');
 ```
 
-Your `blue-box` class should give the left of elements `40px` of `padding`.
+Votre classe `blue-box` devrait donner à la gauche des éléments `40px` de `padding`.
 
 ```js
 assert($('.blue-box').css('padding-left') === '40px');
 ```
 
-You should use the clockwise notation to set the padding of `blue-box` class.
+Vous devez utiliser la notation dans le sens des aiguilles d'une montre pour définir le remplissage de la classe `blue-box`.
 
 ```js
 assert(
