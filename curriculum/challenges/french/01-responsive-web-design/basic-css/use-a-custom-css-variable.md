@@ -1,6 +1,6 @@
 ---
 id: 5a9d727a424fe3d0e10cad12
-title: Use a custom CSS Variable
+title: Utilisez une variable CSS personnalisée
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cM989ck'
 forumTopicId: 301090
@@ -9,21 +9,20 @@ dashedName: use-a-custom-css-variable
 
 # --description--
 
-After you create your variable, you can assign its value to other CSS properties by referencing the name you gave it.
+Après avoir créé votre variable, vous pouvez attribuer sa valeur à d'autres propriétés CSS en faisant référence au nom que vous lui avez donné.
 
 ```css
 background: var(--penguin-skin);
 ```
 
-This will change the background of whatever element you are targeting to gray because that is the value of the `--penguin-skin` variable. Note that styles will not be applied unless the variable names are an exact match.
-
+Cela changera le background de l'élément que vous ciblez en gris, car c'est la valeur de la variable `--penguin-skin`. Notez que les styles ne seront appliqués que si les noms des variables correspondent exactement.
 # --instructions--
 
-Apply the `--penguin-skin` variable to the `background` property of the `penguin-top`, `penguin-bottom`, `right-hand` and `left-hand` classes.
+Appliquez la variable `--penguin-skin` à la propriété `background` des classes `penguin-top`, `penguin-bottom`, `right-hand` et `left-hand`.
 
 # --hints--
 
-The `--penguin-skin` variable should be applied to the `background` property of the `penguin-top` class.
+La variable `--penguin-skin` doit être appliquée à la propriété `background` de la classe `penguin-top`.
 
 ```js
 assert(
@@ -33,7 +32,7 @@ assert(
 );
 ```
 
-The `--penguin-skin` variable should be applied to the `background` property of the `penguin-bottom` class.
+La variable `--penguin-skin` doit être appliquée à la propriété `background` de la classe `penguin-bottom`.
 
 ```js
 assert(
@@ -43,7 +42,7 @@ assert(
 );
 ```
 
-The `--penguin-skin` variable should be applied to the `background` property of the `right-hand` class.
+La variable `--penguin-skin` doit être appliquée à la propriété `background` de la classe `droite`.
 
 ```js
 assert(
@@ -53,7 +52,7 @@ assert(
 );
 ```
 
-The `--penguin-skin` variable should be applied to the `background` property of the `left-hand` class.
+La variable `--penguin-skin` doit être appliquée à la propriété `background` de la classe `left-hand`.
 
 ```js
 assert(
