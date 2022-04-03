@@ -1,6 +1,6 @@
 ---
 id: bad82fee1348bd9aedf08721
-title: Use RGB to Mix Colors
+title: Utiliser RGB pour mélanger les couleurs
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cm24JU6'
 forumTopicId: 18368
@@ -9,23 +9,23 @@ dashedName: use-rgb-to-mix-colors
 
 # --description--
 
-Just like with hex code, you can mix colors in RGB by using combinations of different values.
+Tout comme avec le code hexadécimal, vous pouvez mélanger les couleurs en RGB en utilisant des combinaisons de valeurs différentes.
 
 # --instructions--
 
-Replace the hex codes in our `style` element with their correct RGB values.
+Remplacez les codes hexadécimaux de notre élément `style` par leurs valeurs RGB correctes.
 
 <table class='table table-striped'><tbody><tr><th>Color</th><th>RGB</th></tr><tr><td>Blue</td><td><code>rgb(0, 0, 255)</code></td></tr><tr><td>Red</td><td><code>rgb(255, 0, 0)</code></td></tr><tr><td>Orchid</td><td><code>rgb(218, 112, 214)</code></td></tr><tr><td>Sienna</td><td><code>rgb(160, 82, 45)</code></td></tr></tbody></table>
 
 # --hints--
 
-Your `h1` element with the text `I am red!` should have the `color` red.
+Votre élément `h1` avec le texte `I am red!` devrait avoir la couleur rouge.
 
 ```js
 assert($('.red-text').css('color') === 'rgb(255, 0, 0)');
 ```
 
-You should use `rgb` for the color red.
+Vous devez utiliser `rgb` pour la couleur rouge.
 
 ```js
 assert(
@@ -35,13 +35,13 @@ assert(
 );
 ```
 
-Your `h1` element with the text `I am orchid!` should have the `color` orchid.
+Votre élément `h1` avec le texte `I am orchid!` devrait avoir la `color` orchid.
 
 ```js
 assert($('.orchid-text').css('color') === 'rgb(218, 112, 214)');
 ```
 
-You should use `rgb` for the color orchid.
+Vous devez utiliser `rgb` pour la couleur orchidée.
 
 ```js
 assert(
@@ -51,13 +51,13 @@ assert(
 );
 ```
 
-Your `h1` element with the text `I am blue!` should have the `color` blue.
+Votre élément `h1` avec le texte `I am blue!` devrait avoir la `color` bleue.
 
 ```js
 assert($('.blue-text').css('color') === 'rgb(0, 0, 255)');
 ```
 
-You should use `rgb` for the color blue.
+Vous devez utiliser `rgb` pour la couleur bleue.
 
 ```js
 assert(
@@ -67,13 +67,13 @@ assert(
 );
 ```
 
-Your `h1` element with the text `I am sienna!` should have the `color` sienna.
+Votre élément `h1` avec le texte `I am sienna!` devrait avoir la `color` sienna.
 
 ```js
 assert($('.sienna-text').css('color') === 'rgb(160, 82, 45)');
 ```
 
-You should use `rgb` for the color sienna.
+Vous devez utiliser `rgb` pour la couleur sienna.
 
 ```js
 assert(
