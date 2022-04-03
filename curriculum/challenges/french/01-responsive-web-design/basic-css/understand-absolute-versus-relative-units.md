@@ -1,6 +1,6 @@
 ---
 id: bad82fee1322bd9aedf08721
-title: Understand Absolute versus Relative Units
+title: Comprendre les unités absolues et les unités relatives
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cN66JSL'
 forumTopicId: 301089
@@ -9,21 +9,21 @@ dashedName: understand-absolute-versus-relative-units
 
 # --description--
 
-The last several challenges all set an element's margin or padding with pixels (`px`). Pixels are a type of length unit, which is what tells the browser how to size or space an item. In addition to `px`, CSS has a number of different length unit options that you can use.
+Les derniers défis ont tous défini la marge ou le padding d'un élément en pixels (`px`). Les pixels sont un type d'unité de longueur, qui indique au navigateur la taille ou l'espacement d'un élément. En plus des `px`, CSS propose un certain nombre d'options d'unités de longueur différentes que vous pouvez utiliser.
 
-The two main types of length units are absolute and relative. Absolute units tie to physical units of length. For example, `in` and `mm` refer to inches and millimeters, respectively. Absolute length units approximate the actual measurement on a screen, but there are some differences depending on a screen's resolution.
+Les deux principaux types d'unités de longueur sont absolus et relatifs. Les unités absolues sont liées aux unités physiques de longueur. Par exemple, "in" et "mm" désignent respectivement les pouces et les millimètres. Les unités de longueur absolues se rapprochent de la mesure réelle sur un écran, mais il existe quelques différences en fonction de la résolution de l'écran.
 
-Relative units, such as `em` or `rem`, are relative to another length value. For example, `em` is based on the size of an element's font. If you use it to set the `font-size` property itself, it's relative to the parent's `font-size`.
+Les unités relatives, telles que `em` ou `rem`, sont relatives à une autre valeur de longueur. Par exemple, `em` est basé sur la taille de la police d'un élément. Si vous l'utilisez pour définir la propriété `font-size` elle-même, elle est relative à la `font-size` du parent.
 
-**Note:** There are several relative unit options that are tied to the size of the viewport. They are covered in the Responsive Web Design Principles section.
+**Remarque :** Il existe plusieurs options d'unités relatives liées à la taille de la fenêtre d'affichage. Elles sont abordées dans la section Principes de Conception Web Responsive.
 
 # --instructions--
 
-Add a `padding` property to the element with class `red-box` and set it to `1.5em`.
+Ajoutez une propriété `padding` à l'élément avec la classe `red-box` et définissez-la à `1.5em`.
 
 # --hints--
 
-Your `red-box` class should have a `padding` property.
+Votre classe `red-box` devrait avoir une propriété `padding`.
 
 ```js
 assert(
@@ -34,7 +34,7 @@ assert(
 );
 ```
 
-Your `red-box` class should give elements 1.5em of `padding`.
+Votre classe `red-box` devrait donner aux éléments 1,5em de `padding`.
 
 ```js
 assert(code.match(/\.red-box\s*?{[\s\S]*padding\s*:\s*?1\.5em/gi));
