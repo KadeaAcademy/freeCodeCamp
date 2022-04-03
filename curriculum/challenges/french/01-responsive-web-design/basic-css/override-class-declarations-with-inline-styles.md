@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf06756
-title: Override Class Declarations with Inline Styles
+title: Remplacer les déclarations de classe par des styles en ligne
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cGJDRha'
 forumTopicId: 18252
@@ -9,47 +9,47 @@ dashedName: override-class-declarations-with-inline-styles
 
 # --description--
 
-So we've proven that id declarations override class declarations, regardless of where they are declared in your `style` element CSS.
+Nous avons donc prouvé que les déclarations d'identifiants remplacent les déclarations de classes, quel que soit l'endroit où elles sont déclarées dans votre élément CSS `style`.
 
-There are other ways that you can override CSS. Do you remember inline styles?
+Il existe d'autres façons de remplacer les éléments CSS. Vous vous souvenez des styles en ligne ?
 
 # --instructions--
 
-Use an inline style to try to make our `h1` element white. Remember, inline styles look like this:
+Utilisez un style en ligne pour essayer de rendre notre élément `h1` blanc. Rappelez-vous, les styles en ligne ressemblent à ceci :
 
 ```html
 <h1 style="color: green;">
 ```
 
-Leave the `blue-text` and `pink-text` classes on your `h1` element.
+Laissez les classes `blue-text` et `pink-text` sur votre élément `h1`.
 
 # --hints--
 
-Your `h1` element should have the class `pink-text`.
+Votre élément `h1` doit avoir la classe `pink-text`.
 
 ```js
 assert($('h1').hasClass('pink-text'));
 ```
 
-Your `h1` element should have the class `blue-text`.
+Votre élément `h1` doit avoir la classe `blue-text`.
 
 ```js
 assert($('h1').hasClass('blue-text'));
 ```
 
-Your `h1` element should have the id of `orange-text`.
+Votre élément `h1` devrait avoir l'id `orange-text`.
 
 ```js
 assert($('h1').attr('id') === 'orange-text');
 ```
 
-Your `h1` element should have an inline style.
+Votre élément `h1` doit avoir un style en ligne.
 
 ```js
 assert(document.querySelector('h1[style]'));
 ```
 
-Your `h1` element should be white.
+Votre élément `h1` doit être blanc.
 
 ```js
 assert($('h1').css('color') === 'rgb(255, 255, 255)');
