@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf04756
-title: Override Styles in Subsequent CSS
+title: Remplacer les styles dans les CSS ultérieurs
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cGJDQug'
 forumTopicId: 18253
@@ -9,47 +9,47 @@ dashedName: override-styles-in-subsequent-css
 
 # --description--
 
-Our `pink-text` class overrode our `body` element's CSS declaration!
+Notre classe `pink-text` a remplacé la déclaration CSS de l'élément `body` !
 
-We just proved that our classes will override the `body` element's CSS. So the next logical question is, what can we do to override our `pink-text` class?
-
+Nous venons de prouver que nos classes remplacent le CSS de l'élément `body`. La prochaine question logique est donc : que pouvons-nous faire pour remplacer notre classe `pink-text` ?
 # --instructions--
 
-Create an additional CSS class called `blue-text` that gives an element the color blue. Make sure it's below your `pink-text` class declaration.
+Créez une classe CSS supplémentaire appelée `blue-text` qui donne à un élément la couleur bleue. Assurez-vous qu'elle se trouve sous votre déclaration de classe `pink-text`.
 
-Apply the `blue-text` class to your `h1` element in addition to your `pink-text` class, and let's see which one wins.
+Appliquez la classe `blue-text` à votre élément `h1` en plus de votre classe `pink-text`, et voyons lequel des deux gagne.
 
-Applying multiple class attributes to a HTML element is done with a space between them like this:
+L'application de plusieurs attributs de classe à un élément HTML se fait en les séparant par un espace, comme ceci :
+
 
 ```html
 class="class1 class2"
 ```
 
-**Note:** It doesn't matter which order the classes are listed in the HTML element.
+**Note:** L'ordre dans lequel les classes sont listées dans l'élément HTML n'a pas d'importance.
 
-However, the order of the `class` declarations in the `<style>` section is what is important. The second declaration will always take precedence over the first. Because `.blue-text` is declared second, it overrides the attributes of `.pink-text`
+Cependant, c'est l'ordre des déclarations `class` dans la section `<style>` qui est important. La deuxième déclaration aura toujours la priorité sur la première. Comme `.blue-text` est déclaré en second, il prévaut sur les attributs de `.pink-text`.
 
 # --hints--
 
-Your `h1` element should have the class `pink-text`.
+Votre élément `h1` doit avoir la classe `pink-text`.
 
 ```js
 assert($('h1').hasClass('pink-text'));
 ```
 
-Your `h1` element should have the class `blue-text`.
+Votre élément `h1` doit avoir la classe `blue-text`.
 
 ```js
 assert($('h1').hasClass('blue-text'));
 ```
 
-Both `blue-text` and `pink-text` should belong to the same `h1` element.
+Les deux éléments `blue-text` et `pink-text` doivent appartenir au même élément `h1`.
 
 ```js
 assert($('.pink-text').hasClass('blue-text'));
 ```
 
-Your `h1` element should be blue.
+Votre élément `h1` doit être bleu.
 
 ```js
 assert($('h1').css('color') === 'rgb(0, 0, 255)');
