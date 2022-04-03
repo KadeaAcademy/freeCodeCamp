@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aecf08806
-title: Use a CSS Class to Style an Element
+title: Utiliser une classe CSS pour styliser un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/c2MvDtV'
 forumTopicId: 18337
@@ -9,9 +9,9 @@ dashedName: use-a-css-class-to-style-an-element
 
 # --description--
 
-Classes are reusable styles that can be added to HTML elements.
+Les classes sont des styles réutilisables qui peuvent être ajoutés aux éléments HTML.
 
-Here's an example CSS class declaration:
+Voici un exemple de déclaration de classe CSS :
 
 ```html
 <style>
@@ -21,35 +21,35 @@ Here's an example CSS class declaration:
 </style>
 ```
 
-You can see that we've created a CSS class called `blue-text` within the `<style>` tag. You can apply a class to an HTML element like this: `<h2 class="blue-text">CatPhotoApp</h2>`. Note that in your CSS `style` element, class names start with a period. In your HTML elements' class attribute, the class name does not include the period.
+Vous pouvez voir que nous avons créé une classe CSS appelée `blue-text` dans la balise `<style>`. Vous pouvez appliquer une classe à un élément HTML comme ceci : `<h2 class="blue-text">CatPhotoApp</h2>`. Notez que dans votre élément CSS `style`, les noms de classe commencent par un point. Dans l'attribut class de vos éléments HTML, le nom de la classe n'inclut pas le point.
 
 # --instructions--
 
-Inside your `style` element, change the `h2` selector to `.red-text` and update the color's value from `blue` to `red`.
+Dans votre élément `style`, changez le sélecteur `h2` en `.red-text` et mettez à jour la valeur de la couleur de `blue` à `red`.
 
-Give your `h2` element the `class` attribute with a value of `red-text`.
+Donnez à votre élément `h2` l'attribut `class` avec la valeur `red-text`.
 
 # --hints--
 
-Your `h2` element should be red.
+Votre élément `h2` doit être rouge.
 
 ```js
 assert($('h2').css('color') === 'rgb(255, 0, 0)');
 ```
 
-Your `h2` element should have the class `red-text`.
+Votre élément `h2` doit avoir la classe `red-text`.
 
 ```js
 assert($('h2').hasClass('red-text'));
 ```
 
-Your stylesheet should declare a `red-text` class and have its color set to `red`.
+Votre feuille de style devrait déclarer une classe `red-text` et avoir sa couleur fixée à `red`.
 
 ```js
 assert(code.match(/\.red-text\s*\{\s*color\s*:\s*red;?\s*\}/g));
 ```
 
-You should not use inline style declarations like `style="color: red"` in your `h2` element.
+Vous ne devez pas utiliser de déclarations de style en ligne comme `style="color : red"` dans votre élément `h2`.
 
 ```js
 assert($('h2').attr('style') === undefined);
@@ -68,22 +68,22 @@ assert($('h2').attr('style') === undefined);
 
 <h2>CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
@@ -94,7 +94,7 @@ assert($('h2').attr('style') === undefined);
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -110,22 +110,22 @@ assert($('h2').attr('style') === undefined);
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
-  
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
+
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
-  
+
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
   
@@ -136,7 +136,7 @@ assert($('h2').attr('style') === undefined);
     <label><input type="checkbox" name="personality"> Lazy</label>
     <label><input type="checkbox" name="personality"> Energetic</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
