@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aede08807
-title: Set the Font Family of an Element
+title: Définir la famille de caractères d'un élément
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/c3bvpCg'
 forumTopicId: 18278
@@ -9,9 +9,9 @@ dashedName: set-the-font-family-of-an-element
 
 # --description--
 
-You can set which font an element should use, by using the `font-family` property.
+Vous pouvez définir la police qu'un élément doit utiliser, en utilisant la propriété `font-family`.
 
-For example, if you wanted to set your `h2` element's font to `sans-serif`, you would use the following CSS:
+Par exemple, si vous souhaitez définir la police de votre élément `h2` à `sans-serif`, vous utiliserez le CSS suivant :
 
 ```css
 h2 {
@@ -21,11 +21,11 @@ h2 {
 
 # --instructions--
 
-Make all of your `p` elements use the `monospace` font.
+Faites en sorte que tous vos éléments `p` utilisent la police `monospace`.
 
 # --hints--
 
-Your `p` elements should use the font `monospace`.
+Vos éléments `p` doivent utiliser la police `monospace`.
 
 ```js
 assert(
@@ -53,33 +53,33 @@ assert(
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Énergique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -100,33 +100,33 @@ assert(
 
 <h2 class="red-text">CatPhotoApp</h2>
 <main>
-  <p class="red-text">Click here to view more <a href="#">cat photos</a>.</p>
-  
+  </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
+
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
-  
+
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
   
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
