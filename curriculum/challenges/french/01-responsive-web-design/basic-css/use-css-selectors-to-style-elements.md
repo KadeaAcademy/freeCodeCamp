@@ -1,6 +1,6 @@
 ---
 id: bad87fee1348bd9aedf08805
-title: Use CSS Selectors to Style Elements
+title: Utiliser les sélecteurs CSS pour styliser les éléments
 challengeType: 0
 videoUrl: 'https://scrimba.com/c/cJKMBT2'
 forumTopicId: 18349
@@ -9,20 +9,20 @@ dashedName: use-css-selectors-to-style-elements
 
 # --description--
 
-With CSS, there are hundreds of CSS properties that you can use to change the way an element looks on your page.
+Avec CSS, il existe des centaines de propriétés CSS que vous pouvez utiliser pour modifier l'apparence d'un élément sur votre page.
 
-When you entered `<h2 style="color: red;">CatPhotoApp</h2>`, you were styling that individual `h2` element with inline CSS, which stands for Cascading Style Sheets.
+Lorsque vous avez saisi `<h2 style="color : red ;">CatPhotoApp</h2>`, vous avez donné un style à cet élément `h2` individuel avec le CSS en ligne, qui signifie feuilles de style en cascade.
 
-That's one way to specify the style of an element, but there's a better way to apply CSS.
+C'est une façon de spécifier le style d'un élément, mais il existe une meilleure façon d'appliquer le CSS.
 
-At the top of your code, create a `style` block like this:
+En haut de votre code, créez un bloc `style` comme ceci :
 
 ```html
 <style>
 </style>
 ```
 
-Inside that style block, you can create a <dfn>CSS selector</dfn> for all `h2` elements. For example, if you wanted all `h2` elements to be red, you would add a style rule that looks like this:
+À l'intérieur de ce bloc de style, vous pouvez créer un <dfn>Sélecteur CSS</dfn> pour tous les éléments `h2`. Par exemple, si vous voulez que tous les éléments `h2` soient rouges, vous ajouterez une règle de style qui ressemble à ceci :
 
 ```html
 <style>
@@ -32,39 +32,39 @@ Inside that style block, you can create a <dfn>CSS selector</dfn> for all `h2` e
 </style>
 ```
 
-Note that it's important to have both opening and closing curly braces (`{` and `}`) around each element's style rule(s). You also need to make sure that your element's style definition is between the opening and closing style tags. Finally, be sure to add a semicolon to the end of each of your element's style rules.
+Notez qu'il est important de placer des accolades ouvrantes et fermantes (`{` et `}`) autour des règles de style de chaque élément. Vous devez également vous assurez que la définition de style de votre élément se trouve entre les balises de style ouvrantes et fermantes. Enfin, veillez à ajouter un point-virgule à la fin de chacune des règles de style de votre élément.
 
 # --instructions--
 
-Delete your `h2` element's style attribute, and instead create a CSS `style` block. Add the necessary CSS to turn all `h2` elements blue.
+Supprimez l'attribut de style de votre élément `h2` et créez plutôt un bloc CSS `style`. Ajoutez le CSS nécessaire pour que tous les éléments `h2` deviennent bleus.
 
 # --hints--
 
-The `style` attribute should be removed from your `h2` element.
+L'attribut `style` doit être supprimé de votre élément `h2`.
 
 ```js
 assert(!$('h2').attr('style'));
 ```
 
-You should create a `style` element.
+Vous devez créer un élément `style`.
 
 ```js
 assert($('style') && $('style').length >= 1);
 ```
 
-Your `h2` element should be blue.
+Votre élément `h2` devrait être bleu.
 
 ```js
 assert($('h2').css('color') === 'rgb(0, 0, 255)');
 ```
 
-Your stylesheet `h2` declaration should be valid with a semicolon and closing brace.
+Votre déclaration `h2` de feuille de style doit être valide avec un point-virgule et une accolade fermante.
 
 ```js
 assert(code.match(/h2\s*\{\s*color\s*:.*;\s*\}/g));
 ```
 
-All your `style` elements should be valid and have closing tags.
+Tous vos éléments `style` doivent être valides et comporter des balises de fermeture.
 
 ```js
 assert(
@@ -85,33 +85,33 @@ assert(
 ```html
 <h2 style="color: red;">CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
+ </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
@@ -126,33 +126,33 @@ assert(
 </style>
 <h2>CatPhotoApp</h2>
 <main>
-  <p>Click here to view more <a href="#">cat photos</a>.</p>
+   </p>Cliquez ici pour voir plus de <a href="#">photos de chats</a>.</p>
 
   <a href="#"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
 
   <div>
-    <p>Things cats love:</p>
+    <p>Les choses que les chats aiment :</p>
     <ul>
-      <li>cat nip</li>
-      <li>laser pointers</li>
-      <li>lasagna</li>
+      <li>l'herbe à chat</li>
+      <li>les laser pointers</li>
+      <li>les lasagnes</li>
     </ul>
-    <p>Top 3 things cats hate:</p>
+    <p>Le top 3 des choses que les chats détestent :</p>
     <ol>
-      <li>flea treatment</li>
-      <li>thunder</li>
-      <li>other cats</li>
+      <li>le traitement contre les puces</li>
+      <li>le tonnerre</li>
+      <li>les autres chats</li>
     </ol>
   </div>
 
   <form action="https://freecatphotoapp.com/submit-cat-photo">
-    <label><input type="radio" name="indoor-outdoor" checked> Indoor</label>
-    <label><input type="radio" name="indoor-outdoor"> Outdoor</label><br>
-    <label><input type="checkbox" name="personality" checked> Loving</label>
-    <label><input type="checkbox" name="personality"> Lazy</label>
-    <label><input type="checkbox" name="personality"> Energetic</label><br>
+    <label><input type="radio" name="indoor-outdoor" checked> Intérieur</label>
+    <label><input type="radio" name="indoor-outdoor"> Extérieur</label><br>
+    <label><input type="checkbox" name="personality" checked> Aimant</label>
+    <label><input type="checkbox" name="personality"> Paresseux</label>
+    <label><input type="checkbox" name="personality"> Energique</label><br>
     <input type="text" placeholder="cat photo URL" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Soumettre</button>
   </form>
 </main>
 ```
