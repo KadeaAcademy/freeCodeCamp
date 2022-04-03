@@ -9,25 +9,25 @@ dashedName: use-rgb-values-to-color-elements
 
 # --description--
 
-Another way you can represent colors in CSS is by using `RGB` values.
+Une autre façon de représenter les couleurs en CSS est d'utiliser les valeurs RGB.
 
-The `RGB` value for black looks like this:
+La valeur `RGB` pour le noir ressemble à ceci :
 
 ```css
 rgb(0, 0, 0)
 ```
 
-The `RGB` value for white looks like this:
+La valeur `RGB` pour le blanc ressemble à ceci :
 
 ```css
 rgb(255, 255, 255)
 ```
 
-Instead of using six hexadecimal digits like you do with hex code, with `RGB` you specify the brightness of each color with a number between 0 and 255.
+Au lieu d'utiliser six chiffres hexadécimaux comme avec le code hexadécimal, avec `RGB` vous spécifiez la luminosité de chaque couleur avec un nombre entre 0 et 255.
 
-If you do the math, the two digits for one color equal 16 times 16, which gives us 256 total values. So `RGB`, which starts counting from zero, has the exact same number of possible values as hex code.
+Si vous faites le calcul, les deux chiffres d'une couleur sont égaux à 16 fois 16, ce qui nous donne 256 valeurs au total. Donc `RGB`, qui commence à compter à partir de zéro, a exactement le même nombre de valeurs possibles que le code hexadécimal.
 
-Here's an example of how you'd change the `body` background to orange using its RGB code.
+Voici un exemple de la façon dont vous pouvez changer le fond de `body` en orange en utilisant son code RGB.
 
 ```css
 body {
@@ -37,17 +37,17 @@ body {
 
 # --instructions--
 
-Let's replace the hex code in our `body` element's background color with the RGB value for black: `rgb(0, 0, 0)`
+Remplaçons le code hexadécimal de la couleur d'arrière-plan de notre élément `body` par la valeur RGB du noir : `rgb(0, 0, 0)`.
 
 # --hints--
 
-Your `body` element should have a black background.
+Votre élément `body` doit avoir un fond noir.
 
 ```js
 assert($('body').css('background-color') === 'rgb(0, 0, 0)');
 ```
 
-You should use `rgb` to give your `body` element a background of black.
+Vous devez utiliser `rgb` pour donner à votre élément `body` un fond noir.
 
 ```js
 assert(code.match(/rgb\s*\(\s*0\s*,\s*0\s*,\s*0\s*\)/gi));
