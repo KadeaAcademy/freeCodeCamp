@@ -1,12 +1,10 @@
 import { Modal, Button, Col, Row } from '@freecodecamp/react-bootstrap';
 import { WindowLocation } from '@reach/router';
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { goToAnchor } from 'react-scrollable-anchor';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { createSelector } from 'reselect';
-import { modalDefaultDonation } from '../../../../config/donation-settings';
 import Cup from '../../assets/icons/cup';
 import Heart from '../../assets/icons/heart';
 
@@ -56,12 +54,10 @@ function DonateModal({
   closeDonationModal,
   executeGA,
   location,
-  recentlyClaimedBlock,
-  isAVariant
+  recentlyClaimedBlock
 }: DonateModalProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [closeLabel, setCloseLabel] = React.useState(false);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (show) {
@@ -80,20 +76,6 @@ function DonateModal({
     }
   }, [show, recentlyClaimedBlock, executeGA]);
 
-  const getDonationText = () => {
-    const donationDuration = modalDefaultDonation.donationDuration;
-    switch (donationDuration) {
-      case 'onetime':
-        return <b>{t('donate.duration')}</b>;
-      case 'month':
-        return <b>{t('donate.duration-2')}</b>;
-      case 'year':
-        return <b>{t('donate.duration-3')}</b>;
-      default:
-        return <b>{t('donate.duration-4')}</b>;
-    }
-  };
-
   const handleModalHide = () => {
     // If modal is open on a SuperBlock page
     if (isLocationSuperBlock(location)) {
@@ -110,18 +92,11 @@ function DonateModal({
         {!closeLabel && (
           <Col sm={10} smOffset={1} xs={12}>
             <b>{'Bien joué. Vous venez de terminer!'}</b>
-            <br />
-            {getDonationText()}
           </Col>
         )}
       </Row>
     </div>
   );
-
-  const renderABtestProgressText = () => {
-    if (isAVariant) return getDonationText();
-    else <b>{'Bien joué!'}</b>;
-  };
 
   const progressDonationText = (
     <div className='text-center progress-modal-text'>
@@ -131,7 +106,7 @@ function DonateModal({
       <Row>
         {!closeLabel && (
           <Col sm={10} smOffset={1} xs={12}>
-            {renderABtestProgressText()}
+            {'Bien joué!'}
           </Col>
         )}
       </Row>
@@ -154,11 +129,11 @@ function DonateModal({
               block={true}
               bsSize='sm'
               bsStyle='primary'
-              className='btn-link'
+              className='action-btn btn-primary'
               onClick={closeDonationModal}
               tabIndex='0'
             >
-              {closeLabel ? 'passer' : 'passer'}
+              {'Passez au défi suivant'}
             </Button>
           </Col>
         </Row>

@@ -554,6 +554,7 @@ hr {
   border-radius: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
+  background: var(--quaternary-background) !important;
 }
 
 .progress-bar {

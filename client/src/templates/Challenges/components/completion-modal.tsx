@@ -261,7 +261,7 @@ export class CompletionModalInner extends Component<
             </Login>
           )}
           <Button
-            className='action-btn'
+            className='action-btn btn-primary'
             block={true}
             bsSize='large'
             bsStyle='primary'
@@ -274,7 +274,7 @@ export class CompletionModalInner extends Component<
           </Button>
           {this.state.downloadURL ? (
             <Button
-              className='action-btn'
+              className='action-btn btn-secondary'
               block={true}
               bsSize='lg'
               bsStyle='primary'

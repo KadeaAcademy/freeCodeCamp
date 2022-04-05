@@ -71,7 +71,7 @@
   width: 400px;
   height: 50px;
   color: var(--primary-color);
-  border: 3px solid var(--primary-color);
+  /*border: 3px solid var(--primary-color);*/
   background-color: var(--quaternary-background);
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@
   width: 0;
   overflow: hidden;
   position: relative;
-  background-color: var(--primary-color);
+  background-color: var(--love-light);
   transition: width 0ms linear;
 }
 
@@ -135,18 +135,32 @@
 }
 
 .action-btn {
-  background: var(--love-light);
-  color: var(--gray-00);
   font-weight: 600;
   font-size: 0.8rem;
-  border: solid 2px var(--love-light);
+}
+
+.btn-primary {
+  background: var(--love-light);
+  color: var(--gray-00);
+  border: solid 2px var(--love-light) !important;
   transition: all 0.3s ease;
 }
 
-.action-btn:hover {
+.btn-primary:hover {
   color: var(--love-light) !important;
   background: rgba(255, 255, 255, 0) !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0);
+  color: var(--love-light);
   border: solid 2px var(--love-light) !important;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  color: var(--primary-background) !important;
+  background: var(--love-light) !important;
 }
 
 .completion-header {
