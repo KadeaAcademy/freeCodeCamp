@@ -9,10 +9,9 @@ import { ChallengeNode, CompletedChallenge } from '../../../redux/prop-types';
 import { makeExpandedBlockSelector, toggleBlock } from '../redux';
 import '../intro.css';
 
-const mapStateToProps = (
-  state: unknown,
-  ownProps: { blockDashedName: string } & unknown
-) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapStateToProps = (state: unknown, ownProps: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const expandedSelector = makeExpandedBlockSelector(ownProps.blockDashedName);
 
   return createSelector(
@@ -27,10 +26,9 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({ toggleBlock, executeGA }, dispatch);
-
 interface BlockProps {
-  challenges: ChallengeNode[];
-  completedChallengeIds: string[];
+  challenges?: ChallengeNode[][];
+  completedChallengeIds?: string[];
 }
 
 export class BlockProgressBar extends Component<BlockProps> {
@@ -43,26 +41,37 @@ export class BlockProgressBar extends Component<BlockProps> {
     const { completedChallengeIds, challenges } = this.props;
 
     let completedCount = 0;
-    const challengesWithCompleted = challenges.map(({ challenge }) => {
-      const { id } = challenge;
-      const isCompleted = completedChallengeIds.some(
-        (completedChallengeId: string) => completedChallengeId === id
-      );
-      if (isCompleted) {
-        completedCount++;
+    let challengeCount = 0;
+
+    if (challenges && completedChallengeIds) {
+      for (const challengeBlock of challenges) {
+        for (const { challenge } of challengeBlock) {
+          const { id } = challenge;
+          const isCompleted = completedChallengeIds.some(
+            (completedChallengeId: string) => completedChallengeId === id
+          );
+          if (isCompleted) {
+            completedCount++;
+          }
+          challengeCount++;
+        }
       }
-      return { ...challenge, isCompleted };
-    });
+    } else {
+      challengeCount = 100;
+    }
 
     const percentageComplated = Math.floor(
-      (completedCount / challengesWithCompleted.length) * 100
+      (completedCount / challengeCount) * 100
     );
 
     const BlockProgressBar = (
       <>
         <div className='progress-wrapper'>
-          <ProgressBar now={percentageComplated} />
-          <span>{`${percentageComplated}%`}</span>
+          <h2>
+            <span>{`${percentageComplated}% parcouru`}</span>
+          </h2>
+          <br />
+          <ProgressBar now={percentageComplated} animated />
         </div>
       </>
     );

@@ -23,6 +23,7 @@ import {
 } from '../../redux';
 import { MarkdownRemark, AllChallengeNode, User } from '../../redux/prop-types';
 import Block from './components/block';
+import BlockProgressBar from './components/block-progress-bar';
 import { resetExpansion, toggleBlock } from './redux';
 
 import './intro.css';
@@ -179,6 +180,11 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
 
   const defaultCurriculumNames = blockDashedNames;
 
+  const progressData = defaultCurriculumNames.map(blockDashedName =>
+    nodesForSuperBlock.filter(node => node.challenge.block === blockDashedName)
+  );
+  // console.log(progressData);
+
   return (
     <>
       <Helmet>
@@ -186,6 +192,26 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
       </Helmet>
       <Grid fluid={true} className='bg-light'>
         <Spacer size={2} />
+        <div className=''>
+          <Spacer size={1} />
+          <Row className='super-block-intro-page'>
+            <Col md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
+              <h2 className='big-subheading'>{'Progression globale'}</h2>
+            </Col>
+            <Col className='' md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
+              <Spacer size={1} />
+              <div className='block-ui bg-secondary'>
+                <div className='card-challenge'>
+                  <div>
+                    <BlockProgressBar challenges={progressData} />
+                  </div>
+                </div>
+              </div>
+              <Spacer size={1} />
+            </Col>
+          </Row>
+          <Spacer size={1} />
+        </div>
         <div className=''>
           <Spacer size={1} />
           <Row className='super-block-intro-page'>

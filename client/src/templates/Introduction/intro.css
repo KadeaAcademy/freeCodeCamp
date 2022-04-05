@@ -420,6 +420,10 @@ button.map-title {
   margin-bottom: 14px;
 }
 
+.progress-wrapper {
+  padding: 0 15px !important;
+}
+
 .block-grid .progress-wrapper span {
   color: var(--quaternary-color);
 }
@@ -544,6 +548,16 @@ hr {
   /* Set the hr color */
   color: var(--secondary-background); /* old IE */
   background-color: var(--secondary-background); /* Modern Browsers */
+}
+
+.progress {
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.progress-bar {
+  background: var(--love-light);
 }
 
 @media (max-width: 769px) {
