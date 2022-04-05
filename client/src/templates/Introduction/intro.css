@@ -514,6 +514,10 @@ button.map-title {
   padding-right: 10px;
 }
 
+.card-challenge-content .card-challenge-intro {
+  padding-right: 10px;
+}
+
 .card-challenge-action .link-action {
   padding: 10px;
   text-decoration: none;

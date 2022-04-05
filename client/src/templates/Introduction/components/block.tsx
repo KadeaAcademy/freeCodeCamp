@@ -267,7 +267,9 @@ export class Block extends Component<BlockProps> {
                   <div className='card-challenge-body'>
                     <div className='card-challenge-icon'></div>
                     <div className='card-challenge-content'>
-                      {this.renderBlockIntros(blockIntroArr)}
+                      <div className='card-challenge-intro'>
+                        {this.renderBlockIntros(blockIntroArr)}
+                      </div>
                     </div>
                   </div>
                 </div>

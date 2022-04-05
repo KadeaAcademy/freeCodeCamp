@@ -183,7 +183,6 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
   const progressData = defaultCurriculumNames.map(blockDashedName =>
     nodesForSuperBlock.filter(node => node.challenge.block === blockDashedName)
   );
-  // console.log(progressData);
 
   return (
     <>
@@ -221,19 +220,24 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
             <Col className='' md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
               <Spacer size={1} />
               <div className='block-ui bg-secondary'>
-                {defaultCurriculumNames.map((blockDashedName, index) => (
-                  <Fragment key={blockDashedName}>
-                    <Block
-                      blockDashedName={blockDashedName}
-                      challenges={nodesForSuperBlock.filter(
-                        node => node.challenge.block === blockDashedName
-                      )}
-                      superBlock={superBlock}
-                      blockIndex={1 + index}
-                      isLastVisited={true}
-                    />
-                  </Fragment>
-                ))}
+                {defaultCurriculumNames.map((blockDashedName, index) => {
+                  if (index < defaultCurriculumNames.length - 1) {
+                    // delete the project module which is always at the end of the table with the condition if
+                    return (
+                      <Fragment key={blockDashedName}>
+                        <Block
+                          blockDashedName={blockDashedName}
+                          challenges={nodesForSuperBlock.filter(
+                            node => node.challenge.block === blockDashedName
+                          )}
+                          superBlock={superBlock}
+                          blockIndex={1 + index}
+                          isLastVisited={true}
+                        />
+                      </Fragment>
+                    );
+                  }
+                })}
               </div>
               <Spacer size={1} />
             </Col>
@@ -249,19 +253,24 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
             <Col className='' md={10} mdOffset={1} sm={10} smOffset={1} xs={12}>
               <Spacer size={1} />
               <div className='block-ui bg-secondary'>
-                {defaultCurriculumNames.map((blockDashedName, index) => (
-                  <Fragment key={blockDashedName}>
-                    <Block
-                      blockDashedName={blockDashedName}
-                      challenges={nodesForSuperBlock.filter(
-                        node => node.challenge.block === blockDashedName
-                      )}
-                      superBlock={superBlock}
-                      blockIndex={1 + index}
-                      isLastVisited={false}
-                    />
-                  </Fragment>
-                ))}
+                {defaultCurriculumNames.map((blockDashedName, index) => {
+                  if (index < defaultCurriculumNames.length - 1) {
+                    // delete the project module which is always at the end of the table with the condition if
+                    return (
+                      <Fragment key={blockDashedName}>
+                        <Block
+                          blockDashedName={blockDashedName}
+                          challenges={nodesForSuperBlock.filter(
+                            node => node.challenge.block === blockDashedName
+                          )}
+                          superBlock={superBlock}
+                          blockIndex={1 + index}
+                          isLastVisited={false}
+                        />
+                      </Fragment>
+                    );
+                  }
+                })}
               </div>
               <Spacer size={1} />
             </Col>
