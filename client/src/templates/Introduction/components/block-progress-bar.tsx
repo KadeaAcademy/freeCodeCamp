@@ -44,7 +44,6 @@ export class BlockProgressBar extends Component<BlockProps> {
     let challengeCount = 0;
 
     if (challenges && completedChallengeIds) {
-      challenges.pop(); // delete the project module which is always at the end of the table
       for (const challengeBlock of challenges) {
         for (const { challenge } of challengeBlock) {
           const { id } = challenge;
