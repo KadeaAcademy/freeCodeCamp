@@ -24,6 +24,7 @@ import {
 import { MarkdownRemark, AllChallengeNode, User } from '../../redux/prop-types';
 import Block from './components/block';
 import BlockProgressBar from './components/block-progress-bar';
+import BlockLastVisited from './components/block-last-visited';
 import { resetExpansion, toggleBlock } from './redux';
 
 import './intro.css';
@@ -228,14 +229,13 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
                     // delete the project module which is always at the end of the table with the condition if
                     return (
                       <Fragment key={blockDashedName}>
-                        <Block
+                        <BlockLastVisited
                           blockDashedName={blockDashedName}
                           challenges={nodesForSuperBlock.filter(
                             node => node.challenge.block === blockDashedName
                           )}
                           superBlock={superBlock}
                           blockIndex={1 + index}
-                          isLastVisited={true}
                         />
                       </Fragment>
                     );
@@ -268,7 +268,6 @@ const SuperBlockIntroductionPage = (props: SuperBlockProp) => {
                           )}
                           superBlock={superBlock}
                           blockIndex={1 + index}
-                          isLastVisited={false}
                         />
                       </Fragment>
                     );
