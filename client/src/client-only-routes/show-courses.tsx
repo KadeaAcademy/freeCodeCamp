@@ -37,6 +37,7 @@ import { getExternalResource } from '../utils/ajax';
 import '../components/CourseFilter/course-filter.css';
 import CourseFilter from '../components/CourseFilter/course-filter';
 import sortCourses from '../components/helpers/sort-course';
+import SearchButton from '../components/CourseSearch/search-button';
 
 const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
 
@@ -262,19 +263,23 @@ export function Courses(props: CoursesProps): JSX.Element {
               </svg>{' '}
             </button>
             {/* <Spacer /> */}
-            <h2
-              dangerouslySetInnerHTML={{
-                __html: `${
-                  currentCategory == null
-                    ? 'Tous les cours'
-                    : currentCategory == -1
-                    ? 'Programmation'
-                    : (courseCategories?.find(elt => elt.id == currentCategory)
-                        ?.name as string)
-                }`
-              }}
-              className='title-selected-filter'
-            ></h2>
+            <div className='title-selected-filter'>
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: `${
+                    currentCategory == null
+                      ? 'Tous les cours'
+                      : currentCategory == -1
+                      ? 'Programmation'
+                      : (courseCategories?.find(
+                          elt => elt.id == currentCategory
+                        )?.name as string)
+                  }`
+                }}
+              ></h2>
+              <SearchButton />
+            </div>
+
             <Spacer />
 
             <div className='card-filter-container'>

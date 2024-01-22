@@ -12,7 +12,7 @@ import {
 import { splitArray } from '../helpers';
 import sortCourses from '../helpers/sort-course';
 
-type MoodleCoursesFiltered = {
+export type MoodleCoursesFiltered = {
   courses: MoodleCourse[] | null;
   warnings: [];
 };
