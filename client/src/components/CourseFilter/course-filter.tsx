@@ -7,7 +7,8 @@ import envData from '../../../../config/env.json';
 import {
   MoodleCourse,
   MoodleCourseCategory,
-  MoodleCoursesCatalogue
+  MoodleCoursesCatalogue,
+  scrollTo
 } from '../../client-only-routes/show-courses';
 import { splitArray } from '../helpers';
 import sortCourses from '../helpers/sort-course';
@@ -25,20 +26,22 @@ const CourseFilter = ({
   setShowFilter,
   screenWidth,
   courseCategories,
-  setProgrammingCategory,
+  // setProgrammingCategory,
   currentCategory,
-  setCurrentCategory
+  setCurrentCategory,
+  setCurrentPage
 }: {
   setMoodleCourses: React.Dispatch<
     React.SetStateAction<MoodleCoursesCatalogue | null | undefined>
   >;
   setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
-  setProgrammingCategory: React.Dispatch<React.SetStateAction<boolean>>;
+  // setProgrammingCategory: React.Dispatch<React.SetStateAction<boolean>>;
   screenWidth: number;
   courseCategories: MoodleCourseCategory[] | null | undefined;
   currentCategory: number | null;
   setCurrentCategory: React.Dispatch<React.SetStateAction<number | null>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }): JSX.Element => {
   const [showSubjectFilter, setShowSubjectFilter] = useState<boolean>(true);
 
@@ -153,8 +156,10 @@ const CourseFilter = ({
               }`}
               onClick={() => {
                 void getMoodleCourses();
+                setCurrentPage(1);
                 setCurrentCategory(null);
-                setProgrammingCategory(true);
+                // setProgrammingCategory(true);
+                scrollTo(130);
                 if (screenWidth < 990) setShowFilter(e => !e);
               }}
             >
@@ -169,8 +174,10 @@ const CourseFilter = ({
               }`}
               onClick={() => {
                 setCurrentCategory(-1);
-                setProgrammingCategory(true);
+                // setCurrentPage(1);
+                // setProgrammingCategory(true);
                 setMoodleCourses(null);
+                scrollTo(130);
                 if (screenWidth < 990) setShowFilter(e => !e);
               }}
             >
@@ -187,7 +194,9 @@ const CourseFilter = ({
                 onClick={() => {
                   void filterByCategory(element?.id);
                   setCurrentCategory(element?.id);
-                  setProgrammingCategory(false);
+                  setCurrentPage(1);
+                  scrollTo(130);
+                  // setProgrammingCategory(false);
                   if (screenWidth < 990) setShowFilter(e => !e);
                 }}
                 key={index}
