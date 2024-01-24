@@ -86,7 +86,10 @@ details[open] > *:not(summary) {
   display: none;
 }
 
-@media (max-width: 993px) {
+@media (max-width: 999px) {
+  .title-selected-filter {
+    margin: 20px 0px 20px 0px;
+  }
   .show-filter-button {
     display: flex;
     justify-content: center;
@@ -131,5 +134,15 @@ details[open] > *:not(summary) {
 
   .pagination-container {
     padding-left: 0%;
+  }
+}
+
+@media (max-width: 500px) {
+  .title-selected-filter {
+    flex-direction: column-reverse;
+    gap: 10px;
+    /* justify-content: start; */
+    align-items: flex-start;
+    margin: 20px 0px 20px 0px;
   }
 }

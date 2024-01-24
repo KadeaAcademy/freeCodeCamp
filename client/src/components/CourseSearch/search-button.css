@@ -29,6 +29,7 @@
 .search-button-container button {
   height: 100%;
   width: 15%;
+  min-width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,4 +40,16 @@
   right: 0px;
   background: #000;
   color: white;
+}
+
+@media (max-width: 999px) {
+  .search-button-container {
+    width: 40%;
+  }
+}
+
+@media (max-width: 500px) {
+  .search-button-container {
+    width: 100%;
+  }
 }
