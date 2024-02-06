@@ -1,6 +1,6 @@
 ---
 id: 587d7b87367417b2b2512b3f
-title: Explore Differences Between the var and let Keywords
+title: Explorer les différences entre les mots-clés var et let
 challengeType: 1
 forumTopicId: 301202
 dashedName: explore-differences-between-the-var-and-let-keywords
@@ -8,7 +8,7 @@ dashedName: explore-differences-between-the-var-and-let-keywords
 
 # --description--
 
-One of the biggest problems with declaring variables with the `var` keyword is that you can easily overwrite variable declarations:
+L'un des plus gros problèmes de la déclaration de variables avec le mot-clé `var` est que vous pouvez facilement écraser les déclarations de variables :
 
 ```js
 var camper = "James";
@@ -16,42 +16,42 @@ var camper = "David";
 console.log(camper);
 ```
 
-In the code above, the `camper` variable is originally declared as `James`, and is then overridden to be `David`. The console then displays the string `David`.
+Dans le code ci-dessus, la variable `camper` est initialement déclarée comme étant `James`, et est ensuite remplacée par `David`. La console affiche alors la chaîne `David`.
 
-In a small application, you might not run into this type of problem. But as your codebase becomes larger, you might accidentally overwrite a variable that you did not intend to. Because this behavior does not throw an error, searching for and fixing bugs becomes more difficult.
+Dans une petite application, vous ne rencontrerez peut-être pas ce type de problème. Mais à mesure que votre base de code s'élargit, vous pouvez accidentellement écraser une variable que vous n'aviez pas l'intention d'écraser. Comme ce comportement n'entraîne pas d'erreur, la recherche et la correction des bogues deviennent plus difficiles.
 
-A keyword called `let` was introduced in ES6, a major update to JavaScript, to solve this potential issue with the `var` keyword. You'll learn about other ES6 features in later challenges.
+Un mot-clé appelé `let` a été introduit dans ES6, une mise à jour majeure de JavaScript, pour résoudre ce problème potentiel avec le mot-clé `var`. Vous découvrirez d'autres fonctionnalités de l'ES6 dans des défis ultérieurs.
 
-If you replace `var` with `let` in the code above, it results in an error:
+Si vous remplacez `var` par `let` dans le code ci-dessus, il en résulte une erreur :
 
 ```js
 let camper = "James";
 let camper = "David";
 ```
 
-The error can be seen in your browser console.
+L'erreur peut être vue dans la console de votre navigateur.
 
-So unlike `var`, when you use `let`, a variable with the same name can only be declared once.
+Ainsi, contrairement à `var`, lorsque vous utilisez `let`, une variable avec le même nom ne peut être déclarée qu'une seule fois.
 
 # --instructions--
 
-Update the code so it only uses the `let` keyword.
+Mettez à jour le code pour qu'il n'utilise que le mot-clé `let`.
 
 # --hints--
 
-`var` should not exist in the code.
+`var` ne doit pas exister dans le code.
 
 ```js
 assert.notMatch(code, /var/g);
 ```
 
-`catName` should be the string `Oliver`.
+`catName` doit être la chaîne `Oliver`.
 
 ```js
 assert.equal(catName, 'Oliver');
 ```
 
-`catSound` should be the string `Meow!`
+`catSound` devrait être la chaîne `Meow!`.
 
 ```js
 assert.equal(catSound, 'Meow!');

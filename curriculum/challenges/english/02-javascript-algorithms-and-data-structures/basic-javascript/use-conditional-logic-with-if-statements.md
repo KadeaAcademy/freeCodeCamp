@@ -1,6 +1,6 @@
 ---
 id: cf1111c1c12feddfaeb3bdef
-title: Use Conditional Logic with If Statements
+title: Utiliser la logique conditionnelle avec les instructions If
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cy87mf3'
 forumTopicId: 18348
@@ -9,66 +9,66 @@ dashedName: use-conditional-logic-with-if-statements
 
 # --description--
 
-`if` statements are used to make decisions in code. The keyword `if` tells JavaScript to execute the code in the curly braces under certain conditions, defined in the parentheses. These conditions are known as `Boolean` conditions and they may only be `true` or `false`.
+Les instructions `if` sont utilisées pour prendre des décisions dans le code. Le mot clé "if" indique à JavaScript d'exécuter le code entre accolades sous certaines conditions, définies entre parenthèses. Ces conditions sont connues sous le nom de conditions booléennes et ne peuvent être que `true` ou `false`.
 
-When the condition evaluates to `true`, the program executes the statement inside the curly braces. When the Boolean condition evaluates to `false`, the statement inside the curly braces will not execute.
+Lorsque la condition est évaluée à `true`, le programme exécute l'instruction contenue dans les accolades. Lorsque la condition booléenne est évaluée à `false`, l'instruction entre accolades n'est pas exécutée.
 
 **Pseudocode**
 
-<blockquote>if (<i>condition is true</i>) {<br>  <i>statement is executed</i><br>}</blockquote>
+<blockquote>if (<i>la condition est true</i>) {<br>  <i>l'instruction est exécutée</i><br>}</blockquote>
 
-**Example**
+**Exemple**
 
 ```js
-function test (myCondition) {
-  if (myCondition) {
-    return "It was true";
+function test (maCondition) {
+  if (maCondition) {
+    return "C'était vrai";
   }
-  return "It was false";
+  return "C'était faux";
 }
 
 test(true);
 test(false);
 ```
 
-`test(true)` returns the string `It was true`, and `test(false)` returns the string `It was false`.
+`test(true)` renvoie la chaîne `C'était vrai`, et `test(false)` renvoie la chaîne `C'était faux`.
 
-When `test` is called with a value of `true`, the `if` statement evaluates `myCondition` to see if it is `true` or not. Since it is `true`, the function returns `It was true`. When we call `test` with a value of `false`, `myCondition` is *not* `true` and the statement in the curly braces is not executed and the function returns `It was false`.
+Lorsque `test` est appelé avec la valeur `true`, l'instruction `if` évalue `maCondition` pour voir si elle est `true` ou non. Puisque c'est `true`, la fonction renvoie `C'était vrai`. Lorsque nous appelons `test` avec la valeur `false`, `maCondition` n'est *pas* `true` et l'instruction entre accolades n'est pas exécutée et la fonction renvoie `C'était faux`.
 
 # --instructions--
 
-Create an `if` statement inside the function to return `Yes, that was true` if the parameter `wasThatTrue` is `true` and return `No, that was false` otherwise.
+Créez une instruction `if` à l'intérieur de la fonction pour retourner `Oui, c'était vrai` si le paramètre `etaitCeVrai` est `true` et retourner `Non, c'était faux` sinon.
 
 # --hints--
 
-`trueOrFalse` should be a function
+`vraiOuFaux` devrait être une fonction
 
 ```js
-assert(typeof trueOrFalse === 'function');
+assert(typeof vraiOuFaux === 'function');
 ```
 
-`trueOrFalse(true)` should return a string
+`vraiOuFaux(true)` devrait retourner une chaîne de caractères
 
 ```js
-assert(typeof trueOrFalse(true) === 'string');
+assert(typeof vraiOuFaux(true) === 'string');
 ```
 
-`trueOrFalse(false)` should return a string
+`vraiOuFaux(true)` devrait retourner une chaîne de caractères
 
 ```js
-assert(typeof trueOrFalse(false) === 'string');
+assert(typeof vraiOuFaux(false) === 'string');
 ```
 
-`trueOrFalse(true)` should return the string `Yes, that was true`
+`vraiOuFaux(true)` devrait retourner la chaîne de caractères `Oui, c'était vrai`.
 
 ```js
-assert(trueOrFalse(true) === 'Yes, that was true');
+assert(vraiOuFaux(true) === "Oui, c'était vrai");
 ```
 
-`trueOrFalse(false)` should return the string `No, that was false`
+`vraiOuFaux(false)` devrait retourner la chaîne `Non, c'était faux`.
 
 ```js
-assert(trueOrFalse(false) === 'No, that was false');
+assert(vraiOuFaux(false) === "Non, c'était faux");
 ```
 
 # --seed--
@@ -76,12 +76,12 @@ assert(trueOrFalse(false) === 'No, that was false');
 ## --seed-contents--
 
 ```js
-function trueOrFalse(wasThatTrue) {
-  // Only change code below this line
+function vraiOuFaux(etaitCeVrai) {
+  // Ne changez que le code en dessous de cette ligne
 
 
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 
 }
 ```
@@ -89,10 +89,10 @@ function trueOrFalse(wasThatTrue) {
 # --solutions--
 
 ```js
-function trueOrFalse(wasThatTrue) {
-  if (wasThatTrue) {
-    return "Yes, that was true";
+function vraiOuFaux(etaitCeVrai) {
+  if (etaitCeVrai) {
+    return "Oui, c'était vrai";
   }
-  return "No, that was false";
+  return "Non, c'était faux";
 }
 ```

@@ -1,6 +1,6 @@
 ---
 id: 587d7b84367417b2b2512b34
-title: Use typeof to Check the Type of a Variable
+title: Utiliser typeof pour vérifier le type d'une variable
 challengeType: 1
 forumTopicId: 18374
 dashedName: use-typeof-to-check-the-type-of-a-variable
@@ -8,9 +8,9 @@ dashedName: use-typeof-to-check-the-type-of-a-variable
 
 # --description--
 
-You can use `typeof` to check the data structure, or type, of a variable. This is useful in debugging when working with multiple data types. If you think you're adding two numbers, but one is actually a string, the results can be unexpected. Type errors can lurk in calculations or function calls. Be careful especially when you're accessing and working with external data in the form of a JavaScript Object Notation (JSON) object.
+Vous pouvez utiliser `typeof` pour vérifier la structure de données, ou le type, d'une variable. Ceci est utile pour le débogage lorsque vous travaillez avec plusieurs types de données. Si vous pensez que vous additionnez deux nombres, mais que l'un d'eux est en fait une chaîne de caractères, les résultats peuvent être inattendus. Les erreurs de type peuvent se cacher dans les calculs ou les appels de fonction. Soyez particulièrement prudent lorsque vous accédez et travaillez avec des données externes sous la forme d'un objet JavaScript Object Notation (JSON).
 
-Here are some examples using `typeof`:
+Voici quelques exemples d'utilisation de `typeof` :
 
 ```js
 console.log(typeof "");
@@ -19,29 +19,29 @@ console.log(typeof []);
 console.log(typeof {});
 ```
 
-In order, the console will display the strings `string`, `number`, `object`, and `object`.
+Dans l'ordre, la console affichera les chaînes `string`, `number`, `object`, et `object`.
 
-JavaScript recognizes seven primitive (immutable) data types: `Boolean`, `Null`, `Undefined`, `Number`, `String`, `Symbol` (new with ES6), and `BigInt` (new with ES2020), and one type for mutable items: `Object`. Note that in JavaScript, arrays are technically a type of object.
+JavaScript reconnaît sept types de données primitives (immuables) : `Boolean`, `Null`, `Undefined`, `Number`, `String`, `Symbol` (nouveau avec ES6), et `BigInt` (nouveau avec ES2020), et un type pour les éléments mutables : `Object`. Notez qu'en JavaScript, les tableaux sont techniquement un type d'objet.
 
 # --instructions--
 
-Add two `console.log()` statements to check the `typeof` each of the two variables `seven` and `three` in the code.
+Ajoutez deux instructions `console.log()` pour vérifier le `type` de chacune des deux variables `seven` et `three` dans le code.
 
 # --hints--
 
-Your code should use `typeof` in two `console.log()` statements to check the type of the variables.
+Votre code doit utiliser `typeof` dans deux instructions `console.log()` pour vérifier le type des variables.
 
 ```js
 assert(code.match(/console\.log\(typeof[\( ].*\)?\)/g).length == 2);
 ```
 
-Your code should use `typeof` to check the type of the variable `seven`.
+Votre code devrait utiliser `typeof` pour vérifier le type de la variable `seven`.
 
 ```js
 assert(code.match(/typeof[\( ]seven\)?/g));
 ```
 
-Your code should use `typeof` to check the type of the variable `three`.
+Votre code devrait utiliser `typeof` pour vérifier le type de la variable `three`.
 
 ```js
 assert(code.match(/typeof[\( ]three\)?/g));
@@ -55,7 +55,7 @@ assert(code.match(/typeof[\( ]three\)?/g));
 let seven = 7;
 let three = "3";
 console.log(seven + three);
-// Only change code below this line
+// Ne modifiez que le code en dessous de cette ligne
 ```
 
 # --solutions--

@@ -1,6 +1,6 @@
 ---
 id: 587d7b7e367417b2b2512b24
-title: Use the Conditional (Ternary) Operator
+title: Utiliser l'opérateur conditionnel (ternaire)
 challengeType: 1
 forumTopicId: 301181
 dashedName: use-the-conditional-ternary-operator
@@ -8,56 +8,56 @@ dashedName: use-the-conditional-ternary-operator
 
 # --description--
 
-The <dfn>conditional operator</dfn>, also called the <dfn>ternary operator</dfn>, can be used as a one line if-else expression.
+L'<dfn>opérateur conditionnel</dfn>, également appelé <dfn>opérateur ternaire</dfn>, peut être utilisé comme une expression if-else sur une ligne.
 
-The syntax is `a ? b : c`, where `a` is the condition, `b` is the code to run when the condition returns `true`, and `c` is the code to run when the condition returns `false`.
+La syntaxe est `a ? b : c`, où `a` est la condition, `b` est le code à exécuter lorsque la condition retourne `vrai`, et `c` est le code à exécuter lorsque la condition retourne `faux`.
 
-The following function uses an `if/else` statement to check a condition:
+La fonction suivante utilise une instruction `if/else` pour vérifier une condition :
 
 ```js
 function findGreater(a, b) {
   if(a > b) {
-    return "a is greater";
+    return "a est plus grand";
   }
   else {
-    return "b is greater or equal";
+    return "b est plus grand ou égal";
   }
 }
 ```
 
-This can be re-written using the conditional operator:
+Cela peut être réécrit en utilisant l'opérateur conditionnel :
 
 ```js
 function findGreater(a, b) {
-  return a > b ? "a is greater" : "b is greater or equal";
+  return a > b ? "a est plus grand" : "b est plus grand ou égal";
 }
 ```
 
 # --instructions--
 
-Use the conditional operator in the `checkEqual` function to check if two numbers are equal or not. The function should return either the string `Equal` or the string `Not Equal`.
+Utilisez l'opérateur conditionnel dans la fonction `checkEqual` pour vérifier si deux nombres sont égaux ou non. La fonction doit retourner soit la chaîne `Equal`, soit la chaîne `Not Equal`
 
 # --hints--
 
-`checkEqual` should use the conditional operator
+`checkEqual` devrait utiliser l'opérateur conditionnel
 
 ```js
 assert(/.+?\s*?\?\s*?.+?\s*?:\s*?.+?/.test(code));
 ```
 
-`checkEqual(1, 2)` should return the string `Not Equal`
+`checkEqual(1, 2)` devrait retourner la chaîne de caractères `Not Equal`.
 
 ```js
 assert(checkEqual(1, 2) === 'Not Equal');
 ```
 
-`checkEqual(1, 1)` should return the string `Equal`
+`checkEqual(1, 1)` devrait retourner la chaîne de caractères `Equal`
 
 ```js
 assert(checkEqual(1, 1) === 'Equal');
 ```
 
-`checkEqual(1, -1)` should return the string `Not Equal`
+`checkEqual(1, -1)` devrait retourner la chaîne de caractères `Not Equal`
 
 ```js
 assert(checkEqual(1, -1) === 'Not Equal');

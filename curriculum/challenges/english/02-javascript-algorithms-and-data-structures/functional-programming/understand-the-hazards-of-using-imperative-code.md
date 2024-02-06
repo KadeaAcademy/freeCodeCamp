@@ -1,6 +1,6 @@
 ---
 id: 587d7b8e367417b2b2512b5d
-title: Understand the Hazards of Using Imperative Code
+title: Comprendre les risques liés à l'utilisation du code impératif
 challengeType: 1
 forumTopicId: 301241
 dashedName: understand-the-hazards-of-using-imperative-code
@@ -8,31 +8,31 @@ dashedName: understand-the-hazards-of-using-imperative-code
 
 # --description--
 
-Functional programming is a good habit. It keeps your code easy to manage, and saves you from sneaky bugs. But before we get there, let's look at an imperative approach to programming to highlight where you may have issues.
+La programmation fonctionnelle est une bonne habitude. Elle facilite la gestion de votre code et vous évite les bogues sournois. Mais avant d'en arriver là, examinons une approche impérative de la programmation afin de mettre en évidence les problèmes que vous pourriez rencontrer.
 
-In English (and many other languages), the imperative tense is used to give commands. Similarly, an imperative style in programming is one that gives the computer a set of statements to perform a task.
+En anglais (et dans de nombreuses autres langues), le temps impératif est utilisé pour donner des ordres. De même, un style impératif en programmation est un style qui donne à l'ordinateur un ensemble d'instructions pour effectuer une tâche.
 
-Often the statements change the state of the program, like updating global variables. A classic example is writing a `for` loop that gives exact directions to iterate over the indices of an array.
+Souvent, les instructions modifient l'état du programme, comme la mise à jour des variables globales. Un exemple classique est l'écriture d'une boucle "for" qui donne des instructions exactes pour itérer sur les indices d'un tableau.
 
-In contrast, functional programming is a form of declarative programming. You tell the computer what you want done by calling a method or function.
+En revanche, la programmation fonctionnelle est une forme de programmation déclarative. Vous dites à l'ordinateur ce que vous voulez faire en appelant une méthode ou une fonction.
 
-JavaScript offers many predefined methods that handle common tasks so you don't need to write out how the computer should perform them. For example, instead of using the `for` loop mentioned above, you could call the `map` method which handles the details of iterating over an array. This helps to avoid semantic errors, like the "Off By One Errors" that were covered in the Debugging section.
+JavaScript propose de nombreuses méthodes prédéfinies qui gèrent des tâches courantes, de sorte qu'il n'est pas nécessaire d'écrire comment l'ordinateur doit les exécuter. Par exemple, au lieu d'utiliser la boucle `for` mentionnée ci-dessus, vous pouvez appeler la méthode `map` qui gère les détails de l'itération sur un tableau. Cela permet d'éviter les erreurs sémantiques, comme les "erreurs de décalage d'une unité" qui ont été abordées dans la section Débogage.
 
-Consider the scenario: you are browsing the web in your browser, and want to track the tabs you have opened. Let's try to model this using some simple object-oriented code.
+Considérons le scénario suivant : vous naviguez sur le web dans votre navigateur, et vous voulez suivre les onglets que vous avez ouverts. Essayons de modéliser cela à l'aide d'un code orienté objet simple.
 
-A Window object is made up of tabs, and you usually have more than one Window open. The titles of each open site in each Window object is held in an array. After working in the browser (opening new tabs, merging windows, and closing tabs), you want to print the tabs that are still open. Closed tabs are removed from the array and new tabs (for simplicity) get added to the end of it.
+Un objet Window est constitué d'onglets, et vous avez généralement plus d'une fenêtre ouverte. Les titres de chaque site ouvert dans chaque objet Window sont conservés dans un tableau. Après avoir travaillé dans le navigateur (ouverture de nouveaux onglets, fusion de fenêtres et fermeture d'onglets), vous souhaitez imprimer les onglets encore ouverts. Les onglets fermés sont supprimés du tableau et les nouveaux onglets (pour plus de simplicité) sont ajoutés à la fin du tableau.
 
-The code editor shows an implementation of this functionality with functions for `tabOpen()`, `tabClose()`, and `join()`. The array `tabs` is part of the Window object that stores the name of the open pages.
+L'éditeur de code montre une implémentation de cette fonctionnalité avec les fonctions `tabOpen()`, `tabClose()`, et `join()`. Le tableau `tabs` fait partie de l'objet Window qui stocke le nom des pages ouvertes.
 
 # --instructions--
 
-Examine the code in the editor. It's using a method that has side effects in the program, causing incorrect behaviour. The final list of open tabs, stored in `finalTabs.tabs`, should be `['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium', 'new tab', 'Netflix', 'YouTube', 'Vine', 'GMail', 'Work mail', 'Docs', 'freeCodeCamp', 'new tab']` but the list produced by the code is slightly different.
+Examinez le code dans l'éditeur. Il utilise une méthode qui a des effets secondaires dans le programme, ce qui provoque un comportement incorrect. La liste finale des onglets ouverts, stockée dans `finalTabs.tabs`, devrait être `['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium', 'new tab', 'Netflix', 'YouTube', 'Vine', 'GMail', 'Work mail', 'Docs', 'freeCodeCamp', 'new tab']` mais la liste produite par le code est légèrement différente.
 
-Change `Window.prototype.tabClose` so that it removes the correct tab.
+Modifiez `Window.prototype.tabClose` pour qu'il supprime le bon onglet.
 
 # --hints--
 
-`finalTabs.tabs` should be `['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium', 'new tab', 'Netflix', 'YouTube', 'Vine', 'GMail', 'Work mail', 'Docs', 'freeCodeCamp', 'new tab']`
+`finalTabs.tabs` devrait être `['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium', 'new tab', 'Netflix', 'YouTube', 'Vine', 'GMail', 'Work mail', 'Docs', 'freeCodeCamp', 'new tab']`
 
 ```js
 assert.deepEqual(finalTabs.tabs, [
@@ -58,47 +58,47 @@ assert.deepEqual(finalTabs.tabs, [
 ## --seed-contents--
 
 ```js
-// tabs is an array of titles of each site open within the window
+// tabs est un tableau de titres de chaque site ouvert dans la fenêtre
 const Window = function(tabs) {
-  this.tabs = tabs; // We keep a record of the array inside the object
+  this.tabs = tabs; // Nous gardons une trace du tableau à l'intérieur de l'objet
 };
 
-// When you join two windows into one window
+// Lorsque vous réunissez deux fenêtres en une seule
 Window.prototype.join = function(otherWindow) {
   this.tabs = this.tabs.concat(otherWindow.tabs);
   return this;
 };
 
-// When you open a new tab at the end
+// Lorsque vous ouvrez un nouvel onglet à la fin
 Window.prototype.tabOpen = function(tab) {
-  this.tabs.push('new tab'); // Let's open a new tab for now
+  this.tabs.push('new tab'); // Ouvrons un nouvel onglet pour l'instant
   return this;
 };
 
-// When you close a tab
+// Lorsque vous fermez un onglet
 Window.prototype.tabClose = function(index) {
 
-  // Only change code below this line
+  // Ne modifiez que le code situé en dessous de cette ligne
 
-  const tabsBeforeIndex = this.tabs.splice(0, index); // Get the tabs before the tab
-  const tabsAfterIndex = this.tabs.splice(index + 1); // Get the tabs after the tab
+  const tabsBeforeIndex = this.tabs.splice(0, index); // Récupère les onglets précédant l'onglet
+  const tabsAfterIndex = this.tabs.splice(index + 1); // Récupère les onglets après l'onglet
 
-  this.tabs = tabsBeforeIndex.concat(tabsAfterIndex); // Join them together
+  this.tabs = tabsBeforeIndex.concat(tabsAfterIndex); // Les réunir
 
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
 
   return this;
  };
 
-// Let's create three browser windows
-const workWindow = new Window(['GMail', 'Inbox', 'Work mail', 'Docs', 'freeCodeCamp']); // Your mailbox, drive, and other work sites
-const socialWindow = new Window(['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium']); // Social sites
-const videoWindow = new Window(['Netflix', 'YouTube', 'Vimeo', 'Vine']); // Entertainment sites
+// Créons trois fenêtres de navigation
+const workWindow = new Window(['GMail', 'Inbox', 'Work mail', 'Docs', 'freeCodeCamp']); // Votre boîte aux lettres, votre lecteur et vos autres lieux de travail
+const socialWindow = new Window(['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium']); // Sites sociaux
+const videoWindow = new Window(['Netflix', 'YouTube', 'Vimeo', 'Vine']); // Sites de divertissement
 
-// Now perform the tab opening, closing, and other operations
+// Effectuez maintenant les opérations d'ouverture et de fermeture des onglets, ainsi que d'autres opérations
 const finalTabs = socialWindow
-  .tabOpen() // Open a new tab for cat memes
-  .join(videoWindow.tabClose(2)) // Close third tab in video window, and join
+  .tabOpen() // Ouvrir un nouvel onglet pour les mèmes de chat
+  .join(videoWindow.tabClose(2)) // Fermez le troisième onglet de la fenêtre vidéo et rejoignez
   .join(workWindow.tabClose(1).tabOpen());
 console.log(finalTabs.tabs);
 ```

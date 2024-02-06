@@ -1,6 +1,6 @@
 ---
 id: 599a789b454f2bbd91a3ff4d
-title: Practice comparing different values
+title: Entraînez-vous à comparer différentes valeurs
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cm8PqCa'
 forumTopicId: 301174
@@ -9,42 +9,41 @@ dashedName: practice-comparing-different-values
 
 # --description--
 
-In the last two challenges, we learned about the equality operator (`==`) and the strict equality operator (`===`). Let's do a quick review and practice using these operators some more.
+Dans les deux derniers défis, nous avons appris à connaître l'opérateur d'égalité (`==`) et l'opérateur d'égalité stricte (`===`). Faisons une rapide révision et exerçons-nous à utiliser ces opérateurs un peu plus.
 
-If the values being compared are not of the same type, the equality operator will perform a type conversion, and then evaluate the values. However, the strict equality operator will compare both the data type and value as-is, without converting one type to the other.
+Si les valeurs comparées ne sont pas du même type, l'opérateur d'égalité effectue une conversion de type, puis évalue les valeurs. En revanche, l'opérateur d'égalité stricte compare le type de données et la valeur tels quels, sans convertir un type en l'autre.
 
-**Examples**
+**Exemples**
 
-`3 == '3'` returns `true` because JavaScript performs type conversion from string to number. `3 === '3'` returns false because the types are different and type conversion is not performed.
+`3 == '3'` renvoie `vrai` car JavaScript effectue une conversion de type de la chaîne de caractères en nombre. `3 === '3'` renvoie false car les types sont différents et la conversion de type n'est pas effectuée.
 
-**Note:** In JavaScript, you can determine the type of a variable or a value with the `typeof` operator, as follows:
+**Note:** En JavaScript, vous pouvez vérifier le type d'une variable ou d'une valeur avec l'opérateur `typeof`, comme suit :
 
 ```js
 typeof 3
 typeof '3'
 ```
 
-`typeof 3` returns the string `number`, and `typeof '3'` returns the string `string`.
+`typeof 3` renvoie la chaîne `number`, et `typeof '3'` renvoie la chaîne `string`.
 
 # --instructions--
 
-The `compareEquality` function in the editor compares two values using the equality operator. Modify the function so that it returns the string `Equal` only when the values are strictly equal.
-
+La fonction `compareEquality` de l'éditeur compare deux valeurs en utilisant l'opérateur d'égalité. Modifiez la fonction pour qu'elle ne renvoie la chaîne `Egal` que lorsque les valeurs sont strictement égales.
 # --hints--
 
-`compareEquality(10, "10")` should return the string `Not Equal`
+`compareEquality(10, "10")` devrait renvoyer la chaîne `Pas Egal`.
 
 ```js
-assert(compareEquality(10, '10') === 'Not Equal');
+assert(compareEquality(10, '10') === 'Pas Egal');
 ```
 
-`compareEquality("20", 20)` should return the string `Not Equal`
+`compareEquality("20", 20)` devrait retourner la chaine `Pas Egal`
 
 ```js
-assert(compareEquality('20', 20) === 'Not Equal');
+assert(compareEquality('20', 20) === 'Pas Egal');
 ```
 
-You should use the `===` operator
+Vous devez utiliser l'opérateur `===`.
 
 ```js
 assert(code.match(/===/g));
@@ -57,10 +56,10 @@ assert(code.match(/===/g));
 ```js
 // Setup
 function compareEquality(a, b) {
-  if (a == b) { // Change this line
-    return "Equal";
+  if (a == b) { // Modifiez cette ligne
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 
 compareEquality(10, "10");
@@ -71,8 +70,8 @@ compareEquality(10, "10");
 ```js
 function compareEquality(a,b) {
   if (a === b) {
-    return "Equal";
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 ```

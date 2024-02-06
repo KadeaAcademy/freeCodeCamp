@@ -1,6 +1,6 @@
 ---
 id: 587d7db6367417b2b2512b99
-title: Match Characters that Occur One or More Times
+title: Rechercher des caractères qui apparaissent une ou plusieurs fois.
 challengeType: 1
 forumTopicId: 301350
 dashedName: match-characters-that-occur-one-or-more-times
@@ -8,33 +8,33 @@ dashedName: match-characters-that-occur-one-or-more-times
 
 # --description--
 
-Sometimes, you need to match a character (or group of characters) that appears one or more times in a row. This means it occurs at least once, and may be repeated.
+Parfois, vous devez identifier un caractère (ou un groupe de caractères) qui apparaît une ou plusieurs fois de suite. Cela signifie qu'il apparaît au moins une fois et qu'il peut être répété.
 
-You can use the `+` character to check if that is the case. Remember, the character or pattern has to be present consecutively. That is, the character has to repeat one after the other.
+Vous pouvez utiliser le caractère `+` pour vérifier si c'est le cas. N'oubliez pas que le caractère ou le motif doit être présent consécutivement. Autrement dit, le caractère doit se répéter l'un après l'autre.
 
-For example, `/a+/g` would find one match in `abc` and return `["a"]`. Because of the `+`, it would also find a single match in `aabc` and return `["aa"]`.
+Par exemple, `/a+/g` trouvera une correspondance dans `abc` et retournera `["a"]`. À cause du `+`, elle trouverait également une seule correspondance dans `aabc` et renverrait `["aa"]`.
 
-If it were instead checking the string `abab`, it would find two matches and return `["a", "a"]` because the `a` characters are not in a row - there is a `b` between them. Finally, since there is no `a` in the string `bcd`, it wouldn't find a match.
+Si elle vérifiait plutôt la chaîne `abab`, elle trouverait deux correspondances et renverrait `["a", "a"]` car les caractères `a` ne sont pas alignés - il y a un `b` entre eux. Enfin, comme il n'y a pas de `a` dans la chaîne `bcd`, elle ne trouverait pas de correspondance.
 
 # --instructions--
 
-You want to find matches when the letter `s` occurs one or more times in `Mississippi`. Write a regex that uses the `+` sign.
+Vous voulez trouver des correspondances lorsque la lettre `s` apparaît une ou plusieurs fois dans `Mississippi`. Écrivez une regex qui utilise le signe `+`.
 
 # --hints--
 
-Your regex `myRegex` should use the `+` sign to match one or more `s` characters.
+Votre regex `myRegex` doit utiliser le signe `+` pour correspondre à un ou plusieurs caractères `s`.
 
 ```js
 assert(/\+/.test(myRegex.source));
 ```
 
-Your regex `myRegex` should match 2 items.
+Votre regex `myRegex` doit correspondre à 2 éléments.
 
 ```js
 assert(result.length == 2);
 ```
 
-The `result` variable should be an array with two matches of `ss`
+La variable `result` doit être un tableau contenant deux correspondances de `ss`.
 
 ```js
 assert(result[0] == 'ss' && result[1] == 'ss');
@@ -46,7 +46,7 @@ assert(result[0] == 'ss' && result[1] == 'ss');
 
 ```js
 let difficultSpelling = "Mississippi";
-let myRegex = /change/; // Change this line
+let myRegex = /change/; // Modifiez cette ligne
 let result = difficultSpelling.match(myRegex);
 ```
 
@@ -54,6 +54,6 @@ let result = difficultSpelling.match(myRegex);
 
 ```js
 let difficultSpelling = "Mississippi";
-let myRegex = /s+/g; // Change this line
+let myRegex = /s+/g; // Modifiez cette ligne
 let result = difficultSpelling.match(myRegex);
 ```

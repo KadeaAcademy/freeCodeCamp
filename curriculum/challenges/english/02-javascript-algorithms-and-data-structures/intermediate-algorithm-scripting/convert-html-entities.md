@@ -1,6 +1,6 @@
 ---
 id: a6b0bb188d873cb2c8729495
-title: Convert HTML Entities
+title: Convertir les entités HTML
 challengeType: 5
 forumTopicId: 16007
 dashedName: convert-html-entities
@@ -8,17 +8,17 @@ dashedName: convert-html-entities
 
 # --description--
 
-Convert the characters `&`, `<`, `>`, `"` (double quote), and `'` (apostrophe), in a string to their corresponding HTML entities.
+Convertit les caractères `&`, `<`, `>`, `"` (guillemet double) et `'` (apostrophe) d'une chaîne en entités HTML correspondantes.
 
 # --hints--
 
-`convertHTML("Dolce & Gabbana")` should return the string `Dolce &amp; Gabbana`.
+`convertHTML("Dolce & Gabbana")` devrait retourner la chaîne `Dolce &amp; Gabbana`.
 
 ```js
 assert.match(convertHTML('Dolce & Gabbana'), /Dolce &amp; Gabbana/);
 ```
 
-`convertHTML("Hamburgers < Pizza < Tacos")` should return the string `Hamburgers &lt; Pizza &lt; Tacos`.
+`convertHTML("Hamburgers < Pizza < Tacos")` devrait retourner la chaîne `Hamburgers &lt; Pizza &lt; Tacos`.
 
 ```js
 assert.match(
@@ -27,13 +27,13 @@ assert.match(
 );
 ```
 
-`convertHTML("Sixty > twelve")` should return the string `Sixty &gt; twelve`.
+`convertHTML("Sixty > twelve")` devrait retourner la chaîne `Sixty &gt; twelve`.
 
 ```js
 assert.match(convertHTML('Sixty > twelve'), /Sixty &gt; twelve/);
 ```
 
-`convertHTML('Stuff in "quotation marks"')` should return the string `Stuff in &quot;quotation marks&quot;`.
+`convertHTML('Stuff in "quotation marks"')` devrait retourner la chaîne `Stuff in &quot;quotation marks&quot;`.
 
 ```js
 assert.match(
@@ -42,19 +42,19 @@ assert.match(
 );
 ```
 
-`convertHTML("Schindler's List")` should return the string `Schindler&apos;s List`.
+`convertHTML("Schindler's List")` devrait retourner la chaîne `Schindler&apos;s List`.
 
 ```js
 assert.match(convertHTML("Schindler's List"), /Schindler&apos;s List/);
 ```
 
-`convertHTML("<>")` should return the string `&lt;&gt;`.
+`convertHTML("<>")` devrait retourner la chaîne `&lt;&gt;`.
 
 ```js
 assert.match(convertHTML('<>'), /&lt;&gt;/);
 ```
 
-`convertHTML("abc")` should return the string `abc`.
+`convertHTML("abc")` devrait retourner la chaîne `abc`.
 
 ```js
 assert.strictEqual(convertHTML('abc'), 'abc');

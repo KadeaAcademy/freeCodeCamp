@@ -1,6 +1,6 @@
 ---
 id: a10d2431ad0c6a099a4b8b52
-title: Everything Be True
+title: Tout est vrai
 challengeType: 5
 forumTopicId: 16011
 dashedName: everything-be-true
@@ -8,17 +8,17 @@ dashedName: everything-be-true
 
 # --description--
 
-Check if the predicate (second argument) is <dfn>truthy</dfn> on all elements of a collection (first argument).
+Vérifier si le prédicat (deuxième argument) est <dfn>truthy</dfn> sur tous les éléments d'une collection (premier argument).
 
-In other words, you are given an array collection of objects. The predicate `pre` will be an object property and you need to return `true` if its value is `truthy`. Otherwise, return `false`.
+En d'autres termes, on vous donne un tableau de collection d'objets. Le prédicat `pre` sera une propriété d'objet et vous devez retourner `true` si sa valeur est `truthy`. Sinon, il faut retourner `false`.
 
-In JavaScript, `truthy` values are values that translate to `true` when evaluated in a Boolean context.
+En JavaScript, les valeurs `truthy` sont des valeurs qui se traduisent par `vrai` lorsqu'elles sont évaluées dans un contexte booléen.
 
-Remember, you can access object properties through either dot notation or `[]` notation.
+Rappelez-vous que vous pouvez accéder aux propriétés des objets en utilisant la notation par points ou la notation `[]`.
 
 # --hints--
 
-`truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")` should return `true`.
+`truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")` devrait retourner `true`.
 
 ```js
 assert.strictEqual(
@@ -35,7 +35,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")` should return `false`.
+`truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(
@@ -52,7 +52,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0}, {"user": "Dipsy", "sex": "male", "age": 3}, {"user": "Laa-Laa", "sex": "female", "age": 5}, {"user": "Po", "sex": "female", "age": 4}], "age")` should return `false`.
+`truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0}, {"user": "Dipsy", "sex": "male", "age": 3}, {"user": "Laa-Laa", "sex": "female", "age": 5}, {"user": "Po", "sex": "female", "age": 4}], "age")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(
@@ -69,7 +69,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true}, {"name": "FastForward", "onBoat": null}], "onBoat")` should return `false`.
+`truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true}, {"name": "FastForward", "onBoat": null}], "onBoat")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(
@@ -85,7 +85,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true, "alias": "Repete"}, {"name": "FastForward", "onBoat": true}], "onBoat")` should return `true`.
+`truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true, "alias": "Repete"}, {"name": "FastForward", "onBoat": true}], "onBoat")` devrait retourner `true`.
 
 ```js
 assert.strictEqual(
@@ -101,13 +101,13 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"single": "yes"}], "single")` should return `true`.
+`truthCheck([{"single": "yes"}], "single")` devrait retourner `true`.
 
 ```js
 assert.strictEqual(truthCheck([{ single: 'yes' }], 'single'), true);
 ```
 
-`truthCheck([{"single": ""}, {"single": "double"}], "single")` should return `false`.
+`truthCheck([{"single": ""}, {"single": "double"}], "single")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(
@@ -116,7 +116,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"single": "double"}, {"single": undefined}], "single")` should return `false`.
+`truthCheck([{"single": "double"}, {"single": undefined}], "single")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(
@@ -125,7 +125,7 @@ assert.strictEqual(
 );
 ```
 
-`truthCheck([{"single": "double"}, {"single": NaN}], "single")` should return `false`.
+`truthCheck([{"single": "double"}, {"single": NaN}], "single")` devrait retourner `false`.
 
 ```js
 assert.strictEqual(

@@ -1,6 +1,6 @@
 ---
 id: 587d78b2367417b2b2512b0f
-title: Remove Items from an Array with pop() and shift()
+title: Supprimer des éléments d'un tableau avec pop() et shift()
 challengeType: 1
 forumTopicId: 301165
 dashedName: remove-items-from-an-array-with-pop-and-shift
@@ -8,9 +8,9 @@ dashedName: remove-items-from-an-array-with-pop-and-shift
 
 # --description--
 
-Both `push()` and `unshift()` have corresponding methods that are nearly functional opposites: `pop()` and `shift()`. As you may have guessed by now, instead of adding, `pop()` *removes* an element from the end of an array, while `shift()` removes an element from the beginning. The key difference between `pop()` and `shift()` and their cousins `push()` and `unshift()`, is that neither method takes parameters, and each only allows an array to be modified by a single element at a time.
+Les méthodes `push()` et `unshift()` ont des méthodes correspondantes qui sont presque des opposés fonctionnels : `pop()` et `shift()`. Comme vous l'avez peut-être deviné, au lieu d'ajouter, `pop()` supprime* un élément à la fin d'un tableau, tandis que `shift()` supprime un élément au début. La principale différence entre `pop()` et `shift()` et leurs cousines `push()` et `unshift()` est qu'aucune de ces méthodes ne prend de paramètres, et qu'elles ne permettent de modifier un tableau que par un seul élément à la fois.
 
-Let's take a look:
+Voyons cela de plus près :
 
 ```js
 let greetings = ['whats up?', 'hello', 'see ya!'];
@@ -18,13 +18,13 @@ let greetings = ['whats up?', 'hello', 'see ya!'];
 greetings.pop();
 ```
 
-`greetings` would have the value `['whats up?', 'hello']`.
+`greetings` aurait la valeur `['whats up?', 'hello']`.
 
 ```js
 greetings.shift();
 ```
 
-`greetings` would have the value `['hello']`.
+`greetings` aurait la valeur `['hello']`.
 
 We can also return the value of the removed element with either method like this:
 
@@ -32,15 +32,15 @@ We can also return the value of the removed element with either method like this
 let popped = greetings.pop();
 ```
 
-`greetings` would have the value `[]`, and `popped` would have the value `hello`.
+`greetings` aurait la valeur `[]`, et `popped` aurait la valeur `hello`.
 
 # --instructions--
 
-We have defined a function, `popShift`, which takes an array as an argument and returns a new array. Modify the function, using `pop()` and `shift()`, to remove the first and last elements of the argument array, and assign the removed elements to their corresponding variables, so that the returned array contains their values.
+Nous avons défini une fonction, `popShift`, qui prend un tableau en argument et renvoie un nouveau tableau. Modifiez la fonction, en utilisant `pop()` et `shift()`, pour supprimer le premier et le dernier élément du tableau en argument, et assignez les éléments supprimés à leurs variables correspondantes, de sorte que le tableau retourné contienne leurs valeurs.
 
 # --hints--
 
-`popShift(["challenge", "is", "not", "complete"])` should return `["challenge", "complete"]`
+`popShift(["challenge", "is", "not", "complete"])` devrait renvoyer `["challenge", "complete"]`
 
 ```js
 assert.deepEqual(popShift(['challenge', 'is', 'not', 'complete']), [
@@ -49,13 +49,13 @@ assert.deepEqual(popShift(['challenge', 'is', 'not', 'complete']), [
 ]);
 ```
 
-The `popShift` function should utilize the `pop()` method
+La fonction `popShift` doit utiliser la méthode `pop()`.
 
 ```js
 assert.notStrictEqual(popShift.toString().search(/\.pop\(/), -1);
 ```
 
-The `popShift` function should utilize the `shift()` method
+La fonction `popShift` doit utiliser la méthode `shift()`.
 
 ```js
 assert.notStrictEqual(popShift.toString().search(/\.shift\(/), -1);
@@ -67,8 +67,8 @@ assert.notStrictEqual(popShift.toString().search(/\.shift\(/), -1);
 
 ```js
 function popShift(arr) {
-  let popped; // Change this line
-  let shifted; // Change this line
+  let popped; // Modifiez cette ligne
+  let shifted; // Modifiez cette ligne
   return [shifted, popped];
 }
 
@@ -79,8 +79,8 @@ console.log(popShift(['challenge', 'is', 'not', 'complete']));
 
 ```js
 function popShift(arr) {
-  let popped = arr.pop(); // Change this line
-  let shifted = arr.shift(); // Change this line
+  let popped = arr.pop(); // Modifiez cette ligne
+  let shifted = arr.shift(); // Modifiez cette ligne
   return [shifted, popped];
 }
 ```

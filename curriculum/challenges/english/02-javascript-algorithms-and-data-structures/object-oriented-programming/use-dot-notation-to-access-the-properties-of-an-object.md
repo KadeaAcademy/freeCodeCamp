@@ -1,6 +1,6 @@
 ---
 id: 587d7dac367417b2b2512b74
-title: Use Dot Notation to Access the Properties of an Object
+title: Utiliser la notation pointée pour accéder aux propriétés d'un objet
 challengeType: 1
 forumTopicId: 301333
 dashedName: use-dot-notation-to-access-the-properties-of-an-object
@@ -8,34 +8,34 @@ dashedName: use-dot-notation-to-access-the-properties-of-an-object
 
 # --description--
 
-The last challenge created an object with various properties. Now you'll see how to access the values of those properties. Here's an example:
+Le dernier défi a permis de créer un objet doté de diverses propriétés. Vous allez maintenant voir comment accéder aux valeurs de ces propriétés. Voici un exemple :
 
 ```js
-let duck = {
-  name: "Aflac",
-  numLegs: 2
+let canard = {
+  nom: "Aflac",
+  nombreDePattes: 2
 };
-console.log(duck.name);
+console.log(canard.nom);
 ```
 
-Dot notation is used on the object name, `duck`, followed by the name of the property, `name`, to access the value of `Aflac`.
+La notation pointée est utilisée sur le nom de l'objet, `canard`, suivi du nom de la propriété, `nom`, pour accéder à la valeur de `Aflac`.
 
 # --instructions--
 
-Print both properties of the `dog` object to your console.
+Affichez les deux propriétés de l'objet `chien` sur votre console.
 
 # --hints--
 
-Your code should use `console.log` to print the value for the `name` property of the `dog` object.
+Votre code doit utiliser `console.log` pour afficher la valeur de la propriété `nom` de l'objet `chien`.
 
 ```js
-assert(/console.log\(.*dog\.name.*\)/g.test(code));
+assert(/console.log\(.*chien\.nom.*\)/g.test(code));
 ```
 
-Your code should use `console.log` to print the value for the `numLegs` property of the `dog` object.
+Votre code doit utiliser `console.log` pour afficher la valeur de la propriété `nombreDePattes` de l'objet `chien`.
 
 ```js
-assert(/console.log\(.*dog\.numLegs.*\)/g.test(code));
+assert(/console.log\(.*chien\.nombreDePattes.*\)/g.test(code));
 ```
 
 # --seed--
@@ -43,20 +43,20 @@ assert(/console.log\(.*dog\.numLegs.*\)/g.test(code));
 ## --seed-contents--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4
 };
-// Only change code below this line
+// Ne modifier que le code situé en dessous de cette ligne
 ```
 
 # --solutions--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4
 };
-console.log(dog.name);
-console.log(dog.numLegs);
+console.log(chien.nom);
+console.log(chien.nombreDePattes);
 ```

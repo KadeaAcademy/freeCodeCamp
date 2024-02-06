@@ -1,6 +1,6 @@
 ---
 id: bd7123c9c441eddfaeb5bdef
-title: Understanding Boolean Values
+title: Comprendre les valeurs booléennes
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c9Me8t4'
 forumTopicId: 301176
@@ -9,23 +9,23 @@ dashedName: understanding-boolean-values
 
 # --description--
 
-Another data type is the <dfn>Boolean</dfn>. Booleans may only be one of two values: `true` or `false`. They are basically little on-off switches, where `true` is on and `false` is off. These two states are mutually exclusive.
+Un autre type de données est le <dfn>Boolean</dfn>. Les booléens ne peuvent prendre que l'une des deux valeurs suivantes : `true` (vrai) ou `false` (faux). Ce sont essentiellement de petits interrupteurs marche-arrêt, où `true` est allumé et `false` est éteint. Ces deux états s'excluent mutuellement.
 
-**Note:** Boolean values are never written with quotes. The strings `"true"` and `"false"` are not Boolean and have no special meaning in JavaScript.
+**Note:** Les valeurs booléennes ne sont jamais écrites avec des guillemets. Les chaînes de caractères `"true"` et `"false"` ne sont pas booléennes et n'ont pas de signification particulière en JavaScript.
 
 # --instructions--
 
-Modify the `welcomeToBooleans` function so that it returns `true` instead of `false` when the run button is clicked.
+Modifiez la fonction `welcomeToBooleans` pour qu'elle renvoie `true` au lieu de `false` lorsque le bouton d'exécution est cliqué. 
 
 # --hints--
 
-The `welcomeToBooleans()` function should return a Boolean (`true` or `false`) value.
+La fonction `welcomeToBooleans()` doit retourner une valeur booléenne (`true` ou `false`).
 
 ```js
 assert(typeof welcomeToBooleans() === 'boolean');
 ```
 
-`welcomeToBooleans()` should return `true`.
+`welcomeToBooleans()` devrait retourner `true`.
 
 ```js
 assert(welcomeToBooleans() === true);
@@ -43,11 +43,11 @@ welcomeToBooleans();
 
 ```js
 function welcomeToBooleans() {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
-  return false; // Change this line
+  return false; // Modifiez cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 ```
 
@@ -55,6 +55,6 @@ function welcomeToBooleans() {
 
 ```js
 function welcomeToBooleans() {
-  return true; // Change this line
+  return true; // Modifiez cette ligne
 }
 ```

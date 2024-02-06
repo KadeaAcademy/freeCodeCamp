@@ -1,6 +1,6 @@
 ---
 id: 587d7daf367417b2b2512b7d
-title: Iterate Over All Properties
+title: Itérer sur toutes les propriétés
 challengeType: 1
 forumTopicId: 301320
 dashedName: iterate-over-all-properties
@@ -8,19 +8,19 @@ dashedName: iterate-over-all-properties
 
 # --description--
 
-You have now seen two kinds of properties: <dfn>own properties</dfn> and `prototype` properties. Own properties are defined directly on the object instance itself. And prototype properties are defined on the `prototype`.
+Vous avez maintenant vu deux types de propriétés : les propriétés propres et les propriétés `prototypes`. Les propriétés propres sont définies directement sur l'instance de l'objet elle-même. Les propriétés de type prototype sont définies sur le `prototype`.
 
 ```js
 function Bird(name) {
-  this.name = name;  //own property
+  this.name = name;  //propriéte propre
 }
 
-Bird.prototype.numLegs = 2; // prototype property
+Bird.prototype.numLegs = 2; // propriété prototype 
 
 let duck = new Bird("Donald");
 ```
 
-Here is how you add `duck`'s own properties to the array `ownProps` and `prototype` properties to the array `prototypeProps`:
+Voici comment ajouter les propriétés de `duck` au tableau `ownProps` et les propriétés `prototype` au tableau `prototypeProps` :
 
 ```js
 let ownProps = [];
@@ -38,27 +38,27 @@ console.log(ownProps);
 console.log(prototypeProps);
 ```
 
-`console.log(ownProps)` would display `["name"]` in the console, and `console.log(prototypeProps)` would display `["numLegs"]`.
+`console.log(ownProps)` afficherait `["name"]` dans la console, et `console.log(prototypeProps)` afficherait `["numLegs"]`.
 
 # --instructions--
 
-Add all of the own properties of `beagle` to the array `ownProps`. Add all of the `prototype` properties of `Dog` to the array `prototypeProps`.
+Ajouter toutes les propriétés propres de `beagle` au tableau `ownProps`. Ajoutez toutes les propriétés `prototype` de `Dog` au tableau `prototypeProps`.
 
 # --hints--
 
-The `ownProps` array should only contain `name`.
+Le tableau `ownProps` ne doit contenir que `name`.
 
 ```js
 assert.deepEqual(ownProps, ['name']);
 ```
 
-The `prototypeProps` array should only contain `numLegs`.
+Le tableau `prototypeProps` ne doit contenir que `numLegs`.
 
 ```js
 assert.deepEqual(prototypeProps, ['numLegs']);
 ```
 
-You should solve this challenge without using the built in method `Object.keys()`.
+Vous devez résoudre ce problème sans utiliser la méthode intégrée `Object.keys()`.
 
 ```js
 assert(!/\Object.keys/.test(code));
@@ -80,7 +80,7 @@ let beagle = new Dog("Snoopy");
 let ownProps = [];
 let prototypeProps = [];
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 ```
 
 # --solutions--

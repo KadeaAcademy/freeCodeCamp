@@ -1,6 +1,6 @@
 ---
 id: 587d7dac367417b2b2512b73
-title: Create a Basic JavaScript Object
+title: Créer un objet JavaScript de base
 challengeType: 1
 forumTopicId: 301317
 dashedName: create-a-basic-javascript-object
@@ -8,45 +8,45 @@ dashedName: create-a-basic-javascript-object
 
 # --description--
 
-Think about things people see every day, like cars, shops, and birds. These are all <dfn>objects</dfn>: tangible things people can observe and interact with.
+Pensez à des choses que l'on voit tous les jours, comme les voitures, les magasins et les oiseaux. Ce sont tous des <dfn>objets</dfn> : des choses tangibles que l'on peut observer et avec lesquelles on peut interagir.
 
-What are some qualities of these objects? A car has wheels. Shops sell items. Birds have wings.
+Quelles sont les qualités de ces objets ? Une voiture a des roues. Les magasins vendent des articles. Les oiseaux ont des ailes.
 
-These qualities, or <dfn>properties</dfn>, define what makes up an object. Note that similar objects share the same properties, but may have different values for those properties. For example, all cars have wheels, but not all cars have the same number of wheels.
+Ces qualités, ou <dfn>propriétés</dfn>, définissent ce qui constitue un objet. Notez que des objets similaires partagent les mêmes propriétés, mais peuvent avoir des valeurs différentes pour ces propriétés. Par exemple, toutes les voitures ont des roues, mais toutes n'ont pas le même nombre de roues.
 
-Objects in JavaScript are used to model real-world objects, giving them properties and behavior just like their real-world counterparts. Here's an example using these concepts to create a `duck` object:
+Les objets en JavaScript sont utilisés pour modéliser des objets du monde réel, en leur donnant des propriétés et un comportement identiques à ceux de leurs homologues du monde réel. Voici un exemple utilisant ces concepts pour créer un objet `canard` :
 
 ```js
-let duck = {
-  name: "Aflac",
-  numLegs: 2
-};
+let canard = {
+  nom : "Aflac",
+  nombreDePattes : 2
+} ;
 ```
 
-This `duck` object has two property/value pairs: a `name` of `Aflac` and a `numLegs` of 2.
+Cet objet `canard` a deux paires propriété/valeur : un `nom` de `Aflac` et un `nombreDePattes` de 2.
 
 # --instructions--
 
-Create a `dog` object with `name` and `numLegs` properties, and set them to a string and a number, respectively.
+Créez un objet `chien` avec les propriétés `nom` et `nombreDePattes`, et définissez-les respectivement à une chaîne de caractères et à un nombre.
 
 # --hints--
 
-`dog` should be an object.
+`chien` devrait être un objet
 
 ```js
-assert(typeof dog === 'object');
+assert(typeof chien === 'object');
 ```
 
-`dog` should have a `name` property set to a string.
+`chien` doit avoir une propriété `nom` qui est une chaîne de caractères.
 
 ```js
-assert(typeof dog.name === 'string');
+assert(typeof chien.nom === 'string');
 ```
 
-`dog` should have a `numLegs` property set to a number.
+`chien` doit avoir une propriété `nombreDePattes` qui doit être un nombre.
 
 ```js
-assert(typeof dog.numLegs === 'number');
+assert(typeof chien.nombreDePattes === 'number');
 ```
 
 # --seed--
@@ -54,7 +54,7 @@ assert(typeof dog.numLegs === 'number');
 ## --seed-contents--
 
 ```js
-let dog = {
+let chien = {
 
 };
 ```
@@ -62,8 +62,8 @@ let dog = {
 # --solutions--
 
 ```js
-let dog = {
-  name: '',
-  numLegs: 4
+let chien = {
+  nom: '',
+  nombreDePattes: 4
 };
 ```

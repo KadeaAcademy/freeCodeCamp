@@ -1,6 +1,6 @@
 ---
 id: bd7123c9c448eddfaeb5bdef
-title: Find the Length of a String
+title: Trouver la longueur d'une chaîne de caractères
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cvmqEAd'
 forumTopicId: 18182
@@ -9,23 +9,23 @@ dashedName: find-the-length-of-a-string
 
 # --description--
 
-You can find the length of a `String` value by writing `.length` after the string variable or string literal.
+Vous pouvez trouver la longueur d'une valeur `String` en écrivant `.length` après la variable string ou le littéral string.
 
 ```js
 console.log("Alan Peter".length);
 ```
 
-The value `10` would be displayed in the console.
+La valeur `10` sera affichée dans la console.
 
-For example, if we created a variable `const firstName = "Ada"`, we could find out how long the string `Ada` is by using the `firstName.length` property.
+Par exemple, si nous avons créé une variable `const firstName = "Ada"`, nous pourrions découvrir la longueur de la chaîne `Ada` en utilisant la propriété `firstName.length`.
 
 # --instructions--
 
-Use the `.length` property to count the number of characters in the `lastName` variable and assign it to `lastNameLength`.
+Utilisez la propriété `.length` pour compter le nombre de caractères de la variable `lastName` et l'affecter à `lastNameLength`.
 
 # --hints--
 
-You should not change the variable declarations in the `// Setup` section.
+Vous ne devez pas modifier les déclarations de variables dans la section `// Setup`.
 
 ```js
 assert(
@@ -34,13 +34,13 @@ assert(
 );
 ```
 
-`lastNameLength` should be equal to eight.
+`lastNameLength` doit être égal à huit.
 
 ```js
 assert(typeof lastNameLength !== 'undefined' && lastNameLength === 8);
 ```
 
-You should be getting the length of `lastName` by using `.length` like this: `lastName.length`.
+Vous devriez obtenir la longueur de `lastName` en utilisant `.length` comme ceci : `lastName.length`.
 
 ```js
 assert(code.match(/=\s*lastName\.length/g) && !code.match(/lastName\s*=\s*8/));
@@ -55,7 +55,7 @@ assert(code.match(/=\s*lastName\.length/g) && !code.match(/lastName\s*=\s*8/));
 let lastNameLength = 0;
 const lastName = "Lovelace";
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 lastNameLength = lastName;
 ```
 

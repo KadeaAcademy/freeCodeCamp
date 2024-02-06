@@ -1,6 +1,6 @@
 ---
 id: ab306dbdcc907c7ddfc30830
-title: Steamroller
+title: Rouleau compresseur
 challengeType: 5
 forumTopicId: 16079
 dashedName: steamroller
@@ -8,35 +8,35 @@ dashedName: steamroller
 
 # --description--
 
-Flatten a nested array. You must account for varying levels of nesting.
+Aplatir un tableau imbriqué. Vous devez tenir compte des différents niveaux d'imbrication.
 
 # --hints--
 
-`steamrollArray([[["a"]], [["b"]]])` should return `["a", "b"]`.
+`steamrollArray([[["a"]], [["b"]]])` devrait retourner `["a", "b"]`.
 
 ```js
 assert.deepEqual(steamrollArray([[['a']], [['b']]]), ['a', 'b']);
 ```
 
-`steamrollArray([1, [2], [3, [[4]]]])` should return `[1, 2, 3, 4]`.
+`steamrollArray([1, [2], [3, [[4]]]])` devrait retourner `[1, 2, 3, 4]`.
 
 ```js
 assert.deepEqual(steamrollArray([1, [2], [3, [[4]]]]), [1, 2, 3, 4]);
 ```
 
-`steamrollArray([1, [], [3, [[4]]]])` should return `[1, 3, 4]`.
+`steamrollArray([1, [], [3, [[4]]]])` devrait retourner `[1, 3, 4]`.
 
 ```js
 assert.deepEqual(steamrollArray([1, [], [3, [[4]]]]), [1, 3, 4]);
 ```
 
-`steamrollArray([1, {}, [3, [[4]]]])` should return `[1, {}, 3, 4]`.
+`steamrollArray([1, {}, [3, [[4]]]])` devrait retourner `[1, {}, 3, 4]`.
 
 ```js
 assert.deepEqual(steamrollArray([1, {}, [3, [[4]]]]), [1, {}, 3, 4]);
 ```
 
-Your solution should not use the `Array.prototype.flat()` or `Array.prototype.flatMap()` methods.
+Votre solution ne doit pas utiliser les méthodes `Array.prototype.flat()` ou `Array.prototype.flatMap()`.
 
 ```js
 assert(!code.match(/\.\s*flat\s*\(/) && !code.match(/\.\s*flatMap\s*\(/));

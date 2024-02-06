@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d2
-title: Comparison with the Inequality Operator
+title: Comparaison avec l'opérateur d'inégalité
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cdBm9Sr'
 forumTopicId: 16787
@@ -9,7 +9,7 @@ dashedName: comparison-with-the-inequality-operator
 
 # --description--
 
-The inequality operator (`!=`) is the opposite of the equality operator. It means not equal and returns `false` where equality would return `true` and *vice versa*. Like the equality operator, the inequality operator will convert data types of values while comparing.
+L'opérateur d'inégalité (`!=`) est l'opposé de l'opérateur d'égalité. Il signifie non égal et renvoie `false` alors que l'égalité renvoie `true` et *vice versa*. Comme l'opérateur d'égalité, l'opérateur d'inégalité convertit les types de données des valeurs lors de la comparaison.
 
 **Examples**
 
@@ -23,41 +23,41 @@ The inequality operator (`!=`) is the opposite of the equality operator. It mean
 
 # --instructions--
 
-Add the inequality operator `!=` in the `if` statement so that the function will return the string `Not Equal` when `val` is not equivalent to `99`.
+Ajoutez l'opérateur d'inégalité `!=` dans l'instruction `if` pour que la fonction renvoie la chaîne `Pas Egal` lorsque `val` n'est pas équivalent à `99`.
 
 # --hints--
 
-`testNotEqual(99)` should return the string `Equal`
+`testNotEqual(99)` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testNotEqual(99) === 'Equal');
+assert(testNotEqual(99) === 'Egal');
 ```
 
-`testNotEqual("99")` should return the string `Equal`
+`testNotEqual("99")` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testNotEqual('99') === 'Equal');
+assert(testNotEqual('99') === 'Egal');
 ```
 
-`testNotEqual(12)` should return the string `Not Equal`
+`testNotEqual(12)` doit retourner la chaîne `Pas Egal`
 
 ```js
-assert(testNotEqual(12) === 'Not Equal');
+assert(testNotEqual(12) === 'Pas Egal');
 ```
 
-`testNotEqual("12")` should return the string `Not Equal`
+`testNotEqual("12")` devrait renvoyer la chaîne `Pas Egal`.
 
 ```js
-assert(testNotEqual('12') === 'Not Equal');
+assert(testNotEqual('12') === 'Pas Egal');
 ```
 
-`testNotEqual("bob")` should return the string `Not Equal`
+`testNotEqual("bob")` doit retourner la chaîne `Pas Egal`
 
 ```js
-assert(testNotEqual('bob') === 'Not Equal');
+assert(testNotEqual('bob') === 'Pas Egal');
 ```
 
-You should use the `!=` operator
+Vous devez utiliser l'opérateur `!=`.
 
 ```js
 assert(code.match(/(?!!==)!=/));
@@ -70,10 +70,10 @@ assert(code.match(/(?!!==)!=/));
 ```js
 // Setup
 function testNotEqual(val) {
-  if (val) { // Change this line
-    return "Not Equal";
+  if (val) { // Modifiez cette ligne
+    return "Pas Egal";
   }
-  return "Equal";
+  return "Egal";
 }
 
 testNotEqual(10);
@@ -84,8 +84,8 @@ testNotEqual(10);
 ```js
 function testNotEqual(val) {
   if (val != 99) {
-    return "Not Equal";
+    return "Pas Egal";
   }
-  return "Equal";
+  return "Egal";
 }
 ```

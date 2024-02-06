@@ -1,6 +1,6 @@
 ---
 id: 587d7b8c367417b2b2512b57
-title: Use * to Import Everything from a File
+title: Utiliser * pour tout importer d'un fichier
 challengeType: 1
 forumTopicId: 301210
 dashedName: use--to-import-everything-from-a-file
@@ -8,13 +8,13 @@ dashedName: use--to-import-everything-from-a-file
 
 # --description--
 
-Suppose you have a file and you wish to import all of its contents into the current file. This can be done with the `import * as` syntax. Here's an example where the contents of a file named `math_functions.js` are imported into a file in the same directory:
+Supposons que vous ayez un fichier et que vous souhaitiez importer tout son contenu dans le fichier courant. Ceci peut être fait avec la syntaxe `import * as`. Voici un exemple où le contenu d'un fichier nommé `math_functions.js` est importé dans un fichier situé dans le même répertoire :
 
 ```js
 import * as myMathModule from "./math_functions.js";
 ```
 
-The above `import` statement will create an object called `myMathModule`. This is just a variable name, you can name it anything. The object will contain all of the exports from `math_functions.js` in it, so you can access the functions like you would any other object property. Here's how you can use the `add` and `subtract` functions that were imported:
+L'instruction `import` ci-dessus va créer un objet appelé `myMathModule`. C'est juste un nom de variable, vous pouvez le nommer comme vous voulez. L'objet contiendra toutes les exportations de `math_functions.js`, vous pourrez donc accéder aux fonctions comme vous le feriez avec n'importe quelle autre propriété d'objet. Voici comment vous pouvez utiliser les fonctions `add` et `subtract` qui ont été importées :
 
 ```js
 myMathModule.add(2,3);
@@ -23,11 +23,11 @@ myMathModule.subtract(5,3);
 
 # --instructions--
 
-The code in this file requires the contents of the file: `string_functions.js`, that is in the same directory as the current file. Use the `import * as` syntax to import everything from the file into an object called `stringFunctions`.
+Le code dans ce fichier nécessite le contenu du fichier : `string_functions.js`, qui se trouve dans le même répertoire que le fichier courant. Utilisez la syntaxe `import * as` pour importer tout ce qui se trouve dans le fichier dans un objet appelé `stringFunctions`.
 
 # --hints--
 
-Your code should properly use `import * as` syntax.
+Votre code devrait utiliser correctement la syntaxe `import * as`.
 
 ```js
 assert(
@@ -43,7 +43,7 @@ assert(
 
 ```js
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 stringFunctions.uppercaseString("hello");
 stringFunctions.lowercaseString("WORLD!");
@@ -54,7 +54,7 @@ stringFunctions.lowercaseString("WORLD!");
 ```js
 import * as stringFunctions from "./string_functions.js";
 
-// add code above this line
+// ajouter le code au-dessus de cette ligne
 stringFunctions.uppercaseString("hello");
 stringFunctions.lowercaseString("WORLD!");
 ```

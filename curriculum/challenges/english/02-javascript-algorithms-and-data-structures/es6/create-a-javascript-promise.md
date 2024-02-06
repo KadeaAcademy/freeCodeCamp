@@ -1,6 +1,6 @@
 ---
 id: 5cdafbb0291309899753167f
-title: Create a JavaScript Promise
+title: Créer une promesse en JavaScript
 challengeType: 1
 forumTopicId: 301197
 dashedName: create-a-javascript-promise
@@ -8,7 +8,7 @@ dashedName: create-a-javascript-promise
 
 # --description--
 
-A promise in JavaScript is exactly what it sounds like - you use it to make a promise to do something, usually asynchronously. When the task completes, you either fulfill your promise or fail to do so. `Promise` is a constructor function, so you need to use the `new` keyword to create one. It takes a function, as its argument, with two parameters - `resolve` and `reject`. These are methods used to determine the outcome of the promise. The syntax looks like this:
+Une promesse en JavaScript est exactement ce à quoi elle ressemble : vous l'utilisez pour promettre de faire quelque chose, généralement de manière asynchrone. Lorsque la tâche est terminée, vous remplissez votre promesse ou vous ne la remplissez pas. La fonction `Promise` est une fonction constructeur, vous devez donc utiliser le mot-clé `new` pour en créer une. Elle prend une fonction, comme argument, avec deux paramètres - `resolve` et `reject`. Ce sont des méthodes utilisées pour déterminer le résultat de la promesse. La syntaxe ressemble à ceci :
 
 ```js
 const myPromise = new Promise((resolve, reject) => {
@@ -18,17 +18,17 @@ const myPromise = new Promise((resolve, reject) => {
 
 # --instructions--
 
-Create a new promise called `makeServerRequest`. Pass in a function with `resolve` and `reject` parameters to the constructor.
+Créez une nouvelle promesse appelée `makeServerRequest`. Passez une fonction avec les paramètres `resolve` et `reject` au constructeur.
 
 # --hints--
 
-You should assign a promise to a declared variable named `makeServerRequest`.
+Vous devez assigner une promesse à une variable déclarée nommée `makeServerRequest`.
 
 ```js
 assert(makeServerRequest instanceof Promise);
 ```
 
-Your promise should receive a function with `resolve` and `reject` as parameters.
+Votre promesse devrait recevoir une fonction avec `resolve` et `reject` comme paramètres.
 
 ```js
 assert(

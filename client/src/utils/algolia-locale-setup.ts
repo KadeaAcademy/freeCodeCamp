@@ -37,6 +37,10 @@ const algoliaIndices = {
   japanese: {
     name: 'news',
     searchPage: 'https://www.freecodecamp.org/japanese/news/search/'
+  },
+  french: {
+    name: 'news',
+    searchPage: 'https://www.freecodecamp.org/japanese/news/search/'
   }
 };
 

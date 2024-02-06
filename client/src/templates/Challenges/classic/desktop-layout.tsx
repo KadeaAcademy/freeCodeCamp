@@ -107,22 +107,29 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
   return (
     <div className='desktop-layout'>
       {(projectBasedChallenge || isMultiFileCertProject) && (
-        <ActionRow
-          block={block}
-          hasNotes={hasNotes}
-          showConsole={showConsole}
-          showNotes={showNotes}
-          showPreview={showPreview}
-          superBlock={superBlock}
-          togglePane={togglePane}
-        />
+        <div className=''>
+          <ActionRow
+            block={block}
+            hasNotes={hasNotes}
+            showConsole={showConsole}
+            showNotes={showNotes}
+            showPreview={showPreview}
+            superBlock={superBlock}
+            togglePane={togglePane}
+          />
+        </div>
       )}
-      <ReflexContainer orientation='vertical'>
+      <ReflexContainer className='editor-border-top' orientation='vertical'>
         {!projectBasedChallenge && (
-          <ReflexElement flex={instructionPane.flex} {...resizeProps}>
+          <ReflexElement
+            className='padding-t-b-10 bg-light'
+            flex={instructionPane.flex}
+            {...resizeProps}
+          >
             {instructions}
           </ReflexElement>
         )}
+
         {!projectBasedChallenge && (
           <ReflexSplitter propagate={true} {...resizeProps} />
         )}
@@ -134,15 +141,18 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
               orientation='horizontal'
             >
               <ReflexElement
+                className='padding-t-b-10 bg-light'
                 flex={codePane.flex}
                 {...reflexProps}
                 {...resizeProps}
               >
                 {editor}
               </ReflexElement>
+
               {displayConsole && (
                 <ReflexSplitter propagate={true} {...resizeProps} />
               )}
+
               {displayConsole && (
                 <ReflexElement
                   flex={testsPane.flex}
@@ -155,7 +165,9 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
             </ReflexContainer>
           )}
         </ReflexElement>
+
         {displayNotes && <ReflexSplitter propagate={true} {...resizeProps} />}
+
         {displayNotes && (
           <ReflexElement flex={notesPane.flex} {...resizeProps}>
             {notes}
@@ -164,7 +176,11 @@ const DesktopLayout = (props: DesktopLayoutProps): JSX.Element => {
 
         {displayPreview && <ReflexSplitter propagate={true} {...resizeProps} />}
         {displayPreview && (
-          <ReflexElement flex={previewPane.flex} {...resizeProps}>
+          <ReflexElement
+            className='padding-t-b-10 bg-light'
+            flex={previewPane.flex}
+            {...resizeProps}
+          >
             {preview}
           </ReflexElement>
         )}

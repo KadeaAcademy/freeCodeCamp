@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244da
-title: Introducing Else Statements
+title: Introduction des instructions Else
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cek4Efq'
 forumTopicId: 18207
@@ -9,59 +9,59 @@ dashedName: introducing-else-statements
 
 # --description--
 
-When a condition for an `if` statement is true, the block of code following it is executed. What about when that condition is false? Normally nothing would happen. With an `else` statement, an alternate block of code can be executed.
+Lorsqu'une condition d'une instruction `if` est vraie, le bloc de code qui la suit est exécuté. Qu'en est-il lorsque cette condition est fausse ? Normalement, il ne se passe rien. Avec une instruction `else`, un autre bloc de code peut être exécuté.
 
 ```js
 if (num > 10) {
-  return "Bigger than 10";
+  return "Plus grand que 10";
 } else {
-  return "10 or Less";
+  return "10 ou moins";
 }
 ```
 
 # --instructions--
 
-Combine the `if` statements into a single `if/else` statement.
+Combinez les instructions `if` en une seule instruction `if/else`.
 
 # --hints--
 
-You should only have one `if` statement in the editor
+Vous ne devez avoir qu'une seule instruction `if` dans l'éditeur.
 
 ```js
 assert(code.match(/if/g).length === 1);
 ```
 
-You should use an `else` statement
+Vous devez utiliser une instruction `else`.
 
 ```js
 assert(/else/g.test(code));
 ```
 
-`testElse(4)` should return the string `5 or Smaller`
+`testElse(4)` devrait renvoyer la chaîne `5 ou plus petit`.
 
 ```js
-assert(testElse(4) === '5 or Smaller');
+assert(testElse(4) === '5 ou plus petit');
 ```
 
-`testElse(5)` should return the string `5 or Smaller`
+`testElse(5)` devrait renvoyer la chaîne `5 ou plus petit`
 
 ```js
-assert(testElse(5) === '5 or Smaller');
+assert(testElse(5) === '5 ou plus petit');
 ```
 
-`testElse(6)` should return the string `Bigger than 5`
+`testElse(6)` devrait renvoyer la chaîne `Plus grand que 5`
 
 ```js
-assert(testElse(6) === 'Bigger than 5');
+assert(testElse(6) === 'Plus grand que 5');
 ```
 
-`testElse(10)` should return the string `Bigger than 5`
+`testElse(10)` devrait renvoyer la chaîne `Plus grand que 5`
 
 ```js
-assert(testElse(10) === 'Bigger than 5');
+assert(testElse(10) === 'Plus grand que 5');
 ```
 
-You should not change the code above or below the specified comments.
+Vous ne devez pas modifier le code au-dessus ou au-dessous des commentaires spécifiés.
 
 ```js
 assert(/let result = "";/.test(code) && /return result;/.test(code));
@@ -74,17 +74,17 @@ assert(/let result = "";/.test(code) && /return result;/.test(code));
 ```js
 function testElse(val) {
   let result = "";
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
   if (val > 5) {
-    result = "Bigger than 5";
+    result = "Plus grand que 5";
   }
 
   if (val <= 5) {
-    result = "5 or Smaller";
+    result = "5 ou plus petit";
   }
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return result;
 }
 
@@ -97,9 +97,9 @@ testElse(4);
 function testElse(val) {
   let result = "";
   if(val > 5) {
-    result = "Bigger than 5";
+    result = "Plus grand que 5";
   } else {
-    result = "5 or Smaller";
+    result = "5 ou plus petit";
   }
   return result;
 }

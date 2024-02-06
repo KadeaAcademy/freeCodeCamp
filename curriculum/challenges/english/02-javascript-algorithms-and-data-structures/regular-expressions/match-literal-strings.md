@@ -1,6 +1,6 @@
 ---
 id: 587d7db3367417b2b2512b8f
-title: Match Literal Strings
+title: Faire correspondre des chaînes littérales
 challengeType: 1
 forumTopicId: 301355
 dashedName: match-literal-strings
@@ -8,7 +8,7 @@ dashedName: match-literal-strings
 
 # --description--
 
-In the last challenge, you searched for the word `Hello` using the regular expression `/Hello/`. That regex searched for a literal match of the string `Hello`. Here's another example searching for a literal match of the string `Kevin`:
+Dans le dernier défi, vous avez recherché le mot `Hello` à l'aide de l'expression régulière `/Hello/`. Cette expression régulière recherchait une correspondance littérale de la chaîne `Hello`. Voici un autre exemple de recherche d'une correspondance littérale de la chaîne `Kevin` :
 
 ```js
 let testStr = "Hello, my name is Kevin.";
@@ -16,40 +16,40 @@ let testRegex = /Kevin/;
 testRegex.test(testStr);
 ```
 
-This `test` call will return `true`.
+Cet appel de `test` retournera `true`.
 
-Any other forms of `Kevin` will not match. For example, the regex `/Kevin/` will not match `kevin` or `KEVIN`.
+Toute autre forme de `Kevin` ne correspondra pas. Par exemple, l'expression rationnelle `/Kevin/` ne correspondra pas à `kevin` ou `KEVIN`.
 
 ```js
 let wrongRegex = /kevin/;
 wrongRegex.test(testStr);
 ```
 
-This `test` call will return `false`.
+Cet appel `test` retournera `false`.
 
-A future challenge will show how to match those other forms as well.
+Un prochain défi montrera comment faire correspondre ces autres formes également.
 
 # --instructions--
 
-Complete the regex `waldoRegex` to find `"Waldo"` in the string `waldoIsHiding` with a literal match.
+Complétez la regex `waldoRegex` pour trouver `"Waldo"` dans la chaîne `waldoIsHiding` avec une correspondance littérale.
 
 # --hints--
 
-Your regex `waldoRegex` should find the string `Waldo`
+Votre regex `waldoRegex` devrait trouver la chaîne `Waldo`.
 
 ```js
 waldoRegex.lastIndex = 0;
 assert(waldoRegex.test(waldoIsHiding));
 ```
 
-Your regex `waldoRegex` should not search for anything else.
+Votre regex `waldoRegex` ne doit pas chercher autre chose.
 
 ```js
 waldoRegex.lastIndex = 0;
 assert(!waldoRegex.test('Somewhere is hiding in this text.'));
 ```
 
-You should perform a literal string match with your regex.
+Vous devez effectuer une correspondance de chaîne littérale avec votre regex.
 
 ```js
 assert(!/\/.*\/i/.test(code));
@@ -61,7 +61,7 @@ assert(!/\/.*\/i/.test(code));
 
 ```js
 let waldoIsHiding = "Somewhere Waldo is hiding in this text.";
-let waldoRegex = /search/; // Change this line
+let waldoRegex = /search/; // Modifiez cette ligne
 let result = waldoRegex.test(waldoIsHiding);
 ```
 
@@ -69,6 +69,6 @@ let result = waldoRegex.test(waldoIsHiding);
 
 ```js
 let waldoIsHiding = "Somewhere Waldo is hiding in this text.";
-let waldoRegex = /Waldo/; // Change this line
+let waldoRegex = /Waldo/; // Modifiez cette ligne
 let result = waldoRegex.test(waldoIsHiding);
 ```

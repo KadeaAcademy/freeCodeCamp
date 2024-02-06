@@ -8,3 +8,5 @@ export { default as Link } from './link';
 export { default as ImageLoader } from './image-loader';
 export { default as AvatarRenderer } from './avatar-renderer';
 export { default as borderColorPicker } from './border-color-picker';
+export { default as splitArray } from './split-array';
+export { default as renderCourseCardSkeletons } from './render-course-card-skeletons';

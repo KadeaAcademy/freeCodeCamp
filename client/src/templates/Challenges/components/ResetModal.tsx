@@ -1,7 +1,6 @@
 // Package Utilities
 import { Button, Modal } from '@freecodecamp/react-bootstrap';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
@@ -45,7 +44,6 @@ function withActions(...fns: Array<() => void>) {
 
 // Component
 function ResetModal({ reset, close, isOpen }: ResetModalProps): JSX.Element {
-  const { t } = useTranslation();
   if (isOpen) {
     executeGA({ type: 'modal', data: '/reset-modal' });
   }
@@ -58,24 +56,31 @@ function ResetModal({ reset, close, isOpen }: ResetModalProps): JSX.Element {
       show={isOpen}
     >
       <Modal.Header className='reset-modal-header' closeButton={true}>
-        <Modal.Title className='text-center'>{t('learn.reset')}</Modal.Title>
+        <Modal.Title className='text-center'>
+          {'Réinitialiser cette leçon'}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body className='reset-modal-body'>
         <div className='text-center'>
-          <p>{t('learn.reset-warn')}</p>
           <p>
-            <em>{t('learn.reset-warn-2')}</em>.
+            {
+              'Êtes-vous sûr de vouloir réinitialiser cette leçon ? Les éditeurs et les tests seront réinitialisés.'
+            }
+          </p>
+          <p>
+            <em>{'Cela ne peut être défait'}</em>.
           </p>
         </div>
       </Modal.Body>
       <Modal.Footer className='reset-modal-footer'>
         <Button
+          className='action-btn btn-secondary standard-radius-5'
           block={true}
           bsSize='large'
           bsStyle='danger'
           onClick={withActions(reset, close)}
         >
-          {t('buttons.reset-lesson')}
+          {'Réinitialiser cette leçon'}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -1,4 +1,4 @@
-import { Row, Col, Button, Grid } from '@freecodecamp/react-bootstrap';
+import { Row, Col, Grid } from '@freecodecamp/react-bootstrap';
 import React, { useEffect, useRef } from 'react';
 import Helmet from 'react-helmet';
 import { TFunction, withTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import type { Dispatch } from 'redux';
 import { createSelector } from 'reselect';
 import IntroDescription from '../components/Intro/components/IntroDescription';
 import createRedirect from '../components/create-redirect';
-import { ButtonSpacer, Spacer } from '../components/helpers';
+import { Spacer } from '../components/helpers';
 
 import { acceptTerms, userSelector } from '../redux';
 
@@ -32,9 +32,9 @@ const RedirectToLearn = createRedirect('/learn');
 
 function AcceptPrivacyTerms({
   acceptTerms,
-  acceptedPrivacyTerms,
-  t
-}: AcceptPrivacyTermsProps) {
+  acceptedPrivacyTerms
+}: // t
+AcceptPrivacyTermsProps) {
   const acceptedPrivacyRef = useRef(acceptedPrivacyTerms);
   const acceptTermsRef = useRef(acceptTerms);
   useEffect(() => {
@@ -55,57 +55,21 @@ function AcceptPrivacyTerms({
     };
   }, []);
 
-  function onClick(isWeeklyEmailAccepted: boolean) {
-    acceptTerms(isWeeklyEmailAccepted);
-  }
-
   return acceptedPrivacyTerms ? (
     <RedirectToLearn />
   ) : (
     <>
       <Helmet>
-        <title>{t('misc.email-signup')} | freeCodeCamp.org</title>
+        {/* <title>{t('misc.email-signup')} | Code Learning Plateform</title> */}
+        <title>{`Inscription réussie`} | Kadea Online</title>
       </Helmet>
       <Grid>
         <Row>
           <Col md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
             <Spacer />
-            <IntroDescription />
-            <hr />
-          </Col>
-        </Row>
-        <Row className='email-sign-up' data-cy='email-sign-up'>
-          <Col md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
-            <strong>{t('misc.quincy')}</strong>
-            <Spacer />
-            <p>{t('misc.email-blast')}</p>
-            <Spacer />
-          </Col>
-          <Col md={4} mdOffset={2} sm={5} smOffset={1} xs={12}>
-            <Button
-              block={true}
-              bsSize='lg'
-              bsStyle='primary'
-              className='big-cta-btn'
-              onClick={() => onClick(true)}
-            >
-              {t('buttons.yes-please')}
-            </Button>
-            <ButtonSpacer />
-          </Col>
-          <Col md={4} sm={5} xs={12}>
-            <Button
-              block={true}
-              bsSize='lg'
-              bsStyle='primary'
-              className='big-cta-btn'
-              onClick={() => onClick(false)}
-            >
-              {t('buttons.no-thanks')}
-            </Button>
-            <ButtonSpacer />
-          </Col>
-          <Col xs={12}>
+            <div className='p-3-2 bg-secondary'>
+              <IntroDescription />
+            </div>
             <Spacer />
           </Col>
         </Row>

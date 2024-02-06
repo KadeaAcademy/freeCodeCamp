@@ -1,0 +1,110 @@
+.learn-section {
+  background-color: #202020;
+  padding: 5rem 0 0;
+}
+
+.learn-section-title {
+  font-size: 2.375rem;
+  font-weight: 900;
+  color: #e60000;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.learn-cards-section {
+  width: 100%;
+  margin: 3rem 0 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.learn-card-item {
+  width: 47%;
+  background-color: #e60000;
+  /* For browsers that do not support gradients */
+  background: linear-gradient(
+    180deg,
+    #e62020 0%,
+    #e62020 0.01%,
+    rgba(229, 32, 32, 0.3) 0.02%,
+    #980d0d 34.9%,
+    #d50303 100%
+  );
+  display: flex;
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  color: #ffffff;
+  justify-content: space-between;
+}
+
+.learn-title-of-card {
+  font-size: 1.563rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.learn-description-of-card {
+  font-size: 1rem;
+}
+
+.learn-picture {
+  font-size: 2.536;
+}
+
+.learn-round {
+  display: flex;
+  justify-content: space-between;
+}
+
+.learn-picture {
+  height: 200px !important;
+  width: 200px !important;
+}
+
+@media only screen and (max-width: 1300px) {
+  .learn-cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  .learn-card-item {
+    justify-content: space-between !important;
+    width: 450px;
+    margin: 2rem;
+    align-items: center;
+  }
+
+  .learn-picture {
+    height: 150px !important;
+    width: 150px !important;
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+  .learn-cards-section {
+    display: flex;
+    justify-content: space-between !important;
+  }
+
+  .learn-card-item {
+    justify-content: space-between !important;
+    width: 47%;
+    margin: 2rem 0;
+    align-items: center;
+  }
+
+  .learn-picture {
+    height: 100px !important;
+    width: 100px !important;
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .learn-picture {
+    display: none;
+  }
+}

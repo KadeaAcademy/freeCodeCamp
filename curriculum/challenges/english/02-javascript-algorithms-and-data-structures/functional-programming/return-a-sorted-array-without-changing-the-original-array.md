@@ -1,6 +1,6 @@
 ---
 id: 587d7da9367417b2b2512b6a
-title: Return a Sorted Array Without Changing the Original Array
+title: Renvoyer un tableau trié sans modifier le tableau d'origine
 challengeType: 1
 forumTopicId: 301237
 dashedName: return-a-sorted-array-without-changing-the-original-array
@@ -8,27 +8,27 @@ dashedName: return-a-sorted-array-without-changing-the-original-array
 
 # --description--
 
-A side effect of the `sort` method is that it changes the order of the elements in the original array. In other words, it mutates the array in place. One way to avoid this is to first concatenate an empty array to the one being sorted (remember that `slice` and `concat` return a new array), then run the `sort` method.
+Un effet secondaire de la méthode `sort` est qu'elle change l'ordre des éléments dans le tableau original. En d'autres termes, elle modifie le tableau en place. Une façon d'éviter cela est de concaténer un tableau vide au tableau à trier (rappelez-vous que `slice` et `concat` renvoient un nouveau tableau), puis d'exécuter la méthode `sort`.
 
 # --instructions--
 
-Use the `sort` method in the `nonMutatingSort` function to sort the elements of an array in ascending order. The function should return a new array, and not mutate the `globalArray` variable.
+Utilisez la méthode `sort` dans la fonction `nonMutatingSort` pour trier les éléments d'un tableau par ordre croissant. La fonction doit retourner un nouveau tableau et ne pas modifier la variable `globalArray`.
 
 # --hints--
 
-Your code should use the `sort` method.
+Votre code doit utiliser la méthode `sort`.
 
 ```js
 assert(nonMutatingSort.toString().match(/\.sort/g));
 ```
 
-The `globalArray` variable should not change.
+La variable `globalArray` ne doit pas changer.
 
 ```js
 assert(JSON.stringify(globalArray) === JSON.stringify([5, 6, 3, 2, 9]));
 ```
 
-`nonMutatingSort(globalArray)` should return `[2, 3, 5, 6, 9]`.
+`nonMutatingSort(globalArray)` devrait retourner `[2, 3, 5, 6, 9]`.
 
 ```js
 assert(
@@ -37,26 +37,26 @@ assert(
 );
 ```
 
-`nonMutatingSort(globalArray)` should not be hard coded.
+`nonMutatingSort(globalArray)` ne doit pas être codée en dur.
 
 ```js
 assert(!nonMutatingSort.toString().match(/\[.*?[23569].*?\]/gs));
 ```
 
-The function should return a new array, not the array passed to it.
+La fonction doit renvoyer un nouveau tableau, et non le tableau qui lui a été transmis.
 
 ```js
 assert(nonMutatingSort(globalArray) !== globalArray);
 ```
 
-`nonMutatingSort([1, 30, 4, 21, 100000])` should return `[1, 4, 21, 30, 100000]`.
+`nonMutatingSort([1, 30, 4, 21, 100000])` doit retourner `[1, 4, 21, 30, 100000]`.
 
 ```js
 assert(JSON.stringify(nonMutatingSort([1, 30, 4, 21, 100000])) ===
     JSON.stringify([1, 4, 21, 30, 100000]))
 ```
 
-`nonMutatingSort([140000, 104, 99])` should return `[99, 104, 140000]`.
+`nonMutatingSort([140000, 104, 99])` doit retourner `[99, 104, 140000]`.
 
 ```js
 assert(JSON.stringify(nonMutatingSort([140000, 104, 99])) ===
@@ -71,10 +71,10 @@ assert(JSON.stringify(nonMutatingSort([140000, 104, 99])) ===
 const globalArray = [5, 6, 3, 2, 9];
 
 function nonMutatingSort(arr) {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 
 nonMutatingSort(globalArray);

@@ -1,6 +1,6 @@
 ---
 id: 587d78b2367417b2b2512b0e
-title: Add Items to an Array with push() and unshift()
+title: Ajouter des éléments à un tableau avec push() et unshift()
 challengeType: 1
 forumTopicId: 301151
 dashedName: add-items-to-an-array-with-push-and-unshift
@@ -8,9 +8,9 @@ dashedName: add-items-to-an-array-with-push-and-unshift
 
 # --description--
 
-An array's length, like the data types it can contain, is not fixed. Arrays can be defined with a length of any number of elements, and elements can be added or removed over time; in other words, arrays are <dfn>mutable</dfn>. In this challenge, we will look at two methods with which we can programmatically modify an array: `Array.push()` and `Array.unshift()`.
+La longueur d'un tableau, comme les types de données qu'il peut contenir, n'est pas fixe. Les tableaux peuvent être définis avec une longueur de n'importe quel nombre d'éléments, et des éléments peuvent être ajoutés ou supprimés au fil du temps ; en d'autres termes, les tableaux sont mutables. Dans ce défi, nous allons examiner deux méthodes qui permettent de modifier un tableau de manière programmatique : `Array.push()` and `Array.unshift()`.
 
-Both methods take one or more elements as parameters and add those elements to the array the method is being called on; the `push()` method adds elements to the end of an array, and `unshift()` adds elements to the beginning. Consider the following:
+Ces deux méthodes prennent un ou plusieurs éléments comme paramètres et ajoutent ces éléments au tableau sur lequel la méthode est appelée ; la méthode `push()` ajoute des éléments à la fin d'un tableau, et `unshift()` ajoute des éléments au début. Considérez l'exemple suivant :
 
 ```js
 let twentyThree = 'XXIII';
@@ -19,21 +19,21 @@ let romanNumerals = ['XXI', 'XXII'];
 romanNumerals.unshift('XIX', 'XX');
 ```
 
-`romanNumerals` would have the value `['XIX', 'XX', 'XXI', 'XXII']`.
+`romanNumerals` aura la valeur `['XIX', 'XX', 'XXI', 'XXII']`.
 
 ```js
 romanNumerals.push(twentyThree);
 ```
 
-`romanNumerals` would have the value `['XIX', 'XX', 'XXI', 'XXII', 'XXIII']`. Notice that we can also pass variables, which allows us even greater flexibility in dynamically modifying our array's data.
+`romanNumerals` aura la valeur `['XIX', 'XX', 'XXI', 'XXII', 'XXIII']`. Remarquez que nous pouvons également passer des variables, ce qui nous donne encore plus de flexibilité pour modifier dynamiquement les données de notre tableau.
 
 # --instructions--
 
-We have defined a function, `mixedNumbers`, which we are passing an array as an argument. Modify the function by using `push()` and `unshift()` to add `'I', 2, 'three'` to the beginning of the array and `7, 'VIII', 9` to the end so that the returned array contains representations of the numbers 1-9 in order.
+Nous avons défini une fonction, `mixedNumbers`, à laquelle nous passons un tableau comme argument. Modifiez la fonction en utilisant `push()` et `unshift()` pour ajouter `'I', 2, 'three'` au début du tableau et `7, 'VIII', 9` à la fin de sorte que le tableau retourné contienne des représentations des nombres 1-9 dans l'ordre.
 
 # --hints--
 
-`mixedNumbers(["IV", 5, "six"])` should now return `["I", 2, "three", "IV", 5, "six", 7, "VIII", 9]`
+`mixedNumbers(["IV", 5, "six"])` devrait maintenant retourner `["I", 2, "three", "IV", 5, "six", 7, "VIII", 9]`
 
 ```js
 assert.deepEqual(mixedNumbers(['IV', 5, 'six']), [
@@ -49,13 +49,13 @@ assert.deepEqual(mixedNumbers(['IV', 5, 'six']), [
 ]);
 ```
 
-The `mixedNumbers` function should utilize the `push()` method
+La fonction `mixedNumbers` doit utiliser la méthode `push()`.
 
 ```js
 assert(mixedNumbers.toString().match(/\.push/));
 ```
 
-The `mixedNumbers` function should utilize the `unshift()` method
+La fonction `mixedNumbers` doit utiliser la méthode `unshift()`.
 
 ```js
 assert(mixedNumbers.toString().match(/\.unshift/));
@@ -67,9 +67,9 @@ assert(mixedNumbers.toString().match(/\.unshift/));
 
 ```js
 function mixedNumbers(arr) {
-  // Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
   return arr;
 }
 

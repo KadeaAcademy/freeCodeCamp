@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d5
-title: Comparison with the Greater Than Or Equal To Operator
+title: Comparaison avec l'opérateur plus grand que ou égal à
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c6KBqtV'
 forumTopicId: 16785
@@ -9,9 +9,9 @@ dashedName: comparison-with-the-greater-than-or-equal-to-operator
 
 # --description--
 
-The greater than or equal to operator (`>=`) compares the values of two numbers. If the number to the left is greater than or equal to the number to the right, it returns `true`. Otherwise, it returns `false`.
+L'opérateur supérieur ou égal à (`>=`) compare les valeurs de deux nombres. Si le nombre de gauche est supérieur ou égal à celui de droite, il renvoie "vrai". Sinon, il renvoie " faux ".
 
-Like the equality operator, the greater than or equal to operator will convert data types while comparing.
+Comme l'opérateur d'égalité, l'<dfn>opérateur supérieur ou égal à</dfn> convertit les types de données pendant la comparaison.
 
 **Examples**
 
@@ -24,53 +24,53 @@ Like the equality operator, the greater than or equal to operator will convert d
 
 # --instructions--
 
-Add the greater than or equal to operator to the indicated lines so that the return statements make sense.
+Ajoutez l'<dfn>opérateur supérieur ou égal à</dfn> aux lignes indiquées afin que les instructions de retour aient un sens.
 
 # --hints--
 
-`testGreaterOrEqual(0)` should return the string `Less than 10`
+`testGreaterOrEqual(0)` devrait retourner la chaîne `Moins de 10`.
 
 ```js
-assert(testGreaterOrEqual(0) === 'Less than 10');
+assert(testGreaterOrEqual(0) === 'Moins de 10');
 ```
 
-`testGreaterOrEqual(9)` should return the string `Less than 10`
+`testGreaterOrEqual(9)` devrait retourner la chaîne `Moins de 10`.
 
 ```js
-assert(testGreaterOrEqual(9) === 'Less than 10');
+assert(testGreaterOrEqual(9) === 'Moins de 10');
 ```
 
-`testGreaterOrEqual(10)` should return the string `10 or Over`
+`testGreaterOrEqual(10)` devrait retourner la chaîne `10 ou plus`.
 
 ```js
-assert(testGreaterOrEqual(10) === '10 or Over');
+assert(testGreaterOrEqual(10) === '10 ou plus');
 ```
 
-`testGreaterOrEqual(11)` should return the string `10 or Over`
+`testGreaterOrEqual(11)` devrait retourner la chaîne `10 ou plus`.
 
 ```js
-assert(testGreaterOrEqual(11) === '10 or Over');
+assert(testGreaterOrEqual(11) === '10 ou plus');
 ```
 
-`testGreaterOrEqual(19)` should return the string `10 or Over`
+`testGreaterOrEqual(19)` devrait renvoyer la chaîne `10 ou plus`.
 
 ```js
-assert(testGreaterOrEqual(19) === '10 or Over');
+assert(testGreaterOrEqual(19) === '10 ou plus');
 ```
 
-`testGreaterOrEqual(100)` should return the string `20 or Over`
+`testGreaterOrEqual(100)` devrait renvoyer la chaîne `20 ou plus`.
 
 ```js
-assert(testGreaterOrEqual(100) === '20 or Over');
+assert(testGreaterOrEqual(100) === '20 ou plus');
 ```
 
-`testGreaterOrEqual(21)` should return the string `20 or Over`
+`testGreaterOrEqual(21)` devrait renvoyer la chaîne `20 ou plus`.
 
 ```js
-assert(testGreaterOrEqual(21) === '20 or Over');
+assert(testGreaterOrEqual(21) === '20 ou plus');
 ```
 
-You should use the `>=` operator at least twice
+Vous devez utiliser l'opérateur ">=" au moins deux fois.
 
 ```js
 assert(code.match(/val\s*>=\s*('|")*\d+('|")*/g).length > 1);
@@ -82,15 +82,15 @@ assert(code.match(/val\s*>=\s*('|")*\d+('|")*/g).length > 1);
 
 ```js
 function testGreaterOrEqual(val) {
-  if (val) {  // Change this line
-    return "20 or Over";
+  if (val) {  // Modifiez cette ligne
+    return "20 ou plus";
   }
 
-  if (val) {  // Change this line
-    return "10 or Over";
+  if (val) {  // Modifiez cette ligne
+    return "10 ou plus";
   }
 
-  return "Less than 10";
+  return "Moins de 10";
 }
 
 testGreaterOrEqual(10);
@@ -100,14 +100,14 @@ testGreaterOrEqual(10);
 
 ```js
 function testGreaterOrEqual(val) {
-  if (val >= 20) {  // Change this line
-    return "20 or Over";
+  if (val >= 20) {  // Modifiez cette ligne
+    return "20 ou plus";
   }
 
-  if (val >= 10) {  // Change this line
-    return "10 or Over";
+  if (val >= 10) {  // Modifiez cette ligne
+    return "10 ou plus";
   }
 
-  return "Less than 10";
+  return "Moins de 10";
 }
 ```

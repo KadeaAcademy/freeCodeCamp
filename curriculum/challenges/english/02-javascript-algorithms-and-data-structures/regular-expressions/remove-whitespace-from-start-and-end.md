@@ -1,6 +1,6 @@
 ---
 id: 587d7dbb367417b2b2512bac
-title: Remove Whitespace from Start and End
+title: Supprimer les espaces blancs au début et à la fin
 challengeType: 1
 forumTopicId: 301362
 dashedName: remove-whitespace-from-start-and-end
@@ -8,35 +8,35 @@ dashedName: remove-whitespace-from-start-and-end
 
 # --description--
 
-Sometimes whitespace characters around strings are not wanted but are there. Typical processing of strings is to remove the whitespace at the start and end of it.
+Parfois, les caractères d'espacement autour des chaînes de caractères ne sont pas souhaités mais sont présents. Le traitement typique des chaînes de caractères consiste à supprimer les espaces au début et à la fin de la chaîne.
 
 # --instructions--
 
-Write a regex and use the appropriate string methods to remove whitespace at the beginning and end of strings.
+Écrivez une expression rationnelle et utilisez les méthodes appropriées pour supprimer les espaces au début et à la fin des chaînes de caractères.
 
-**Note:** The `String.prototype.trim()` method would work here, but you'll need to complete this challenge using regular expressions.
+**Note :** La méthode `String.prototype.trim()` fonctionnerait ici, mais vous devrez relever ce défi en utilisant des expressions régulières.
 
 # --hints--
 
-`result` should be equal to the string `Hello, World!`
+`result` doit être égal à la chaîne de caractères `Hello, World!`
 
 ```js
 assert(result === 'Hello, World!');
 ```
 
-Your solution should not use the `String.prototype.trim()` method.
+Votre solution ne doit pas utiliser la méthode `String.prototype.trim()`.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?trim/));
 ```
 
-The `result` variable should not directly be set to a string
+La variable `result` ne doit pas être directement définie comme une chaîne de caractères.
 
 ```js
 assert(!code.match(/result\s*=\s*["'`].*?["'`]/));
 ```
 
-The value of the `hello` variable should not be changed.
+La valeur de la variable `hello` ne doit pas être modifiée.
 
 ```js
 assert(hello === '   Hello, World!  ');
@@ -48,8 +48,8 @@ assert(hello === '   Hello, World!  ');
 
 ```js
 let hello = "   Hello, World!  ";
-let wsRegex = /change/; // Change this line
-let result = hello; // Change this line
+let wsRegex = /change/; // Modifiez cette ligne
+let result = hello; // Modifiez cette ligne
 ```
 
 # --solutions--

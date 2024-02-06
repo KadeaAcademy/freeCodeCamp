@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c6
-title: Stand in Line
+title: Faire la queue
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/ca8Q8tP'
 forumTopicId: 18307
@@ -9,43 +9,43 @@ dashedName: stand-in-line
 
 # --description--
 
-In Computer Science a <dfn>queue</dfn> is an abstract <dfn>Data Structure</dfn> where items are kept in order. New items can be added at the back of the queue and old items are taken off from the front of the queue.
+En informatique, la <dfn>file</dfn> est une <dfn>structure de données</dfn> abstraite dans laquelle les éléments sont conservés dans l'ordre. Les nouveaux éléments peuvent être ajoutés à l'arrière de la file et les anciens éléments sont retirés de l'avant de la file.
 
 # --instructions--
 
-Write a function `nextInLine` which takes an array (`arr`) and a number (`item`) as arguments.
+Ecrivez une fonction `nextInLine` qui prend un tableau (`arr`) et un nombre (`item`) comme arguments.
 
-Add the number to the end of the array, then remove the first element of the array.
+Ajoutez le nombre à la fin du tableau, puis supprimez le premier élément du tableau.
 
-The `nextInLine` function should then return the element that was removed.
+La fonction `nextInLine` doit alors retourner l'élément qui a été supprimé. 
 
 # --hints--
 
-`nextInLine([], 5)` should return a number.
+`nextInLine([], 5)` devrait retourner un nombre.
 
 ```js
 assert.isNumber(nextInLine([], 5));
 ```
 
-`nextInLine([], 1)` should return `1`
+`nextInLine([], 1)` devrait retourner `1`.
 
 ```js
 assert(nextInLine([], 1) === 1);
 ```
 
-`nextInLine([2], 1)` should return `2`
+`nextInLine([2], 1)` devrait renvoyer `2`.
 
 ```js
 assert(nextInLine([2], 1) === 2);
 ```
 
-`nextInLine([5,6,7,8,9], 1)` should return `5`
+`nextInLine([5,6,7,8,9], 1)` devrait retourner `5`.
 
 ```js
 assert(nextInLine([5, 6, 7, 8, 9], 1) === 5);
 ```
 
-After `nextInLine(testArr, 10)`, `testArr[4]` should be `10`
+Après `nextInLine(testArr, 10)`, `testArr[4]` devrait être `10`.
 
 ```js
 nextInLine(testArr, 10);
@@ -91,16 +91,16 @@ testArr = [1,2,3,4,5];
 
 ```js
 function nextInLine(arr, item) {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
   
   return item;
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 
 // Setup
 const testArr = [1, 2, 3, 4, 5];
 
-// Display code
+// Code d'affichage
 console.log("Before: " + JSON.stringify(testArr));
 console.log(nextInLine(testArr, 6));
 console.log("After: " + JSON.stringify(testArr));

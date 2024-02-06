@@ -1,6 +1,6 @@
 ---
 id: ac6993d51946422351508a41
-title: Truncate a String
+title: Tronquer une chaîne de caractères
 challengeType: 5
 forumTopicId: 16089
 dashedName: truncate-a-string
@@ -8,11 +8,11 @@ dashedName: truncate-a-string
 
 # --description--
 
-Truncate a string (first argument) if it is longer than the given maximum string length (second argument). Return the truncated string with a `...` ending.
+Tronque une chaîne de caractères (premier argument) si elle est plus longue que la longueur maximale donnée (deuxième argument). Retourne la chaîne tronquée avec une terminaison `...`.
 
 # --hints--
 
-`truncateString("A-tisket a-tasket A green and yellow basket", 8)` should return the string `A-tisket...`.
+`truncateString("A-tisket a-tasket A green and yellow basket", 8)` doit retourner la chaîne `A-tisket...`.
 
 ```js
 assert(
@@ -21,7 +21,7 @@ assert(
 );
 ```
 
-`truncateString("Peter Piper picked a peck of pickled peppers", 11)` should return the string `Peter Piper...`.
+`truncateString("Peter Piper picked a peck of pickled peppers", 11)` doit retourner la chaîne `Peter Piper...`.
 
 ```js
 assert(
@@ -30,7 +30,7 @@ assert(
 );
 ```
 
-`truncateString("A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length)` should return the string `A-tisket a-tasket A green and yellow basket`.
+`truncateString("A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length)` doit retourner la chaîne `A-tisket a-tasket A green and yellow basket`.
 
 ```js
 assert(
@@ -41,7 +41,7 @@ assert(
 );
 ```
 
-`truncateString("A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length + 2)` should return the string `A-tisket a-tasket A green and yellow basket`.
+`truncateString("A-tisket a-tasket A green and yellow basket", "A-tisket a-tasket A green and yellow basket".length + 2)` doit retourner la chaîne `A-tisket a-tasket A green and yellow basket`.
 
 ```js
 assert(
@@ -52,13 +52,13 @@ assert(
 );
 ```
 
-`truncateString("A-", 1)` should return the string `A...`.
+`truncateString("A-", 1)` doit retourner la chaîne `A...`.
 
 ```js
 assert(truncateString('A-', 1) === 'A...');
 ```
 
-`truncateString("Absolutely Longer", 2)` should return the string `Ab...`.
+`truncateString("Absolutely Longer", 2)` doit retourner la chaîne `Ab...`.
 
 ```js
 assert(truncateString('Absolutely Longer', 2) === 'Ab...');

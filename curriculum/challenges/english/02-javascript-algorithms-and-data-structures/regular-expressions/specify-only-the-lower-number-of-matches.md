@@ -1,6 +1,6 @@
 ---
 id: 587d7db9367417b2b2512ba6
-title: Specify Only the Lower Number of Matches
+title: Spécifier uniquement le nombre inférieur de correspondances
 challengeType: 1
 forumTopicId: 301366
 dashedName: specify-only-the-lower-number-of-matches
@@ -8,11 +8,11 @@ dashedName: specify-only-the-lower-number-of-matches
 
 # --description--
 
-You can specify the lower and upper number of patterns with quantity specifiers using curly brackets. Sometimes you only want to specify the lower number of patterns with no upper limit.
+Vous pouvez spécifier le nombre inférieur et supérieur de motifs avec des spécificateurs de quantité utilisant des crochets. Parfois, vous souhaitez uniquement spécifier le nombre inférieur de motifs, sans limite supérieure.
 
-To only specify the lower number of patterns, keep the first number followed by a comma.
+Pour ne spécifier que le nombre inférieur de motifs, gardez le premier nombre suivi d'une virgule.
 
-For example, to match only the string `hah` with the letter `a` appearing at least `3` times, your regex would be `/ha{3,}h/`.
+Par exemple, pour ne faire correspondre que la chaîne `hah` avec la lettre `a` apparaissant au moins `3` fois, votre regex serait `/ha{3,}h/`.
 
 ```js
 let A4 = "haaaah";
@@ -24,53 +24,53 @@ multipleA.test(A2);
 multipleA.test(A100);
 ```
 
-In order, the three `test` calls would return `true`, `false`, and `true`.
+Dans l'ordre, les trois appels `test` retourneront `true`, `false` et `true`.
 
 # --instructions--
 
-Change the regex `haRegex` to match the word `Hazzah` only when it has four or more letter `z`'s.
+Modifiez la regex `haRegex` pour qu'elle ne corresponde au mot `Hazzah` que lorsqu'il comporte quatre lettres `z` ou plus.
 
 # --hints--
 
-Your regex should use curly brackets.
+Votre regex doit utiliser des accolades.
 
 ```js
 assert(haRegex.source.match(/{.*?}/).length > 0);
 ```
 
-Your regex should not match the string `Hazzah`
+Votre regex ne doit pas correspondre à la chaîne `Hazzah`.
 
 ```js
 haRegex.lastIndex = 0;
 assert(!haRegex.test('Hazzah'));
 ```
 
-Your regex should not match the string `Hazzzah`
+Votre regex ne doit pas correspondre à la chaîne de caractères `Hazzzah`
 
 ```js
 haRegex.lastIndex = 0;
 assert(!haRegex.test('Hazzzah'));
 ```
 
-Your regex should match the string `Hazzzzah`
+Votre regex doit correspondre à la chaîne de caractères `Hazzzzah`
 
 ```js
 assert('Hazzzzah'.match(haRegex)[0].length === 8);
 ```
 
-Your regex should match the string `Hazzzzzah`
+Votre regex doit correspondre à la chaîne de caractères `Hazzzzzah`
 
 ```js
 assert('Hazzzzzah'.match(haRegex)[0].length === 9);
 ```
 
-Your regex should match the string `Hazzzzzzah`
+Votre regex doit correspondre à la chaîne de caractères `Hazzzzzzah`
 
 ```js
 assert('Hazzzzzzah'.match(haRegex)[0].length === 10);
 ```
 
-Your regex should match the string `Hazzah` with 30 `z`'s in it.
+Votre regex doit correspondre à la chaîne `Hazzah` avec 30 `z` dedans.
 
 ```js
 assert('Hazzzzzzzzzzzzzzzzzzzzzzzzzzzzzzah'.match(haRegex)[0].length === 34);
@@ -82,7 +82,7 @@ assert('Hazzzzzzzzzzzzzzzzzzzzzzzzzzzzzzah'.match(haRegex)[0].length === 34);
 
 ```js
 let haStr = "Hazzzzah";
-let haRegex = /change/; // Change this line
+let haRegex = /change/; // Modifiez cette ligne
 let result = haRegex.test(haStr);
 ```
 
@@ -90,6 +90,6 @@ let result = haRegex.test(haStr);
 
 ```js
 let haStr = "Hazzzzah";
-let haRegex = /Haz{4,}ah/; // Change this line
+let haRegex = /Haz{4,}ah/; // Modifiez cette ligne
 let result = haRegex.test(haStr);
 ```

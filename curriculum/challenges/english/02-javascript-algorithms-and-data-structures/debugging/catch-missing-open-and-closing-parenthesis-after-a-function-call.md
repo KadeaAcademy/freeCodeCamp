@@ -1,6 +1,6 @@
 ---
 id: 587d7b85367417b2b2512b39
-title: Catch Missing Open and Closing Parenthesis After a Function Call
+title: Attraper les parenthèses ouvertes et fermées manquantes après un appel de fonction
 challengeType: 1
 forumTopicId: 301185
 dashedName: catch-missing-open-and-closing-parenthesis-after-a-function-call
@@ -8,9 +8,9 @@ dashedName: catch-missing-open-and-closing-parenthesis-after-a-function-call
 
 # --description--
 
-When a function or method doesn't take any arguments, you may forget to include the (empty) opening and closing parentheses when calling it. Often times the result of a function call is saved in a variable for other use in your code. This error can be detected by logging variable values (or their types) to the console and seeing that one is set to a function reference, instead of the expected value the function returns.
+Lorsqu'une fonction ou une méthode ne prend pas d'arguments, vous pouvez oublier d'inclure les parenthèses ouvrantes et fermantes (vides) lors de son appel. Il arrive souvent que le résultat d'un appel de fonction soit enregistré dans une variable pour une autre utilisation dans votre code. Cette erreur peut être détectée en enregistrant les valeurs des variables (ou leurs types) dans la console et en constatant que l'une d'entre elles est définie comme une référence de fonction, au lieu de la valeur attendue que la fonction renvoie.
 
-The variables in the following example are different:
+Les variables de l'exemple suivant sont différentes :
 
 ```js
 function myFunction() {
@@ -20,21 +20,21 @@ let varOne = myFunction;
 let varTwo = myFunction();
 ```
 
-Here `varOne` is the function `myFunction`, and `varTwo` is the string `You rock!`.
+Ici, `varOne` est la fonction `myFunction`, et `varTwo` est la chaîne `You rock!`.
 
 # --instructions--
 
-Fix the code so the variable `result` is set to the value returned from calling the function `getNine`.
+Corrigez le code pour que la variable `result` soit définie comme la valeur renvoyée par l'appel de la fonction `getNine`.
 
 # --hints--
 
-Your code should fix the variable `result` so it is set to the number that the function `getNine` returns.
+Votre code doit ajuster la variable `result` pour qu'elle prenne la valeur du nombre que la fonction `getNine` renvoie.
 
 ```js
 assert(result == 9);
 ```
 
-Your code should call the `getNine` function.
+Votre code doit appeler la fonction `getNine`.
 
 ```js
 assert(code.match(/getNine\(\)/g).length == 2);

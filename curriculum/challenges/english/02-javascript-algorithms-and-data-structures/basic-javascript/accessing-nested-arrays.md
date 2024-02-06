@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244cd
-title: Accessing Nested Arrays
+title: Accéder aux tableaux imbriqués
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cLeGDtZ'
 forumTopicId: 16160
@@ -9,9 +9,9 @@ dashedName: accessing-nested-arrays
 
 # --description--
 
-As we have seen in earlier examples, objects can contain both nested objects and nested arrays. Similar to accessing nested objects, array bracket notation can be chained to access nested arrays.
+Comme nous l'avons vu dans les exemples précédents, les objets peuvent contenir à la fois des objets imbriqués et des tableaux imbriqués. Comme pour l'accès aux objets imbriqués, la notation des crochets de tableau peut être enchaînée pour accéder aux tableaux imbriqués.
 
-Here is an example of how to access a nested array:
+Voici un exemple de la façon d'accéder à un tableau imbriqué :
 
 ```js
 const ourPets = [
@@ -37,21 +37,21 @@ ourPets[0].names[1];
 ourPets[1].names[0];
 ```
 
-`ourPets[0].names[1]` would be the string `Fluffy`, and `ourPets[1].names[0]` would be the string `Spot`.
+`ourPets[0].names[1]` serait la chaîne `Fluffy`, and `ourPets[1].names[0]` serait la chaîne `Spot`.
 
 # --instructions--
 
-Using dot and bracket notation, set the variable `secondTree` to the second item in the `trees` list from the `myPlants` object.
+En utilisant la notation par points et crochets, définissez la variable `secondTree` comme étant le deuxième élément de la liste `trees` de l'objet `myPlants`.
 
 # --hints--
 
-`secondTree` should equal the string `pine`.
+`secondTree` doit être égal à la chaîne de caractères `pine`.
 
 ```js
 assert(secondTree === 'pine');
 ```
 
-Your code should use dot and bracket notation to access `myPlants`.
+Votre code doit utiliser la notation par points et par crochets pour accéder à `myPlants`.
 
 ```js
 assert(/=\s*myPlants\[1\].list\[1\]/.test(code));

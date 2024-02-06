@@ -1,6 +1,6 @@
 ---
 id: bd7123c9c444eddfaeb5bdef
-title: Declare String Variables
+title: Déclarer des variables de type String
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c2QvWU6'
 forumTopicId: 17557
@@ -9,35 +9,35 @@ dashedName: declare-string-variables
 
 # --description--
 
-Previously you used the following code to declare a variable:
+Auparavant, vous avez utilisé le code suivant pour déclarer une variable :
 
 ```js
-var myName;
+var monNom;
 ```
 
-But you can also declare a string variable like this:
+Mais vous pouvez aussi déclarer une variable de type chaîne de caractères comme ceci :
 
 ```js
-var myName = "your name";
+var monNom = "votre nom" ;
 ```
 
-`"your name"` is called a <dfn>string</dfn> <dfn>literal</dfn>. A string literal, or string, is a series of zero or more characters enclosed in single or double quotes.
+`"votre nom"` est une <dfn>chaîne</dfn> <dfn>littérale</dfn>. Une chaîne littérale, ou chaîne, est une série de zéro ou de plusieurs caractères entre guillemets simples ou doubles.
 
 # --instructions--
 
-Create two new string variables: `myFirstName` and `myLastName` and assign them the values of your first and last name, respectively.
+Créez deux nouvelles variables de type chaîne : `monPrenom` et `monNom` et attribuez-leur les valeurs de votre prénom et de votre nom, respectivement.
 
 # --hints--
 
-`myFirstName` should be a string with at least one character in it.
+`monPrenom` doit être une chaîne de caractères contenant au moins un caractère.
 
 ```js
 assert(
   (function () {
     if (
-      typeof myFirstName !== 'undefined' &&
-      typeof myFirstName === 'string' &&
-      myFirstName.length > 0
+      typeof monPrenom !== 'undefined' &&
+      typeof monPrenom === 'string' &&
+      monPrenom.length > 0
     ) {
       return true;
     } else {
@@ -47,15 +47,15 @@ assert(
 );
 ```
 
-`myLastName` should be a string with at least one character in it.
+`monNom` doit être une chaîne de caractères contenant au moins un caractère.
 
 ```js
 assert(
   (function () {
     if (
-      typeof myLastName !== 'undefined' &&
-      typeof myLastName === 'string' &&
-      myLastName.length > 0
+      typeof monNom !== 'undefined' &&
+      typeof monNom === 'string' &&
+      monNom.length > 0
     ) {
       return true;
     } else {
@@ -70,7 +70,7 @@ assert(
 ## --after-user-code--
 
 ```js
-if(typeof myFirstName !== "undefined" && typeof myLastName !== "undefined"){(function(){return myFirstName + ', ' + myLastName;})();}
+if(typeof monPrenom !== "undefined" && typeof monNom !== "undefined"){(function(){return monPrenom + ', ' + monNom;})();}
 ```
 
 ## --seed-contents--
@@ -82,6 +82,6 @@ if(typeof myFirstName !== "undefined" && typeof myLastName !== "undefined"){(fun
 # --solutions--
 
 ```js
-var myFirstName = "Alan";
-var myLastName = "Turing";
+var monPrenom = "Alan";
+var monNom = "Turing";
 ```

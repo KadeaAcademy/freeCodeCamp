@@ -1,6 +1,6 @@
 ---
 id: 587d7db5367417b2b2512b95
-title: Match Single Character with Multiple Possibilities
+title: Faire correspondre un seul caractère avec de multiples possibilités
 challengeType: 1
 forumTopicId: 301357
 dashedName: match-single-character-with-multiple-possibilities
@@ -8,11 +8,11 @@ dashedName: match-single-character-with-multiple-possibilities
 
 # --description--
 
-You learned how to match literal patterns (`/literal/`) and wildcard character (`/./`). Those are the extremes of regular expressions, where one finds exact matches and the other matches everything. There are options that are a balance between the two extremes.
+Vous avez appris à faire correspondre des motifs littéraux (`/literal/`) et des caractères génériques (`/./`). Ce sont les extrêmes des expressions régulières, où l'une trouve des correspondances exactes et l'autre correspond à tout. Il existe des options qui constituent un équilibre entre ces deux extrêmes.
 
-You can search for a literal pattern with some flexibility with <dfn>character classes</dfn>. Character classes allow you to define a group of characters you wish to match by placing them inside square (`[` and `]`) brackets.
+Vous pouvez rechercher un motif littéral avec une certaine souplesse grâce aux classes de caractères. Les classes de caractères vous permettent de définir un groupe de caractères que vous souhaitez faire correspondre en les plaçant entre des crochets (`[` et `]`).
 
-For example, you want to match `bag`, `big`, and `bug` but not `bog`. You can create the regex `/b[aiu]g/` to do this. The `[aiu]` is the character class that will only match the characters `a`, `i`, or `u`.
+Par exemple, vous voulez faire correspondre `bag`, `big`, et `bug` mais pas `bog`. Vous pouvez créer la regex `/b[aiu]g/` pour faire cela. Le `[aiu]` est la classe de caractères qui ne correspondra qu'aux caractères `a`, `i`, ou `u`.
 
 ```js
 let bigStr = "big";
@@ -26,44 +26,44 @@ bugStr.match(bgRegex);
 bogStr.match(bgRegex);
 ```
 
-In order, the four `match` calls would return the values `["big"]`, `["bag"]`, `["bug"]`, and `null`.
+Dans l'ordre, les quatre appels à `match` renverront les valeurs `["big"]`, `["bag"]`, `["bug"]` et `null`.
 
 # --instructions--
 
-Use a character class with vowels (`a`, `e`, `i`, `o`, `u`) in your regex `vowelRegex` to find all the vowels in the string `quoteSample`.
+Utilisez une classe de caractères contenant seulement les voyelles (`a`, `e`, `i`, `o`, `u`) dans votre regex `voyelleRegex` pour trouver toutes les voyelles dans la chaîne `phrase`.
 
-**Note:** Be sure to match both upper- and lowercase vowels.
+**Note:** Veillez à faire correspondre les voyelles en majuscules et en minuscules.
 
 # --hints--
 
-You should find all 25 vowels.
+Vous devriez trouver un total de 36 voyelles dans cette phrase.
 
 ```js
-assert(result.length == 25);
+assert(resultat.length == 36);
 ```
 
-Your regex `vowelRegex` should use a character class.
+Votre regex `voyelleRegex` doit utiliser une classe de caractères.
 
 ```js
-assert(/\[.*\]/.test(vowelRegex.source));
+assert(/\[.*\]/.test(voyelleRegex.source));
 ```
 
-Your regex `vowelRegex` should use the global flag.
+Votre regex `voyelleRegex` doit utiliser le marqueur global.
 
 ```js
-assert(vowelRegex.flags.match(/g/).length == 1);
+assert(voyelleRegex.flags.match(/g/).length == 1);
 ```
 
-Your regex `vowelRegex` should use the case insensitive flag.
+Votre regex `voyelleRegex` doit utiliser le marqueur insensible à la casse.
 
 ```js
-assert(vowelRegex.flags.match(/i/).length == 1);
+assert(voyelleRegex.flags.match(/i/).length == 1);
 ```
 
-Your regex should not match any consonants.
+Votre regex ne doit pas correspondre à des consonnes.
 
 ```js
-assert(!/[b-df-hj-np-tv-z]/gi.test(result.join()));
+assert(!/[b-df-hj-np-tv-z]/gi.test(resultat.join()));
 ```
 
 # --seed--
@@ -71,15 +71,15 @@ assert(!/[b-df-hj-np-tv-z]/gi.test(result.join()));
 ## --seed-contents--
 
 ```js
-let quoteSample = "Beware of bugs in the above code; I have only proved it correct, not tried it.";
-let vowelRegex = /change/; // Change this line
-let result = vowelRegex; // Change this line
+let phrase = "Attention aux bugs dans le code ci-dessus ; je n'ai fait que prouver qu'il est correct, je ne l'ai pas essayé.";
+let voyelleRegex = /change/; // Modifiez cette ligne
+let resultat = voyelleRegex; // Modifiez cette ligne
 ```
 
 # --solutions--
 
 ```js
-let quoteSample = "Beware of bugs in the above code; I have only proved it correct, not tried it.";
-let vowelRegex = /[aeiou]/gi; // Change this line
-let result = quoteSample.match(vowelRegex); // Change this line
+let phrase = "Attention aux bugs dans le code ci-dessus ; je n'ai fait que prouver qu'il est correct, je ne l'ai pas essayé.";
+let voyelleRegex = /[aeiou]/gi; // Modifiez cette ligne
+let resultat = phrase.match(voyelleRegex); // Modifiez cette ligne
 ```

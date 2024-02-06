@@ -1,7 +1,6 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import i18next from 'i18next';
-import React from 'react';
-
+import React, { ReactElement } from 'react';
 import { SuperBlocks } from '../../../../config/certification-settings';
 import envData from '../../../../config/env.json';
 import { isAuditedCert } from '../../../../utils/is-audited';
@@ -17,6 +16,11 @@ const { curriculumLocale } = envData;
 interface MapProps {
   currentSuperBlock?: SuperBlocks | null;
   forLanding?: boolean;
+  single?: boolean;
+  className?: string;
+  text?: string;
+  keyPrefix?: string;
+  children?: ReactElement | undefined;
 }
 
 interface MapData {
@@ -61,6 +65,43 @@ function renderLandingMap(nodes: ChallengeNode[]) {
         </li>
       ))}
     </ul>
+  );
+}
+
+function renderFirstLandingMap(
+  nodes: ChallengeNode[],
+  className?: string,
+  mapKeyAndText?: { text?: string; keyPrefix?: string },
+  children?: ReactElement
+) {
+  nodes = nodes.filter(
+    ({ challenge }) => challenge.superBlock !== SuperBlocks.CodingInterviewPrep
+  );
+  if (!mapKeyAndText) {
+    mapKeyAndText = { text: '', keyPrefix: '' };
+  }
+  return (
+    <>
+      {nodes.map(({ challenge }, i) => (
+        <span
+          key={`${
+            mapKeyAndText && mapKeyAndText.keyPrefix
+              ? mapKeyAndText.keyPrefix
+              : ''
+          }${i}`}
+        >
+          {i === 0 && (
+            <Link to={`/learn/${challenge.superBlock}/`} className={className}>
+              {children
+                ? children
+                : mapKeyAndText && mapKeyAndText.text
+                ? mapKeyAndText.text
+                : 'ok'}
+            </Link>
+          )}
+        </span>
+      ))}
+    </>
   );
 }
 
@@ -142,7 +183,12 @@ function renderLearnMap(
 
 export function Map({
   forLanding = false,
-  currentSuperBlock = null
+  single = false,
+  className = '',
+  text = '',
+  keyPrefix = '',
+  currentSuperBlock = null,
+  children = undefined
 }: MapProps): React.ReactElement {
   /*
    * this query gets the first challenge from each block and the first block
@@ -170,7 +216,17 @@ export function Map({
   return (
     <div className='map-ui' data-test-label='learn-curriculum-map'>
       {forLanding
-        ? renderLandingMap(nodes)
+        ? single
+          ? renderFirstLandingMap(
+              nodes,
+              className,
+              {
+                text: text,
+                keyPrefix: keyPrefix
+              },
+              children
+            )
+          : renderLandingMap(nodes)
         : renderLearnMap(nodes, currentSuperBlock)}
     </div>
   );

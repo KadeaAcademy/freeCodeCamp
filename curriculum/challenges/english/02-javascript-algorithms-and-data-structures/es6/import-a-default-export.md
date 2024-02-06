@@ -1,6 +1,6 @@
 ---
 id: 587d7b8d367417b2b2512b59
-title: Import a Default Export
+title: Importer un export par défaut
 challengeType: 1
 forumTopicId: 301205
 dashedName: import-a-default-export
@@ -8,21 +8,21 @@ dashedName: import-a-default-export
 
 # --description--
 
-In the last challenge, you learned about `export default` and its uses. To import a default export, you need to use a different `import` syntax. In the following example, `add` is the default export of the `math_functions.js` file. Here is how to import it:
+Dans le dernier défi, vous vous êtes familiarisé avec `export default` et ses utilisations. Pour importer une exportation par défaut, vous devez utiliser une syntaxe `import` différente. Dans l'exemple suivant, `add` est l'exportation par défaut du fichier `math_functions.js`. Voici comment l'importer :
 
 ```js
 import add from "./math_functions.js";
 ```
 
-The syntax differs in one key place. The imported value, `add`, is not surrounded by curly braces (`{}`). `add` here is simply a variable name for whatever the default export of the `math_functions.js` file is. You can use any name here when importing a default.
+La syntaxe diffère à un endroit clé. La valeur importée, `add`, n'est pas entourée d'accolades (`{}`). `add` ici est simplement un nom de variable pour ce qui est l'exportation par défaut du fichier `math_functions.js`. Vous pouvez utiliser n'importe quel nom ici lorsque vous importez un défaut.
 
 # --instructions--
 
-In the following code, import the default export from the `math_functions.js` file, found in the same directory as this file. Give the import the name `subtract`.
+Dans le code suivant, importez l'exportation par défaut du fichier `math_functions.js`, qui se trouve dans le même répertoire que ce fichier. Donnez à l'import le nom de `subtract`.
 
 # --hints--
 
-You should properly import `subtract` from `math_functions.js`.
+Vous devez importer correctement `subtract` de `math_functions.js`.
 
 ```js
 assert(code.match(/import\s+subtract\s+from\s+('|")\.\/math_functions\.js\1/g));
@@ -34,7 +34,7 @@ assert(code.match(/import\s+subtract\s+from\s+('|")\.\/math_functions\.js\1/g));
 
 ```js
   
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 subtract(7,4);
 ```

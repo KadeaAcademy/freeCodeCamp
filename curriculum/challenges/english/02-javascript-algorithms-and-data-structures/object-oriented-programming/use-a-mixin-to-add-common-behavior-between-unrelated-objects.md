@@ -1,6 +1,6 @@
 ---
 id: 587d7db2367417b2b2512b89
-title: Use a Mixin to Add Common Behavior Between Unrelated Objects
+title: Utiliser un Mixin pour ajouter un comportement commun à des objets non apparentés
 challengeType: 1
 forumTopicId: 301331
 dashedName: use-a-mixin-to-add-common-behavior-between-unrelated-objects
@@ -8,9 +8,9 @@ dashedName: use-a-mixin-to-add-common-behavior-between-unrelated-objects
 
 # --description--
 
-As you have seen, behavior is shared through inheritance. However, there are cases when inheritance is not the best solution. Inheritance does not work well for unrelated objects like `Bird` and `Airplane`. They can both fly, but a `Bird` is not a type of `Airplane` and vice versa.
+Comme vous l'avez vu, le comportement est partagé par l'héritage. Cependant, dans certains cas, l'héritage n'est pas la meilleure solution. En effet, l'héritage ne fonctionne pas bien pour des objets non apparentés comme 'Bird' (oiseau) et 'Airplane' (avion). Ils peuvent tous deux voler, mais un `Oiseau` n'est pas un type de `Avion` et vice versa.
 
-For unrelated objects, it's better to use <dfn>mixins</dfn>. A mixin allows other objects to use a collection of functions.
+Pour les objets non liés, il est préférable d'utiliser des <dfn>mixins</dfn>. Un mixin permet à d'autres objets d'utiliser une collection de fonctions.
 
 ```js
 let flyMixin = function(obj) {
@@ -20,7 +20,7 @@ let flyMixin = function(obj) {
 };
 ```
 
-The `flyMixin` takes any object and gives it the `fly` method.
+Le `flyMixin` prend n'importe quel objet et lui donne la méthode `fly`.
 
 ```js
 let bird = {
@@ -37,36 +37,36 @@ flyMixin(bird);
 flyMixin(plane);
 ```
 
-Here `bird` and `plane` are passed into `flyMixin`, which then assigns the `fly` function to each object. Now `bird` and `plane` can both fly:
+Ici, `bird` et `plane` sont passés à `flyMixin`, qui assigne la fonction `fly` à chaque objet. Maintenant, `bird` et `plane` peuvent tous deux voler :
 
 ```js
 bird.fly();
 plane.fly();
 ```
 
-The console would display the string `Flying, wooosh!` twice, once for each `.fly()` call.
+La console affichera la chaîne `Flying, wooosh!` deux fois, une fois pour chaque appel à `.fly()`.
 
-Note how the mixin allows for the same `fly` method to be reused by unrelated objects `bird` and `plane`.
+Notez que le mixin permet à la même méthode `fly` d'être réutilisée par les objets non apparentés `bird` et `plane`.
 
 # --instructions--
 
-Create a mixin named `glideMixin` that defines a method named `glide`. Then use the `glideMixin` to give both `bird` and `boat` the ability to glide.
+Créez un mixin nommé `glideMixin` qui définit une méthode nommée `glide`. Utilisez ensuite le `glideMixin` pour donner à `bird` et `boat` la possibilité de planer (glide).
 
 # --hints--
 
-Your code should declare a `glideMixin` variable that is a function.
+Votre code doit déclarer une variable `glideMixin` qui est une fonction.
 
 ```js
 assert(typeof glideMixin === 'function');
 ```
 
-Your code should use the `glideMixin` on the `bird` object to give it the `glide` method.
+Votre code doit utiliser le `glideMixin` sur l'objet `bird` pour lui donner la méthode `glide`.
 
 ```js
 assert(typeof bird.glide === 'function');
 ```
 
-Your code should use the `glideMixin` on the `boat` object to give it the `glide` method.
+Votre code doit utiliser le `glideMixin` sur l'objet `boat` pour lui donner la méthode `glide`.
 
 ```js
 assert(typeof boat.glide === 'function');
@@ -87,7 +87,7 @@ let boat = {
   type: "race-boat"
 };
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 ```
 
 # --solutions--

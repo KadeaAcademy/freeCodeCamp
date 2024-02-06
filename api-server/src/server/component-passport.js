@@ -144,6 +144,7 @@ we recommend using your email address: ${user.email} to sign in instead.
         // returnTo, origin and pathPrefix are audited by getReturnTo
         let { returnTo, origin, pathPrefix } = getReturnTo(state, jwtSecret);
         const redirectBase = getPrefixedLandingPath(origin, pathPrefix);
+        delete req.session.returnTo;
 
         // TODO: getReturnTo could return a success flag to show a flash message,
         // but currently it immediately gets overwritten by a second message. We

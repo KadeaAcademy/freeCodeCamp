@@ -1,18 +1,17 @@
 .reset-modal p {
-  color: var(--danger-color);
+  color: var(--primary-color);
 }
 
 .reset-modal-header {
-  color: var(--danger-color);
-  background-color: var(--danger-background);
+  color: var(--primary-color);
 }
 
 .reset-modal-header h4 {
-  color: var(--danger-color);
+  color: var(--primary-color);
 }
 
 .reset-modal-header .close {
-  color: var(--danger-color);
+  color: var(--primary-color);
   font-size: 28px;
   text-shadow: none;
 }

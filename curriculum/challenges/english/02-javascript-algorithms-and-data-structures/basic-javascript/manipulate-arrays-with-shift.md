@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392cd
-title: Manipulate Arrays With shift()
+title: Manipuler les tableaux avec shift()
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cRbVETW'
 forumTopicId: 18238
@@ -9,26 +9,26 @@ dashedName: manipulate-arrays-with-shift
 
 # --description--
 
-`pop()` always removes the last element of an array. What if you want to remove the first?
+`pop()` supprime toujours le dernier élément d'un tableau. Et si vous vouliez enlever le premier ?
 
-That's where `.shift()` comes in. It works just like `.pop()`, except it removes the first element instead of the last.
+C'est là que `.shift()` entre en jeu. Il fonctionne exactement comme `.pop()`, sauf qu'il supprime le premier élément au lieu du dernier.
 
-Example:
+Exemple :
 
 ```js
-const ourArray = ["Stimpson", "J", ["cat"]];
-const removedFromOurArray = ourArray.shift();
+const notreTableau = ["Stimpson", "J", ["cat"]];
+const retireDeNotreTableau = notreTableau.shift();
 ```
 
-`removedFromOurArray` would have a value of the string `Stimpson`, and `ourArray` would have `["J", ["cat"]]`.
+`retireDeNotreTableau` aurait une valeur de la chaîne `Stimpson`, et `notreTableau` aurait `["J", ["cat"]]`.
 
 # --instructions--
 
-Use the `.shift()` function to remove the first item from `myArray` and assign the "shifted off" value to a new variable, `removedFromMyArray`.
+Utilisez la fonction `.shift()` pour supprimer le premier élément de `monTableau` et affectez la valeur "décalée" à une nouvelle variable, `retireDeMonTableau`.
 
 # --hints--
 
-`myArray` should now equal `[["dog", 3]]`.
+`monTableau` devrait maintenant être égal à `["dog", 3]]`.
 
 ```js
 assert(
@@ -38,11 +38,11 @@ assert(
     } else {
       return false;
     }
-  })(myArray)
+  })(monTableau)
 );
 ```
 
-`removedFromMyArray` should contain `["John", 23]`.
+`retireDeMonTableau` devrait contenir `["John", 23]`.
 
 ```js
 assert(
@@ -50,13 +50,13 @@ assert(
     if (
       d[0] == 'John' &&
       d[1] === 23 &&
-      typeof removedFromMyArray === 'object'
+      typeof retireDeMonTableau === 'object'
     ) {
       return true;
     } else {
       return false;
     }
-  })(removedFromMyArray)
+  })(retireDeMonTableau)
 );
 ```
 
@@ -65,24 +65,23 @@ assert(
 ## --after-user-code--
 
 ```js
-if (typeof removedFromMyArray !== 'undefined') (function(y, z){return 'myArray = ' + JSON.stringify(y) + ' & removedFromMyArray = ' + JSON.stringify(z);})(myArray, removedFromMyArray);
+if (typeof retireDeMonTableau !== 'undefined') (function(y, z){return 'monTableau = ' + JSON.stringify(y) + ' & retireDeMonTableau = ' + JSON.stringify(z);})(monTableau, retireDeMonTableau);
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myArray = [["John", 23], ["dog", 3]];
+const monTableau = [["John", 23], ["dog", 3]];
 
-// Only change code below this line
-
+// Ne changez que le code en dessous de cette ligne
 ```
 
 # --solutions--
 
 ```js
-const myArray = [["John", 23], ["dog", 3]];
+const monTableau = [["John", 23], ["dog", 3]];
 
-// Only change code below this line
-const removedFromMyArray = myArray.shift();
+// Ne changez que le code en dessous de cette ligne
+const retireDeMonTableau = monTableau.shift();
 ```

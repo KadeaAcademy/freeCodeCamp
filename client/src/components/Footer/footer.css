@@ -6,7 +6,6 @@
   color: var(--tertiary-color);
   background: var(--tertiary-background);
   line-height: 1.6;
-  font-family: 'Lato', sans-serif;
 }
 
 .footer-container {
@@ -23,7 +22,7 @@
 .footer-container p {
   margin: 0 0 1.45rem;
   line-height: 30px;
-  font-family: 'Lato', sans-serif;
+
   font-size: 16px;
 }
 
@@ -212,4 +211,19 @@ p.footer-donation a:hover {
     margin: 0 15px;
     background-color: var(--quaternary-background);
   }
+}
+
+.footer-logo {
+  width: 20%;
+}
+
+.footer-icon {
+  width: 1.5rem;
+}
+
+.link-icon,
+.link-icon:hover {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0);
 }

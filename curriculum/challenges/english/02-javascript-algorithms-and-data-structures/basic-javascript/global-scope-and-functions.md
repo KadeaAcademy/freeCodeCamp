@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244be
-title: Global Scope and Functions
+title: Portée et fonctions globales
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cQM7mCN'
 forumTopicId: 18193
@@ -9,37 +9,37 @@ dashedName: global-scope-and-functions
 
 # --description--
 
-In JavaScript, <dfn>scope</dfn> refers to the visibility of variables. Variables which are defined outside of a function block have <dfn>Global</dfn> scope. This means, they can be seen everywhere in your JavaScript code.
+En JavaScript, la <dfn>portée</dfn> fait référence à la visibilité des variables. Les variables définies en dehors d'une fonction ont une portée <dfn>globale</dfn>. Cela signifie qu'elles peuvent être vues partout dans votre code JavaScript.
 
-Variables which are declared without the `let` or `const` keywords are automatically created in the `global` scope. This can create unintended consequences elsewhere in your code or when running a function again. You should always declare your variables with `let` or `const`.
+Les variables déclarées sans les mots clés `let` ou `const` sont automatiquement créées dans la portée `global`. Cela peut créer des conséquences inattendues ailleurs dans votre code ou lors de la réexécution d'une fonction. Vous devez toujours déclarer vos variables avec `let` ou `const`.
 
 # --instructions--
 
-Using `let` or `const`, declare a global variable named `myGlobal` outside of any function. Initialize it with a value of `10`.
+En utilisant `let` ou `const`, déclarez une variable globale nommée `myGlobal` en dehors de toute fonction. Initialisez-la avec la valeur `10`.
 
-Inside function `fun1`, assign `5` to `oopsGlobal` ***without*** using the `let` or `const` keywords.
+À l'intérieur de la fonction `fun1`, affectez la valeur `5` à la variable globale `myGlobal` ***sans*** utiliser les mots-clés `let` ou `const`.
 
 # --hints--
 
-`myGlobal` should be defined
+`myGlobal` doit être défini
 
 ```js
 assert(typeof myGlobal != 'undefined');
 ```
 
-`myGlobal` should have a value of `10`
+La valeur de `myGlobal` devrait être de `10`.
 
 ```js
 assert(myGlobal === 10);
 ```
 
-`myGlobal` should be declared using the `let` or `const` keywords
+`myGlobal` doit être déclaré en utilisant les mots-clés `let` ou `const`.
 
 ```js
 assert(/(let|const)\s+myGlobal/.test(code));
 ```
 
-`oopsGlobal` should be a global variable and have a value of `5`
+`oopsGlobal` doit être une variable globale et avoir une valeur de `5`.
 
 ```js
 assert(typeof oopsGlobal != 'undefined' && oopsGlobal === 5);
@@ -84,15 +84,15 @@ uncapture();
 ## --seed-contents--
 
 ```js
-// Declare the myGlobal variable below this line
+// Déclarer la variable myGlobal sous cette ligne
 
 
 function fun1() {
-  // Assign 5 to oopsGlobal Here
+  // Affecter 5 à oopsGlobal Ici
 
 }
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 function fun2() {
   var output = "";

@@ -1,6 +1,6 @@
 ---
 id: 587d7dab367417b2b2512b6d
-title: Apply Functional Programming to Convert Strings to URL Slugs
+title: Appliquer la programmation fonctionnelle pour convertir des chaînes de caractères en slugs d'URL
 challengeType: 1
 forumTopicId: 301227
 dashedName: apply-functional-programming-to-convert-strings-to-url-slugs
@@ -8,45 +8,45 @@ dashedName: apply-functional-programming-to-convert-strings-to-url-slugs
 
 # --description--
 
-The last several challenges covered a number of useful array and string methods that follow functional programming principles. We've also learned about `reduce`, which is a powerful method used to reduce problems to simpler forms. From computing averages to sorting, any array operation can be achieved by applying it. Recall that `map` and `filter` are special cases of `reduce`.
+Les derniers défis ont couvert un certain nombre de méthodes utiles pour les tableaux et les chaînes de caractères qui suivent les principes de la programmation fonctionnelle. Nous avons également appris à connaître la méthode `reduce`, qui est une méthode puissante utilisée pour réduire les problèmes à des formes plus simples. Du calcul des moyennes au tri, toute opération sur un tableau peut être réalisée en l'appliquant. Rappelons que `map` et `filter` sont des cas particuliers de `reduce`.
 
-Let's combine what we've learned to solve a practical problem.
+Combinons ce que nous avons appris pour résoudre un problème pratique.
 
-Many content management sites (CMS) have the titles of a post added to part of the URL for simple bookmarking purposes. For example, if you write a Medium post titled `Stop Using Reduce`, it's likely the URL would have some form of the title string in it (`.../stop-using-reduce`). You may have already noticed this on the freeCodeCamp site.
+Sur de nombreux sites de gestion de contenu (CMS), les titres des articles sont ajoutés à une partie de l'URL à des fins de bookmarking. Par exemple, si vous écrivez un article sur Medium intitulé `Stop Using Reduce`, il est probable que l'URL contienne une partie de la chaîne de titre (`.../stop-using-reduce`). Vous l'avez peut-être déjà remarqué sur le site Kadea.
 
 # --instructions--
 
-Fill in the `urlSlug` function so it converts a string `title` and returns the hyphenated version for the URL. You can use any of the methods covered in this section, and don't use `replace`. Here are the requirements:
+Remplissez la fonction `urlSlug` pour qu'elle convertisse une chaîne de caractères `title` et retourne la version avec trait d'union pour l'URL. Vous pouvez utiliser n'importe laquelle des méthodes décrites dans cette section, et n'utilisez pas `replace`. Voici les conditions requises :
 
-The input is a string with spaces and title-cased words
+L'entrée est une chaîne de caractères avec des espaces et des mots mis en majuscules dans le titre
 
-The output is a string with the spaces between words replaced by a hyphen (`-`)
+La sortie est une chaîne dont les espaces entre les mots sont remplacés par un trait d'union (`-`).
 
-The output should be all lower-cased letters
+La sortie doit être composée de lettres minuscules
 
-The output should not have any spaces
+La sortie ne doit pas comporter d'espaces
 
 # --hints--
 
-Your code should not use the `replace` method for this challenge.
+Votre code ne doit pas utiliser la méthode `replace` pour ce défi.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?replace/g));
 ```
 
-`urlSlug("Winter Is Coming")` should return the string `winter-is-coming`.
+`urlSlug("Winter Is Coming")` doit retourner la chaîne `winter-is-coming`.
 
 ```js
 assert(urlSlug('Winter Is Coming') === 'winter-is-coming');
 ```
 
-`urlSlug(" Winter Is  Coming")` should return the string `winter-is-coming`.
+`urlSlug(" Winter Is  Coming")` doit retourner la chaîne `winter-is-coming`.
 
 ```js
 assert(urlSlug(' Winter Is  Coming') === 'winter-is-coming');
 ```
 
-`urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone")` should return the string `a-mind-needs-books-like-a-sword-needs-a-whetstone`.
+`urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone")` doit retourner la chaîne  `a-mind-needs-books-like-a-sword-needs-a-whetstone`.
 
 ```js
 assert(
@@ -55,7 +55,7 @@ assert(
 );
 ```
 
-`urlSlug("Hold The Door")` should return the string `hold-the-door`.
+`urlSlug("Hold The Door")` doit retourner la chaîne `hold-the-door`.
 
 ```js
 assert(urlSlug('Hold The Door') === 'hold-the-door');
@@ -66,12 +66,12 @@ assert(urlSlug('Hold The Door') === 'hold-the-door');
 ## --seed-contents--
 
 ```js
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 function urlSlug(title) {
 
 
 }
-// Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
 ```
 

@@ -1,7 +1,7 @@
 {
-  "title": "Learn to Code — For Free — Coding Courses for Busy People",
-  "description": "Learn to Code — For Free",
-  "social-description": "Learn to Code — For Free",
+  "title": "Apprendre à coder - gratuitement — Kadea Online",
+  "description": "Forme-toi en ligne à un métier d'avenir. Apprends à coder et maximise tes chances d'être admis dans la meilleure école de codage. Kadea Online est une plateforme d'apprentissage interactif propulsée par Kadea Academy, offrant des cours de codage.",
+  "social-description": "Forme-toi en ligne à un métier d'avenir. Apprends à coder et maximise tes chances d'être admis dans la meilleure école de codage. Kadea Online est une plateforme d'apprentissage interactif propulsée par Kadea Academy, offrant des cours de codage.",
   "keywords": [
     "python",
     "javascript",
@@ -11,9 +11,8 @@
     "website",
     "web",
     "development",
-    "free",
-    "code",
-    "camp",
+    "Kadea",
+    "online",
     "course",
     "courses",
     "html",
@@ -28,5 +27,5 @@
     "tutorial",
     "programming"
   ],
-  "youre-unsubscribed": "You have been unsubscribed"
+  "youre-unsubscribed": "Vous avez été désabonné(e)"
 }

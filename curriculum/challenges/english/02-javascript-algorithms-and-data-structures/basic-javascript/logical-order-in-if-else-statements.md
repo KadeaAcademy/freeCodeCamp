@@ -1,6 +1,6 @@
 ---
 id: 5690307fddb111c6084545d7
-title: Logical Order in If Else Statements
+title: Ordre logique dans les instructions If Else
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cwNvMUV'
 forumTopicId: 18228
@@ -9,71 +9,71 @@ dashedName: logical-order-in-if-else-statements
 
 # --description--
 
-Order is important in `if`, `else if` statements.
+L'ordre est important dans les instructions `if`, `else if`.
 
-The function is executed from top to bottom so you will want to be careful of what statement comes first.
+La fonction est exécutée de haut en bas, vous devez donc faire attention à l'instruction qui vient en premier.
 
-Take these two functions as an example.
+Prenons l'exemple de ces deux fonctions.
 
-Here's the first:
+Voici la première :
 
 ```js
 function foo(x) {
   if (x < 1) {
-    return "Less than one";
+    return "Moins d'un";
   } else if (x < 2) {
-    return "Less than two";
+    return "Moins de deux";
   } else {
-    return "Greater than or equal to two";
+    return "Supérieur ou égal à deux";
   }
 }
 ```
 
-And the second just switches the order of the statements:
+Et la deuxième change simplement l'ordre des déclarations :
 
 ```js
 function bar(x) {
   if (x < 2) {
-    return "Less than two";
+    return "Moins de deux";
   } else if (x < 1) {
-    return "Less than one";
+    return "Moins d'un";
   } else {
-    return "Greater than or equal to two";
+    return "Supérieur ou égal à deux";
   }
 }
 ```
 
-While these two functions look nearly identical if we pass a number to both we get different outputs.
+Bien que ces deux fonctions soient presque identiques, si nous passons un nombre aux deux, nous obtenons des résultats différents.
 
 ```js
 foo(0)
 bar(0)
 ```
 
-`foo(0)` will return the string `Less than one`, and `bar(0)` will return the string `Less than two`.
+`foo(0)` renverra la chaîne `Moins d'un`, et `bar(0)` renverra la chaîne `Moins de deux`.
 
 # --instructions--
 
-Change the order of logic in the function so that it will return the correct statements in all cases.
+Modifiez l'ordre de la logique dans la fonction afin qu'elle renvoie les déclarations correctes dans tous les cas.
 
 # --hints--
 
-`orderMyLogic(4)` should return the string `Less than 5`
+`orderMyLogic(4)` devrait retourner la chaîne de caractères `Moins de 5`.
 
 ```js
-assert(orderMyLogic(4) === 'Less than 5');
+assert(orderMyLogic(4) === 'Moins de 5');
 ```
 
-`orderMyLogic(6)` should return the string `Less than 10`
+`orderMyLogic(6)` devrait retourner la chaîne `Moins de 10`.
 
 ```js
-assert(orderMyLogic(6) === 'Less than 10');
+assert(orderMyLogic(6) === 'Moins de 10');
 ```
 
-`orderMyLogic(11)` should return the string `Greater than or equal to 10`
+`orderMyLogic(11)` devrait retourner la chaîne de caractères `Supérieur ou égal à 10`.
 
 ```js
-assert(orderMyLogic(11) === 'Greater than or equal to 10');
+assert(orderMyLogic(11) === 'Supérieur ou égal à 10');
 ```
 
 # --seed--
@@ -83,11 +83,11 @@ assert(orderMyLogic(11) === 'Greater than or equal to 10');
 ```js
 function orderMyLogic(val) {
   if (val < 10) {
-    return "Less than 10";
+    return "Moins de 10";
   } else if (val < 5) {
-    return "Less than 5";
+    return "Moins de 5";
   } else {
-    return "Greater than or equal to 10";
+    return "Supérieur ou égal à 10";
   }
 }
 
@@ -99,11 +99,11 @@ orderMyLogic(7);
 ```js
 function orderMyLogic(val) {
   if(val < 5) {
-    return "Less than 5";
+    return "Moins de 5";
   } else if (val < 10) {
-    return "Less than 10";
+    return "Moins de 10";
   } else {
-    return "Greater than or equal to 10";
+    return "Supérieur ou égal à 10";
   }
 }
 ```

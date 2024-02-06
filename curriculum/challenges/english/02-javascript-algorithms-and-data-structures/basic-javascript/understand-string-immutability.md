@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244ba
-title: Understand String Immutability
+title: Comprendre l'immuabilité des chaînes
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cWPVaUR'
 forumTopicId: 18331
@@ -9,16 +9,16 @@ dashedName: understand-string-immutability
 
 # --description--
 
-In JavaScript, `String` values are <dfn>immutable</dfn>, which means that they cannot be altered once created.
+En JavaScript, les chaînes de caractères (`String`) sont <dfn>immuables</dfn>, ce qui signifie qu'elles ne peuvent pas être modifiées une fois créées.
 
-For example, the following code:
+Par exemple, le code suivant :
 
 ```js
 let myStr = "Bob";
 myStr[0] = "J";
 ```
 
-cannot change the value of `myStr` to `Job`, because the contents of `myStr` cannot be altered. Note that this does *not* mean that `myStr` cannot be changed, just that the individual characters of a <dfn>string literal</dfn> cannot be changed. The only way to change `myStr` would be to assign it with a new string, like this:
+ne peut pas changer la valeur de `myStr` en `Job`, car le contenu de `myStr` ne peut pas être modifié. Notez que cela ne signifie *pas* que `myStr` ne peut pas être modifié, mais simplement que les caractères individuels d'un <dfn>littéral de chaîne</dfn> ne peuvent pas être modifiés. La seule façon de changer `myStr` serait de lui attribuer une nouvelle chaîne, comme ceci :
 
 ```js
 let myStr = "Bob";
@@ -27,17 +27,17 @@ myStr = "Job";
 
 # --instructions--
 
-Correct the assignment to `myStr` so it contains the string value of `Hello World` using the approach shown in the example above.
+Corrigez l'affectation à `myStr` pour qu'elle contienne la valeur de la chaîne de caractères `Hello World` en utilisant l'approche montrée dans l'exemple ci-dessus.
 
 # --hints--
 
-`myStr` should have a value of the string `Hello World`.
+`myStr` devrait avoir une valeur de la chaîne `Hello World`.
 
 ```js
 assert(myStr === 'Hello World');
 ```
 
-You should not change the code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(/myStr = "Jello World"/.test(code));
@@ -57,9 +57,9 @@ assert(/myStr = "Jello World"/.test(code));
 // Setup
 let myStr = "Jello World";
 
-// Only change code below this line
-myStr[0] = "H"; // Change this line
-// Only change code above this line
+// Ne changez que le code en dessous de cette ligne
+myStr[0] = "H"; // Modifiez cette ligne
+// Ne changez que le code au-dessus de cette ligne
 ```
 
 # --solutions--

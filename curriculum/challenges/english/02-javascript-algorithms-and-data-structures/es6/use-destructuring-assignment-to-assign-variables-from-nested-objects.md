@@ -1,6 +1,6 @@
 ---
 id: 587d7b89367417b2b2512b4a
-title: Use Destructuring Assignment to Assign Variables from Nested Objects
+title: Utiliser l'affectation de déstructuration pour affecter des variables à partir d'objets imbriqués
 challengeType: 1
 forumTopicId: 301214
 dashedName: use-destructuring-assignment-to-assign-variables-from-nested-objects
@@ -8,9 +8,9 @@ dashedName: use-destructuring-assignment-to-assign-variables-from-nested-objects
 
 # --description--
 
-You can use the same principles from the previous two lessons to destructure values from nested objects.
+Vous pouvez utiliser les mêmes principes que ceux des deux leçons précédentes pour déstructurer les valeurs des objets imbriqués.
 
-Using an object similar to previous examples:
+En utilisant un objet similaire aux exemples précédents :
 
 ```js
 const user = {
@@ -21,13 +21,13 @@ const user = {
 };
 ```
 
-Here's how to extract the values of object properties and assign them to variables with the same name:
+Voici comment extraire les valeurs des propriétés d'un objet et les affecter à des variables portant le même nom 
 
 ```js
 const { johnDoe: { age, email }} = user;
 ```
 
-And here's how you can assign an object properties' values to variables with different names:
+Et voici comment vous pouvez affecter les valeurs des propriétés d'un objet à des variables portant des noms différents :
 
 ```js
 const { johnDoe: { age: userAge, email: userEmail }} = user;
@@ -35,11 +35,11 @@ const { johnDoe: { age: userAge, email: userEmail }} = user;
 
 # --instructions--
 
-Replace the two assignments with an equivalent destructuring assignment. It should still assign the variables `lowToday` and `highToday` the values of `today.low` and `today.high` from the `LOCAL_FORECAST` object.
+Remplacez les deux affectations par une affectation de déstructuration équivalente. Elle devrait toujours affecter aux variables `lowToday` et `highToday` les valeurs de `today.low` et `today.high` de l'objet `LOCAL_FORECAST`.
 
 # --hints--
 
-You should remove the ES5 assignment syntax.
+Vous devez supprimer la syntaxe d'affectation ES5.
 
 ```js
 assert(
@@ -48,7 +48,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `lowToday` variable.
+Vous devez utiliser la déstructuration pour créer la variable `lowToday`.
 
 ```js
 assert(
@@ -58,7 +58,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `highToday` variable.
+Vous devez utiliser la déstructuration pour créer la variable `highToday`.
 
 ```js
 assert(
@@ -68,7 +68,7 @@ assert(
 );
 ```
 
-`lowToday` should be equal to `64` and `highToday` should be equal to `77`.
+`lowToday` doit être égal à `64` et `highToday` doit être égal à `77`.
 
 ```js
 assert(lowToday === 64 && highToday === 77);
@@ -85,12 +85,12 @@ const LOCAL_FORECAST = {
   tomorrow: { low: 68, high: 80 }
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
   
 const lowToday = LOCAL_FORECAST.today.low;
 const highToday = LOCAL_FORECAST.today.high;
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 ```
 
 # --solutions--

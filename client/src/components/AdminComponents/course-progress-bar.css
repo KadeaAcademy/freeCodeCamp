@@ -1,0 +1,65 @@
+.course-progress-block {
+  width: 100%;
+  padding: 1em 0;
+}
+
+.course-progress-block {
+  padding: 10px 15px 20px 15px !important;
+}
+
+.course-progress-block span {
+  color: var(--quaternary-color);
+}
+
+.course-progress-block .course-progress-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em 0;
+}
+
+.course-progress-header .title-course-progress {
+  width: 100%;
+}
+
+.course-progress-block .progress {
+  /* height: 0.4em; */
+  background-color: var(--secondary-background);
+  width: 100%;
+  /* border-radius: 20px; */
+  /* border-radius: 5px; */
+  margin-bottom: 0;
+}
+
+.progress {
+  /* border-radius: 20px; */
+  /* border-radius: 5px; */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: var(--quaternary-background) !important;
+}
+
+.progress-bar {
+  background: var(--primary-color);
+}
+
+.display-inlin {
+  display: inline;
+}
+
+@media (max-width: 480px) {
+  .course-progress-block .course-progress-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0.2em 0;
+  }
+
+  .course-progress-header .title-course-progress {
+    width: 100%;
+  }
+}

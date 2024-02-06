@@ -1,0 +1,56 @@
+/*Card Styling*/
+
+.card-course-detail-back-path {
+  /* padding:2%; */
+  width: 30%;
+  height: auto;
+  margin-bottom: 5%;
+}
+
+/*Card Flex Code*/
+
+.card-course-detail-container-path {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 5%;
+}
+
+@media (max-width: 1024px) {
+  .card-course-detail-back-path {
+    width: 47%;
+    /* margin-bottom: 5%; */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-course-detail-back-path {
+    width: 47%;
+  }
+
+  .card-course-detail-container-path {
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    justify-content: flex-start !important;
+    /* gap: 50px; */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-course-detail-back-path {
+    width: 95%;
+    margin-bottom: 10%;
+  }
+
+  .card-course-detail-container-path {
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    height: fit-content;
+    /* gap: 30px; */
+  }
+}

@@ -1,6 +1,6 @@
 ---
 id: 587d7b83367417b2b2512b33
-title: Use the JavaScript Console to Check the Value of a Variable
+title: Utiliser la console JavaScript pour vérifier la valeur d'une variable
 challengeType: 1
 forumTopicId: 18372
 dashedName: use-the-javascript-console-to-check-the-value-of-a-variable
@@ -8,13 +8,13 @@ dashedName: use-the-javascript-console-to-check-the-value-of-a-variable
 
 # --description--
 
-Both Chrome and Firefox have excellent JavaScript consoles, also known as DevTools, for debugging your JavaScript.
+Chrome et Firefox disposent tous deux d'excellentes consoles JavaScript, également appelées DevTools, pour déboguer votre JavaScript.
 
-You can find Developer tools in your Chrome's menu or Web Console in Firefox's menu. If you're using a different browser, or a mobile phone, we strongly recommend switching to desktop Firefox or Chrome.
+Vous trouverez les outils du développeur dans le menu de Chrome ou la console Web dans le menu de Firefox. Si vous utilisez un autre navigateur, ou un téléphone portable, nous vous recommandons vivement de passer à Firefox ou Chrome de bureau.
 
-The `console.log()` method, which "prints" the output of what's within its parentheses to the console, will likely be the most helpful debugging tool. Placing it at strategic points in your code can show you the intermediate values of variables. It's good practice to have an idea of what the output should be before looking at what it is. Having check points to see the status of your calculations throughout your code will help narrow down where the problem is.
+La méthode `console.log()`, qui "imprime" la sortie de ce qui se trouve entre ses parenthèses dans la console, sera probablement l'outil de débogage le plus utile. En la plaçant à des endroits stratégiques de votre code, vous pourrez voir les valeurs intermédiaires des variables. Il est bon d'avoir une idée de ce que devrait être la sortie avant de regarder ce qu'elle est. Le fait d'avoir des points de référence pour voir l'état de vos calculs tout au long de votre code vous aidera à déterminer où se situe le problème.
 
-Here's an example to print the string `Hello world!` to the console:
+Voici un exemple pour imprimer la chaîne `Hello world!` à la console :
 
 ```js
 console.log('Hello world!');
@@ -22,11 +22,11 @@ console.log('Hello world!');
 
 # --instructions--
 
-Use the `console.log()` method to print the value of the variable `a` where noted in the code.
+Utilisez la méthode `console.log()` pour imprimer la valeur de la variable `a` à l'endroit indiqué dans le code.
 
 # --hints--
 
-Your code should use `console.log()` to check the value of the variable `a`.
+Votre code devrait utiliser `console.log()` pour vérifier la valeur de la variable `a`.
 
 ```js
 assert(code.match(/console\.log\(a\)/g));
@@ -40,7 +40,7 @@ assert(code.match(/console\.log\(a\)/g));
 let a = 5;
 let b = 1;
 a++;
-// Only change code below this line
+// Ne modifiez que le code en dessous de cette ligne
 
 
 let sumAB = a + b;

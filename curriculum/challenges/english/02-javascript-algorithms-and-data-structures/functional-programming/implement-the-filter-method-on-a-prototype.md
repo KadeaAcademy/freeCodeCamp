@@ -1,6 +1,6 @@
 ---
 id: 587d7b8f367417b2b2512b64
-title: Implement the filter Method on a Prototype
+title: Implémenter la méthode de filtrage sur un prototype
 challengeType: 1
 forumTopicId: 301231
 dashedName: implement-the-filter-method-on-a-prototype
@@ -8,21 +8,21 @@ dashedName: implement-the-filter-method-on-a-prototype
 
 # --description--
 
-You might learn a lot about the `filter` method if you implement your own version of it. It is recommended you use a `for` loop or `Array.prototype.forEach()`.
+Vous pourriez en apprendre beaucoup sur la méthode `filter` en implémentant votre propre version de celle-ci. Il est recommandé d'utiliser une boucle `for` ou `Array.prototype.forEach()`.
 
 # --instructions--
 
-Write your own `Array.prototype.myFilter()`, which should behave exactly like `Array.prototype.filter()`. You should not use the built-in `filter` method. The `Array` instance can be accessed in the `myFilter` method using `this`.
+Ecrivez votre propre `Array.prototype.myFilter()`, qui devrait se comporter exactement comme `Array.prototype.filter()`. Vous ne devez pas utiliser la méthode intégrée `filter`. L'instance `Array` peut être accédée dans la méthode `myFilter` en utilisant `this`.
 
 # --hints--
 
-`new_s` should equal `[23, 65, 5]`.
+`new_s` devrait être égal à `[23, 65, 5]`.
 
 ```js
 assert(JSON.stringify(new_s) === JSON.stringify([23, 65, 5]));
 ```
 
-Your code should not use the `filter` method.
+Votre code ne doit pas utiliser la méthode `filter`.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?filter/g));
@@ -33,13 +33,13 @@ assert(!code.match(/\.?[\s\S]*?filter/g));
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 const s = [23, 65, 98, 5];
 
 Array.prototype.myFilter = function(callback) {
-  // Only change code below this line
+  // Ne modifiez que le code situé en dessous de cette ligne
   const newArray = [];
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
   return newArray;
 };
 

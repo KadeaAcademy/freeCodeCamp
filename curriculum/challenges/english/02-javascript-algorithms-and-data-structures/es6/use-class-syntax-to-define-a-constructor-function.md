@@ -1,6 +1,6 @@
 ---
 id: 587d7b8b367417b2b2512b53
-title: Use class Syntax to Define a Constructor Function
+title: Utiliser la syntaxe des classes pour définir une fonction constructrice
 challengeType: 1
 forumTopicId: 301212
 dashedName: use-class-syntax-to-define-a-constructor-function
@@ -8,11 +8,11 @@ dashedName: use-class-syntax-to-define-a-constructor-function
 
 # --description--
 
-ES6 provides a new syntax to create objects, using the <dfn>class</dfn> keyword.
+ES6 fournit une nouvelle syntaxe pour créer des objets, en utilisant le mot-clé <dfn>class</dfn>.
 
-It should be noted that the `class` syntax is just syntax, and not a full-fledged class-based implementation of an object-oriented paradigm, unlike in languages such as Java, Python, Ruby, etc.
+Il convient de noter que la syntaxe `class` n'est qu'un sucre syntaxique, et non une implémentation à part entière, basée sur les classes, d'un paradigme orienté objet, contrairement à des langages tels que Java, Python, Ruby, etc.
 
-In ES5, we usually define a `constructor` function and use the `new` keyword to instantiate an object.
+Dans ES5, nous définissons généralement une fonction `constructeur` et utilisons le mot-clé `new` pour instancier un objet.
 
 ```js
 var SpaceShuttle = function(targetPlanet){
@@ -21,7 +21,7 @@ var SpaceShuttle = function(targetPlanet){
 var zeus = new SpaceShuttle('Jupiter');
 ```
 
-The `class` syntax simply replaces the `constructor` function creation:
+La syntaxe `class` remplace simplement la création de la fonction `constructor` :
 
 ```js
 class SpaceShuttle {
@@ -32,21 +32,21 @@ class SpaceShuttle {
 const zeus = new SpaceShuttle('Jupiter');
 ```
 
-It should be noted that the `class` keyword declares a new function, to which a constructor is added. This constructor is invoked when `new` is called to create a new object.
+Il est à noter que le mot-clé `class` déclare une nouvelle fonction, à laquelle on ajoute un constructeur. Ce constructeur est invoqué lorsque `new` est appelé pour créer un nouvel objet.
 
-**Note:** UpperCamelCase should be used by convention for ES6 class names, as in `SpaceShuttle` used above.
+**Note:** Les majuscules doivent être utilisées par convention pour les noms de classes ES6, comme dans `SpaceShuttle` utilisé ci-dessus.
 
-The `constructor` method is a special method for creating and initializing an object created with a class. You will learn more about it in the Object Oriented Programming section of the JavaScript Algorithms And Data Structures Certification.
+La méthode `constructor` est une méthode spéciale pour créer et initialiser un objet créé avec une classe. Vous en apprendrez davantage à ce sujet dans la section Programmation orientée objet de la certification Algorithmes et Structures de données en JavaScript .
 
 # --instructions--
 
-Use the `class` keyword and write a `constructor` to create the `Vegetable` class.
+Utilisez le mot-clé `class` et écrivez un `constructor` pour créer la classe `Vegetable`.
 
-The `Vegetable` class allows you to create a vegetable object with a property `name` that gets passed to the `constructor`.
+La classe `Vegetable` vous permet de créer un objet vegetable avec une propriété `name` qui est passée au `constructor`.
 
 # --hints--
 
-`Vegetable` should be a `class` with a defined `constructor` method.
+`Vegetable` devrait être une `classe` avec une méthode `constructor` définie.
 
 ```js
 assert(
@@ -54,13 +54,13 @@ assert(
 );
 ```
 
-The `class` keyword should be used.
+Le mot-clé `class` doit être utilisé.
 
 ```js
 assert(code.match(/class/g));
 ```
 
-`Vegetable` should be able to be instantiated.
+`Vegetable` doit pouvoir être instancié.
 
 ```js
 assert(() => {
@@ -69,7 +69,7 @@ assert(() => {
 });
 ```
 
-`carrot.name` should return `carrot`.
+`carrot.name` doit retourner `carrot`.
 
 ```js
 assert(carrot.name == 'carrot');
@@ -80,12 +80,12 @@ assert(carrot.name == 'carrot');
 ## --seed-contents--
 
 ```js
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 const carrot = new Vegetable('carrot');
-console.log(carrot.name); // Should display 'carrot'
+console.log(carrot.name); // devrait afficher 'carrot'
 ```
 
 # --solutions--

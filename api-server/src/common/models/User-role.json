@@ -1,0 +1,30 @@
+{
+  "name": "userRole",
+  "plural": "userRoles",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "userRoleName": {
+      "type": "string",
+      "index": {
+        "mongodb": {
+          "unique": true
+        }
+      }
+    },
+    "descrpiton": {
+      "tpye": "string"
+    },
+    "createAt": {
+      "type": "date",
+      "defaultFn": "now"
+    },
+    "memberCount": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+
+  "acls": [],
+  "methods": {}
+}

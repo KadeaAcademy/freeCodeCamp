@@ -1,6 +1,6 @@
 ---
 id: a2f1d72d9b908d0bd72bb9f6
-title: Make a Person
+title: Créer une Personne
 challengeType: 5
 forumTopicId: 16020
 dashedName: make-a-person
@@ -8,7 +8,7 @@ dashedName: make-a-person
 
 # --description--
 
-Fill in the object constructor with the following methods below:
+Complétez le constructeur de l'objet avec les méthodes suivantes :
 
 ```js
 getFirstName()
@@ -19,11 +19,11 @@ setLastName(last)
 setFullName(firstAndLast)
 ```
 
-Run the tests to see the expected output for each method. The methods that take an argument must accept only one argument and it has to be a string. These methods must be the only available means of interacting with the object.
+Exécutez les tests pour voir le résultat attendu pour chaque méthode. Les méthodes qui prennent un argument ne doivent accepter qu'un seul argument et celui-ci doit être une chaîne de caractères. Ces méthodes doivent être le seul moyen disponible pour interagir avec l'objet.
 
 # --hints--
 
-No properties should be added. `Object.keys(bob).length` should always return 6.
+Aucune propriété ne doit être ajoutée. `Object.keys(bob).length` doit toujours retourner 6.
 
 ```js
 assert.strictEqual(
@@ -38,43 +38,43 @@ assert.strictEqual(
  );
 ```
 
-`bob instanceof Person` should return `true`.
+`bob instanceof Person` devrait retourner `true`.
 
 ```js
 assert.deepEqual(bob instanceof Person, true);
 ```
 
-`bob.firstName` should return `undefined`.
+`bob.firstName` devrait retourner `undefined`.
 
 ```js
 assert.deepEqual(bob.firstName, undefined);
 ```
 
-`bob.lastName` should return `undefined`.
+`bob.lastName` devrait retourner `undefined`.
 
 ```js
 assert.deepEqual(bob.lastName, undefined);
 ```
 
-`bob.getFirstName()` should return the string `Bob`.
+`bob.getFirstName()` devrait retourner la chaîne `Bob`.
 
 ```js
 assert.deepEqual(bob.getFirstName(), 'Bob');
 ```
 
-`bob.getLastName()` should return the string `Ross`.
+`bob.getLastName()` devrait retourner la chaîne `Ross`.
 
 ```js
 assert.deepEqual(bob.getLastName(), 'Ross');
 ```
 
-`bob.getFullName()` should return the string `Bob Ross`.
+`bob.getFullName()` devrait retourner la chaîne `Bob Ross`.
 
 ```js
 assert.deepEqual(bob.getFullName(), 'Bob Ross');
 ```
 
-`bob.getFullName()` should return the string `Haskell Ross` after `bob.setFirstName("Haskell")`.
+`bob.getFullName()` devrait retourner la chaîne `Haskell Ross` après `bob.setFirstName("Haskell")`.
 
 ```js
 assert.strictEqual(
@@ -86,7 +86,7 @@ assert.strictEqual(
 );
 ```
 
-`bob.getFullName()` should return the string `Haskell Curry` after `bob.setLastName("Curry")`.
+`bob.getFullName()` devrait retourner la chaîne `Haskell Curry` après `bob.setLastName("Curry")`.
 
 ```js
 assert.strictEqual(
@@ -99,7 +99,7 @@ assert.strictEqual(
 );
 ```
 
-`bob.getFullName()` should return the string `Haskell Curry` after `bob.setFullName("Haskell Curry")`.
+`bob.getFullName()` devrait retourner la chaîne `Haskell Curry` après `bob.setFullName("Haskell Curry")`.
 
 ```js
 assert.strictEqual(
@@ -111,7 +111,7 @@ assert.strictEqual(
 );
 ```
 
-`bob.getFirstName()` should return the string `Haskell` after `bob.setFullName("Haskell Curry")`.
+`bob.getFirstName()` devrait retourner la chaîne `Haskell` après `bob.setFullName("Haskell Curry")`.
 
 ```js
 assert.strictEqual(
@@ -123,7 +123,7 @@ assert.strictEqual(
 );
 ```
 
-`bob.getLastName()` should return the string `Curry` after `bob.setFullName("Haskell Curry")`.
+`bob.getLastName()` devrait retourner la chaîne `Curry` après `bob.setFullName("Haskell Curry")`.
 
 ```js
 assert.strictEqual(
@@ -149,8 +149,8 @@ if(bob){
 
 ```js
 const Person = function(firstAndLast) {
-  // Only change code below this line
-  // Complete the method below and implement the others similarly
+// Ne modifiez le code qu'en dessous de cette ligne
+// Compléter la méthode ci-dessous et implémenter les autres de manière similaire
   this.getFullName = function() {
     return "";
   };

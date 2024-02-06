@@ -12,16 +12,13 @@ import { TFunction, Trans, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import type { Dispatch } from 'redux';
-import isEmail from 'validator/lib/isEmail';
+import validator from 'validator/';
 
 import { updateMyEmail } from '../../redux/settings';
 import { maybeEmailRE } from '../../utils';
 
 import BlockSaveButton from '../helpers/form/block-save-button';
 import FullWidthRow from '../helpers/full-width-row';
-import Spacer from '../helpers/spacer';
-import SectionHeader from './section-header';
-import ToggleSetting from './toggle-setting';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -41,21 +38,24 @@ interface EmailForm {
   newEmail: string;
   confirmNewEmail: string;
   isPristine: boolean;
+  isValidNewEmail: boolean;
+  isFocusNewEmail: boolean;
+  isBlurNewEmail: boolean;
 }
 
 function EmailSettings({
   email,
   isEmailVerified,
-  sendQuincyEmail,
-  t,
-  updateMyEmail,
-  updateQuincyEmail
+  updateMyEmail
 }: EmailProps): JSX.Element {
   const [emailForm, setEmailForm] = useState<EmailForm>({
     currentEmail: email,
     newEmail: '',
     confirmNewEmail: '',
-    isPristine: true
+    isPristine: true,
+    isValidNewEmail: true,
+    isFocusNewEmail: false,
+    isBlurNewEmail: false
   });
 
   function handleSubmit(e: React.FormEvent): void {
@@ -72,33 +72,42 @@ function EmailSettings({
       setEmailForm(prev => ({
         ...prev,
         [key]: userInput,
-        isPristine: userInput === prev.currentEmail
+        isPristine: userInput === prev.currentEmail,
+        isValidNewEmail:
+          key === 'newEmail' && validator.isEmail(userInput) ? true : false
       }));
     };
   }
 
   function getValidationForNewEmail() {
-    const { newEmail, currentEmail } = emailForm;
-    if (!maybeEmailRE.test(newEmail)) {
+    const { newEmail, currentEmail, isValidNewEmail, isFocusNewEmail } =
+      emailForm;
+    if (!maybeEmailRE.test(newEmail) && isFocusNewEmail) {
       return {
         state: null,
-        message: ''
+        message: 'Votre e-mail dois etre sous la forme : exemple@mail.com'
       };
     }
     if (newEmail === currentEmail) {
       return {
         state: 'error',
-        message: t('validation.same-email')
+        message: 'Cet email est le même que votre email actuel'
       };
     }
-    if (isEmail(newEmail)) {
+    if (validator.isEmail(newEmail)) {
       return { state: 'success', message: '' };
-    } else {
+    }
+    if (!validator.isEmail(newEmail) && !isValidNewEmail) {
       return {
         state: 'error',
-        message: t('validation.invalid-email')
+        message:
+          "Nous n'avons pas pu valider votre e-mail correctement, veuillez vous assurer qu'il est correct."
       };
     }
+    return {
+      state: null,
+      message: ''
+    };
   }
 
   function getValidationForConfirmEmail() {
@@ -113,13 +122,75 @@ function EmailSettings({
     if (maybeEmailRE.test(confirmNewEmail)) {
       return {
         state: isMatch ? 'success' : 'error',
-        message: isMatch ? '' : t('validation.email-mismatch')
+        message: isMatch
+          ? ''
+          : 'Les deux nouvelles adresses électroniques doivent être les mêmes'
       };
     } else {
       return {
         state: null,
         message: ''
       };
+    }
+  }
+
+  // ------------NewEmail Handler------------
+
+  function focusHandlerNewEmail(e: React.FocusEvent<HTMLInputElement>): void {
+    const value = (e.target as HTMLInputElement).value.slice(0);
+
+    if (value) {
+      if (validator.isEmail(value)) {
+        setEmailForm({
+          ...emailForm,
+          isValidNewEmail: true,
+          isFocusNewEmail: true,
+          isBlurNewEmail: false
+        });
+      } else {
+        setEmailForm({
+          ...emailForm,
+          isValidNewEmail: false,
+          isFocusNewEmail: true,
+          isBlurNewEmail: false
+        });
+      }
+    } else {
+      setEmailForm({
+        ...emailForm,
+        isValidNewEmail: true,
+        isFocusNewEmail: true,
+        isBlurNewEmail: false
+      });
+    }
+  }
+
+  function blurHandlerNewEmail(e: React.FocusEvent<HTMLInputElement>): void {
+    const value = (e.target as HTMLInputElement).value.slice(0);
+
+    if (value) {
+      if (validator.isEmail(value)) {
+        setEmailForm({
+          ...emailForm,
+          isValidNewEmail: true,
+          isFocusNewEmail: false,
+          isBlurNewEmail: true
+        });
+      } else {
+        setEmailForm({
+          ...emailForm,
+          isValidNewEmail: false,
+          isFocusNewEmail: false,
+          isBlurNewEmail: true
+        });
+      }
+    } else {
+      setEmailForm({
+        ...emailForm,
+        isValidNewEmail: true,
+        isFocusNewEmail: false,
+        isBlurNewEmail: true
+      });
     }
   }
 
@@ -137,12 +208,14 @@ function EmailSettings({
     return (
       <div>
         <FullWidthRow>
-          <p className='large-p text-center'>{t('settings.email.missing')}</p>
+          <p className='large-p text-center'>
+            {"Vous n'avez pas d'adresse électronique associée à ce compte."}
+          </p>
         </FullWidthRow>
         <FullWidthRow>
           <Link style={{ textDecoration: 'none' }} to='/update-email'>
             <Button block={true} bsSize='lg' bsStyle='primary'>
-              {t('buttons.edit')}
+              {'Modifier'}
             </Button>
           </Link>
         </FullWidthRow>
@@ -151,46 +224,49 @@ function EmailSettings({
   }
   return (
     <div className='email-settings'>
-      <SectionHeader>{t('settings.email.heading')}</SectionHeader>
       {isEmailVerified ? null : (
-        <FullWidthRow>
+        <div>
           <HelpBlock>
-            <Alert
-              bsStyle='info'
-              className='text-center'
-              closeLabel={t('buttons.close')}
-            >
-              {t('settings.email.not-verified')}
+            <Alert bsStyle='info' className='text-center' closeLabel={'Fermer'}>
+              {"Votre courriel n'a pas été vérifié."}
               <br />
               <Trans i18nKey='settings.email.check'>
                 <Link to='/update-email' />
               </Trans>
             </Alert>
           </HelpBlock>
-        </FullWidthRow>
+        </div>
       )}
-      <FullWidthRow>
+      <div>
         <form id='form-update-email' onSubmit={handleSubmit}>
           <FormGroup controlId='current-email'>
-            <ControlLabel>{t('settings.email.current')}</ControlLabel>
+            <ControlLabel>{'Email actuel'}</ControlLabel>
             <FormControl.Static>{currentEmail}</FormControl.Static>
           </FormGroup>
           <FormGroup controlId='new-email' validationState={newEmailValidation}>
-            <ControlLabel>{t('settings.email.new')}</ControlLabel>
+            <ControlLabel className='text-gray-90'>
+              {'Nouvel email'}
+            </ControlLabel>
             <FormControl
+              onFocus={focusHandlerNewEmail}
+              onBlur={blurHandlerNewEmail}
               onChange={createHandleEmailFormChange('newEmail')}
               type='email'
               value={newEmail}
             />
             {newEmailValidationMessage ? (
               <HelpBlock>{newEmailValidationMessage}</HelpBlock>
-            ) : null}
+            ) : (
+              <HelpBlock className='none-help-block'>{'none'}</HelpBlock>
+            )}
           </FormGroup>
           <FormGroup
             controlId='confirm-email'
             validationState={confirmEmailValidation}
           >
-            <ControlLabel>{t('settings.email.confirm')}</ControlLabel>
+            <ControlLabel className='text-gray-90'>
+              {'Confirmer le nouvel email'}
+            </ControlLabel>
             <FormControl
               onChange={createHandleEmailFormChange('confirmNewEmail')}
               type='email'
@@ -198,7 +274,9 @@ function EmailSettings({
             />
             {confirmEmailValidationMessage ? (
               <HelpBlock>{confirmEmailValidationMessage}</HelpBlock>
-            ) : null}
+            ) : (
+              <HelpBlock className='none-help-block'>{'none'}</HelpBlock>
+            )}
           </FormGroup>
           <BlockSaveButton
             disabled={
@@ -208,20 +286,7 @@ function EmailSettings({
             }
           />
         </form>
-      </FullWidthRow>
-      <Spacer />
-      <FullWidthRow>
-        <form id='form-quincy-email' onSubmit={handleSubmit}>
-          <ToggleSetting
-            action={t('settings.email.weekly')}
-            flag={sendQuincyEmail}
-            flagName='sendQuincyEmail'
-            offLabel={t('buttons.no-thanks')}
-            onLabel={t('buttons.yes-please')}
-            toggleFlag={() => updateQuincyEmail(!sendQuincyEmail)}
-          />
-        </form>
-      </FullWidthRow>
+      </div>
     </div>
   );
 }

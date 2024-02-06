@@ -1,0 +1,27 @@
+{
+  "name": "userGroup",
+  "plural": "userGroups",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "userGroupName": {
+      "type": "string",
+      "index": {
+        "mongodb": {
+          "unique": true
+        }
+      }
+    },
+    "createAt": {
+      "type": "date",
+      "defaultFn": "now"
+    },
+    "memberCount": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+
+  "acls": [],
+  "methods": {}
+}

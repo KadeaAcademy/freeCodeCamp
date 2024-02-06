@@ -1,6 +1,6 @@
 ---
 id: 587d7dab367417b2b2512b6f
-title: Use the some Method to Check that Any Elements in an Array Meet a Criteria
+title: Utiliser la méthode some pour vérifier que tous les éléments d'un tableau répondent à un critère.
 challengeType: 1
 forumTopicId: 301314
 dashedName: use-the-some-method-to-check-that-any-elements-in-an-array-meet-a-criteria
@@ -8,9 +8,9 @@ dashedName: use-the-some-method-to-check-that-any-elements-in-an-array-meet-a-cr
 
 # --description--
 
-The `some` method works with arrays to check if *any* element passes a particular test. It returns a Boolean value - `true` if any of the values meet the criteria, `false` if not.
+La méthode `some` travaille avec des tableaux pour vérifier si *un* élément passe un test particulier. Elle retourne une valeur booléenne - `vrai` si l'une des valeurs répond aux critères, `faux` si ce n'est pas le cas.
 
-For example, the following code would check if any element in the `numbers` array is less than 10:
+Par exemple, le code suivant vérifie si un élément du tableau `numbers` est inférieur à 10 :
 
 ```js
 const numbers = [10, 50, 8, 220, 110, 11];
@@ -20,33 +20,33 @@ numbers.some(function(currentValue) {
 });
 ```
 
-The `some` method would return `true`.
+La méthode `some` renverrait `vrai`.
 
 # --instructions--
 
-Use the `some` method inside the `checkPositive` function to check if any element in `arr` is positive. The function should return a Boolean value.
+Utilisez la méthode `some` à l'intérieur de la fonction `checkPositive` pour vérifier si un élément de `arr` est positif. La fonction doit retourner une valeur booléenne.
 
 # --hints--
 
-Your code should use the `some` method.
+Votre code devrait utiliser la méthode `some`.
 
 ```js
 assert(code.match(/\.some/g));
 ```
 
-`checkPositive([1, 2, 3, -4, 5])` should return `true`.
+`checkPositive([1, 2, 3, -4, 5])` devrait retourner `true`.
 
 ```js
 assert(checkPositive([1, 2, 3, -4, 5]));
 ```
 
-`checkPositive([1, 2, 3, 4, 5])` should return `true`.
+`checkPositive([1, 2, 3, 4, 5])` devrait retourner `true`.
 
 ```js
 assert(checkPositive([1, 2, 3, 4, 5]));
 ```
 
-`checkPositive([-1, -2, -3, -4, -5])` should return `false`.
+`checkPositive([-1, -2, -3, -4, -5])` devrait retourner `false`.
 
 ```js
 assert(!checkPositive([-1, -2, -3, -4, -5]));
@@ -58,10 +58,10 @@ assert(!checkPositive([-1, -2, -3, -4, -5]));
 
 ```js
 function checkPositive(arr) {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 
 checkPositive([1, 2, 3, -4, 5]);

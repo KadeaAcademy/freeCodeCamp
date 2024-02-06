@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244af
-title: Compound Assignment With Augmented Addition
+title: Affectation composée avec addition augmentée
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cDR6LCb'
 forumTopicId: 16661
@@ -9,15 +9,15 @@ dashedName: compound-assignment-with-augmented-addition
 
 # --description--
 
-In programming, it is common to use assignments to modify the contents of a variable. Remember that everything to the right of the equals sign is evaluated first, so we can say:
+En programmation, il est courant d'utiliser des affectations pour modifier le contenu d'une variable. Rappelez-vous que tout ce qui se trouve à droite du signe égal est évalué en premier, donc on peut dire :
 
 ```js
 myVar = myVar + 5;
 ```
 
-to add `5` to `myVar`. Since this is such a common pattern, there are operators which do both a mathematical operation and assignment in one step.
+pour ajouter `5` à `myVar`. Comme il s'agit d'un modèle très courant, il existe des opérateurs qui effectuent à la fois une opération mathématique et une affectation en une seule étape.
 
-One such operator is the `+=` operator.
+L'un de ces opérateurs est l'opérateur `+=`.
 
 ```js
 let myVar = 1;
@@ -25,39 +25,39 @@ myVar += 5;
 console.log(myVar);
 ```
 
-`6` would be displayed in the console.
+`6` serait affiché dans la console.
 
 # --instructions--
 
-Convert the assignments for `a`, `b`, and `c` to use the `+=` operator.
+Convertissez les affectations pour `a`, `b`, et `c` pour utiliser l'opérateur `+=`.
 
 # --hints--
 
-`a` should equal `15`.
+`a` devrait être égal à `15`.
 
 ```js
 assert(a === 15);
 ```
 
-`b` should equal `26`.
+`b` devrait être égal à `26`.
 
 ```js
 assert(b === 26);
 ```
 
-`c` should equal `19`.
+`c` devrait être égal à `19`.
 
 ```js
 assert(c === 19);
 ```
 
-You should use the `+=` operator for each variable.
+Vous devez utiliser l'opérateur `+=` pour chaque variable.
 
 ```js
 assert(code.match(/\+=/g).length === 3);
 ```
 
-You should not modify the code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(
@@ -82,7 +82,7 @@ let a = 3;
 let b = 17;
 let c = 12;
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 a = a + 12;
 b = 9 + b;
 c = c + 7;

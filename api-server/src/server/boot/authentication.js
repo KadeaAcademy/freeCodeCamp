@@ -52,7 +52,11 @@ module.exports = function enableAuthentication(app) {
   } else {
     api.get('/signin', ifUserRedirect, (req, res, next) => {
       const { returnTo, origin, pathPrefix } = getRedirectParams(req);
+      console.log('origin : ', origin);
+      console.log('pathPrefix : ', pathPrefix);
+      console.log('retun : ', returnTo);
       const state = jwt.sign({ returnTo, origin, pathPrefix }, jwtSecret);
+
       return passport.authenticate('auth0-login', { state })(req, res, next);
     });
 
@@ -67,14 +71,42 @@ module.exports = function enableAuthentication(app) {
     req.logout();
     req.session.destroy(err => {
       if (err) {
-        throw wrapHandledError(new Error('could not destroy session'), {
-          type: 'info',
-          message: 'We could not log you out, please try again in a moment.',
-          redirectTo: origin
-        });
+        throw wrapHandledError(
+          new Error(`nous n'avons pas pu détruire la session`),
+          {
+            type: 'info',
+            message: `Nous n'avons pas pu vous déconnecter, veuillez réessayer dans un moment.`,
+            redirectTo: origin
+          }
+        );
       }
       removeCookies(req, res);
-      res.redirect(returnTo);
+
+      /**
+       * logout user session from Auth0
+       * doc url: https://auth0.com/blog/create-a-simple-and-secure-node-express-app/
+       */
+      // make url for login out to Auth0
+      const logoutURL = new URL(
+        `https://${process.env.AUTH0_DOMAIN}/v2/logout`
+      );
+
+      /**
+       * make params for auth0 logout url
+       * URLSearchParams nodjs object tuto :
+       * https://www.linkedin.com/pulse/how-migrate-from-querystring-urlsearchparams-nodejs-vladim%C3%ADr-gorej/?trk=articles_directory
+       */
+      const searchString = new URLSearchParams({
+        // federated: 'federated',
+        client_id: process.env.AUTH0_CLIENT_ID,
+        returnTo: returnTo
+      }).toString();
+      // add params to logoutURL
+      logoutURL.search = searchString;
+      // make Api call for login out user to Auth0
+      res.redirect(logoutURL);
+      // End logout user from Auth0
+      // res.redirect(returnTo);
     });
   });
 

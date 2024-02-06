@@ -1,6 +1,6 @@
 ---
 id: 587d7b7d367417b2b2512b1e
-title: Generate an Array of All Object Keys with Object.keys()
+title: Générer un tableau de toutes les clés d'un objet avec Object.keys()
 challengeType: 1
 forumTopicId: 301160
 dashedName: generate-an-array-of-all-object-keys-with-object-keys
@@ -8,15 +8,15 @@ dashedName: generate-an-array-of-all-object-keys-with-object-keys
 
 # --description--
 
-We can also generate an array which contains all the keys stored in an object using the `Object.keys()` method and passing in an object as the argument. This will return an array with strings representing each property in the object. Again, there will be no specific order to the entries in the array.
+Nous pouvons également générer un tableau qui contient toutes les clés stockées dans un objet en utilisant la méthode `Object.keys()` et en passant un objet comme argument. Cette méthode renvoie un tableau contenant des chaînes de caractères représentant chaque propriété de l'objet. Encore une fois, il n'y aura pas d'ordre spécifique pour les entrées dans le tableau.
 
 # --instructions--
 
-Finish writing the `getArrayOfUsers` function so that it returns an array containing all the properties in the object it receives as an argument.
+Terminez l'écriture de la fonction `getArrayOfUsers` afin qu'elle renvoie un tableau contenant toutes les propriétés de l'objet qu'elle reçoit en argument.
 
 # --hints--
 
-The `users` object should only contain the keys `Alan`, `Jeff`, `Sarah`, and `Ryan`
+L'objet `users` ne doit contenir que les clés `Alan`, `Jeff`, `Sarah`, et `Ryan`.
 
 ```js
 assert(
@@ -28,7 +28,7 @@ assert(
 );
 ```
 
-The `getArrayOfUsers` function should return an array which contains all the keys in the `users` object
+La fonction `getArrayOfUsers` doit retourner un tableau qui contient toutes les clés de l'objet `users`.
 
 ```js
 assert(
@@ -73,9 +73,9 @@ let users = {
 };
 
 function getArrayOfUsers(obj) {
-  // Only change code below this line
+ // Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 
 console.log(getArrayOfUsers(users));

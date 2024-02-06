@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c8
-title: Accessing Object Properties with Bracket Notation
+title: Accéder aux propriétés d'un objet avec la notation entre crochets
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cBvmEHP'
 forumTopicId: 16163
@@ -9,11 +9,11 @@ dashedName: accessing-object-properties-with-bracket-notation
 
 # --description--
 
-The second way to access the properties of an object is bracket notation (`[]`). If the property of the object you are trying to access has a space in its name, you will need to use bracket notation.
+La deuxième façon d'accéder aux propriétés d'un objet est la notation entre crochets (`[]`). Si la propriété de l'objet auquel vous essayez d'accéder comporte un espace dans son nom, vous devrez utiliser la notation entre crochets.
 
-However, you can still use bracket notation on object properties without spaces.
+Cependant, vous pouvez toujours utiliser la notation entre crochets pour les propriétés d'un objet sans espace.
 
-Here is a sample of using bracket notation to read an object's property:
+Voici un exemple d'utilisation de la notation entre crochets pour lire la propriété d'un objet :
 
 ```js
 const myObj = {
@@ -27,41 +27,41 @@ myObj['More Space'];
 myObj["NoSpace"];
 ```
 
-`myObj["Space Name"]` would be the string `Kirk`, `myObj['More Space']` would be the string `Spock`, and `myObj["NoSpace"]` would be the string `USS Enterprise`.
+`myObj["Space Name"]` serait la chaîne `Kirk`, `myObj["More Space"]` serait la chaîne `Spock`, et `myObj["NoSpace"]` serait la chaîne `USS Enterprise`.
 
-Note that property names with spaces in them must be in quotes (single or double).
+Notez que les noms de propriétés contenant des espaces doivent être placés entre guillemets (simples ou doubles).
 
 # --instructions--
 
-Read the values of the properties `an entree` and `the drink` of `testObj` using bracket notation and assign them to `entreeValue` and `drinkValue` respectively.
+Lisez les valeurs des propriétés `an entree` et `the drink` de `testObj` en utilisant la notation entre crochets et affectez-les respectivement à `entreeValue` et `drinkValue`.
 
 # --hints--
 
-`entreeValue` should be a string
+`entreeValue` doit être une chaîne de caractères
 
 ```js
 assert(typeof entreeValue === 'string');
 ```
 
-The value of `entreeValue` should be the string `hamburger`
+La valeur de `entreeValue` doit être la chaîne de caractères `hamburger`.
 
 ```js
 assert(entreeValue === 'hamburger');
 ```
 
-`drinkValue` should be a string
+`drinkValue` doit être une chaîne de caractères.
 
 ```js
 assert(typeof drinkValue === 'string');
 ```
 
-The value of `drinkValue` should be the string `water`
+La valeur de `drinkValue` doit être la chaîne `water`.
 
 ```js
 assert(drinkValue === 'water');
 ```
 
-You should use bracket notation twice
+Vous devez utiliser la notation entre crochets deux fois
 
 ```js
 assert(code.match(/testObj\s*?\[('|")[^'"]+\1\]/g).length > 1);
@@ -85,9 +85,9 @@ const testObj = {
   "the drink": "water"
 };
 
-// Only change code below this line
-const entreeValue = testObj;   // Change this line
-const drinkValue = testObj;    // Change this line
+// Ne changez que le code en dessous de cette ligne
+const entreeValue = testObj;   // Modifiez cette ligne
+const drinkValue = testObj;    // Modifiez cette ligne
 ```
 
 # --solutions--

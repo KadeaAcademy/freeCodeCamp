@@ -1,6 +1,6 @@
 ---
 id: 587d7b7b367417b2b2512b13
-title: Copy an Array with the Spread Operator
+title: Copier un tableau avec l'opérateur d'étalement
 challengeType: 1
 forumTopicId: 301157
 dashedName: copy-an-array-with-the-spread-operator
@@ -8,24 +8,24 @@ dashedName: copy-an-array-with-the-spread-operator
 
 # --description--
 
-While `slice()` allows us to be selective about what elements of an array to copy, among several other useful tasks, ES6's new <dfn>spread operator</dfn> allows us to easily copy *all* of an array's elements, in order, with a simple and highly readable syntax. The spread syntax simply looks like this: `...`
+Alors que `slice()` nous permet d'être sélectif quant aux éléments d'un tableau à copier, parmi plusieurs autres tâches utiles, le nouvel opérateur <dfn>spread</dfn> de ES6 nous permet de copier facilement *tous* les éléments d'un tableau, dans l'ordre, avec une syntaxe simple et très lisible. La syntaxe spread se présente simplement comme suit : `...`
 
-In practice, we can use the spread operator to copy an array like so:
+En pratique, nous pouvons utiliser l'opérateur d'étalement pour copier un tableau comme suit :
 
 ```js
 let thisArray = [true, true, undefined, false, null];
 let thatArray = [...thisArray];
 ```
 
-`thatArray` equals `[true, true, undefined, false, null]`. `thisArray` remains unchanged and `thatArray` contains the same elements as `thisArray`.
+`thatArray` est égal à `[true, true, undefined, false, null]`. `thisArray` reste inchangé et `thatArray` contient les mêmes éléments que `thisArray`.
 
 # --instructions--
 
-We have defined a function, `copyMachine` which takes `arr` (an array) and `num` (a number) as arguments. The function is supposed to return a new array made up of `num` copies of `arr`. We have done most of the work for you, but it doesn't work quite right yet. Modify the function using spread syntax so that it works correctly (hint: another method we have already covered might come in handy here!).
+Nous avons défini une fonction, `copyMachine` qui prend `arr` (un tableau) et `num` (un nombre) comme arguments. La fonction est censée retourner un nouveau tableau composé de `num` copies de `arr`. Nous avons fait le plus gros du travail pour vous, mais cela ne fonctionne pas encore tout à fait correctement. Modifiez la fonction en utilisant la syntaxe de l'étalement pour qu'elle fonctionne correctement (indice : une autre méthode que nous avons déjà couverte pourrait s'avérer utile ici !)
 
 # --hints--
 
-`copyMachine([true, false, true], 2)` should return `[[true, false, true], [true, false, true]]`
+`copyMachine([true, false, true], 2)` devrait renvoyer `[[true, false, true], [true, false, true]]`
 
 ```js
 assert.deepEqual(copyMachine([true, false, true], 2), [
@@ -34,7 +34,7 @@ assert.deepEqual(copyMachine([true, false, true], 2), [
 ]);
 ```
 
-`copyMachine([1, 2, 3], 5)` should return `[[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]`
+`copyMachine([1, 2, 3], 5)` devrait rennvoyer `[[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]`
 
 ```js
 assert.deepEqual(copyMachine([1, 2, 3], 5), [
@@ -46,13 +46,13 @@ assert.deepEqual(copyMachine([1, 2, 3], 5), [
 ]);
 ```
 
-`copyMachine([true, true, null], 1)` should return `[[true, true, null]]`
+`copyMachine([true, true, null], 1)` devrait rennvoyer `[[true, true, null]]`
 
 ```js
 assert.deepEqual(copyMachine([true, true, null], 1), [[true, true, null]]);
 ```
 
-`copyMachine(["it works"], 3)` should return `[["it works"], ["it works"], ["it works"]]`
+`copyMachine(["it works"], 3)` devrait rennvoyer `[["it works"], ["it works"], ["it works"]]`
 
 ```js
 assert.deepEqual(copyMachine(['it works'], 3), [
@@ -62,7 +62,7 @@ assert.deepEqual(copyMachine(['it works'], 3), [
 ]);
 ```
 
-The `copyMachine` function should utilize the `spread operator` with array `arr`
+La fonction `copyMachine` doit utiliser l'opérateur `spread` avec le tableau `arr`.
 
 ```js
 assert(code.match(/\.\.\.arr/));
@@ -76,9 +76,9 @@ assert(code.match(/\.\.\.arr/));
 function copyMachine(arr, num) {
   let newArr = [];
   while (num >= 1) {
-    // Only change code below this line
+    // Ne changez que le code en dessous de cette ligne
 
-    // Only change code above this line
+    // Ne changez que le code au-dessus de cette ligne
     num--;
   }
   return newArr;

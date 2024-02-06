@@ -1,6 +1,6 @@
 ---
 id: 587d7b84367417b2b2512b35
-title: Catch Misspelled Variable and Function Names
+title: Repérer les noms de variables et de fonctions mal orthographiés
 challengeType: 1
 forumTopicId: 301186
 dashedName: catch-misspelled-variable-and-function-names
@@ -8,41 +8,41 @@ dashedName: catch-misspelled-variable-and-function-names
 
 # --description--
 
-The `console.log()` and `typeof` methods are the two primary ways to check intermediate values and types of program output. Now it's time to get into the common forms that bugs take. One syntax-level issue that fast typers can commiserate with is the humble spelling error.
+Les méthodes `console.log()` et `typeof` sont les deux principaux moyens de vérifier les valeurs intermédiaires et les types de sortie du programme. Il est maintenant temps d'aborder les formes courantes que prennent les bugs. Un problème de niveau syntaxique avec lequel les dactylographes rapides peuvent compatir est l'humble erreur d'orthographe.
 
-Transposed, missing, or mis-capitalized characters in a variable or function name will have the browser looking for an object that doesn't exist - and complain in the form of a reference error. JavaScript variable and function names are case-sensitive.
+Des caractères transposés, manquants ou mal capitalisés dans un nom de variable ou de fonction feront que le navigateur cherchera un objet qui n'existe pas - et se plaindra sous la forme d'une erreur de référence. Les noms de variables et de fonctions JavaScript sont sensibles à la casse.
 
 # --instructions--
 
-Fix the two spelling errors in the code so the `netWorkingCapital` calculation works.
+Corriger les deux erreurs d'orthographe dans le code pour que le calcul du `netWorkingCapital` fonctionne.
 
 # --hints--
 
-Check the spelling of the two variables used in the netWorkingCapital calculation, the console output should show that "Net working capital is: 2".
+Vérifiez l'orthographe des deux variables utilisées dans le calcul du fonds de roulement net (`netWorkingCapital`), la sortie de la console devrait montrer que "Le fonds de roulement net est : 2".
 
 ```js
 assert(netWorkingCapital === 2);
 ```
 
-There should be no instances of mis-spelled variables in the code.
+Il ne doit y avoir aucun cas de variables mal orthographiées dans le code.
 
 ```js
 assert(!code.match(/recievables/g));
 ```
 
-The `receivables` variable should be declared and used properly in the code.
+La variable `receivables` doit être déclarée et utilisée correctement dans le code.
 
 ```js
 assert(code.match(/receivables/g).length == 2);
 ```
 
-There should be no instances of mis-spelled variables in the code.
+Il ne doit y avoir aucun cas de variables mal orthographiées dans le code.
 
 ```js
 assert(!code.match(/payable;/g));
 ```
 
-The `payables` variable should be declared and used properly in the code.
+La variable `payables` doit être déclarée et utilisée correctement dans le code.
 
 ```js
 assert(code.match(/payables/g).length == 2);
@@ -56,7 +56,7 @@ assert(code.match(/payables/g).length == 2);
 let receivables = 10;
 let payables = 8;
 let netWorkingCapital = recievables - payable;
-console.log(`Net working capital is: ${netWorkingCapital}`);
+console.log(`Le fonds de roulement net est: ${netWorkingCapital}`);
 ```
 
 # --solutions--
@@ -65,5 +65,5 @@ console.log(`Net working capital is: ${netWorkingCapital}`);
 let receivables = 10;
 let payables = 8;
 let netWorkingCapital = receivables - payables;
-console.log(`Net working capital is: ${netWorkingCapital}`);
+console.log(`Le fonds de roulement net est: ${netWorkingCapital}`);
 ```

@@ -1,6 +1,6 @@
 ---
 id: 587d7da9367417b2b2512b68
-title: Use the reduce Method to Analyze Data
+title: Utiliser la méthode reduce pour analyser les données
 challengeType: 1
 forumTopicId: 301313
 dashedName: use-the-reduce-method-to-analyze-data
@@ -8,15 +8,15 @@ dashedName: use-the-reduce-method-to-analyze-data
 
 # --description--
 
-`Array.prototype.reduce()`, or simply `reduce()`, is the most general of all array operations in JavaScript. You can solve almost any array processing problem using the `reduce` method.
+`Array.prototype.reduce()`, ou simplement `reduce()`, est la plus générale des opérations sur les tableaux en JavaScript. Vous pouvez résoudre presque tous les problèmes de traitement de tableaux en utilisant la méthode `reduce`.
 
-The `reduce` method allows for more general forms of array processing, and it's possible to show that both `filter` and `map` can be derived as special applications of `reduce`. The `reduce` method iterates over each item in an array and returns a single value (i.e. string, number, object, array). This is achieved via a callback function that is called on each iteration.
+La méthode `reduce` permet des formes plus générales de traitement des tableaux, et il est possible de montrer que `filter` et `map` peuvent être dérivés comme des applications spéciales de `reduce`. La méthode `reduce` itère sur chaque élément d'un tableau et retourne une valeur unique (i.e. chaîne de caractères, nombre, objet, tableau). Ceci est réalisé via une fonction de rappel qui est appelée à chaque itération.
 
-The callback function accepts four arguments. The first argument is known as the accumulator, which gets assigned the return value of the callback function from the previous iteration, the second is the current element being processed, the third is the index of that element and the fourth is the array upon which `reduce` is called.
+La fonction de rappel accepte quatre arguments. Le premier argument est l'accumulateur, qui reçoit la valeur de retour de la fonction de rappel de l'itération précédente, le deuxième est l'élément en cours de traitement, le troisième est l'index de cet élément et le quatrième est le tableau sur lequel `reduce` est appelé.
 
-In addition to the callback function, `reduce` has an additional parameter which takes an initial value for the accumulator. If this second parameter is not used, then the first iteration is skipped and the second iteration gets passed the first element of the array as the accumulator.
+En plus de la fonction de rappel, `reduce` a un paramètre supplémentaire qui prend une valeur initiale pour l'accumulateur. Si ce second paramètre n'est pas utilisé, alors la première itération est sautée et la seconde itération reçoit le premier élément du tableau comme accumulateur.
 
-See below for an example using `reduce` on the `users` array to return the sum of all the users' ages. For simplicity, the example only uses the first and second arguments.
+Voir ci-dessous un exemple utilisant `reduce` sur le tableau `users` pour retourner la somme des âges de tous les utilisateurs. Pour des raisons de simplicité, l'exemple n'utilise que les premier et deuxième arguments.
 
 ```js
 const users = [
@@ -29,9 +29,9 @@ const sumOfAges = users.reduce((sum, user) => sum + user.age, 0);
 console.log(sumOfAges);
 ```
 
-The console would display the value `64`.
+La console affichera la valeur `64`.
 
-In another example, see how an object can be returned containing the names of the users as properties with their ages as values.
+Dans un autre exemple, voyez comment un objet peut être retourné contenant les noms des utilisateurs comme propriétés avec leurs âges comme valeurs.
 
 ```js
 const users = [
@@ -47,15 +47,15 @@ const usersObj = users.reduce((obj, user) => {
 console.log(usersObj);
 ```
 
-The console would display the value `{ John: 34, Amy: 20, camperCat: 10 }`.
+La console affichera la valeur `{ John : 34, Amy : 20, camperCat : 10 }`.
 
 # --instructions--
 
-The variable `watchList` holds an array of objects with information on several movies. Use `reduce` to find the average IMDB rating of the movies directed by `Christopher Nolan`. Recall from prior challenges how to `filter` data and `map` over it to pull what you need. You may need to create other variables, and return the average rating from `getRating` function. Note that the rating values are saved as strings in the object and need to be converted into numbers before they are used in any mathematical operations.
+La variable `watchList` contient un tableau d'objets avec des informations sur plusieurs films. Utilisez `reduce` pour trouver la note IMDB moyenne des films réalisés par `Christopher Nolan`. Rappelez-vous des défis précédents comment `filtrer` les données et `mapper` dessus pour en tirer ce dont vous avez besoin. Vous pouvez avoir besoin de créer d'autres variables, et de retourner la note moyenne à partir de la fonction `getRating`. Notez que les valeurs de classement sont sauvegardées sous forme de chaînes dans l'objet et doivent être converties en nombres avant d'être utilisées dans des opérations mathématiques.
 
 # --hints--
 
-The `watchList` variable should not change.
+La variable `watchList` ne doit pas changer.
 
 ```js
 assert(
@@ -63,25 +63,25 @@ assert(
 );
 ```
 
-Your code should use the `reduce` method.
+Votre code doit utiliser la méthode `reduce`.
 
 ```js
 assert(code.match(/\.reduce/g));
 ```
 
-The `getRating(watchList)` should equal 8.675.
+La valeur de `getRating(watchList)` devrait être égale à 8.675.
 
 ```js
 assert(getRating(watchList) === 8.675);
 ```
 
-Your code should not use a `for` loop.
+Votre code ne doit pas utiliser de boucle `for`.
 
 ```js
 assert(!code.match(/for\s*?\([\s\S]*?\)/g));
 ```
 
-Your code should return the correct output after modifying the `watchList` object.
+Votre code devrait renvoyer la sortie correcte après avoir modifié l'objet `watchList`.
 
 ```js
 assert(getRating(watchList.filter((_, i) => i < 1 || i > 2)) === 8.55);
@@ -92,7 +92,7 @@ assert(getRating(watchList.filter((_, i) => i < 1 || i > 2)) === 8.55);
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 const watchList = [
   {
     "Title": "Inception",
@@ -207,11 +207,11 @@ const watchList = [
 ];
 
 function getRating(watchList) {
-  // Only change code below this line
+  // Ne modifiez que le code situé en dessous de cette ligne
   let averageRating;
 
 
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
   return averageRating;
 }
 

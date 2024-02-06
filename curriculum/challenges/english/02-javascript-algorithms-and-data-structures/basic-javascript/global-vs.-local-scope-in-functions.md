@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c0
-title: Global vs. Local Scope in Functions
+title: Portée globale versus locale dans les fonctions
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c2QwKH2'
 forumTopicId: 18194
@@ -9,9 +9,9 @@ dashedName: global-vs--local-scope-in-functions
 
 # --description--
 
-It is possible to have both <dfn>local</dfn> and <dfn>global</dfn> variables with the same name. When you do this, the local variable takes precedence over the global variable.
+Il est possible d'avoir des variables locales et globales portant le même nom. Lorsque vous faites cela, la variable locale a la priorité sur la variable globale.
 
-In this example:
+Dans cet exemple :
 
 ```js
 const someVar = "Hat";
@@ -22,27 +22,27 @@ function myFun() {
 }
 ```
 
-The function `myFun` will return the string `Head` because the local version of the variable is present.
+La fonction `myFun` retournera la chaîne `Head` car la version locale de la variable est présente.
 
 # --instructions--
 
-Add a local variable to `myOutfit` function to override the value of `outerWear` with the string `sweater`.
+Ajoutez une variable locale à la fonction `myOutfit` pour remplacer la valeur de `outerWear` par la chaîne `sweater`.
 
 # --hints--
 
-You should not change the value of the global `outerWear`.
+Vous ne devez pas modifier la valeur de la variable globale `outerWear`. 
 
 ```js
 assert(outerWear === 'T-Shirt');
 ```
 
-`myOutfit` should return the string `sweater`.
+`myOutfit` devrait retourner la chaîne `sweater`.
 
 ```js
 assert(myOutfit() === 'sweater');
 ```
 
-You should not change the return statement.
+Vous ne devez pas modifier la déclaration de retour.
 
 ```js
 assert(/return outerWear/.test(code));
@@ -57,9 +57,9 @@ assert(/return outerWear/.test(code));
 const outerWear = "T-Shirt";
 
 function myOutfit() {
-  // Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return outerWear;
 }
 

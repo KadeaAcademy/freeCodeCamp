@@ -4,7 +4,7 @@ const { createFilePath } = require('gatsby-source-filesystem');
 const uniq = require('lodash/uniq');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const webpack = require('webpack');
-const env = require('../config/env.json');
+// const env = require('../config/env.json');
 
 const { blockNameify } = require('../utils/block-nameify');
 const {
@@ -33,28 +33,28 @@ exports.onCreateNode = function onCreateNode({ node, actions, getNode }) {
   }
 };
 
-exports.createPages = function createPages({ graphql, actions, reporter }) {
-  if (!env.algoliaAPIKey || !env.algoliaAppId) {
-    if (process.env.FREECODECAMP_NODE_ENV === 'production') {
-      throw new Error(
-        'Algolia App id and API key are required to start the client!'
-      );
-    } else {
-      reporter.info(
-        'Algolia keys missing or invalid. Required for search to yield results.'
-      );
-    }
-  }
+exports.createPages = function createPages({ graphql, actions }) {
+  // if (!env.algoliaAPIKey || !env.algoliaAppId) {
+  //   if (process.env.FREECODECAMP_NODE_ENV === 'production') {
+  //     throw new Error(
+  //       'Algolia App id and API key are required to start the client!'
+  //     );
+  //   } else {
+  //     reporter.info(
+  //       'Algolia keys missing or invalid. Required for search to yield results.'
+  //     );
+  //   }
+  // }
 
-  if (!env.stripePublicKey) {
-    if (process.env.FREECODECAMP_NODE_ENV === 'production') {
-      throw new Error('Stripe public key is required to start the client!');
-    } else {
-      reporter.info(
-        'Stripe public key is missing or invalid. Required for Stripe integration.'
-      );
-    }
-  }
+  // if (!env.stripePublicKey) {
+  //   if (process.env.FREECODECAMP_NODE_ENV === 'production') {
+  //     throw new Error('Stripe public key is required to start the client!');
+  //   } else {
+  //     reporter.info(
+  //       'Stripe public key is missing or invalid. Required for Stripe integration.'
+  //     );
+  //   }
+  // }
 
   const { createPage } = actions;
 
@@ -264,6 +264,20 @@ exports.onCreatePage = async ({ page, actions }) => {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
     page.matchPath = '/challenges/*';
+    // Update the page.
+    createPage(page);
+  }
+  if (page.path.match(/^\/aws-courses\/learning-path/)) {
+    // page.matchPath is a special key that's used for matching pages
+    // with corresponding routes only on the client.
+    page.matchPath = '/aws-courses/learning-path/*';
+    // Update the page.
+    createPage(page);
+  }
+  if (page.path.match(/^\/learning-path/)) {
+    // page.matchPath is a special key that's used for matching pages
+    // with corresponding routes only on the client.
+    page.matchPath = '/learning-path/*';
     // Update the page.
     createPage(page);
   }

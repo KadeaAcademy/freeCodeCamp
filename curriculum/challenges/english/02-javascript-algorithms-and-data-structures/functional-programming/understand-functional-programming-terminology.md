@@ -1,6 +1,6 @@
 ---
 id: 587d7b8e367417b2b2512b5c
-title: Understand Functional Programming Terminology
+title: Comprendre la terminologie de la programmation fonctionnelle
 challengeType: 1
 forumTopicId: 301240
 dashedName: understand-functional-programming-terminology
@@ -8,50 +8,50 @@ dashedName: understand-functional-programming-terminology
 
 # --description--
 
-The FCC Team had a mood swing and now wants two types of tea: green tea and black tea. General Fact: Client mood swings are pretty common.
+L'équipe Kadea a eu un changement d'humeur et veut maintenant deux types de thé : le thé vert et le thé noir. Fait général : les sautes d'humeur des clients sont assez courantes.
 
-With that information, we'll need to revisit the `getTea` function from last challenge to handle various tea requests. We can modify `getTea` to accept a function as a parameter to be able to change the type of tea it prepares. This makes `getTea` more flexible, and gives the programmer more control when client requests change.
+Avec cette information, nous allons devoir revisiter la fonction `getTea` du dernier défi pour gérer les différentes demandes de thé. Nous pouvons modifier `getTea` pour qu'elle accepte une fonction comme paramètre afin de pouvoir changer le type de thé qu'elle prépare. Cela rend `getTea` plus flexible, et donne au programmeur plus de contrôle lorsque les demandes des clients changent.
 
-But first, let's cover some functional terminology:
+Mais tout d'abord, abordons un peu de terminologie fonctionnelle :
 
-<dfn>Callbacks</dfn> are the functions that are slipped or passed into another function to decide the invocation of that function. You may have seen them passed to other methods, for example in `filter`, the callback function tells JavaScript the criteria for how to filter an array.
+Les <dfn>Callbacks</dfn> sont des fonctions qui sont glissées ou passées dans une autre fonction pour décider de l'invocation de cette fonction. Vous avez peut-être déjà vu ces fonctions passées à d'autres méthodes, par exemple dans `filter`, la fonction de rappel indique à JavaScript les critères de filtrage d'un tableau.
 
-Functions that can be assigned to a variable, passed into another function, or returned from another function just like any other normal value, are called <dfn>first class</dfn> functions. In JavaScript, all functions are first class functions.
+Les fonctions qui peuvent être assignées à une variable, passées à une autre fonction ou retournées par une autre fonction comme n'importe quelle autre valeur normale, sont appelées fonctions de première classe. En JavaScript, toutes les fonctions fonctions de première classe.
 
-The functions that take a function as an argument, or return a function as a return value are called <dfn>higher order</dfn> functions.
+Les fonctions qui prennent une fonction comme argument ou renvoient une fonction comme valeur de retour sont appelées <dfn>fonctions d'ordre supérieur</dfn>.
 
-When functions are passed in to or returned from another function, then those functions which were passed in or returned can be called a <dfn>lambda</dfn>.
+Lorsque des fonctions sont transmises à une autre fonction ou renvoyées par celle-ci, ces fonctions transmises ou renvoyées peuvent être appelées lambda.
 
 # --instructions--
 
-Prepare 27 cups of green tea and 13 cups of black tea and store them in `tea4GreenTeamFCC` and `tea4BlackTeamFCC` variables, respectively. Note that the `getTea` function has been modified so it now takes a function as the first argument.
+Préparez 27 tasses de thé vert et 13 tasses de thé noir et stockez-les dans les variables `tea4GreenTeamKadea` et `tea4BlackTeamKadea`, respectivement. Notez que la fonction `getTea` a été modifiée pour prendre une fonction comme premier argument.
 
-Note: The data (the number of cups of tea) is supplied as the last argument. We'll discuss this more in later lessons.
+Note: La donnée (le nombre de tasses de thé) est fournie comme dernier argument. Nous en reparlerons dans les leçons suivantes.
 
 # --hints--
 
-The `tea4GreenTeamFCC` variable should hold 27 cups of green tea for the team.
+La variable `tea4GreenTeamKadea` doit contenir 27 tasses de thé vert pour l'équipe.
 
 ```js
-assert(tea4GreenTeamFCC.length === 27);
+assert(tea4GreenTeamKadea.length === 27);
 ```
 
-The `tea4GreenTeamFCC` variable should hold cups of green tea.
+La variable `tea4GreenTeamKadea` doit contenir des tasses de thé vert (green tea).
 
 ```js
-assert(tea4GreenTeamFCC[0] === 'greenTea');
+assert(tea4GreenTeamKadea[0] === 'greenTea');
 ```
 
-The `tea4BlackTeamFCC` variable should hold 13 cups of black tea.
+La variable `tea4BlackTeamKadea` doit contenir 13 tasses de thé noir.
 
 ```js
-assert(tea4BlackTeamFCC.length === 13);
+assert(tea4BlackTeamKadea.length === 13);
 ```
 
-The `tea4BlackTeamFCC` variable should hold cups of black tea.
+La variable `tea4BlackTeamKadea` doit contenir des tasses de thé noir.
 
 ```js
-assert(tea4BlackTeamFCC[0] === 'blackTea');
+assert(tea4BlackTeamKadea[0] === 'blackTea');
 ```
 
 # --seed--
@@ -59,16 +59,14 @@ assert(tea4BlackTeamFCC[0] === 'blackTea');
 ## --seed-contents--
 
 ```js
-// Function that returns a string representing a cup of green tea
+// Fonction qui renvoie une chaîne de caractères représentant une tasse de thé vert
 const prepareGreenTea = () => 'greenTea';
 
-// Function that returns a string representing a cup of black tea
+// Fonction qui renvoie une chaîne de caractères représentant une tasse de thé noir
 const prepareBlackTea = () => 'blackTea';
 
 /*
-Given a function (representing the tea type) and number of cups needed, the
-following function returns an array of strings (each representing a cup of
-a specific type of tea).
+Étant donné une fonction (représentant le type de thé) et le nombre de tasses nécessaires, la fonction suivante renvoie un tableau de chaînes (chacune représentant une tasse d'un type de thé spécifique).
 */
 const getTea = (prepareTea, numOfCups) => {
   const teaCups = [];
@@ -80,14 +78,14 @@ const getTea = (prepareTea, numOfCups) => {
   return teaCups;
 };
 
-// Only change code below this line
-const tea4GreenTeamFCC = null;
-const tea4BlackTeamFCC = null;
-// Only change code above this line
+// Ne modifiez que le code situé en dessous de cette ligne
+const tea4GreenTeamKadea = null;
+const tea4BlackTeamKadea = null;
+// Ne modifiez que le code au-dessus de cette ligne
 
 console.log(
-  tea4GreenTeamFCC,
-  tea4BlackTeamFCC
+  tea4GreenTeamKadea,
+  tea4BlackTeamKadea
 );
 ```
 
@@ -107,6 +105,6 @@ const getTea = (prepareTea, numOfCups) => {
   return teaCups;
 };
 
-const tea4BlackTeamFCC = getTea(prepareBlackTea, 13);
-const tea4GreenTeamFCC = getTea(prepareGreenTea, 27);
+const tea4BlackTeamKadea = getTea(prepareBlackTea, 13);
+const tea4GreenTeamKadea = getTea(prepareGreenTea, 27);
 ```

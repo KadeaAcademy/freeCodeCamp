@@ -1,6 +1,6 @@
 ---
 id: 587d7dba367417b2b2512ba8
-title: Check for All or None
+title: Vérifier tout ou rien
 challengeType: 1
 forumTopicId: 301338
 dashedName: check-for-all-or-none
@@ -8,11 +8,11 @@ dashedName: check-for-all-or-none
 
 # --description--
 
-Sometimes the patterns you want to search for may have parts of it that may or may not exist. However, it may be important to check for them nonetheless.
+Parfois, les motifs que vous souhaitez rechercher peuvent comporter des parties qui peuvent ou non exister. Cependant, il peut être important de les vérifier quand même.
 
-You can specify the possible existence of an element with a question mark, `?`. This checks for zero or one of the preceding element. You can think of this symbol as saying the previous element is optional.
+Vous pouvez spécifier l'existence possible d'un élément avec un point d'interrogation, `?`. Cela permet de vérifier si l'élément précédent existe ou non. On peut considérer que ce symbole signifie que l'élément précédent est facultatif.
 
-For example, there are slight differences in American and British English and you can use the question mark to match both spellings.
+Par exemple, il existe de légères différences entre l'anglais américain et l'anglais britannique, et vous pouvez utiliser le point d'interrogation pour vérifier les deux orthographes.
 
 ```js
 let american = "color";
@@ -22,36 +22,36 @@ rainbowRegex.test(american);
 rainbowRegex.test(british);
 ```
 
-Both uses of the `test` method would return `true`.
+Les deux utilisations de la méthode `test` retourneraient `true`.
 
 # --instructions--
 
-Change the regex `favRegex` to match both the American English (`favorite`) and the British English (`favourite`) version of the word.
+Changez la regex `favRegex` pour qu'elle corresponde à la fois à la version anglaise américaine (`favorite`) et à la version anglaise britannique (`favourite`) du mot.
 
 # --hints--
 
-Your regex should use the optional symbol, `?`.
+Votre regex doit utiliser le symbole optionnel, `?`.
 
 ```js
 favRegex.lastIndex = 0;
 assert(favRegex.source.match(/\?/).length > 0);
 ```
 
-Your regex should match the string `favorite`
+Votre regex doit correspondre à la chaîne `favorite`.
 
 ```js
 favRegex.lastIndex = 0;
 assert(favRegex.test('favorite'));
 ```
 
-Your regex should match the string `favourite`
+Votre regex doit correspondre à la chaîne `favourite`.
 
 ```js
 favRegex.lastIndex = 0;
 assert(favRegex.test('favourite'));
 ```
 
-Your regex should not match the string `fav`
+Votre regex ne doit pas correspondre à la chaîne `fav`.
 
 ```js
 favRegex.lastIndex = 0;
@@ -64,7 +64,7 @@ assert(!favRegex.test('fav'));
 
 ```js
 let favWord = "favorite";
-let favRegex = /change/; // Change this line
+let favRegex = /change/; // Modifiez cette ligne
 let result = favRegex.test(favWord);
 ```
 

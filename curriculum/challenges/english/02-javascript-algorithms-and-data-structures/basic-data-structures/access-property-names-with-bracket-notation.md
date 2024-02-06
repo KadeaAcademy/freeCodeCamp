@@ -1,6 +1,6 @@
 ---
 id: 587d7b7c367417b2b2512b1a
-title: Access Property Names with Bracket Notation
+title: Noms de propriétés d'accès avec la notation entre crochets
 challengeType: 1
 forumTopicId: 301150
 dashedName: access-property-names-with-bracket-notation
@@ -8,56 +8,56 @@ dashedName: access-property-names-with-bracket-notation
 
 # --description--
 
-In the first object challenge we mentioned the use of bracket notation as a way to access property values using the evaluation of a variable. For instance, imagine that our `foods` object is being used in a program for a supermarket cash register. We have some function that sets the `selectedFood` and we want to check our `foods` object for the presence of that food. This might look like:
+Dans le premier défi objet, nous avons mentionné l'utilisation de la notation entre crochets comme moyen d'accéder aux valeurs des propriétés en utilisant l'évaluation d'une variable. Par exemple, imaginons que notre objet `fruits` soit utilisé dans un programme pour une caisse enregistreuse de supermarché. Nous avons une fonction qui définit la variable `fruitSelectionne` et nous voulons vérifier la présence de cet aliment dans notre objet `fruits`. Cela pourrait ressembler à ceci :
 
 ```js
-let selectedFood = getCurrentFood(scannedItem);
-let inventory = foods[selectedFood];
+let fruitSelectionne = getCurrentFood(fruitScanne);
+let stock = fruits[fruitSelectionne];
 ```
 
-This code will evaluate the value stored in the `selectedFood` variable and return the value of that key in the `foods` object, or `undefined` if it is not present. Bracket notation is very useful because sometimes object properties are not known before runtime or we need to access them in a more dynamic way.
+Ce code va évaluer la valeur stockée dans la variable `fruitSelectionne` et retourner la valeur de cette clé dans l'objet `fruits`, ou `undefined` si elle n'est pas présente. La notation entre parenthèses est très utile car parfois les propriétés des objets ne sont pas connues avant l'exécution ou nous devons y accéder d'une manière plus dynamique.
 
 # --instructions--
 
-We've defined a function, `checkInventory`, which receives a scanned item as an argument. Return the current value of the `scannedItem` key in the `foods` object. You can assume that only valid keys will be provided as an argument to `checkInventory`.
+Nous avons défini une fonction, `verifierStock`, qui reçoit un élément scanné comme argument. Elle renvoie la valeur actuelle de la clé `fruitScanne` dans l'objet `fruits`. Vous pouvez supposer que seules des clés valides seront fournies comme argument à `verifierStock`. 
 
 # --hints--
 
-`checkInventory` should be a function.
+`verifierStock` devrait être une fonction.
 
 ```js
-assert.strictEqual(typeof checkInventory, 'function');
+assert.strictEqual(typeof verifierStock, 'function');
 ```
 
-The `foods` object should have only the following key-value pairs: `apples: 25`, `oranges: 32`, `plums: 28`, `bananas: 13`, `grapes: 35`, `strawberries: 27`.
+L'objet `fruits` ne doit contenir que les paires clé-valeur suivantes : `pommes: 25`, `oranges: 32`, `prunes: 28`, `bananes: 13`, `raisins: 35`, `fraises: 27`.
 
 ```js
-assert.deepEqual(foods, {
-  apples: 25,
-  oranges: 32,
-  plums: 28,
-  bananas: 13,
-  grapes: 35,
-  strawberries: 27
+assert.deepEqual(fruits, {
+  pommes : 25,
+  oranges : 32,
+  prunes : 28,
+  bananes : 13,
+  raisins : 35,
+  fraises : 27
 });
 ```
 
-`checkInventory("apples")` should return `25`.
+`verifierStock("apples")` should return `25`.
 
 ```js
-assert.strictEqual(checkInventory('apples'), 25);
+assert.strictEqual(verifierStock('pommes'), 25);
 ```
 
-`checkInventory("bananas")` should return `13`.
+`verifierStock("bananas")` should return `13`.
 
 ```js
-assert.strictEqual(checkInventory('bananas'), 13);
+assert.strictEqual(verifierStock('bananes'), 13);
 ```
 
-`checkInventory("strawberries")` should return `27`.
+`verifierStock("strawberries")` should return `27`.
 
 ```js
-assert.strictEqual(checkInventory('strawberries'), 27);
+assert.strictEqual(verifierStock('fraises'), 27);
 ```
 
 # --seed--
@@ -65,37 +65,37 @@ assert.strictEqual(checkInventory('strawberries'), 27);
 ## --seed-contents--
 
 ```js
-let foods = {
-  apples: 25,
-  oranges: 32,
-  plums: 28,
-  bananas: 13,
-  grapes: 35,
-  strawberries: 27
+let fruits = {
+  pommes : 25,
+  oranges : 32,
+  prunes : 28,
+  bananes : 13,
+  raisins : 35,
+  fraises : 27
 };
 
-function checkInventory(scannedItem) {
-  // Only change code below this line
+function verifierStock(fruitScanne) {
+  // Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 
-console.log(checkInventory("apples"));
+console.log(verifierStock("pommes"));
 ```
 
 # --solutions--
 
 ```js
-let foods = {
-  apples: 25,
-  oranges: 32,
-  plums: 28,
-  bananas: 13,
-  grapes: 35,
-  strawberries: 27
+let fruits = {
+  pommes : 25,
+  oranges : 32,
+  prunes : 28,
+  bananes : 13,
+  raisins : 35,
+  fraises : 27
 };
 
-function checkInventory(scannedItem) {
-  return foods[scannedItem];
+function verifierStock(fruitScanne) {
+  return fruits[fruitScanne];
 }
 ```

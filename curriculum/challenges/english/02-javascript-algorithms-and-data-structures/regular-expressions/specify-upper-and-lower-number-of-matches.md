@@ -1,6 +1,6 @@
 ---
 id: 587d7db9367417b2b2512ba5
-title: Specify Upper and Lower Number of Matches
+title: Spécifier le nombre supérieur et inférieur de correspondances
 challengeType: 1
 forumTopicId: 301367
 dashedName: specify-upper-and-lower-number-of-matches
@@ -8,11 +8,11 @@ dashedName: specify-upper-and-lower-number-of-matches
 
 # --description--
 
-Recall that you use the plus sign `+` to look for one or more characters and the asterisk `*` to look for zero or more characters. These are convenient but sometimes you want to match a certain range of patterns.
+Rappelez-vous que vous utilisez le signe plus `+` pour rechercher un ou plusieurs caractères et l'astérisque `*` pour rechercher zéro ou plusieurs caractères. Ce sont des outils pratiques, mais il arrive parfois que vous souhaitiez faire correspondre un certain nombre de motifs.
 
-You can specify the lower and upper number of patterns with <dfn>quantity specifiers</dfn>. Quantity specifiers are used with curly brackets (`{` and `}`). You put two numbers between the curly brackets - for the lower and upper number of patterns.
+Vous pouvez spécifier le nombre inférieur et supérieur de motifs avec des spécificateurs de quantité. Les spécificateurs de quantité sont utilisés avec des accolades (`{` et `}`). Vous placez deux chiffres entre les accolades, pour le nombre inférieur et supérieur de motifs.
 
-For example, to match only the letter `a` appearing between `3` and `5` times in the string `ah`, your regex would be `/a{3,5}h/`.
+Par exemple, pour ne faire correspondre que la lettre `a` apparaissant entre `3` et `5` fois dans la chaîne `ah`, votre regex sera `/a{3,5}h/`.
 
 ```js
 let A4 = "aaaah";
@@ -22,52 +22,52 @@ multipleA.test(A4);
 multipleA.test(A2);
 ```
 
-The first `test` call would return `true`, while the second would return `false`.
+Le premier appel à `test` renverrait `true`, tandis que le second renverrait `false`.
 
 # --instructions--
 
-Change the regex `ohRegex` to match the entire phrase `Oh no` only when it has `3` to `6` letter `h`'s.
+Changez la regex `ohRegex` pour qu'elle ne corresponde à l'expression entière `Oh no` que lorsqu'elle contient des `h` de 3 à 6 lettres.
 
 # --hints--
 
-Your regex should use curly brackets.
+Votre regex doit utiliser des accolades.
 
 ```js
 assert(ohRegex.source.match(/{.*?}/).length > 0);
 ```
 
-Your regex should not match the string `Ohh no`
+Votre regex ne doit pas correspondre à la chaîne `Ohh no`.
 
 ```js
 ohRegex.lastIndex = 0;
 assert(!ohRegex.test('Ohh no'));
 ```
 
-Your regex should match the string `Ohhh no`
+Votre regex doit correspondre à la chaîne `Ohhh no`.
 
 ```js
 assert('Ohhh no'.match(ohRegex)[0].length === 7);
 ```
 
-Your regex should match the string `Ohhhh no`
+Votre regex doit correspondre à la chaîne `Ohhhhh no`.
 
 ```js
 assert('Ohhhh no'.match(ohRegex)[0].length === 8);
 ```
 
-Your regex should match the string `Ohhhhh no`
+Votre regex doit correspondre à la chaîne `Ohhhhhh no`.
 
 ```js
 assert('Ohhhhh no'.match(ohRegex)[0].length === 9);
 ```
 
-Your regex should match the string `Ohhhhhh no`
+Votre regex doit correspondre à la chaîne `Ohhhhhhh no`.
 
 ```js
 assert('Ohhhhhh no'.match(ohRegex)[0].length === 10);
 ```
 
-Your regex should not match the string `Ohhhhhhh no`
+Votre regex ne doit pas correspondre à la chaîne `Ohhhhhhh non`.
 
 ```js
 ohRegex.lastIndex = 0;
@@ -80,7 +80,7 @@ assert(!ohRegex.test('Ohhhhhhh no'));
 
 ```js
 let ohStr = "Ohhh no";
-let ohRegex = /change/; // Change this line
+let ohRegex = /change/; // Modifiez cette ligne
 let result = ohRegex.test(ohStr);
 ```
 
@@ -88,6 +88,6 @@ let result = ohRegex.test(ohStr);
 
 ```js
 let ohStr = "Ohhh no";
-let ohRegex = /Oh{3,6} no/; // Change this line
+let ohRegex = /Oh{3,6} no/; // Modifiez cette ligne
 let result = ohRegex.test(ohStr);
 ```

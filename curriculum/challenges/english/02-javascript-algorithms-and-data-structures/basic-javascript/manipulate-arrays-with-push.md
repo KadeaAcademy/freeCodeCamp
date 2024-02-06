@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392cb
-title: Manipulate Arrays With push()
+title: Manipuler les tableaux avec push()
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cnqmVtJ'
 forumTopicId: 18237
@@ -9,29 +9,29 @@ dashedName: manipulate-arrays-with-push
 
 # --description--
 
-An easy way to append data to the end of an array is via the `push()` function.
+La façon la plus simple d'ajouter des données à la fin d'un tableau est d'utiliser la fonction `push()`.
 
-`.push()` takes one or more <dfn>parameters</dfn> and "pushes" them onto the end of the array.
+`.push()` prend un ou plusieurs <dfn>paramètres</dfn> et les " insère " à la fin du tableau.
 
-Examples:
+Exemples :
 
 ```js
-const arr1 = [1, 2, 3];
-arr1.push(4);
+const tab1 = [1, 2, 3];
+tab1.push(4);
 
-const arr2 = ["Stimpson", "J", "cat"];
-arr2.push(["happy", "joy"]);
+const tab2 = ["Stimpson", "J", "cat"];
+tab2.push(["happy", "joy"]);
 ```
 
-`arr1` now has the value `[1, 2, 3, 4]` and `arr2` has the value `["Stimpson", "J", "cat", ["happy", "joy"]]`.
+`tab1` a maintenant la valeur `[1, 2, 3, 4]` et `tab2` a la valeur `["Stimpson", "J", "cat", ["happy", "joy"]]`.
 
 # --instructions--
 
-Push `["dog", 3]` onto the end of the `myArray` variable.
+Insérez `["dog", 3]` à la fin de la variable `monTableau`.
 
 # --hints--
 
-`myArray` should now equal `[["John", 23], ["cat", 2], ["dog", 3]]`.
+`monTableau` devrait maintenant être égal à `[["John", 23], ["cat", 2], ["dog", 3]]`.
 
 ```js
 assert(
@@ -48,7 +48,7 @@ assert(
     } else {
       return false;
     }
-  })(myArray)
+  })(monTableau)
 );
 ```
 
@@ -57,22 +57,22 @@ assert(
 ## --after-user-code--
 
 ```js
-(function(z){return 'myArray = ' + JSON.stringify(z);})(myArray);
+(function(z){return 'monTableau = ' + JSON.stringify(z);})(monTableau);
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myArray = [["John", 23], ["cat", 2]];
+const monTableau = [["John", 23], ["cat", 2]];
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 
 # --solutions--
 
 ```js
-const myArray = [["John", 23], ["cat", 2]];
-myArray.push(["dog",3]);
+const monTableau = [["John", 23], ["cat", 2]];
+monTableau.push(["dog",3]);
 ```

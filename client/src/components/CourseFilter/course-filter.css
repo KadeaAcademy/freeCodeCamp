@@ -1,0 +1,131 @@
+.filter-container {
+  width: 18%;
+  height: 100%;
+  position: sticky;
+  top: 100px;
+}
+
+.pagination-container {
+  padding-left: 17%;
+}
+
+.main-title-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.main-title-filter-container > svg {
+  display: none;
+}
+
+.card-filter-container {
+  display: flex;
+  gap: 4%;
+}
+
+.filter-title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.filter-button {
+  border: none;
+  background-color: inherit;
+  display: block;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.filter-button:hover {
+  border: none;
+  background-color: inherit;
+  color: red;
+}
+
+@keyframes details-show {
+  from {
+    opacity: 0;
+    transform: var(--details-translate, translateY(-0.5em));
+  }
+}
+
+details[open] > *:not(summary) {
+  animation: details-show 300ms ease-in-out;
+}
+
+.selected-category {
+  color: red;
+  font-weight: bold;
+}
+
+.title-selected-filter {
+  border-bottom: 1px solid grey;
+  padding: 20px 0px;
+}
+
+.filter-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-title-container {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+  /* align-items: center; */
+}
+
+.show-filter-button {
+  display: none;
+}
+
+@media (max-width: 993px) {
+  .show-filter-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3%;
+    border-radius: 30px;
+    border: 2px solid #e60000;
+    width: 100%;
+    /* border-color: red; */
+    background: inherit;
+    transition: all 300ms;
+  }
+
+  svg {
+    transition: all 300ms;
+  }
+  .show-filter-button:hover > svg {
+    fill: white;
+  }
+
+  .show-filter-button:hover {
+    background-color: #e60000;
+    border: #e60000 2px solid;
+  }
+  .filter-container {
+    /* display: none; */
+    position: fixed;
+    top: 55px;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255);
+    z-index: 1000;
+    color: white;
+  }
+
+  .main-title-filter-container > svg {
+    display: block;
+    cursor: pointer;
+  }
+
+  .pagination-container {
+    padding-left: 0%;
+  }
+}

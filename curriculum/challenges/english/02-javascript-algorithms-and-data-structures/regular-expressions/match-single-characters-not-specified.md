@@ -1,6 +1,6 @@
 ---
 id: 587d7db6367417b2b2512b98
-title: Match Single Characters Not Specified
+title: Faire correspondre des caractères uniques non spécifiés
 challengeType: 1
 forumTopicId: 301358
 dashedName: match-single-characters-not-specified
@@ -8,31 +8,31 @@ dashedName: match-single-characters-not-specified
 
 # --description--
 
-So far, you have created a set of characters that you want to match, but you could also create a set of characters that you do not want to match. These types of character sets are called <dfn>negated character sets</dfn>.
+Jusqu'à présent, vous avez créé un jeu de caractères que vous souhaitez faire correspondre, mais vous pouvez également créer un jeu de caractères que vous ne souhaitez pas faire correspondre. Ces types de jeux de caractères sont appelés jeux de caractères négatifs.
 
-To create a negated character set, you place a caret character (`^`) after the opening bracket and before the characters you do not want to match.
+Pour créer un jeu de caractères négatifs, vous placez un signe d'insertion (`^`) après la parenthèse ouvrante et avant les caractères que vous ne voulez pas faire correspondre.
 
-For example, `/[^aeiou]/gi` matches all characters that are not a vowel. Note that characters like `.`, `!`, `[`, `@`, `/` and white space are matched - the negated vowel character set only excludes the vowel characters.
+Par exemple, `/[^aeiou]/gi` correspond à tous les caractères qui ne sont pas des voyelles. Notez que les caractères comme `.`, `!`, `[`, `@`, `/` et les espaces sont pris en compte - le jeu de caractères de voyelles négatives n'exclut que les voyelles.
 
 # --instructions--
 
-Create a single regex that matches all characters that are not a number or a vowel. Remember to include the appropriate flags in the regex.
+Créez une seule regex qui correspond à tous les caractères qui ne sont pas un nombre ou une voyelle. N'oubliez pas d'inclure les marqueurs appropriés dans la regex.
 
 # --hints--
 
-Your regex `myRegex` should match 9 items.
+Votre regex `myRegex` doit correspondre à 9 éléments.
 
 ```js
 assert(result.length == 9);
 ```
 
-Your regex `myRegex` should use the global flag.
+Votre regex `myRegex` doit utiliser le marqueur global.
 
 ```js
 assert(myRegex.flags.match(/g/).length == 1);
 ```
 
-Your regex `myRegex` should use the case insensitive flag.
+Votre regex `myRegex` doit utiliser le marqueur insensible à la casse.
 
 ```js
 assert(myRegex.flags.match(/i/).length == 1);
@@ -44,14 +44,14 @@ assert(myRegex.flags.match(/i/).length == 1);
 
 ```js
 let quoteSample = "3 blind mice.";
-let myRegex = /change/; // Change this line
-let result = myRegex; // Change this line
+let myRegex = /change/; // Modifiez cette ligne
+let result = myRegex; // Modifiez cette ligne
 ```
 
 # --solutions--
 
 ```js
 let quoteSample = "3 blind mice.";
-let myRegex = /[^0-9aeiou]/gi; // Change this line
-let result = quoteSample.match(myRegex); // Change this line
+let myRegex = /[^0-9aeiou]/gi; // Modifiez cette ligne
+let result = quoteSample.match(myRegex); // Modifiez cette ligne
 ```

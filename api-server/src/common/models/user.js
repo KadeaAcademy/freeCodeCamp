@@ -977,6 +977,7 @@ export default function initializeUser(User) {
       return user.progressTimestamps;
     });
   };
+
   User.prototype.getCompletedChallenges$ = function getCompletedChallenges$() {
     if (
       Array.isArray(this.completedChallenges) &&

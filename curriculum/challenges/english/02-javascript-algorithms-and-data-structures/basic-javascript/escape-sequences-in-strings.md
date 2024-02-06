@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244b6
-title: Escape Sequences in Strings
+title: Séquences d'échappement dans les chaînes de caractères
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cvmqRh6'
 forumTopicId: 17567
@@ -9,36 +9,36 @@ dashedName: escape-sequences-in-strings
 
 # --description--
 
-Quotes are not the only characters that can be <dfn>escaped</dfn> inside a string. There are two reasons to use escaping characters:
+Les guillemets ne sont pas les seuls caractères qui peuvent être <dfn>échappés</dfn> à l'intérieur d'une chaîne de caractères. Il y a deux raisons d'utiliser des caractères d'échappement :
 
-1.  To allow you to use characters you may not otherwise be able to type out, such as a carriage return.
-2.  To allow you to represent multiple quotes in a string without JavaScript misinterpreting what you mean.
+1.  Pour vous permettre d'utiliser des caractères que vous ne pourriez pas taper autrement, comme un retour chariot.
+2.  Pour vous permettre de représenter plusieurs guillemets dans une chaîne sans que JavaScript n'interprète mal ce que vous voulez dire.
 
-We learned this in the previous challenge.
+Nous avons appris cela dans le défi précédent.
 
 <table class='table table-striped'><thead><tr><th>Code</th><th>Output</th></tr></thead><tbody><tr><td><code>\'</code></td><td>single quote</td></tr><tr><td><code>\"</code></td><td>double quote</td></tr><tr><td><code>\\</code></td><td>backslash</td></tr><tr><td><code>\n</code></td><td>newline</td></tr><tr><td><code>\r</code></td><td>carriage return</td></tr><tr><td><code>\t</code></td><td>tab</td></tr><tr><td><code>\b</code></td><td>word boundary</td></tr><tr><td><code>\f</code></td><td>form feed</td></tr></tbody></table>
 
-*Note that the backslash itself must be escaped in order to display as a backslash.*
+*Notez que la barre oblique inversée elle-même doit être échappée afin de s'afficher comme une barre oblique inversée.*
 
 # --instructions--
 
-Assign the following three lines of text into the single variable `myStr` using escape sequences.
+Assignez les trois lignes de texte suivantes dans la variable unique `myStr` en utilisant des séquences d'échappement.
 
 <blockquote>FirstLine<br>    \SecondLine<br>ThirdLine</blockquote>
 
-You will need to use escape sequences to insert special characters correctly. You will also need to follow the spacing as it looks above, with no spaces between escape sequences or words.
+Vous devrez utiliser des séquences d'échappement pour insérer correctement les caractères spéciaux. Vous devrez également respecter l'espacement tel qu'il apparaît ci-dessus, sans espace entre les séquences d'échappement ou les mots.
 
-**Note:** The indentation for `SecondLine` is achieved with the tab escape character, not spaces.
+**Note:** L'indentation pour `SecondLine` est obtenue avec le caractère d'échappement tabulation, et non avec les espaces.
 
 # --hints--
 
-`myStr` should not contain any spaces
+`myStr` ne doit pas contenir d'espace.
 
 ```js
 assert(!/ /.test(myStr));
 ```
 
-`myStr` should contain the strings `FirstLine`, `SecondLine` and `ThirdLine` (remember case sensitivity)
+`myStr` doit contenir les chaînes `FirstLine`, `SecondLine` et `ThirdLine` (n'oubliez pas la sensibilité à la casse)
 
 ```js
 assert(
@@ -46,31 +46,31 @@ assert(
 );
 ```
 
-`FirstLine` should be followed by the newline character `\n`
+`FirstLine` doit être suivi du caractère de nouvelle ligne `n`.
 
 ```js
 assert(/FirstLine\n/.test(myStr));
 ```
 
-`myStr` should contain a tab character `\t` which follows a newline character
+`myStr` doit contenir un caractère de tabulation `\t` qui suit un caractère de nouvelle ligne
 
 ```js
 assert(/\n\t/.test(myStr));
 ```
 
-`SecondLine` should be preceded by the backslash character `\`
+`SecondLine` doit être précédé du caractère backslash `\`.
 
 ```js
 assert(/\\SecondLine/.test(myStr));
 ```
 
-There should be a newline character between `SecondLine` and `ThirdLine`
+Il doit y avoir un caractère de nouvelle ligne entre `SecondLine` et `ThirdLine`.
 
 ```js
 assert(/SecondLine\nThirdLine/.test(myStr));
 ```
 
-`myStr` should only contain characters shown in the instructions
+`myStr` ne doit contenir que les caractères indiqués dans les instructions
 
 ```js
 assert(myStr === 'FirstLine\n\t\\SecondLine\nThirdLine');
@@ -89,7 +89,7 @@ console.log('myStr:\n' + myStr);}})();
 ## --seed-contents--
 
 ```js
-const myStr = ""; // Change this line
+const myStr = ""; // Modifiez cette ligne
 ```
 
 # --solutions--

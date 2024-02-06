@@ -1,6 +1,6 @@
 ---
 id: ae9defd7acaf69703ab432ea
-title: Smallest Common Multiple
+title: Plus petit multiple commun
 challengeType: 5
 forumTopicId: 16075
 dashedName: smallest-common-multiple
@@ -8,45 +8,45 @@ dashedName: smallest-common-multiple
 
 # --description--
 
-Find the smallest common multiple of the provided parameters that can be evenly divided by both, as well as by all sequential numbers in the range between these parameters.
+Trouvez le plus petit multiple commun des paramètres fournis qui peut être divisé uniformément par les deux, ainsi que par tous les nombres séquentiels dans l'intervalle entre ces paramètres.
 
-The range will be an array of two numbers that will not necessarily be in numerical order.
+L'intervalle sera un tableau de deux nombres qui ne seront pas nécessairement dans l'ordre numérique.
 
-For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by all numbers *between* 1 and 3. The answer here would be 6.
+Par exemple, si l'on vous donne 1 et 3, trouvez le plus petit multiple commun de 1 et 3 qui soit également divisible par tous les nombres situés entre 1 et 3. La réponse serait ici 6.
 
 # --hints--
 
-`smallestCommons([1, 5])` should return a number.
+`smallestCommons([1, 5])` devrait retourner un nombre.
 
 ```js
 assert.deepEqual(typeof smallestCommons([1, 5]), 'number');
 ```
 
-`smallestCommons([1, 5])` should return 60.
+`smallestCommons([1, 5])` devrait retourner 60.
 
 ```js
 assert.deepEqual(smallestCommons([1, 5]), 60);
 ```
 
-`smallestCommons([5, 1])` should return 60.
+`smallestCommons([5, 1])` devrait retourner 60.
 
 ```js
 assert.deepEqual(smallestCommons([5, 1]), 60);
 ```
 
-`smallestCommons([2, 10])` should return 2520.
+`smallestCommons([2, 10])` devrait retourner 2520.
 
 ```js
 assert.deepEqual(smallestCommons([2, 10]), 2520);
 ```
 
-`smallestCommons([1, 13])` should return 360360.
+`smallestCommons([1, 13])` devrait retourner 360360.
 
 ```js
 assert.deepEqual(smallestCommons([1, 13]), 360360);
 ```
 
-`smallestCommons([23, 18])` should return 6056820.
+`smallestCommons([23, 18])` devrait retourner 6056820.
 
 ```js
 assert.deepEqual(smallestCommons([23, 18]), 6056820);

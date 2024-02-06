@@ -1,6 +1,6 @@
 ---
 id: 587d7b8f367417b2b2512b61
-title: Use the map Method to Extract Data from an Array
+title: Utiliser la méthode map pour extraire des données d'un tableau
 challengeType: 1
 forumTopicId: 18214
 dashedName: use-the-map-method-to-extract-data-from-an-array
@@ -8,19 +8,19 @@ dashedName: use-the-map-method-to-extract-data-from-an-array
 
 # --description--
 
-So far we have learned to use pure functions to avoid side effects in a program. Also, we have seen the value in having a function only depend on its input arguments.
+Jusqu'à présent, nous avons appris à utiliser des fonctions pures pour éviter les effets de bord dans un programme. Nous avons également vu l'intérêt pour une fonction de ne dépendre que de ses arguments d'entrée.
 
-This is only the beginning. As its name suggests, functional programming is centered around a theory of functions.
+Ce n'est qu'un début. Comme son nom l'indique, la programmation fonctionnelle est centrée sur une théorie des fonctions.
 
-It would make sense to be able to pass them as arguments to other functions, and return a function from another function. Functions are considered <dfn>first class objects</dfn> in JavaScript, which means they can be used like any other object. They can be saved in variables, stored in an object, or passed as function arguments.
+Il serait logique de pouvoir les passer comme arguments à d'autres fonctions et de renvoyer une fonction à partir d'une autre fonction. Les fonctions sont considérées comme des objets de première classe en JavaScript, ce qui signifie qu'elles peuvent être utilisées comme n'importe quel autre objet. Elles peuvent être enregistrées dans des variables, stockées dans un objet ou transmises en tant qu'arguments de fonction.
 
-Let's start with some simple array functions, which are methods on the array object prototype. In this exercise we are looking at `Array.prototype.map()`, or more simply `map`.
+Commençons par quelques fonctions de tableau simples, qui sont des méthodes sur le prototype de l'objet tableau. Dans cet exercice, nous allons étudier `Array.prototype.map()`, ou plus simplement `map`.
 
-The `map` method iterates over each item in an array and returns a new array containing the results of calling the callback function on each element. It does this without mutating the original array.
+La méthode `map` itère sur chaque élément d'un tableau et renvoie un nouveau tableau contenant les résultats de l'appel à la fonction callback sur chaque élément. Cela se fait sans modifier le tableau d'origine.
 
-When the callback is used, it is passed three arguments. The first argument is the current element being processed. The second is the index of that element and the third is the array upon which the `map` method was called.
+Lorsque la fonction callback est utilisée, trois arguments lui sont passés. Le premier argument est l'élément en cours de traitement. Le second est l'index de cet élément et le troisième est le tableau sur lequel la méthode `map` a été appelée.
 
-See below for an example using the `map` method on the `users` array to return a new array containing only the names of the users as elements. For simplicity, the example only uses the first argument of the callback.
+Vous trouverez ci-dessous un exemple d'utilisation de la méthode `map` sur le tableau `users` pour retourner un nouveau tableau contenant uniquement les noms des utilisateurs comme éléments. Pour des raisons de simplicité, l'exemple n'utilise que le premier argument du callback.
 
 ```js
 const users = [
@@ -33,15 +33,15 @@ const names = users.map(user => user.name);
 console.log(names);
 ```
 
-The console would display the value ` [ 'John', 'Amy', 'camperCat' ]`.
+La console affichera la valeur ` [ 'John', 'Amy', 'camperCat' ]`.
 
 # --instructions--
 
-The `watchList` array holds objects with information on several movies. Use `map` on `watchList` to assign a new array of objects to the `ratings` variable. Each movie in the new array should have only a `title` key with the name of the film, and a `rating` key with the IMDB rating. The code in the editor currently uses a `for` loop to do this, so you should replace the loop functionality with your `map` expression.
+Le tableau `watchList` contient des objets contenant des informations sur plusieurs films. Utilisez `map` sur `watchList` pour assigner un nouveau tableau d'objets à la variable `ratings`. Chaque film dans le nouveau tableau devrait avoir seulement une clé `title` avec le nom du film, et une clé `rating` avec le classement IMDB. Le code de l'éditeur utilise actuellement une boucle `for` pour faire cela, vous devez donc remplacer la fonctionnalité de la boucle par votre expression `map`.
 
 # --hints--
 
-The `watchList` variable should not change.
+La variable `watchList` ne doit pas changer.
 
 ```js
 assert(
@@ -49,19 +49,19 @@ assert(
 );
 ```
 
-Your code should not use a `for` loop.
+Votre code ne doit pas utiliser de boucle `for`.
 
 ```js
 assert(!code.match(/for\s*?\([\s\S]*?\)/));
 ```
 
-Your code should use the `map` method.
+Votre code doit utiliser la méthode `map`.
 
 ```js
 assert(code.match(/\.map/g));
 ```
 
-`ratings` should equal `[{"title": "Inception", "rating": "8.8"}, {"title": "Interstellar", "rating": "8.6"}, {"title": "The Dark Knight", "rating": "9.0"},{"title": "Batman Begins", "rating": "8.3"}, {"title": "Avatar", "rating": "7.9"}]`.
+`ratings` doit être égàl à `[{"title": "Inception", "rating": "8.8"}, {"title": "Interstellar", "rating": "8.6"}, {"title": "The Dark Knight", "rating": "9.0"},{"title": "Batman Begins", "rating": "8.3"}, {"title": "Avatar", "rating": "7.9"}]`.
 
 ```js
 assert.deepEqual(ratings, [
@@ -78,7 +78,7 @@ assert.deepEqual(ratings, [
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 const watchList = [
   {
     "Title": "Inception",
@@ -192,14 +192,14 @@ const watchList = [
   }
 ];
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 const ratings = [];
 for (let i = 0; i < watchList.length; i++) {
   ratings.push({title: watchList[i]["Title"], rating: watchList[i]["imdbRating"]});
 }
 
-// Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 
 console.log(JSON.stringify(ratings));
 ```

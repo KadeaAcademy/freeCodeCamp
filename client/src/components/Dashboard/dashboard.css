@@ -1,0 +1,107 @@
+.cours-card-progress {
+  width: 100%;
+  padding: 1em 0;
+}
+
+.cours-card-progress {
+  padding: 10px 15px 20px 15px !important;
+}
+
+.cours-card-progress span {
+  color: var(--quaternary-color);
+}
+
+.cours-card-progress .cours-card-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em 0;
+}
+
+.cours-card-content .cours-card-content-left {
+  width: 45%;
+}
+
+.cours-card-content .cours-card-content-right {
+  width: 45%;
+  text-align: right;
+}
+
+.cours-card-progress .progress {
+  /* height: 0.4em; */
+  background-color: var(--secondary-background);
+  width: 100%;
+  /* border-radius: 20px; */
+  border-radius: 5px;
+  margin-bottom: 0;
+}
+
+.progress {
+  /* border-radius: 20px; */
+  border-radius: 5px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: var(--quaternary-background) !important;
+}
+
+.progress-bar {
+  background: var(--primary-color);
+}
+
+.cours-card-progress-btn {
+  padding: 8px 10px;
+  text-decoration: none;
+  color: var(--gray-00) !important;
+  font-weight: 600;
+  background: var(--love-light);
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.cours-card-progress-btn:hover,
+.cours-card-progress-btn:focus {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 0) !important;
+  border: solid 2px var(--love-light);
+}
+
+.display-inlin {
+  display: inline;
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .cours-card-progress .cours-card-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0.2em 0;
+  }
+
+  .cours-card-content .cours-card-content-left {
+    width: 100%;
+  }
+
+  .cours-card-content .cours-card-content-right {
+    width: 100%;
+    text-align: left;
+    padding: 1.5em 0;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .show-on-mobile {
+    display: block;
+    padding-top: 1.5em;
+  }
+}

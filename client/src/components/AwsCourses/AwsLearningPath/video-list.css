@@ -1,0 +1,14 @@
+.video-list-container {
+  font-family: sans-serif;
+  width: 100%;
+}
+.video-item {
+  border-bottom: 10px solid rgb(255, 255, 255);
+  padding: 0.7rem;
+}
+.video-item p {
+  font-size: 0.7rem;
+}
+.video-item div {
+  font-size: 0.8rem;
+}

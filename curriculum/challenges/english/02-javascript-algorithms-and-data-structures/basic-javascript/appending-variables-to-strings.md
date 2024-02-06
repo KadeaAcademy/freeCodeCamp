@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244ed
-title: Appending Variables to Strings
+title: Ajouter des variables aux chaînes de caractères
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cbQmZfa'
 forumTopicId: 16656
@@ -9,34 +9,34 @@ dashedName: appending-variables-to-strings
 
 # --description--
 
-Just as we can build a string over multiple lines out of string <dfn>literals</dfn>, we can also append variables to a string using the plus equals (`+=`) operator.
+Tout comme nous pouvons construire une chaîne de caractères sur plusieurs lignes à partir de chaînes de caractères <dfn>littérales</dfn>, nous pouvons également ajouter des variables à une chaîne de caractères en utilisant l'opérateur plus égal (`+=`).
 
-Example:
+Exemple :
 
 ```js
-const anAdjective = "awesome!";
-let ourStr = "freeCodeCamp is ";
-ourStr += anAdjective;
+const unAdjectif = "formidable!";
+let notreChaine = "Kadea est ";
+notreChaine += unAdjectif;
 ```
 
-`ourStr` would have the value `freeCodeCamp is awesome!`.
+`notreChaine` aura la valeur `Kadea est formidable!`.
 
 # --instructions--
 
-Set `someAdjective` to a string of at least 3 characters and append it to `myStr` using the `+=` operator.
+Affectez à `unCertainAdjectif` une chaîne d'au moins 3 caractères et joignez-la à `myStr` en utilisant l'opérateur `+=`.
 
 # --hints--
 
-`someAdjective` should be set to a string at least 3 characters long.
+`unCertainAdjectif` doit contenir une chaîne d'au moins 3 caractères.
 
 ```js
-assert(typeof someAdjective !== 'undefined' && someAdjective.length > 2);
+assert(typeof unCertainAdjectif !== 'undefined' && unCertainAdjectif.length > 2);
 ```
 
-You should append `someAdjective` to `myStr` using the `+=` operator.
+Vous devez annexer `unCertainAdjectif` à `myStr` en utilisant l'opérateur `+=`.
 
 ```js
-assert(code.match(/myStr\s*\+=\s*someAdjective\s*/).length > 0);
+assert(code.match(/myStr\s*\+=\s*unCertainAdjectif\s*/).length > 0);
 ```
 
 # --seed--
@@ -46,10 +46,10 @@ assert(code.match(/myStr\s*\+=\s*someAdjective\s*/).length > 0);
 ```js
 (function(){
   var output = [];
-  if(typeof someAdjective === 'string') {
-    output.push('someAdjective = "' + someAdjective + '"');
+  if(typeof unCertainAdjectif === 'string') {
+    output.push('unCertainAdjectif = "' + unCertainAdjectif + '"');
   } else {
-    output.push('someAdjective is not a string');
+    output.push('unCertainAdjectif is not a string');
   }
   if(typeof myStr === 'string') {
     output.push('myStr = "' + myStr + '"');
@@ -63,15 +63,15 @@ assert(code.match(/myStr\s*\+=\s*someAdjective\s*/).length > 0);
 ## --seed-contents--
 
 ```js
-// Change code below this line
-const someAdjective = "";
-let myStr = "Learning to code is ";
+// Changez le code sous cette ligne
+const unCertainAdjectif = "";
+let myStr = "Apprendre à coder est ";
 ```
 
 # --solutions--
 
 ```js
-const someAdjective = "neat";
-let myStr = "Learning to code is ";
-myStr += someAdjective;
+const unCertainAdjectif = "génial";
+let myStr = "Apprendre à coder est ";
+myStr += unCertainAdjectif;
 ```

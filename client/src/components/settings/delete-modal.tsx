@@ -1,6 +1,5 @@
 import { Button, Modal } from '@freecodecamp/react-bootstrap';
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
 
 import { ButtonSpacer } from '../helpers';
 
@@ -14,8 +13,6 @@ type DeleteModalProps = {
 
 function DeleteModal(props: DeleteModalProps): JSX.Element {
   const { show, onHide } = props;
-  const email = 'team@freecodecamp.org';
-  const { t } = useTranslation();
   return (
     <Modal
       aria-labelledby='modal-title'
@@ -27,46 +24,43 @@ function DeleteModal(props: DeleteModalProps): JSX.Element {
       show={show}
     >
       <Modal.Header closeButton={true}>
-        <Modal.Title id='modal-title'>
-          {t('settings.danger.delete-title')}
-        </Modal.Title>
+        <Modal.Title id='modal-title'>{'Supprimer mon compte'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{t('settings.danger.delete-p1')}</p>
-        <p>{t('settings.danger.delete-p2')}</p>
         <p>
-          <Trans i18nKey='settings.danger.delete-p3'>
-            <a href={`mailto:${email}`} title={email}>
-              {{ email }}
-            </a>
-          </Trans>
+          {
+            'Cela supprimera réellement toutes vos données, y compris toutes vos informations de progression et de compte.'
+          }
+        </p>
+        <p>
+          {
+            "Nous ne pourrons plus rien récupérer pour vous par la suite, même si vous changez d'avis."
+          }
         </p>
         <hr />
         <Button
+          className='action-btn btn-secondary standard-radius-5'
           block={true}
           bsSize='lg'
           bsStyle='primary'
-          className='btn-invert'
           onClick={props.onHide}
           type='button'
         >
-          {t('settings.danger.nevermind')}
+          {"C'est pas grave, je ne veux pas supprimer mon compte."}
         </Button>
         <ButtonSpacer />
         <Button
+          className='action-btn btn-primary standard-radius-5'
           block={true}
           bsSize='lg'
           bsStyle='danger'
-          className='btn-danger'
           onClick={props.delete}
           type='button'
         >
-          {t('settings.danger.certain')}
+          {'Je suis sûr à 100%. Supprimez tout ce qui est lié à ce compte'}
         </Button>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>{t('buttons.close')}</Button>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }

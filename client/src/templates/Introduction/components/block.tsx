@@ -49,6 +49,7 @@ interface BlockProps {
   executeGA: typeof executeGA;
   isExpanded: boolean;
   superBlock: SuperBlocks;
+  blockIndex: number;
   t: TFunction;
   toggleBlock: typeof toggleBlock;
 }
@@ -101,6 +102,7 @@ export class Block extends Component<BlockProps> {
       challenges,
       isExpanded,
       superBlock,
+      blockIndex,
       t
     } = this.props;
 
@@ -142,13 +144,6 @@ export class Block extends Component<BlockProps> {
     );
     const blockTitle = blockIntroObj ? blockIntroObj.title : null;
     const blockIntroArr = blockIntroObj ? blockIntroObj.intro : [];
-    const {
-      expand: expandText,
-      collapse: collapseText
-    }: {
-      expand: string;
-      collapse: string;
-    } = t('intro:misc-text');
 
     const isBlockCompleted = completedCount === challengesWithCompleted.length;
 
@@ -167,14 +162,21 @@ export class Block extends Component<BlockProps> {
       <>
         {' '}
         <ScrollableAnchor id={blockDashedName}>
-          <div className={`block ${isExpanded ? 'open' : ''}`}>
-            <div className='block-header'>
-              <a className='block-link' href={`#${blockDashedName}`}>
-                <h3 className='big-block-title'>
-                  {blockTitle}
-                  <span className='block-link-icon'>#</span>
-                </h3>
-              </a>
+          <div
+            className={`block ${isExpanded ? 'open' : ''} standard-radius-5`}
+          >
+            <div className='card-challenge standard-radius-5'>
+              <div className='card-challenge-header'>
+                <div className='card-challenge-index'>{blockIndex}</div>
+                <div className='card-challenge-title'>
+                  <a className='' href={`#${blockDashedName}`}>
+                    <h3 className='big-block-title'>
+                      {blockTitle}
+                      <span className='block-link-icon'>#</span>
+                    </h3>
+                  </a>
+                </div>
+              </div>
               {!isAuditedCert(curriculumLocale, superBlock) && (
                 <div className='block-cta-wrapper'>
                   <Link
@@ -185,18 +187,26 @@ export class Block extends Component<BlockProps> {
                   </Link>
                 </div>
               )}
+              <div className='card-challenge-body'>
+                <div className='card-challenge-icon'></div>
+                <div className='card-challenge-content'>
+                  <div className='card-challenge-intro'>
+                    {this.renderBlockIntros(blockIntroArr)}
+                  </div>
+                </div>
+              </div>
             </div>
-            {this.renderBlockIntros(blockIntroArr)}
+            <hr />
             <button
               aria-expanded={isExpanded}
-              className='map-title'
+              className='map-title standard-radius-5-bottom'
               onClick={() => {
                 this.handleBlockClick();
               }}
             >
               <Caret />
               <h4 className='course-title'>
-                {`${isExpanded ? collapseText : expandText}`}
+                {`${isExpanded ? 'Fermer' : 'Voir plus de chapitres'}`}
               </h4>
               <div className='map-title-completed course-title'>
                 {this.renderCheckMark(isBlockCompleted)}
@@ -208,6 +218,7 @@ export class Block extends Component<BlockProps> {
                 challengesWithCompleted={challengesWithCompleted}
                 isProjectBlock={isProjectBlock}
                 superBlock={superBlock}
+                isLastVisited={false}
               />
             )}
           </div>
@@ -215,6 +226,7 @@ export class Block extends Component<BlockProps> {
       </>
     );
 
+    // Block for Project
     const ProjectBlock = (
       <>
         <ScrollableAnchor id={blockDashedName}>
@@ -242,6 +254,7 @@ export class Block extends Component<BlockProps> {
               challengesWithCompleted={challengesWithCompleted}
               isProjectBlock={isProjectBlock}
               superBlock={superBlock}
+              isLastVisited={false}
             />
           </div>
         </ScrollableAnchor>
@@ -287,6 +300,7 @@ export class Block extends Component<BlockProps> {
                   challengesWithCompleted={challengesWithCompleted}
                   isProjectBlock={isProjectBlock}
                   superBlock={superBlock}
+                  isLastVisited={false}
                 />
               </>
             )}
@@ -325,8 +339,9 @@ export class Block extends Component<BlockProps> {
     );
 
     const blockrenderer = () => {
-      if (isProjectBlock)
+      if (isProjectBlock) {
         return isNewResponsiveWebDesign ? GridProjectBlock : ProjectBlock;
+      }
       return isNewResponsiveWebDesign ? GridBlock : Block;
     };
 

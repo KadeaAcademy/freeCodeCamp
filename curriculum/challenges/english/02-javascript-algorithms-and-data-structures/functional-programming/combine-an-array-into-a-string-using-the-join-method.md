@@ -1,6 +1,6 @@
 ---
 id: 587d7daa367417b2b2512b6c
-title: Combine an Array into a String Using the join Method
+title: Combiner un tableau en une chaîne de caractères à l'aide de la méthode join
 challengeType: 1
 forumTopicId: 18221
 dashedName: combine-an-array-into-a-string-using-the-join-method
@@ -8,47 +8,47 @@ dashedName: combine-an-array-into-a-string-using-the-join-method
 
 # --description--
 
-The `join` method is used to join the elements of an array together to create a string. It takes an argument for the delimiter that is used to separate the array elements in the string.
+La méthode `join` est utilisée pour joindre les éléments d'un tableau afin de créer une chaîne de caractères. Elle prend un argument pour le délimiteur qui est utilisé pour séparer les éléments du tableau dans la chaîne.
 
-Here's an example:
+Voici un exemple :
 
 ```js
 const arr = ["Hello", "World"];
 const str = arr.join(" ");
 ```
 
-`str` would have a value of the string `Hello World`.
+`str` aurait une valeur de la chaîne de caractères `Hello World`.
 # --instructions--
 
-Use the `join` method (among others) inside the `sentensify` function to make a sentence from the words in the string `str`. The function should return a string. For example, `I-like-Star-Wars` would be converted to `I like Star Wars`. For this challenge, do not use the `replace` method.
+Utilisez la méthode `join` (entre autres) à l'intérieur de la fonction `sentensify` pour créer une phrase à partir des mots de la chaîne `str`. La fonction doit retourner une chaîne de caractères. Par exemple, `I-like-Star-Wars` sera converti en `I like Star Wars`. Pour ce défi, n'utilisez pas la méthode `replace`.
 
 # --hints--
 
-Your code should use the `join` method.
+Votre code doit utiliser la méthode `join`.
 
 ```js
 assert(code.match(/\.join/g));
 ```
 
-Your code should not use the `replace` method.
+Votre code ne doit pas utiliser la méthode `replace`.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?replace/g));
 ```
 
-`sentensify("May-the-force-be-with-you")` should return a string.
+`sentensify("May-the-force-be-with-you")` doit retourner une chaîne.
 
 ```js
 assert(typeof sentensify('May-the-force-be-with-you') === 'string');
 ```
 
-`sentensify("May-the-force-be-with-you")` should return the string `May the force be with you`.
+`sentensify("May-the-force-be-with-you")` doit retourner la chaîne `May the force be with you`.
 
 ```js
 assert(sentensify('May-the-force-be-with-you') === 'May the force be with you');
 ```
 
-`sentensify("The.force.is.strong.with.this.one")` should return the string `The force is strong with this one`.
+`sentensify("The.force.is.strong.with.this.one")` doit retourner la chaîne `The force is strong with this one`.
 
 ```js
 assert(
@@ -57,7 +57,7 @@ assert(
 );
 ```
 
-`sentensify("There,has,been,an,awakening")` should return the string `There has been an awakening`.
+`sentensify("There,has,been,an,awakening")` doit retourner la chaîne `There has been an awakening`.
 
 ```js
 assert(
@@ -71,10 +71,10 @@ assert(
 
 ```js
 function sentensify(str) {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 
 sentensify("May-the-force-be-with-you");

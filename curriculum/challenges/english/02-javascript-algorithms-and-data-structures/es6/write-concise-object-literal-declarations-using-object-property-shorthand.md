@@ -1,6 +1,6 @@
 ---
 id: 587d7b8a367417b2b2512b4f
-title: Write Concise Object Literal Declarations Using Object Property Shorthand
+title: Écrire des déclarations concises de littéral d'objet en utilisant le raccourci de propriété d'objet
 challengeType: 1
 forumTopicId: 301225
 dashedName: write-concise-object-literal-declarations-using-object-property-shorthand
@@ -8,9 +8,9 @@ dashedName: write-concise-object-literal-declarations-using-object-property-shor
 
 # --description--
 
-ES6 adds some nice support for easily defining object literals.
+ES6 ajoute un support intéressant pour définir facilement les littéraux d'objet.
 
-Consider the following code:
+Considérez le code suivant :
 
 ```js
 const getMousePosition = (x, y) => ({
@@ -19,7 +19,7 @@ const getMousePosition = (x, y) => ({
 });
 ```
 
-`getMousePosition` is a simple function that returns an object containing two properties. ES6 provides the syntactic sugar to eliminate the redundancy of having to write `x: x`. You can simply write `x` once, and it will be converted to`x: x` (or something equivalent) under the hood. Here is the same function from above rewritten to use this new syntax:
+`getMousePosition` est une fonction simple qui renvoie un objet contenant deux propriétés. ES6 fournit le sucre syntaxique pour éliminer la redondance de l'écriture de `x : x`. Vous pouvez simplement écrire `x` une fois, et il sera converti en `x : x` (ou quelque chose d'équivalent) sous le capot. Voici la même fonction que précédemment, réécrite pour utiliser cette nouvelle syntaxe :
 
 ```js
 const getMousePosition = (x, y) => ({ x, y });
@@ -27,11 +27,11 @@ const getMousePosition = (x, y) => ({ x, y });
 
 # --instructions--
 
-Use object property shorthand with object literals to create and return an object with `name`, `age` and `gender` properties.
+Utilisez le raccourci de propriété d'objet avec les littéraux d'objet pour créer et retourner un objet avec les propriétés `name`, `age` et `gender`.
 
 # --hints--
 
-`createPerson("Zodiac Hasbro", 56, "male")` should return `{name: "Zodiac Hasbro", age: 56, gender: "male"}`.
+`createPerson("Zodiac Hasbro", 56, "male")` devrait renvoyer `{name: "Zodiac Hasbro", age: 56, gender: "male"}`.
 
 ```js
 assert.deepEqual(
@@ -40,7 +40,7 @@ assert.deepEqual(
 );
 ```
 
-Your code should not use `key:value`.
+Votre code ne doit pas utiliser `key:value`.
 
 ```js
 (getUserInput) => assert(!getUserInput('index').match(/:/g));
@@ -52,13 +52,13 @@ Your code should not use `key:value`.
 
 ```js
 const createPerson = (name, age, gender) => {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
   return {
     name: name,
     age: age,
     gender: gender
   };
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 };
 ```
 

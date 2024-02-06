@@ -1,0 +1,14 @@
+.side-bar {
+  min-height: 100vh;
+  color: var(--primary-background);
+}
+
+.side-bar-title {
+  font-weight: bolder;
+  margin: 1.2rem 0;
+}
+
+hr {
+  background-color: var(--primary-background);
+  opacity: 0.4;
+}

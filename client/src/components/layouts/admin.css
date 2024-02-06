@@ -1,0 +1,41 @@
+.admin-profile-bar {
+  margin: 1rem 0;
+}
+
+.margin-0 {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.padding-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.admin-profil-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.profile-name {
+  padding: 0 0.5rem;
+}
+
+.img-profile {
+  height: 2rem;
+  width: 2rem;
+  vertical-align: middle;
+  border-style: none;
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.admin-default-layout {
+  min-height: 100vh;
+}

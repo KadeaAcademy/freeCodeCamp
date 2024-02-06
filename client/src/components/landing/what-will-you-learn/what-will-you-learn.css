@@ -1,0 +1,160 @@
+.pull {
+  float: left;
+}
+
+.push {
+  float: right;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+/*Card Styling*/
+
+.card-outlin-border {
+  border: solid 1px #2b292b;
+}
+
+.card-course-detail-unit {
+  margin: 0;
+  padding: 0;
+}
+
+.card-course-detail-item {
+  padding: 0% 5%;
+}
+
+.card-course-detail-header {
+  overflow: hidden;
+}
+
+.card-course-detail-footer {
+  padding: 5% 5%;
+  overflow: hidden;
+}
+
+.card-course-detail-logo {
+  width: 25%;
+  padding: 5%;
+}
+
+.play {
+  width: 100%;
+}
+
+.card-title-w60 {
+  width: 60%;
+}
+
+.link-course:hover {
+  color: var(--love-light);
+}
+
+/*Card Flex Code*/
+
+.position-relative {
+  position: relative;
+  top: -15px;
+  left: -15px;
+}
+
+.row-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row-link-text {
+  margin-right: 10px;
+}
+
+.card-course-detail-container-landing {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  gap: 5%;
+}
+
+.card-course-detail-unit {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-course-detail-unit {
+  width: 100%;
+}
+
+.flexible {
+  flex-grow: 1;
+}
+
+.course-cta {
+  background-color: #e60000;
+  border: 2px solid #e60000;
+
+  box-shadow: 0px 0px 8px #e60000;
+  color: #fff !important;
+  padding: 0.5rem 1.875rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: ease-in-out 0.3s;
+  margin-left: 1.5%;
+}
+
+.course-cta:hover {
+  background-color: transparent;
+  border: 2px solid #e60000;
+
+  color: #e60000 !important;
+  box-shadow: none;
+}
+
+@media (max-width: 1024px) {
+  .course-cta {
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-course-detail-container-landing {
+    display: flex;
+    justify-content: center;
+  }
+  .course-cta {
+    margin-left: 3%;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-cta-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .course-cta {
+    margin: 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .card-title-w60 {
+    padding-top: 10%;
+  }
+
+  .hide-small {
+    display: none;
+  }
+
+  .card-course-detail-container-landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}

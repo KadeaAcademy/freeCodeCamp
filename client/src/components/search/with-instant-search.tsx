@@ -1,6 +1,6 @@
 import { Location } from '@reach/router';
 import type { WindowLocation } from '@reach/router';
-import algoliasearch from 'algoliasearch/lite';
+// import algoliasearch from 'algoliasearch/lite';
 import { navigate } from 'gatsby';
 import qs from 'query-string';
 import React, { useEffect, useRef } from 'react';
@@ -9,7 +9,7 @@ import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { connect } from 'react-redux';
 import Media from 'react-responsive';
 import { createSelector } from 'reselect';
-import envData from '../../../../config/env.json';
+// import envData from '../../../../config/env.json';
 import { newsIndex } from '../../utils/algolia-locale-setup';
 
 import {
@@ -19,18 +19,18 @@ import {
   updateSearchQuery
 } from './redux';
 
-const { algoliaAppId, algoliaAPIKey } = envData;
+// const { algoliaAppId, algoliaAPIKey } = envData;
 
 const DEBOUNCE_TIME = 100;
 
 // If a key is missing, searches will fail, but the client will still render.
-const searchClient =
-  algoliaAppId && algoliaAPIKey
-    ? algoliasearch(algoliaAppId, algoliaAPIKey)
-    : {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        search: () => {}
-      };
+// const searchClient =
+//   algoliaAppId && algoliaAPIKey
+//     ? algoliasearch(algoliaAppId, algoliaAPIKey)
+//     : {
+//         // eslint-disable-next-line @typescript-eslint/no-empty-function
+//         search: () => {}
+//       };
 
 const mapStateToProps = createSelector(
   searchQuerySelector,
@@ -155,7 +155,7 @@ function InstantSearchRoot({
     <InstantSearch
       indexName={newsIndex}
       onSearchStateChange={onSearchStateChange}
-      searchClient={searchClient}
+      searchClient={null}
       searchState={{ query }}
     >
       {isSearchPage() ? (

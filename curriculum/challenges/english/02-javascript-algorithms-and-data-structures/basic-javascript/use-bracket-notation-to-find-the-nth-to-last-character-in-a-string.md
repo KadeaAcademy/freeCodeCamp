@@ -1,6 +1,6 @@
 ---
 id: bd7123c9c452eddfaeb5bdef
-title: Use Bracket Notation to Find the Nth-to-Last Character in a String
+title: Utiliser la notation entre crochets pour trouver le énième avant-dernier caractère d'une chaîne de caractères
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cw4vkh9'
 forumTopicId: 18344
@@ -9,9 +9,9 @@ dashedName: use-bracket-notation-to-find-the-nth-to-last-character-in-a-string
 
 # --description--
 
-You can use the same principle we just used to retrieve the last character in a string to retrieve the Nth-to-last character.
+Vous pouvez utiliser le même principe que celui que nous venons d'utiliser pour récupérer le dernier caractère d'une chaîne afin de récupérer le Nième avant-dernier caractère.
 
-For example, you can get the value of the third-to-last letter of the `const firstName = "Augusta"` string by using `firstName[firstName.length - 3]`
+Par exemple, vous pouvez obtenir la valeur de la troisième avant-dernière lettre de la chaîne `const firstName = "Augusta"` en utilisant `firstName[firstName.length - 3]`.
 
 Example:
 
@@ -20,23 +20,23 @@ const firstName = "Augusta";
 const thirdToLastLetter = firstName[firstName.length - 3];
 ```
 
-`thirdToLastLetter` would have a value of the string `s`.
+La valeur de `thirdToLastLetter` doit être la chaîne `s`.
 
 # --instructions--
 
-Use <dfn>bracket notation</dfn> to find the second-to-last character in the `lastName` string.
+Utilisez la <dfn>notation entre crochets</dfn> pour trouver l'avant-dernier caractère de la chaîne `lastName`.
 
-**Hint:** Try looking at the example above if you get stuck.
+**Indice:** Essayez de regarder l'exemple ci-dessus si vous êtes bloqué.
 
 # --hints--
 
-`secondToLastLetterOfLastName` should be the letter `c`.
+`secondToLastLetterOfLastName` devrait être la lettre `c`.
 
 ```js
 assert(secondToLastLetterOfLastName === 'c');
 ```
 
-You should use `.length` to get the second last letter.
+Vous devez utiliser `.length` pour obtenir l'avant-dernière lettre.
 
 ```js
 assert(code.match(/\.length/g).length > 0);
@@ -56,8 +56,8 @@ assert(code.match(/\.length/g).length > 0);
 // Setup
 const lastName = "Lovelace";
 
-// Only change code below this line
-const secondToLastLetterOfLastName = lastName; // Change this line
+// Ne changez que le code en dessous de cette ligne
+const secondToLastLetterOfLastName = lastName; // Modifiez cette ligne
 ```
 
 # --solutions--

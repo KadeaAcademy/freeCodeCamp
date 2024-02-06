@@ -8,83 +8,83 @@ dashedName: mutations
 
 # --description--
 
-Return `true` if the string in the first element of the array contains all of the letters of the string in the second element of the array.
+Retourne `true` si la chaîne de caractères du premier élément du tableau contient toutes les lettres de la chaîne de caractères du second élément du tableau.
 
-For example, `["hello", "Hello"]`, should return `true` because all of the letters in the second string are present in the first, ignoring case.
+Par exemple, `["hello", "Hello"]`, devrait retourner `true` car toutes les lettres de la seconde chaîne sont présentes dans la première, sans tenir compte de la casse.
 
-The arguments `["hello", "hey"]` should return `false` because the string `hello` does not contain a `y`.
+Les arguments `["hello", "hey"]` devraient retourner `false` parce que la chaîne `hello` ne contient pas de `y`.
 
-Lastly, `["Alien", "line"]`, should return `true` because all of the letters in `line` are present in `Alien`.
+Enfin, `["Alien", "line"]`, devrait retourner `vrai` car toutes les lettres de `line` sont présentes dans `Alien`.
 
 # --hints--
 
-`mutation(["hello", "hey"])` should return `false`.
+`mutation(["hello", "hey"])` devrait retourner `false`.
 
 ```js
 assert(mutation(['hello', 'hey']) === false);
 ```
 
-`mutation(["hello", "Hello"])` should return `true`.
+`mutation(["hello", "Hello"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['hello', 'Hello']) === true);
 ```
 
-`mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])` should return `true`.
+`mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['zyxwvutsrqponmlkjihgfedcba', 'qrstu']) === true);
 ```
 
-`mutation(["Mary", "Army"])` should return `true`.
+`mutation(["Mary", "Army"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['Mary', 'Army']) === true);
 ```
 
-`mutation(["Mary", "Aarmy"])` should return `true`.
+`mutation(["Mary", "Aarmy"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['Mary', 'Aarmy']) === true);
 ```
 
-`mutation(["Alien", "line"])` should return `true`.
+`mutation(["Alien", "line"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['Alien', 'line']) === true);
 ```
 
-`mutation(["floor", "for"])` should return `true`.
+`mutation(["floor", "for"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['floor', 'for']) === true);
 ```
 
-`mutation(["hello", "neo"])` should return `false`.
+`mutation(["hello", "neo"])` devrait retourner `false`.
 
 ```js
 assert(mutation(['hello', 'neo']) === false);
 ```
 
-`mutation(["voodoo", "no"])` should return `false`.
+`mutation(["voodoo", "no"])` devrait retourner `false`.
 
 ```js
 assert(mutation(['voodoo', 'no']) === false);
 ```
 
-`mutation(["ate", "date"])` should return `false`.
+`mutation(["ate", "date"])` devrait retourner `false`.
 
 ```js
 assert(mutation(['ate', 'date']) === false);
 ```
 
-`mutation(["Tiger", "Zebra"])` should return `false`.
+`mutation(["Tiger", "Zebra"])` devrait retourner `false`.
 
 ```js
 assert(mutation(['Tiger', 'Zebra']) === false);
 ```
 
-`mutation(["Noel", "Ole"])` should return `true`.
+`mutation(["Noel", "Ole"])` devrait retourner `true`.
 
 ```js
 assert(mutation(['Noel', 'Ole']) === true);

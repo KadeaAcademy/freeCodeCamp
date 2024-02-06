@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d7
-title: Comparison with the Less Than Or Equal To Operator
+title: Comparaison avec l'opérateur "inférieur ou égal à" 
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cNVR7Am'
 forumTopicId: 16788
@@ -9,9 +9,9 @@ dashedName: comparison-with-the-less-than-or-equal-to-operator
 
 # --description--
 
-The less than or equal to operator (`<=`) compares the values of two numbers. If the number to the left is less than or equal to the number to the right, it returns `true`. If the number on the left is greater than the number on the right, it returns `false`. Like the equality operator, the less than or equal to operator converts data types.
+L'opérateur inférieur ou égal à (`<=`) compare les valeurs de deux nombres. Si le nombre à gauche est inférieur ou égal au nombre à droite, il renvoie `true`. Si le nombre à gauche est supérieur au nombre à droite, il renvoie `false`. Comme l'opérateur d'égalité, l'opérateur inférieur ou égal à convertit les types de données.
 
-**Examples**
+**Exemples**
 
 ```js
 4   <= 5 // true
@@ -23,53 +23,53 @@ The less than or equal to operator (`<=`) compares the values of two numbers. If
 
 # --instructions--
 
-Add the less than or equal to operator to the indicated lines so that the return statements make sense.
+Ajoutez l'opérateur inférieur ou égal à sur les lignes indiquées afin que les déclarations de retour aient un sens.
 
 # --hints--
 
-`testLessOrEqual(0)` should return the string `Smaller Than or Equal to 12`
+`testLessOrEqual(0)` devrait retourner la chaîne `Inférieur ou égal à 12`.
 
 ```js
-assert(testLessOrEqual(0) === 'Smaller Than or Equal to 12');
+assert(testLessOrEqual(0) === 'Inférieur ou égal à 12');
 ```
 
-`testLessOrEqual(11)` should return the string `Smaller Than or Equal to 12`
+`testLessOrEqual(11)` devrait retourner la chaîne `Inférieur ou égal à 12`
 
 ```js
-assert(testLessOrEqual(11) === 'Smaller Than or Equal to 12');
+assert(testLessOrEqual(11) === 'Inférieur ou égal à 12');
 ```
 
-`testLessOrEqual(12)` should return the string `Smaller Than or Equal to 12`
+`testLessOrEqual(12)` devrait retourner la chaîne `Inférieur ou égal à 12`
 
 ```js
-assert(testLessOrEqual(12) === 'Smaller Than or Equal to 12');
+assert(testLessOrEqual(12) === 'Inférieur ou égal à 12');
 ```
 
-`testLessOrEqual(23)` should return the string `Smaller Than or Equal to 24`
+`testLessOrEqual(23)` devrait retourner la chaîne `Inférieur ou égal à 24`
 
 ```js
-assert(testLessOrEqual(23) === 'Smaller Than or Equal to 24');
+assert(testLessOrEqual(23) === 'Inférieur ou égal à 24');
 ```
 
-`testLessOrEqual(24)` should return the string `Smaller Than or Equal to 24`
+`testLessOrEqual(24)` devrait retourner la chaîne `Inférieur ou égal à 24`
 
 ```js
-assert(testLessOrEqual(24) === 'Smaller Than or Equal to 24');
+assert(testLessOrEqual(24) === 'Inférieur ou égal à 24');
 ```
 
-`testLessOrEqual(25)` should return the string `More Than 24`
+`testLessOrEqual(25)` devrait retourner la chaîne `Plus de 24`
 
 ```js
-assert(testLessOrEqual(25) === 'More Than 24');
+assert(testLessOrEqual(25) === 'Plus de 24');
 ```
 
-`testLessOrEqual(55)` should return the string `More Than 24`
+`testLessOrEqual(55)` devrait retourner la chaîne `Plus de 24`
 
 ```js
-assert(testLessOrEqual(55) === 'More Than 24');
+assert(testLessOrEqual(55) === 'Plus de 24');
 ```
 
-You should use the `<=` operator at least twice
+Vous devez utiliser l'opérateur `<=` au moins deux fois.
 
 ```js
 assert(code.match(/val\s*<=\s*('|")*\d+('|")*/g).length > 1);
@@ -82,14 +82,14 @@ assert(code.match(/val\s*<=\s*('|")*\d+('|")*/g).length > 1);
 ```js
 function testLessOrEqual(val) {
   if (val) {  // Change this line
-    return "Smaller Than or Equal to 12";
+    return "Inférieur ou égal à 12";
   }
 
   if (val) {  // Change this line
-    return "Smaller Than or Equal to 24";
+    return "Inférieur ou égal à 24";
   }
 
-  return "More Than 24";
+  return "Plus de 24";
 }
 
 testLessOrEqual(10);
@@ -100,13 +100,13 @@ testLessOrEqual(10);
 ```js
 function testLessOrEqual(val) {
   if (val <= 12) {  // Change this line
-    return "Smaller Than or Equal to 12";
+    return "Inférieur ou égal à 12";
   }
 
   if (val <= 24) {  // Change this line
-    return "Smaller Than or Equal to 24";
+    return "Inférieur ou égal à 24";
   }
 
-  return "More Than 24";
+  return "Plus de 24";
 }
 ```

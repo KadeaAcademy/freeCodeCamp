@@ -1,6 +1,6 @@
 ---
 id: 587d7b7c367417b2b2512b18
-title: Add Key-Value Pairs to JavaScript Objects
+title: Ajouter des paires clé-valeur à des objets JavaScript
 challengeType: 1
 forumTopicId: 301153
 dashedName: add-key-value-pairs-to-javascript-objects
@@ -8,7 +8,7 @@ dashedName: add-key-value-pairs-to-javascript-objects
 
 # --description--
 
-At their most basic, objects are just collections of <dfn>key-value</dfn> pairs. In other words, they are pieces of data (<dfn>values</dfn>) mapped to unique identifiers called <dfn>properties</dfn> (<dfn>keys</dfn>). Take a look at an example:
+À la base, les objets ne sont que des collections de paires clé-valeur. En d'autres termes, il s'agit d'éléments de données (valeurs) associés à des identifiants uniques appelés propriétés (clés). Prenons un exemple :
 
 ```js
 const tekkenCharacter = {
@@ -18,19 +18,19 @@ const tekkenCharacter = {
 };
 ```
 
-The above code defines a Tekken video game character object called `tekkenCharacter`. It has three properties, each of which map to a specific value. If you want to add an additional property, such as "origin", it can be done by assigning `origin` to the object:
+Le code ci-dessus définit un objet personnage de jeu vidéo Tekken appelé `tekkenCharacter`. Il possède trois propriétés, chacune d'entre elles correspondant à une valeur spécifique. Si vous voulez ajouter une propriété supplémentaire, telle que "origine", vous pouvez le faire en assignant `origin` à l'objet :
 
 ```js
 tekkenCharacter.origin = 'South Korea';
 ```
 
-This uses dot notation. If you were to observe the `tekkenCharacter` object, it will now include the `origin` property. Hwoarang also had distinct orange hair. You can add this property with bracket notation by doing:
+Ceci utilise la notation par points. Si vous observez l'objet `tekkenCharacter`, il comprendra maintenant la propriété `origin`. Hwoarang avait aussi des cheveux orange distincts. Vous pouvez ajouter cette propriété avec la notation entre parenthèses en faisant :
 
 ```js
 tekkenCharacter['hair color'] = 'dyed orange';
 ```
 
-Bracket notation is required if your property has a space in it or if you want to use a variable to name the property. In the above case, the property is enclosed in quotes to denote it as a string and will be added exactly as shown. Without quotes, it will be evaluated as a variable and the name of the property will be whatever value the variable is. Here's an example with a variable:
+La notation entre crochets est nécessaire si votre propriété comporte un espace ou si vous souhaitez utiliser une variable pour nommer la propriété. Dans le cas ci-dessus, la propriété est placée entre guillemets pour indiquer qu'il s'agit d'une chaîne de caractères et elle sera ajoutée exactement comme indiqué. Sans les guillemets, elle sera évaluée comme une variable et le nom de la propriété sera la valeur de la variable. Voici un exemple avec une variable :
 
 ```js
 const eyes = 'eye color';
@@ -38,7 +38,7 @@ const eyes = 'eye color';
 tekkenCharacter[eyes] = 'brown';
 ```
 
-After adding all the examples, the object will look like this:
+Après avoir ajouté tous les exemples, l'objet ressemblera à ceci :
 
 ```js
 {
@@ -53,35 +53,35 @@ After adding all the examples, the object will look like this:
 
 # --instructions--
 
-A `foods` object has been created with three entries. Using the syntax of your choice, add three more entries to it: `bananas` with a value of `13`, `grapes` with a value of `35`, and `strawberries` with a value of `27`.
+Un objet `foods` a été créé avec trois entrées. En utilisant la syntaxe de votre choix, ajoutez-lui trois autres entrées : `bananas` avec la valeur `13`, `grapes` avec la valeur '35', et `strawberries` avec la valeur `27`.
 
 # --hints--
 
-`foods` should be an object.
+`foods` doit être un objet.
 
 ```js
 assert(typeof foods === 'object');
 ```
 
-The `foods` object should have a key `bananas` with a value of `13`.
+L'objet `foods` devrait avoir une clé `bananas` avec la valeur `13`.
 
 ```js
 assert(foods.bananas === 13);
 ```
 
-The `foods` object should have a key `grapes` with a value of `35`.
+L'objet `foods` devrait avoir une clé `grapes` avec une valeur de `35`.
 
 ```js
 assert(foods.grapes === 35);
 ```
 
-The `foods` object should have a key `strawberries` with a value of `27`.
+L'objet `foods` devrait avoir une clé `strawberries` avec la valeur `27`.
 
 ```js
 assert(foods.strawberries === 27);
 ```
 
-The key-value pairs should be set using dot or bracket notation.
+Les paires clé-valeur doivent être définies en utilisant la notation par points ou par crochets.
 
 ```js
 assert(
@@ -102,9 +102,9 @@ let foods = {
   plums: 28
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 console.log(foods);
 ```

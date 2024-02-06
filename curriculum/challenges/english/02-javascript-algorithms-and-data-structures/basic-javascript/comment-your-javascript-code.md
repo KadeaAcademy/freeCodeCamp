@@ -1,6 +1,6 @@
 ---
 id: bd7123c9c441eddfaeb4bdef
-title: Comment Your JavaScript Code
+title: Commentez votre code JavaScript
 challengeType: 1
 removeComments: false
 videoUrl: 'https://scrimba.com/c/c7ynnTp'
@@ -10,38 +10,38 @@ dashedName: comment-your-javascript-code
 
 # --description--
 
-Comments are lines of code that JavaScript will intentionally ignore. Comments are a great way to leave notes to yourself and to other people who will later need to figure out what that code does.
+Les commentaires sont des lignes de code que JavaScript ignore intentionnellement. Les commentaires sont un excellent moyen de laisser des notes à vous-même et aux autres personnes qui devront plus tard comprendre ce que fait ce code.
 
-There are two ways to write comments in JavaScript:
+Il existe deux façons d'écrire des commentaires en JavaScript :
 
-Using `//` will tell JavaScript to ignore the remainder of the text on the current line. This is an in-line comment:
-
-```js
-// This is an in-line comment.
-```
-
-You can make a multi-line comment beginning with `/*` and ending with `*/`. This is a multi-line comment:
+L'utilisation de `//` indique à JavaScript d'ignorer le reste du texte de la ligne en cours. Il s'agit d'un commentaire en ligne :
 
 ```js
-/* This is a
-multi-line comment */
+// Il s'agit d'un commentaire en ligne.
 ```
 
-**NOTE:** As you write code, you should regularly add comments to clarify the function of parts of your code. Good commenting can help communicate the intent of your code—both for others *and* for your future self.
+Vous pouvez faire un commentaire de plusieurs lignes commençant par `/*` et finissant par `*/`. Ceci est un commentaire de plusieurs lignes :
+
+```js
+/* Il s'agit d'un
+commentaire de plusieurs lignes */
+```
+
+**NOTE:** Lorsque vous écrivez du code, vous devriez régulièrement ajouter des commentaires pour clarifier la fonction de certaines parties de votre code. Un bon commentaire peut aider à communiquer l'intention de votre code - à la fois pour les autres *et* pour vous-même dans le futur.
 
 # --instructions--
 
-Try creating one of each type of comment.
+Essayez de créer un commentaire de chaque type.
 
 # --hints--
 
-You should create a `//` style comment that contains at least five letters.
+Vous devez créer un commentaire de style `//` qui contient au moins cinq lettres.
 
 ```js
 assert(code.match(/(\/\/)...../g));
 ```
 
-You should create a `/* */` style comment that contains at least five letters.
+Vous devez créer un commentaire de style `/* */` qui contient au moins cinq lettres.
 
 ```js
 assert(code.match(/(\/\*)([^\/]{5,})(?=\*\/)/gm));

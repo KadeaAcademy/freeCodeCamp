@@ -1,6 +1,6 @@
 ---
 id: cf1111c1c12feddfaeb1bdef
-title: Generate Random Whole Numbers with JavaScript
+title: Générer des nombres entiers aléatoires avec JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cRn6bfr'
 forumTopicId: 18186
@@ -9,27 +9,27 @@ dashedName: generate-random-whole-numbers-with-javascript
 
 # --description--
 
-It's great that we can generate random decimal numbers, but it's even more useful if we use it to generate random whole numbers.
+C'est formidable de pouvoir générer des nombres décimaux aléatoires, mais c'est encore plus utile si on l'utilise pour générer des nombres entiers aléatoires.
 
-<ol><li>Use <code>Math.random()</code> to generate a random decimal.</li><li>Multiply that random decimal by <code>20</code>.</li><li>Use another function, <code>Math.floor()</code> to round the number down to its nearest whole number.</li></ol>
+<ol><li>utilisez <code>Math.random()</code> pour générer un nombre décimal aléatoire.</li><li>Multipliez ce nombre décimal aléatoire par <code>20</code>.</li><li>Utilisez une autre fonction, <code>Math.floor()</code> pour arrondir le nombre à l'entier inférieur le plus proche.</li></ol>
 
-Remember that `Math.random()` can never quite return a `1` and, because we're rounding down, it's impossible to actually get `20`. This technique will give us a whole number between `0` and `19`.
+Rappelez-vous que `Math.random()` ne peut jamais retourner un `1` et, comme nous arrondissons à l'inférieur, il est impossible d'obtenir réellement `20`. Cette technique nous donnera un nombre entier compris entre " 0 " et " 19 ".
 
-Putting everything together, this is what our code looks like:
+En mettant tout ensemble, voici à quoi ressemble notre code :
 
 ```js
 Math.floor(Math.random() * 20);
 ```
 
-We are calling `Math.random()`, multiplying the result by 20, then passing the value to `Math.floor()` function to round the value down to the nearest whole number.
+Nous appelons `Math.random()`, nous multiplions le résultat par 20, puis nous passons la valeur à la fonction `Math.floor()` pour arrondir la valeur au nombre entier le plus proche.
 
 # --instructions--
 
-Use this technique to generate and return a random whole number between `0` and `9`.
+Utilisez cette technique pour générer et renvoyer un nombre entier aléatoire compris entre `0` et `9`.
 
 # --hints--
 
-The result of `randomWholeNum` should be a whole number.
+Le résultat de `randomWholeNum` doit être un nombre entier.
 
 ```js
 assert(
@@ -41,13 +41,13 @@ assert(
 );
 ```
 
-You should use `Math.random` to generate a random number.
+Vous devriez utiliser `Math.random` pour générer un nombre aléatoire.
 
 ```js
 assert(code.match(/Math.random/g).length >= 1);
 ```
 
-You should have multiplied the result of `Math.random` by 10 to make it a number that is between zero and nine.
+Vous auriez dû multiplier le résultat de `Math.random` par 10 pour en faire un nombre compris entre zéro et neuf.
 
 ```js
 assert(
@@ -56,7 +56,7 @@ assert(
 );
 ```
 
-You should use `Math.floor` to remove the decimal part of the number.
+Vous devriez utiliser `Math.floor` pour enlever la partie décimale du nombre.
 
 ```js
 assert(code.match(/Math.floor/g).length >= 1);
@@ -75,7 +75,7 @@ assert(code.match(/Math.floor/g).length >= 1);
 ```js
 function randomWholeNum() {
 
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
   return Math.random();
 }

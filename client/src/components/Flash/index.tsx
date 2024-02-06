@@ -25,6 +25,11 @@ function Flash({ flashMessage, removeFlashMessage }: FlashProps): JSX.Element {
       '--flash-message-height',
       `${flashMessageHeight}px`
     );
+    const timeToCloseModal = setTimeout(() => {
+      handleClose();
+    }, 8000);
+    return () => clearTimeout(timeToCloseModal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flashMessageHeight]);
 
   function handleClose() {
@@ -34,25 +39,32 @@ function Flash({ flashMessage, removeFlashMessage }: FlashProps): JSX.Element {
 
   return (
     <>
-      <TransitionGroup>
-        <CSSTransition classNames='flash-message' key={id} timeout={500}>
-          <Alert
-            bsStyle={type}
-            className='flash-message'
-            closeLabel={t('buttons.close')}
-            onDismiss={handleClose}
-          >
-            {t(message, variables)}
-          </Alert>
-        </CSSTransition>
-      </TransitionGroup>
-      {flashMessage && (
-        <div
-          style={{
-            height: `${flashMessageHeight}px`
-          }}
-        />
-      )}
+      <div>
+        <TransitionGroup>
+          <CSSTransition classNames='flash-message' key={id} timeout={500}>
+            <Alert
+              bsStyle={type}
+              className='flash-message'
+              closeLabel={t('buttons.close')}
+              onDismiss={handleClose}
+              style={
+                type === 'errors'
+                  ? { background: '#FFADAD', color: '#850000' }
+                  : null
+              }
+            >
+              {t(message, variables)}
+            </Alert>
+          </CSSTransition>
+        </TransitionGroup>
+        {flashMessage && (
+          <div
+            style={{
+              height: `${flashMessageHeight}px`
+            }}
+          />
+        )}
+      </div>
     </>
   );
 }

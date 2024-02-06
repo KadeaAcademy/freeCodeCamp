@@ -1,6 +1,6 @@
 ---
 id: 587d7b8a367417b2b2512b4d
-title: Use Destructuring Assignment to Pass an Object as a Function's Parameters
+title: Utiliser l'assignation de déstructuration pour passer un objet comme paramètre d'une fonction
 challengeType: 1
 forumTopicId: 301217
 dashedName: use-destructuring-assignment-to-pass-an-object-as-a-functions-parameters
@@ -8,9 +8,9 @@ dashedName: use-destructuring-assignment-to-pass-an-object-as-a-functions-parame
 
 # --description--
 
-In some cases, you can destructure the object in a function argument itself.
+Dans certains cas, vous pouvez déstructurer l'objet dans un argument de fonction lui-même.
 
-Consider the code below:
+Considérez le code ci-dessous :
 
 ```js
 const profileUpdate = (profileData) => {
@@ -19,7 +19,7 @@ const profileUpdate = (profileData) => {
 }
 ```
 
-This effectively destructures the object sent into the function. This can also be done in-place:
+Cela déstructure effectivement l'objet envoyé dans la fonction. Cela peut également être fait en place :
 
 ```js
 const profileUpdate = ({ name, age, nationality, location }) => {
@@ -27,33 +27,33 @@ const profileUpdate = ({ name, age, nationality, location }) => {
 }
 ```
 
-When `profileData` is passed to the above function, the values are destructured from the function parameter for use within the function.
+Lorsque `profileData` est transmis à la fonction ci-dessus, les valeurs sont déstructurées à partir du paramètre de fonction pour être utilisées dans la fonction.
 
 # --instructions--
 
-Use destructuring assignment within the argument to the function `half` to send only `max` and `min` inside the function.
+Utilisez l'affectation de déstructuration dans l'argument de la fonction `half` pour envoyer uniquement `max` et `min` à l'intérieur de la fonction.
 
 # --hints--
 
-`stats` should be an `object`.
+`stats` devrait être un `objet`.
 
 ```js
 assert(typeof stats === 'object');
 ```
 
-`half(stats)` should be `28.015`
+`half(stats)` devrait être `28.015`
 
 ```js
 assert(half(stats) === 28.015);
 ```
 
-Destructuring should be used.
+La déstructuration doit être utilisée.
 
 ```js
 assert(__helpers.removeWhiteSpace(code).match(/half=\({\w+,\w+}\)/));
 ```
 
-Destructured parameter should be used.
+Il faut utiliser un paramètre déstructuré.
 
 ```js
 assert(!code.match(/stats\.max|stats\.min/));
@@ -73,9 +73,9 @@ const stats = {
   average: 35.85
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 const half = (stats) => (stats.max + stats.min) / 2.0; 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 ```
 
 # --solutions--

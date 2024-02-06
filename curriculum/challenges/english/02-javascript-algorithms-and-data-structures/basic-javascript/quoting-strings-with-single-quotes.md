@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244b4
-title: Quoting Strings with Single Quotes
+title: Citer des chaînes de caractères avec des guillemets simples
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cbQmnhM'
 forumTopicId: 18260
@@ -9,41 +9,41 @@ dashedName: quoting-strings-with-single-quotes
 
 # --description--
 
-<dfn>String</dfn> values in JavaScript may be written with single or double quotes, as long as you start and end with the same type of quote. Unlike some other programming languages, single and double quotes work the same in JavaScript.
+Les valeurs <dfn>String</dfn> en JavaScript peuvent être écrites avec des guillemets simples ou doubles, tant que vous commencez et terminez avec le même type de guillemets. Contrairement à certains autres langages de programmation, les guillemets simples et doubles fonctionnent de la même manière en JavaScript. 
 
 ```js
-const doubleQuoteStr = "This is a string"; 
-const singleQuoteStr = 'This is also a string';
+const doubleQuoteStr = "Une chaîne de caractères"; 
+const singleQuoteStr = 'Une chaîne de caractères aussi';
 ```
 
-The reason why you might want to use one type of quote over the other is if you want to use both in a string. This might happen if you want to save a conversation in a string and have the conversation in quotes. Another use for it would be saving an `<a>` tag with various attributes in quotes, all within a string.
+La raison pour laquelle vous voudrez peut-être utiliser un type de guillemet plutôt qu'un autre est si vous voulez utiliser les deux dans une chaîne. Cela peut arriver si vous souhaitez enregistrer une conversation dans une chaîne et avoir la conversation entre guillemets. Une autre utilisation serait de sauvegarder une balise `<a>` avec divers attributs entre guillemets, le tout dans une chaîne.
 
 ```js
-const conversation = 'Finn exclaims to Jake, "Algebraic!"';
+const conversation = 'Finn a crié à Jake : "Algébrique !"';
 ```
 
-However, this becomes a problem if you need to use the outermost quotes within it. Remember, a string has the same kind of quote at the beginning and end. But if you have that same quote somewhere in the middle, the string will stop early and throw an error.
+Cependant, cela devient un problème si vous devez utiliser les guillemets les plus éloignés à l'intérieur de la chaîne. Rappelez-vous qu'une chaîne de caractères comporte le même type de guillemets au début et à la fin. Mais si vous avez le même type de guillemet au milieu, la chaîne s'arrêtera prématurément et une erreur sera signalée.
 
 ```js
 const goodStr = 'Jake asks Finn, "Hey, let\'s go on an adventure?"'; 
 const badStr = 'Finn responds, "Let's go!"';
 ```
 
-Here `badStr` will throw an error.
+Ici, `badStr` lancera une erreur.
 
-In the <dfn>goodStr</dfn> above, you can use both quotes safely by using the backslash `\` as an escape character.
+Dans le <dfn>goodStr</dfn> ci-dessus, vous pouvez utiliser les deux guillemets en toute sécurité en utilisant la barre oblique inversée `\` comme caractère d'échappement.
 
-**Note:** The backslash `\` should not be confused with the forward slash `/`. They do not do the same thing.
+**Note:** Il ne faut pas confondre la barre oblique inversée `\` avec la barre oblique directe `/`. Elles ne font pas la même chose.
 
 # --instructions--
 
-Change the provided string to a string with single quotes at the beginning and end and no escape characters.
+Remplacez la chaîne fournie par une chaîne avec des guillemets simples au début et à la fin et sans caractères d'échappement.
 
-Right now, the `<a>` tag in the string uses double quotes everywhere. You will need to change the outer quotes to single quotes so you can remove the escape characters.
+À l'heure actuelle, la balise `<a>` dans la chaîne utilise des guillemets doubles partout. Vous devrez remplacer les guillemets externes par des guillemets simples afin de pouvoir supprimer les caractères d'échappement.
 
 # --hints--
 
-You should remove all the backslashes (`\`).
+Vous devez enlever tous les antislashs (`\`).
 
 ```js
 assert(
@@ -54,7 +54,7 @@ assert(
 );
 ```
 
-You should have two single quotes `'` and four double quotes `"`.
+Vous devriez avoir deux guillemets simples `'` et quatre guillemets doubles `"`.
 
 ```js
 assert(code.match(/"/g).length === 4 && code.match(/'/g).length === 2);

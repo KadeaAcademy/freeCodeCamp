@@ -1,6 +1,6 @@
 ---
 id: 587d7daf367417b2b2512b7e
-title: Understand the Constructor Property
+title: Comprendre la propriété du constructeur
 challengeType: 1
 forumTopicId: 301327
 dashedName: understand-the-constructor-property
@@ -8,7 +8,7 @@ dashedName: understand-the-constructor-property
 
 # --description--
 
-There is a special `constructor` property located on the object instances `duck` and `beagle` that were created in the previous challenges:
+Il existe une propriété spéciale `constructor` située sur les instances d'objets `duck` et `beagle` qui ont été créées dans les défis précédents :
 
 ```js
 let duck = new Bird();
@@ -18,9 +18,9 @@ console.log(duck.constructor === Bird);
 console.log(beagle.constructor === Dog);
 ```
 
-Both of these `console.log` calls would display `true` in the console.
+Ces deux appels à `console.log` afficheront `true` dans la console.
 
-Note that the `constructor` property is a reference to the constructor function that created the instance. The advantage of the `constructor` property is that it's possible to check for this property to find out what kind of object it is. Here's an example of how this could be used:
+Notez que la propriété `constructor` est une référence à la fonction constructeur qui a créé l'instance. L'avantage de la propriété `constructor` est qu'il est possible de vérifier cette propriété pour savoir de quel type d'objet il s'agit. Voici un exemple d'utilisation de cette propriété :
 
 ```js
 function joinBirdFraternity(candidate) {
@@ -32,27 +32,27 @@ function joinBirdFraternity(candidate) {
 }
 ```
 
-**Note:** Since the `constructor` property can be overwritten (which will be covered in the next two challenges) it’s generally better to use the `instanceof` method to check the type of an object.
+**Note:** Comme la propriété `constructor` peut être écrasée (ce qui sera couvert dans les deux prochains défis), il est généralement préférable d'utiliser la méthode `instanceof` pour vérifier le type d'un objet.
 
 # --instructions--
 
-Write a `joinDogFraternity` function that takes a `candidate` parameter and, using the `constructor` property, return `true` if the candidate is a `Dog`, otherwise return `false`.
+Ecrivez une fonction `joinDogFraternity` qui prend un paramètre `candidate` et, en utilisant la propriété `constructor`, retourne `true` si le candidat est un `Dog`, sinon retourne `false`.
 
 # --hints--
 
-`joinDogFraternity` should be defined as a function.
+`joinDogFraternity` doit être définie comme une fonction.
 
 ```js
 assert(typeof joinDogFraternity === 'function');
 ```
 
-`joinDogFraternity` should return `true` if `candidate` is an instance of `Dog`.
+`joinDogFraternity` doit retourner `true` si `candidate` est une instance de `Dog`.
 
 ```js
 assert(joinDogFraternity(new Dog('')) === true);
 ```
 
-`joinDogFraternity` should use the `constructor` property.
+`joinDogFraternity` devrait utiliser la propriété `constructor`.
 
 ```js
 assert(/\.constructor/.test(code) && !/instanceof/.test(code));
@@ -67,7 +67,7 @@ function Dog(name) {
   this.name = name;
 }
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 function joinDogFraternity(candidate) {
 
 }

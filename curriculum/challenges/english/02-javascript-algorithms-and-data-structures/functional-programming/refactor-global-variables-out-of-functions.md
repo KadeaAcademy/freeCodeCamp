@@ -1,6 +1,6 @@
 ---
 id: 587d7b8f367417b2b2512b60
-title: Refactor Global Variables Out of Functions
+title: Refactoriser les variables globales hors des fonctions
 challengeType: 1
 forumTopicId: 301235
 dashedName: refactor-global-variables-out-of-functions
@@ -8,23 +8,23 @@ dashedName: refactor-global-variables-out-of-functions
 
 # --description--
 
-So far, we have seen two distinct principles for functional programming:
+Jusqu'à présent, nous avons vu deux principes distincts pour la programmation fonctionnelle :
 
-1) Don't alter a variable or object - create new variables and objects and return them if need be from a function. Hint: using something like `const newArr = arrVar`, where `arrVar` is an array will simply create a reference to the existing variable and not a copy. So changing a value in `newArr` would change the value in `arrVar`.
+1) Ne pas modifier une variable ou un objet - créer de nouvelles variables et de nouveaux objets et les retourner si nécessaire à partir d'une fonction. Astuce : utiliser quelque chose comme `const newArr = arrVar`, où `arrVar` est un tableau, créera simplement une référence à la variable existante et non une copie. Donc changer une valeur dans `newArr` changera la valeur dans `arrVar`.
 
-2) Declare function parameters - any computation inside a function depends only on the arguments passed to the function, and not on any global object or variable.
+2) Déclarer les paramètres des fonctions - tout calcul à l'intérieur d'une fonction ne dépend que des arguments passés à la fonction, et non d'un objet ou d'une variable globale.
 
-Adding one to a number is not very exciting, but we can apply these principles when working with arrays or more complex objects.
+Ajouter un à un nombre n'est pas très excitant, mais nous pouvons appliquer ces principes lorsque nous travaillons avec des tableaux ou des objets plus complexes.
 
 # --instructions--
 
-Rewrite the code so the global array `bookList` is not changed inside either function. The `add` function should add the given `bookName` to the end of the array passed to it and return a new array (list). The `remove` function should remove the given `bookName` from the array passed to it.
+Réécrivez le code pour que le tableau global `bookList` ne soit pas modifié dans l'une ou l'autre des fonctions. La fonction `add` doit ajouter le `bookName` (nom de livre) donné à la fin du tableau qui lui est passé et retourner un nouveau tableau (liste). La fonction `remove` doit supprimer le `bookName` donné du tableau qui lui est passé.
 
-**Note:** Both functions should return an array, and any new parameters should be added before the `bookName` parameter.
+**Note:** Les deux fonctions doivent retourner un tableau, et tout nouveau paramètre doit être ajouté avant le paramètre `bookName`.
 
 # --hints--
 
-`bookList` should not change and still equal `["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"]`.
+`bookList` ne devrait pas changer et rester égal à `["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"]`.
 
 ```js
 add(bookList, "Test");
@@ -39,7 +39,7 @@ assert(
 );
 ```
 
-`add(bookList, "A Brief History of Time")` should return `["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae", "A Brief History of Time"]`.
+`add(bookList, "A Brief History of Time")` doit retourner `["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae", "A Brief History of Time"]`.
 
 ```js
 assert(
@@ -54,7 +54,7 @@ assert(
 );
 ```
 
-`remove(bookList, "On The Electrodynamics of Moving Bodies")` should return `["The Hound of the Baskervilles", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"]`.
+`remove(bookList, "On The Electrodynamics of Moving Bodies")` doit retourner `["The Hound of the Baskervilles", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"]`.
 
 ```js
 assert(
@@ -67,7 +67,7 @@ assert(
 );
 ```
 
-`remove(add(bookList, "A Brief History of Time"), "On The Electrodynamics of Moving Bodies");` should equal `["The Hound of the Baskervilles", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae", "A Brief History of Time"]`.
+`remove(add(bookList, "A Brief History of Time"), "On The Electrodynamics of Moving Bodies");` doit être égal à `["The Hound of the Baskervilles", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae", "A Brief History of Time"]`.
 
 ```js
 assert(
@@ -86,19 +86,19 @@ assert(
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 const bookList = ["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"];
 
-// Change code below this line
+// Modifier le code sous cette ligne
 function add(bookName) {
 
   bookList.push(bookName);
   return bookList;
   
-  // Change code above this line
+  // Modifiez le code au-dessus de cette ligne
 }
 
-// Change code below this line
+// Modifiez le code en dessous de cette ligne
 function remove(bookName) {
   const book_index = bookList.indexOf(bookName);
   if (book_index >= 0) {
@@ -106,7 +106,7 @@ function remove(bookName) {
     bookList.splice(book_index, 1);
     return bookList;
 
-    // Change code above this line
+    // Modifier le code au-dessus de cette ligne
     }
 }
 ```
@@ -114,7 +114,7 @@ function remove(bookName) {
 # --solutions--
 
 ```js
-// The global variable
+// La variable globale
 const bookList = ["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"];
 
 function add(bookList, bookName) {

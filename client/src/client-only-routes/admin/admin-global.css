@@ -1,0 +1,141 @@
+.pagination-chevron {
+  cursor: pointer;
+}
+
+.action-btn-detail {
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--highlight-color);
+}
+
+.action-btn-detail:hover {
+  background: rgba(255, 255, 255, 0);
+  color: var(--highlight-color);
+}
+
+.action-btn-update {
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: #198754;
+}
+
+.action-btn-update:hover {
+  background: rgba(255, 255, 255, 0);
+  color: #0c9c71;
+}
+
+.action-btn-delete {
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: #a8351b;
+}
+
+.action-btn-delete:hover {
+  background: rgba(255, 255, 255, 0);
+  color: rgb(215, 60, 29);
+}
+
+.section-block-padding {
+  padding: 20px 15px 2px 15px !important;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-big {
+  font-size: 3rem !important;
+}
+
+.custom-progress-bloc {
+  /* margin-bottom: 0px; */
+  height: 16px !important;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.search-bar {
+  gap: 2%;
+}
+
+.btn-black,
+.btn-black:focus {
+  border: none;
+  color: #ffffff;
+  background-color: #282c34;
+  transition: all ease-in-out 0.3s;
+}
+
+.btn-black:hover {
+  border: none;
+  color: #ffffff;
+  background-color: #585f6d;
+}
+
+.btn-red,
+.btn-red:focus {
+  border: none;
+  color: #ffffff;
+  background-color: #a8351b;
+  transition: all ease-in-out 0.3s;
+}
+
+.btn-red:hover {
+  border: none;
+  color: #ffffff;
+  background-color: rgb(215, 60, 29);
+}
+
+.btn-green,
+.btn-green:focus {
+  border: none;
+  color: #ffffff;
+  background-color: #198754;
+  transition: all ease-in-out 0.3s;
+}
+
+.btn-green:hover {
+  border: none;
+  color: #ffffff;
+  background-color: #0c9c71;
+}
+
+.text-error {
+  color: #a8351b;
+}
+
+.text-success {
+  color: #198754;
+}
+
+.btn-group {
+  display: flex;
+}
+.add-group-section {
+  display: flex;
+
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.Export-section {
+  padding-top: 1.4rem;
+}
+.select-role {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1rem;
+}
+.role-input {
+  width: 25%;
+}

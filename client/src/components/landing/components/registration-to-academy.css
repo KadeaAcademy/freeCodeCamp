@@ -1,0 +1,29 @@
+.registration-academy-btn {
+  padding: 0.5rem 1.875rem;
+  text-decoration: none;
+  color: var(--love-light);
+  font-weight: 600;
+  background: var(--gray-00);
+  border: solid 2px var(--gray-00);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.registration-academy-btn:hover,
+.registration-academy-btn:focus {
+  color: var(--gray-00) !important;
+  background: var(--love-light) !important;
+  border: solid 2px var(--gray-00);
+}
+
+@media (max-width: 1024px) {
+  .registration-academy-btn {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .registration-academy-btn {
+    font-size: 0.8rem !important;
+  }
+}

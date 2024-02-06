@@ -1,6 +1,6 @@
 ---
 id: 587d7db7367417b2b2512b9d
-title: Match Beginning String Patterns
+title: Correspondre aux modèles de chaînes de caractères de début
 challengeType: 1
 forumTopicId: 301349
 dashedName: match-beginning-string-patterns
@@ -8,9 +8,9 @@ dashedName: match-beginning-string-patterns
 
 # --description--
 
-Prior challenges showed that regular expressions can be used to look for a number of matches. They are also used to search for patterns in specific positions in strings.
+Les défis précédents ont montré que les expressions régulières peuvent être utilisées pour rechercher un certain nombre de correspondances. Elles sont également utilisées pour rechercher des motifs à des positions spécifiques dans des chaînes de caractères.
 
-In an earlier challenge, you used the caret character (`^`) inside a character set to create a negated character set in the form `[^thingsThatWillNotBeMatched]`. Outside of a character set, the caret is used to search for patterns at the beginning of strings.
+Dans un défi précédent, vous avez utilisé le signe d'insertion (`^`) à l'intérieur d'un jeu de caractères pour créer un jeu de caractères négatif sous la forme `[^choses qui ne seront pas correspondantes]`. En dehors d'un jeu de caractères, le signe d'insertion est utilisé pour rechercher des motifs au début des chaînes de caractères.
 
 ```js
 let firstString = "Ricky is first and can be found.";
@@ -20,34 +20,34 @@ let notFirst = "You can't find Ricky now.";
 firstRegex.test(notFirst);
 ```
 
-The first `test` call would return `true`, while the second would return `false`.
+Le premier appel à `test` renverrait `true`, tandis que le second renverrait `false`.
 
 # --instructions--
 
-Use the caret character in a regex to find `Cal` only in the beginning of the string `rickyAndCal`.
+Utilisez le caractère caret dans une regex pour trouver `Cal` uniquement au début de la chaîne `rickyAndCal`.
 
 # --hints--
 
-Your regex should search for the string `Cal` with a capital letter.
+Votre regex doit rechercher la chaîne `Cal` avec une majuscule.
 
 ```js
 assert(calRegex.source == '^Cal');
 ```
 
-Your regex should not use any flags.
+Votre regex ne doit pas utiliser de marqueurs.
 
 ```js
 assert(calRegex.flags == '');
 ```
 
-Your regex should match the string `Cal` at the beginning of the string.
+Votre regex doit correspondre à la chaîne `Cal` au début de la chaîne.
 
 ```js
 calRegex.lastIndex = 0;
 assert(calRegex.test('Cal and Ricky both like racing.'));
 ```
 
-Your regex should not match the string `Cal` in the middle of a string.
+Votre regex ne doit pas correspondre à la chaîne `Cal` au milieu d'une chaîne.
 
 ```js
 calRegex.lastIndex = 0;
@@ -60,7 +60,7 @@ assert(!calRegex.test('Ricky and Cal both like racing.'));
 
 ```js
 let rickyAndCal = "Cal and Ricky both like racing.";
-let calRegex = /change/; // Change this line
+let calRegex = /change/; // Modifiez cette ligne
 let result = calRegex.test(rickyAndCal);
 ```
 
@@ -68,6 +68,6 @@ let result = calRegex.test(rickyAndCal);
 
 ```js
 let rickyAndCal = "Cal and Ricky both like racing.";
-let calRegex = /^Cal/; // Change this line
+let calRegex = /^Cal/; // Modifiez cette ligne
 let result = calRegex.test(rickyAndCal);
 ```

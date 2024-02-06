@@ -1,6 +1,6 @@
 ---
 id: 587d7daa367417b2b2512b6b
-title: Split a String into an Array Using the split Method
+title: Diviser une chaîne de caractères en un tableau à l'aide de la méthode split
 challengeType: 1
 forumTopicId: 18305
 dashedName: split-a-string-into-an-array-using-the-split-method
@@ -8,9 +8,9 @@ dashedName: split-a-string-into-an-array-using-the-split-method
 
 # --description--
 
-The `split` method splits a string into an array of strings. It takes an argument for the delimiter, which can be a character to use to break up the string or a regular expression. For example, if the delimiter is a space, you get an array of words, and if the delimiter is an empty string, you get an array of each character in the string.
+La méthode `split` divise une chaîne de caractères en un tableau de chaînes. Elle prend un argument pour le délimiteur, qui peut être un caractère à utiliser pour séparer la chaîne ou une expression régulière. Par exemple, si le délimiteur est un espace, vous obtenez un tableau de mots, et si le délimiteur est une chaîne vide, vous obtenez un tableau de chaque caractère de la chaîne.
 
-Here are two examples that split one string by spaces, then another by digits using a regular expression:
+Voici deux exemples de séparation d'une chaîne par des espaces, puis d'une autre par des chiffres à l'aide d'une expression régulière :
 
 ```js
 const str = "Hello World";
@@ -20,23 +20,23 @@ const otherString = "How9are7you2today";
 const byDigits = otherString.split(/\d/);
 ```
 
-`bySpace` would have the value `["Hello", "World"]` and `byDigits` would have the value `["How", "are", "you", "today"]`.
+`bySpace` aurait la valeur `["Hello", "World"]` et `byDigits` aurait la valeur `["How", "are", "you", "today"]`.
 
-Since strings are immutable, the `split` method makes it easier to work with them.
+Comme les chaînes de caractères sont immuables, la méthode `split` facilite le travail avec elles.
 
 # --instructions--
 
-Use the `split` method inside the `splitify` function to split `str` into an array of words. The function should return the array. Note that the words are not always separated by spaces, and the array should not contain punctuation.
+Utilisez la méthode `split` à l'intérieur de la fonction `splitify` pour diviser `str` en un tableau de mots. La fonction doit retourner le tableau. Notez que les mots ne sont pas toujours séparés par des espaces, et que le tableau ne doit pas contenir de ponctuation.
 
 # --hints--
 
-Your code should use the `split` method.
+Votre code doit utiliser la méthode `split`.
 
 ```js
 assert(code.match(/\.split/g));
 ```
 
-`splitify("Hello World,I-am code")` should return `["Hello", "World", "I", "am", "code"]`.
+`splitify("Hello World,I-am code")` devrait retourner `["Hello", "World", "I", "am", "code"]`.
 
 ```js
 assert(
@@ -45,7 +45,7 @@ assert(
 );
 ```
 
-`splitify("Earth-is-our home")` should return `["Earth", "is", "our", "home"]`.
+`splitify("Earth-is-our home")` devrait retourner `["Earth", "is", "our", "home"]`.
 
 ```js
 assert(
@@ -54,7 +54,7 @@ assert(
 );
 ```
 
-`splitify("This.is.a-sentence")` should return `["This", "is", "a", "sentence"]`.
+`splitify("This.is.a-sentence")` devrait retourner `["This", "is", "a", "sentence"]`.
 
 ```js
 assert(
@@ -69,10 +69,10 @@ assert(
 
 ```js
 function splitify(str) {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 
 splitify("Hello World,I-am code");

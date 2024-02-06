@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c9
-title: Accessing Object Properties with Variables
+title: Accéder aux propriétés des objets avec des variables
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cnQyKur'
 forumTopicId: 16165
@@ -9,9 +9,9 @@ dashedName: accessing-object-properties-with-variables
 
 # --description--
 
-Another use of bracket notation on objects is to access a property which is stored as the value of a variable. This can be very useful for iterating through an object's properties or when accessing a lookup table.
+Une autre utilisation de la notation entre crochets sur les objets consiste à accéder à une propriété stockée comme valeur d'une variable. Cela peut être très utile pour itérer parmi les propriétés d'un objet ou pour accéder à une table de recherche.
 
-Here is an example of using a variable to access a property:
+Voici un exemple d'utilisation d'une variable pour accéder à une propriété :
 
 ```js
 const dogs = {
@@ -25,9 +25,9 @@ const myBreed = dogs[myDog];
 console.log(myBreed);
 ```
 
-The string `Doberman` would be displayed in the console.
+La chaîne `Doberman` sera affichée dans la console.
 
-Another way you can use this concept is when the property's name is collected dynamically during the program execution, as follows:
+Une autre façon d'utiliser ce concept est lorsque le nom de la propriété est collecté dynamiquement pendant l'exécution du programme, comme suit :
 
 ```js
 const someObj = {
@@ -43,47 +43,47 @@ const someProp = propPrefix("Name");
 console.log(someObj[someProp]);
 ```
 
-`someProp` would have a value of the string `propName`, and the string `John` would be displayed in the console.
+`someProp` aurait une valeur de la chaîne `propName`, et la chaîne `John` serait affichée dans la console.
 
-Note that we do *not* use quotes around the variable name when using it to access the property because we are using the *value* of the variable, not the *name*.
+Notez que nous n'utilisons *pas* de guillemets autour du nom de la variable lorsque nous l'utilisons pour accéder à la propriété, car nous utilisons la *valeur* de la variable, et non son *nom*.
 
 # --instructions--
 
-Set the `playerNumber` variable to `16`. Then, use the variable to look up the player's name and assign it to `player`.
+Donnez à la variable `playerNumber` la valeur `16`. Ensuite, utilisez la variable pour rechercher le nom du joueur et l'affecter à `player`
 
 # --hints--
 
-`playerNumber` should be a number
+`playerNumber` doit être un nombre.
 
 ```js
 assert(typeof playerNumber === 'number');
 ```
 
-The variable `player` should be a string
+La variable `player` doit être une chaîne de caractères.
 
 ```js
 assert(typeof player === 'string');
 ```
 
-The value of `player` should be the string `Montana`
+La valeur de `player` doit être la chaîne `Montana`.
 
 ```js
 assert(player === 'Montana');
 ```
 
-You should use bracket notation to access `testObj`
+Vous devez utiliser la notation entre parenthèses pour accéder à `testObj`.
 
 ```js
 assert(/testObj\s*?\[.*?\]/.test(code));
 ```
 
-You should not assign the value `Montana` to the variable `player` directly.
+Vous ne devez pas attribuer la valeur `Montana` à la variable `player` directement.
 
 ```js
 assert(!code.match(/player\s*=\s*"|\'\s*Montana\s*"|\'\s*;/gi));
 ```
 
-You should be using the variable `playerNumber` in your bracket notation
+Vous devez utiliser la variable `playerNumber` dans votre notation entre crochets.
 
 ```js
 assert(/testObj\s*?\[\s*playerNumber\s*\]/.test(code));
@@ -107,9 +107,9 @@ const testObj = {
   19: "Unitas"
 };
 
-// Only change code below this line
-const playerNumber = 42;  // Change this line
-const player = testObj;   // Change this line
+// Ne changez que le code en dessous de cette ligne
+const playerNumber = 42;  // Modifiez cette ligne
+const player = testObj;   // Modifiez cette ligne
 ```
 
 # --solutions--

@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244b0
-title: Compound Assignment With Augmented Subtraction
+title: Affectation composée avec soustraction augmentée
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c2Qv7AV'
 forumTopicId: 16660
@@ -9,13 +9,13 @@ dashedName: compound-assignment-with-augmented-subtraction
 
 # --description--
 
-Like the `+=` operator, `-=` subtracts a number from a variable.
+Comme l'opérateur `+=`, `-=` soustrait un nombre d'une variable.
 
 ```js
 myVar = myVar - 5;
 ```
 
-will subtract `5` from `myVar`. This can be rewritten as:
+va soustraire `5` de `myVar`. Ceci peut être réécrit comme suit :
 
 ```js
 myVar -= 5;
@@ -23,35 +23,35 @@ myVar -= 5;
 
 # --instructions--
 
-Convert the assignments for `a`, `b`, and `c` to use the `-=` operator.
+Convertissez les affectations pour `a`, `b`, et `c` pour utiliser l'opérateur `-=`.
 
 # --hints--
 
-`a` should equal `5`.
+`a` devrait être égal à `5`.
 
 ```js
 assert(a === 5);
 ```
 
-`b` should equal `-6`.
+`b` devrait être égal à `-6`.
 
 ```js
 assert(b === -6);
 ```
 
-`c` should equal `2`.
+`c` devrait être égal à `2`.
 
 ```js
 assert(c === 2);
 ```
 
-You should use the `-=` operator for each variable.
+Vous devez utiliser l'opérateur `-=` pour chaque variable.
 
 ```js
 assert(code.match(/-=/g).length === 3);
 ```
 
-You should not modify the code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(

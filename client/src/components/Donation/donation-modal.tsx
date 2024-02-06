@@ -1,12 +1,10 @@
 import { Modal, Button, Col, Row } from '@freecodecamp/react-bootstrap';
 import { WindowLocation } from '@reach/router';
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { goToAnchor } from 'react-scrollable-anchor';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { createSelector } from 'reselect';
-import { modalDefaultDonation } from '../../../../config/donation-settings';
 import Cup from '../../assets/icons/cup';
 import Heart from '../../assets/icons/heart';
 
@@ -20,7 +18,6 @@ import {
 import { isLocationSuperBlock } from '../../utils/path-parsers';
 import { playTone } from '../../utils/tone';
 import { Spacer } from '../helpers';
-import DonateForm from './donate-form';
 
 const mapStateToProps = createSelector(
   isDonationModalOpenSelector,
@@ -57,27 +54,10 @@ function DonateModal({
   closeDonationModal,
   executeGA,
   location,
-  recentlyClaimedBlock,
-  isAVariant
+  recentlyClaimedBlock
 }: DonateModalProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [closeLabel, setCloseLabel] = React.useState(false);
-  const { t } = useTranslation();
-  const handleProcessing = (
-    duration: string,
-    amount: number,
-    action: string
-  ) => {
-    executeGA({
-      type: 'event',
-      data: {
-        category: 'Donation',
-        action: `Modal ${action}`,
-        label: duration,
-        value: amount
-      }
-    });
-    setCloseLabel(true);
-  };
 
   useEffect(() => {
     if (show) {
@@ -96,20 +76,6 @@ function DonateModal({
     }
   }, [show, recentlyClaimedBlock, executeGA]);
 
-  const getDonationText = () => {
-    const donationDuration = modalDefaultDonation.donationDuration;
-    switch (donationDuration) {
-      case 'onetime':
-        return <b>{t('donate.duration')}</b>;
-      case 'month':
-        return <b>{t('donate.duration-2')}</b>;
-      case 'year':
-        return <b>{t('donate.duration-3')}</b>;
-      default:
-        return <b>{t('donate.duration-4')}</b>;
-    }
-  };
-
   const handleModalHide = () => {
     // If modal is open on a SuperBlock page
     if (isLocationSuperBlock(location)) {
@@ -125,19 +91,12 @@ function DonateModal({
       <Row>
         {!closeLabel && (
           <Col sm={10} smOffset={1} xs={12}>
-            <b>{t('donate.nicely-done', { block: recentlyClaimedBlock })}</b>
-            <br />
-            {getDonationText()}
+            <b>{'Bien joué. Vous venez de terminer!'}</b>
           </Col>
         )}
       </Row>
     </div>
   );
-
-  const renderABtestProgressText = () => {
-    if (isAVariant) return getDonationText();
-    else <b>{t('donate.duration-5')}</b>;
-  };
 
   const progressDonationText = (
     <div className='text-center progress-modal-text'>
@@ -147,7 +106,7 @@ function DonateModal({
       <Row>
         {!closeLabel && (
           <Col sm={10} smOffset={1} xs={12}>
-            {renderABtestProgressText()}
+            {'Bien joué!'}
           </Col>
         )}
       </Row>
@@ -165,25 +124,16 @@ function DonateModal({
         {recentlyClaimedBlock ? blockDonationText : progressDonationText}
         <Spacer />
         <Row>
-          <Col xs={12}>
-            <DonateForm
-              handleProcessing={handleProcessing}
-              isMinimalForm={true}
-            />
-          </Col>
-        </Row>
-        <Spacer />
-        <Row>
           <Col sm={4} smOffset={4} xs={8} xsOffset={2}>
             <Button
               block={true}
               bsSize='sm'
               bsStyle='primary'
-              className='btn-link'
+              className='action-btn btn-primary'
               onClick={closeDonationModal}
               tabIndex='0'
             >
-              {closeLabel ? t('buttons.close') : t('buttons.ask-later')}
+              {'Passez au défi suivant'}
             </Button>
           </Col>
         </Row>

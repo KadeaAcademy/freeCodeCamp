@@ -1,6 +1,6 @@
 ---
 id: 587d7db9367417b2b2512ba7
-title: Specify Exact Number of Matches
+title: Précisez le nombre exact de correspondances
 challengeType: 1
 forumTopicId: 301365
 dashedName: specify-exact-number-of-matches
@@ -8,11 +8,11 @@ dashedName: specify-exact-number-of-matches
 
 # --description--
 
-You can specify the lower and upper number of patterns with quantity specifiers using curly brackets. Sometimes you only want a specific number of matches.
+Vous pouvez spécifier le nombre inférieur et supérieur de motifs avec des spécificateurs de quantité en utilisant des accolades. Parfois, vous ne voulez qu'un nombre spécifique de correspondances.
 
-To specify a certain number of patterns, just have that one number between the curly brackets.
+Pour spécifier un certain nombre de motifs, il suffit de placer ce nombre entre les accolades.
 
-For example, to match only the word `hah` with the letter `a` `3` times, your regex would be `/ha{3}h/`.
+Par exemple, pour ne faire correspondre que le mot `hah` avec la lettre `a` `3` fois, votre regex serait `/ha{3}h/`.
 
 ```js
 let A4 = "haaaah";
@@ -24,49 +24,49 @@ multipleHA.test(A3);
 multipleHA.test(A100);
 ```
 
-In order, the three `test` calls would return `false`, `true`, and `false`.
+Dans l'ordre, les trois appels `test` renverront `false`, `true`, et `false`.
 
 # --instructions--
 
-Change the regex `timRegex` to match the word `Timber` only when it has four letter `m`'s.
+Modifiez la regex `timRegex` pour qu'elle ne corresponde au mot `Timber` que lorsqu'il contient quatre lettres `m`.
 
 # --hints--
 
-Your regex should use curly brackets.
+Votre regex doit utiliser des accolades.
 
 ```js
 assert(timRegex.source.match(/{.*?}/).length > 0);
 ```
 
-Your regex should not match the string `Timber`
+Votre regex ne doit pas correspondre à la chaîne de caractères `Timber`
 
 ```js
 timRegex.lastIndex = 0;
 assert(!timRegex.test('Timber'));
 ```
 
-Your regex should not match the string `Timmber`
+Votre regex ne doit pas correspondre à la chaîne de caractères `Timmber`
 
 ```js
 timRegex.lastIndex = 0;
 assert(!timRegex.test('Timmber'));
 ```
 
-Your regex should not match the string `Timmmber`
+Votre regex ne doit pas correspondre à la chaîne de caractères `Timmmber`
 
 ```js
 timRegex.lastIndex = 0;
 assert(!timRegex.test('Timmmber'));
 ```
 
-Your regex should match the string `Timmmmber`
+Votre regex doit correspondre à la chaîne de caractères `Timmmmber`
 
 ```js
 timRegex.lastIndex = 0;
 assert(timRegex.test('Timmmmber'));
 ```
 
-Your regex should not match the string `Timber` with 30 `m`'s in it.
+Votre regex ne doit pas correspondre à la chaîne `Timber` avec 30 `m` dans celle-ci.
 
 ```js
 timRegex.lastIndex = 0;
@@ -79,7 +79,7 @@ assert(!timRegex.test('Ti' + 'm'.repeat(30) + 'ber'));
 
 ```js
 let timStr = "Timmmmber";
-let timRegex = /change/; // Change this line
+let timRegex = /change/; // Modifiez cette ligne
 let result = timRegex.test(timStr);
 ```
 
@@ -87,6 +87,6 @@ let result = timRegex.test(timStr);
 
 ```js
 let timStr = "Timmmmber";
-let timRegex = /Tim{4}ber/; // Change this line
+let timRegex = /Tim{4}ber/; // Modifiez cette ligne
 let result = timRegex.test(timStr);
 ```

@@ -32,7 +32,7 @@ const app = loopback();
 app.set('state namespace', '__fcc__');
 app.set('port', process.env.API_PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.use(loopback.token());
+// app.use(loopback.token());
 app.use(
   morgan(reqLogFormat, { stream: { write: msg => log(_.split(msg, '\n')[0]) } })
 );
@@ -70,7 +70,7 @@ app.start = _.once(function () {
   const server = app.listen(app.get('port'), function () {
     app.emit('started');
     log(
-      'freeCodeCamp server listening on port %d in %s',
+      'KDA learning platform server listening on port %d in %s',
       app.get('port'),
       app.get('env')
     );

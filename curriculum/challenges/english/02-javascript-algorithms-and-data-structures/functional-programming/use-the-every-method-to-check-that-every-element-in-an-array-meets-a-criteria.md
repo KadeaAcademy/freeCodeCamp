@@ -1,6 +1,6 @@
 ---
 id: 587d7dab367417b2b2512b6e
-title: Use the every Method to Check that Every Element in an Array Meets a Criteria
+title: Utiliser la méthode every pour vérifier que chaque élément d'un tableau répond à un critère
 challengeType: 1
 forumTopicId: 301312
 dashedName: use-the-every-method-to-check-that-every-element-in-an-array-meets-a-criteria
@@ -8,9 +8,9 @@ dashedName: use-the-every-method-to-check-that-every-element-in-an-array-meets-a
 
 # --description--
 
-The `every` method works with arrays to check if *every* element passes a particular test. It returns a Boolean value - `true` if all values meet the criteria, `false` if not.
+La méthode `every` fonctionne avec les tableaux pour vérifier si *chaque* élément passe un test particulier. Elle retourne une valeur booléenne - `vrai` si toutes les valeurs répondent aux critères, `faux` si ce n'est pas le cas.
 
-For example, the following code would check if every element in the `numbers` array is less than 10:
+Par exemple, le code suivant vérifie si chaque élément du tableau `numbers` est inférieur à 10 :
 
 ```js
 const numbers = [1, 5, 8, 0, 10, 11];
@@ -20,33 +20,33 @@ numbers.every(function(currentValue) {
 });
 ```
 
-The `every` method would return `false` here.
+La méthode `every` renverrait ici `false`.
 
 # --instructions--
 
-Use the `every` method inside the `checkPositive` function to check if every element in `arr` is positive. The function should return a Boolean value.
+Utilisez la méthode `every` à l'intérieur de la fonction `checkPositive` pour vérifier si chaque élément de `arr` est positif. La fonction doit retourner une valeur booléenne.
 
 # --hints--
 
-Your code should use the `every` method.
+Votre code doit utiliser la méthode `every`.
 
 ```js
 assert(code.match(/\.every/g));
 ```
 
-`checkPositive([1, 2, 3, -4, 5])` should return `false`.
+`checkPositive([1, 2, 3, -4, 5])` devrait retourner `false`.
 
 ```js
 assert.isFalse(checkPositive([1, 2, 3, -4, 5]));
 ```
 
-`checkPositive([1, 2, 3, 4, 5])` should return `true`.
+`checkPositive([1, 2, 3, 4, 5])` devrait retourner `true`.
 
 ```js
 assert.isTrue(checkPositive([1, 2, 3, 4, 5]));
 ```
 
-`checkPositive([1, -2, 3, -4, 5])` should return `false`.
+`checkPositive([1, -2, 3, -4, 5])` devrait retourner `false`.
 
 ```js
 assert.isFalse(checkPositive([1, -2, 3, -4, 5]));
@@ -58,10 +58,10 @@ assert.isFalse(checkPositive([1, -2, 3, -4, 5]));
 
 ```js
 function checkPositive(arr) {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 
 checkPositive([1, 2, 3, -4, 5]);

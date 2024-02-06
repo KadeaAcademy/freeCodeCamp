@@ -1,6 +1,6 @@
 ---
 id: cf1111c1c11feddfaeb5bdef
-title: Iterate with JavaScript For Loops
+title: Itérer avec les boucles For de JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c9yNVCe'
 forumTopicId: 18219
@@ -9,21 +9,21 @@ dashedName: iterate-with-javascript-for-loops
 
 # --description--
 
-You can run the same code multiple times by using a loop.
+Vous pouvez exécuter le même code plusieurs fois en utilisant une boucle.
 
-The most common type of JavaScript loop is called a `for` loop because it runs for a specific number of times.
+Le type de boucle JavaScript le plus courant est appelé boucle `for` car elle s'exécute un nombre spécifique de fois.
 
-For loops are declared with three optional expressions separated by semicolons:
+Les boucles For sont déclarées avec trois expressions facultatives séparées par des points-virgules :
 
-`for (a; b; c)`, where `a` is the initialization statement, `b` is the condition statement, and `c` is the final expression.
+`for (a ; b ; c)`, où `a` est la déclaration d'initialisation, `b` est la déclaration de condition, et `c` est l'expression finale.
 
-The initialization statement is executed one time only before the loop starts. It is typically used to define and setup your loop variable.
+L'instruction d'initialisation est exécutée une seule fois avant le début de la boucle. Elle est généralement utilisée pour définir et configurer votre variable de boucle.
 
-The condition statement is evaluated at the beginning of every loop iteration and will continue as long as it evaluates to `true`. When the condition is `false` at the start of the iteration, the loop will stop executing. This means if the condition starts as false, your loop will never execute.
+L'instruction de condition est évaluée au début de chaque itération de la boucle et continue tant qu'elle est évaluée à `vrai`. Lorsque la condition est "fausse" au début de l'itération, la boucle cesse de s'exécuter. Cela signifie que si la condition est fausse au départ, votre boucle ne s'exécutera jamais.
 
-The final expression is executed at the end of each loop iteration, prior to the next condition check and is usually used to increment or decrement your loop counter.
+L'expression finale est exécutée à la fin de chaque itération de la boucle, avant la vérification de la condition suivante, et est généralement utilisée pour incrémenter ou décrémenter le compteur de la boucle.
 
-In the following example we initialize with `i = 0` and iterate while our condition `i < 5` is true. We'll increment `i` by `1` in each loop iteration with `i++` as our final expression.
+Dans l'exemple suivant, on initialise avec `i = 0` et on itère tant que notre condition `i < 5` est vraie. Nous incrémenterons `i` de `1` à chaque itération de la boucle avec `i++` comme expression finale.
 
 ```js
 const ourArray = [];
@@ -33,21 +33,21 @@ for (let i = 0; i < 5; i++) {
 }
 ```
 
-`ourArray` will now have the value `[0, 1, 2, 3, 4]`.
+`ourArray` aura maintenant la valeur `[0, 1, 2, 3, 4]`.
 
 # --instructions--
 
-Use a `for` loop to push the values 1 through 5 onto `myArray`.
+Utilisez une boucle `for` pour insérer les valeurs 1 à 5 dans `myArray`.
 
 # --hints--
 
-You should be using a `for` loop for this.
+Vous devriez utiliser une boucle `for` pour cela.
 
 ```js
 assert(/for\s*\([^)]+?\)/.test(code));
 ```
 
-`myArray` should equal `[1, 2, 3, 4, 5]`.
+`myArray` devrait être égal à `[1, 2, 3, 4, 5]`.
 
 ```js
 assert.deepEqual(myArray, [1, 2, 3, 4, 5]);
@@ -67,7 +67,7 @@ if (typeof myArray !== "undefined"){(function(){return myArray;})();}
 // Setup
 const myArray = [];
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 

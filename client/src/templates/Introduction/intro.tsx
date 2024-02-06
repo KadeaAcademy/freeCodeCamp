@@ -51,7 +51,7 @@ function IntroductionPage({
   return (
     <LearnLayout>
       <Helmet>
-        <title>{block} | freeCodeCamp.org</title>
+        <title>{block} | Kadea Online</title>
       </Helmet>
       <Grid className='intro-layout-container'>
         <FullWidthRow>

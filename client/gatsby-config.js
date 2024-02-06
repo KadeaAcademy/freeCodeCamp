@@ -19,7 +19,7 @@ module.exports = {
     DEV_SSR: false
   },
   siteMetadata: {
-    title: 'freeCodeCamp',
+    title: 'Kadea Online',
     siteUrl: homeLocation
   },
   pathPrefix: pathPrefix,
@@ -107,13 +107,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'freeCodeCamp',
-        short_name: 'fCC',
+        name: 'kadea-learn',
+        short_name: 'kl',
         start_url: '/',
         theme_color: '#0a0a23',
         background_color: '#fff',
         display: 'minimal-ui',
-        icon: 'src/assets/images/square_puck.png'
+        icon: 'src/assets/images/logo/square_puck.png'
       }
     },
     'gatsby-plugin-remove-serviceworker'

@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244aa
-title: Understanding Uninitialized Variables
+title: Comprendre les variables non initialisées
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cBa2JAL'
 forumTopicId: 18335
@@ -9,33 +9,33 @@ dashedName: understanding-uninitialized-variables
 
 # --description--
 
-When JavaScript variables are declared, they have an initial value of `undefined`. If you do a mathematical operation on an `undefined` variable your result will be `NaN` which means <dfn>"Not a Number"</dfn>. If you concatenate a string with an `undefined` variable, you will get a literal <dfn>string</dfn> of `undefined`.
+Lorsque des variables JavaScript sont déclarées, elles ont une valeur initiale de `undefined`. Si vous effectuez une opération mathématique sur une variable `undefined`, votre résultat sera `NaN`, ce qui signifie <dfn>"Pas un nombre"</dfn>. Si vous concaténez une chaîne avec une variable `undefined`, vous obtiendrez une <dfn>chaîne</dfn> littérale de `undefined`.
 
 # --instructions--
 
-Initialize the three variables `a`, `b`, and `c` with `5`, `10`, and `"I am a"` respectively so that they will not be `undefined`.
+Initialisez les trois variables `a`, `b`, et `c` avec respectivement `5`, `10`, et `"Je suis un"` afin qu'elles ne soient pas `undefined`.
 
 # --hints--
 
-`a` should be defined and evaluated to have the value of `6`.
+`a` doit être défini et évalué pour avoir la valeur de `6`.
 
 ```js
 assert(typeof a === 'number' && a === 6);
 ```
 
-`b` should be defined and evaluated to have the value of `15`.
+`b` doit être défini et évalué pour avoir la valeur de `15`.
 
 ```js
 assert(typeof b === 'number' && b === 15);
 ```
 
-`c` should not contain `undefined` and should have a value of the string `I am a String!`
+`c` ne doit pas contenir `undefined` et doit avoir une valeur de la chaîne `I am a String!`.
 
 ```js
-assert(!/undefined/.test(c) && c === 'I am a String!');
+assert(!/undefined/.test(c) && c === 'Je suis un String!');
 ```
 
-You should not change code below the specified comment.
+Vous ne devez pas modifier le code en dessous du commentaire spécifié.
 
 ```js
 assert(
@@ -56,11 +56,11 @@ assert(
 ## --seed-contents--
 
 ```js
-// Only change code below this line
+// Ne changez que le code sous cette ligne
 var a;
 var b;
 var c;
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 a = a + 1;
 b = b + 5;
@@ -72,7 +72,7 @@ c = c + " String!";
 ```js
 var a = 5;
 var b = 10;
-var c = "I am a";
+var c = "Je suis un";
 a = a + 1;
 b = b + 5;
 c = c + " String!";

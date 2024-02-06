@@ -10,6 +10,7 @@ import { SuperBlocks } from '../certification-settings';
  */
 export const availableLangs = {
   client: [
+    'french',
     'english',
     'espanol',
     'chinese',
@@ -20,6 +21,7 @@ export const availableLangs = {
     'japanese'
   ],
   curriculum: [
+    'french',
     'english',
     'espanol',
     'chinese',
@@ -40,6 +42,14 @@ export const availableLangs = {
  * English equivalent.
  */
 export const auditedCerts = {
+  french: [
+    SuperBlocks.RespWebDesign,
+    SuperBlocks.JsAlgoDataStruct,
+    SuperBlocks.FrontEndDevLibs,
+    SuperBlocks.DataVis,
+    SuperBlocks.BackEndDevApis,
+    SuperBlocks.InfoSec
+  ],
   espanol: [
     SuperBlocks.RespWebDesign,
     SuperBlocks.JsAlgoDataStruct,
@@ -72,16 +82,16 @@ export const auditedCerts = {
     SuperBlocks.MachineLearningPy
   ],
   italian: [
-    SuperBlocks.RespWebDesign,
-    SuperBlocks.JsAlgoDataStruct,
-    SuperBlocks.FrontEndDevLibs,
-    SuperBlocks.DataVis,
-    SuperBlocks.BackEndDevApis,
-    SuperBlocks.QualityAssurance,
-    SuperBlocks.SciCompPy,
-    SuperBlocks.DataAnalysisPy,
-    SuperBlocks.InfoSec,
-    SuperBlocks.MachineLearningPy
+    SuperBlocks.RespWebDesign
+    // SuperBlocks.JsAlgoDataStruct,
+    // SuperBlocks.FrontEndDevLibs,
+    // SuperBlocks.DataVis,
+    // SuperBlocks.BackEndDevApis,
+    // SuperBlocks.QualityAssurance,
+    // SuperBlocks.SciCompPy,
+    // SuperBlocks.DataAnalysisPy,
+    // SuperBlocks.InfoSec,
+    // SuperBlocks.MachineLearningPy
   ],
   portuguese: [
     SuperBlocks.RespWebDesign,
@@ -125,6 +135,9 @@ export const auditedCerts = {
     SuperBlocks.CodingInterviewPrep,
     SuperBlocks.RelationalDb
   ]
+  // french: [
+  //   SuperBlocks.RespWebDesign,
+  // ]
 };
 
 // ---------------------------------------------------------------------------
@@ -136,6 +149,7 @@ export const auditedCerts = {
  * Use a 639-1 code here https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
  */
 export const i18nextCodes = {
+  french: 'fr',
   english: 'en',
   espanol: 'es',
   chinese: 'zh',
@@ -144,10 +158,12 @@ export const i18nextCodes = {
   portuguese: 'pt-BR',
   ukrainian: 'uk',
   japanese: 'ja'
+  // french: 'fr'
 };
 
 // These are for the language selector dropdown menu in the footer
 export const langDisplayNames = {
+  french: 'Francais',
   english: 'English',
   espanol: 'Español',
   chinese: '中文（简体字）',
@@ -156,6 +172,7 @@ export const langDisplayNames = {
   portuguese: 'Português',
   ukrainian: 'Українська',
   japanese: '日本語'
+  // french: 'Francais'
 };
 
 /* These are for formatting dates and numbers. Used with JS .toLocaleString().
@@ -163,6 +180,7 @@ export const langDisplayNames = {
  * List: https://github.com/unicode-cldr/cldr-dates-modern/tree/master/main
  */
 export const langCodes = {
+  french: 'fr',
   english: 'en-US',
   espanol: 'es-419',
   chinese: 'zh',
@@ -171,4 +189,7 @@ export const langCodes = {
   portuguese: 'pt-BR',
   ukrainian: 'uk',
   japanese: 'ja'
+  // french: 'fr'
 };
+
+// export const hiddenLangs = ['french']

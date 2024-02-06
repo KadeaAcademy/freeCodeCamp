@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244e1
-title: Nesting For Loops
+title: Embriquer des boucles For
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cRn6GHM'
 forumTopicId: 18248
@@ -9,7 +9,7 @@ dashedName: nesting-for-loops
 
 # --description--
 
-If you have a multi-dimensional array, you can use the same logic as the prior waypoint to loop through both the array and any sub-arrays. Here is an example:
+Si vous avez un tableau multidimensionnel, vous pouvez utiliser la même logique que le point de repère précédent pour parcourir en boucle le tableau et ses sous tableaux. Voici un exemple :
 
 ```js
 const arr = [
@@ -23,21 +23,21 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
-This outputs each sub-element in `arr` one at a time. Note that for the inner loop, we are checking the `.length` of `arr[i]`, since `arr[i]` is itself an array.
+Cela produit chaque sous-élément de `arr` un par un. Notez que pour la boucle interne, nous vérifions la `.length` de `arr[i]`, puisque `arr[i]` est lui-même un tableau.
 
 # --instructions--
 
-Modify function `multiplyAll` so that it returns the product of all the numbers in the sub-arrays of `arr`.
+Modifiez la fonction `multiplyAll` pour qu'elle renvoie le produit de tous les nombres dans les sous-tableaux de `arr`.
 
 # --hints--
 
-`multiplyAll([[1], [2], [3]])` should return `6`
+`multiplyAll([[1], [2], [3]])` devrait retourner `6`
 
 ```js
 assert(multiplyAll([[1], [2], [3]]) === 6);
 ```
 
-`multiplyAll([[1, 2], [3, 4], [5, 6, 7]])` should return `5040`
+`multiplyAll([[1, 2], [3, 4], [5, 6, 7]])` devrait retourner `5040`
 
 ```js
 assert(
@@ -49,7 +49,7 @@ assert(
 );
 ```
 
-`multiplyAll([[5, 1], [0.2, 4, 0.5], [3, 9]])` should return `54`
+`multiplyAll([[5, 1], [0.2, 4, 0.5], [3, 9]])` devrait retourner `54`
 
 ```js
 assert(
@@ -68,9 +68,9 @@ assert(
 ```js
 function multiplyAll(arr) {
   let product = 1;
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return product;
 }
 

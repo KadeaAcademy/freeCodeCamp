@@ -1,6 +1,6 @@
 ---
 id: cf1111c1c11feddfaeb8bdef
-title: Modify Array Data With Indexes
+title: Modifier les données d'un tableau avec des indices
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/czQM4A8'
 forumTopicId: 18241
@@ -9,35 +9,35 @@ dashedName: modify-array-data-with-indexes
 
 # --description--
 
-Unlike strings, the entries of arrays are <dfn>mutable</dfn> and can be changed freely, even if the array was declared with `const`.
+Contrairement aux chaînes de caractères, les entrées des tableaux sont <dfn>muables</dfn> et peuvent être modifiées librement, même si le tableau a été déclaré avec `const`.
 
 **Example**
 
 ```js
-const ourArray = [50, 40, 30];
-ourArray[0] = 15;
+const notreTableau = [50, 40, 30];
+notreTableau[0] = 15;
 ```
 
-`ourArray` now has the value `[15, 40, 30]`.
+`notreTableau` a maintenant la valeur `[15, 40, 30]`.
 
-**Note:** There shouldn't be any spaces between the array name and the square brackets, like `array [0]`. Although JavaScript is able to process this correctly, this may confuse other programmers reading your code.
+**Remarque :** il ne doit pas y avoir d'espace entre le nom du tableau et les crochets, comme "tableau [0]". Bien que JavaScript soit capable de traiter cela correctement, cela peut perturber les autres programmeurs qui lisent votre code.
 
 # --instructions--
 
-Modify the data stored at index `0` of `myArray` to a value of `45`.
+Remplacez la donnée stockée à l'indice `0` de `monTableau` par la valeur 45.
 
 # --hints--
 
-`myArray` should now be `[45, 64, 99]`.
+`monTableau` devrait maintenant être `[45, 64, 99]`.
 
 ```js
 assert(
   (function () {
     if (
-      typeof myArray != 'undefined' &&
-      myArray[0] == 45 &&
-      myArray[1] == 64 &&
-      myArray[2] == 99
+      typeof monTableau != 'undefined' &&
+      monTableau[0] == 45 &&
+      monTableau[1] == 64 &&
+      monTableau[2] == 99
     ) {
       return true;
     } else {
@@ -47,12 +47,12 @@ assert(
 );
 ```
 
-You should be using correct index to modify the value in `myArray`.
+Vous devriez utiliser le bon indice pour modifier la valeur dans `monTableau`.
 
 ```js
 assert(
   (function () {
-    if (code.match(/myArray\[0\]\s*=\s*/g)) {
+    if (code.match(/monTableau\[0\]\s*=\s*/g)) {
       return true;
     } else {
       return false;
@@ -66,22 +66,22 @@ assert(
 ## --after-user-code--
 
 ```js
-if(typeof myArray !== "undefined"){(function(){return myArray;})();}
+if(typeof monTableau !== "undefined"){(function(){return monTableau;})();}
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myArray = [18, 64, 99];
+const monTableau = [18, 64, 99];
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 
 # --solutions--
 
 ```js
-const myArray = [18, 64, 99];
-myArray[0] = 45;
+const monTableau = [18, 64, 99];
+monTableau[0] = 45;
 ```

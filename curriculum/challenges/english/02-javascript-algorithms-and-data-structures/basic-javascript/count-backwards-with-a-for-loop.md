@@ -1,6 +1,6 @@
 ---
 id: 56105e7b514f539506016a5e
-title: Count Backwards With a For Loop
+title: Compter à rebours avec une boucle For
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c2R6BHa'
 forumTopicId: 16808
@@ -9,11 +9,11 @@ dashedName: count-backwards-with-a-for-loop
 
 # --description--
 
-A for loop can also count backwards, so long as we can define the right conditions.
+Une boucle for peut également compter à rebours, pour autant que nous puissions définir les bonnes conditions.
 
-In order to decrement by two each iteration, we'll need to change our initialization, condition, and final expression.
+Pour pouvoir décrémenter de deux à chaque itération, nous devons modifier notre initialisation, notre condition et notre expression finale.
 
-We'll start at `i = 10` and loop while `i > 0`. We'll decrement `i` by 2 each loop with `i -= 2`.
+Nous allons commencer à `i = 10` et boucler pendant que `i > 0`. Nous allons décrémenter `i` de 2 à chaque boucle avec `i -= 2`.
 
 ```js
 const ourArray = [];
@@ -23,27 +23,27 @@ for (let i = 10; i > 0; i -= 2) {
 }
 ```
 
-`ourArray` will now contain `[10, 8, 6, 4, 2]`. Let's change our initialization and final expression so we can count backwards by twos to create an array of descending odd numbers.
+`ourArray` contiendra maintenant `[10, 8, 6, 4, 2]`. Modifions notre initialisation et notre expression finale afin de pouvoir compter à rebours par deux pour créer un tableau de nombres impairs décroissants.
 
 # --instructions--
 
-Push the odd numbers from 9 through 1 to `myArray` using a `for` loop.
+Insérez les nombres impairs de 9 à 1 dans `myArray` en utilisant une boucle `for`
 
 # --hints--
 
-You should be using a `for` loop for this.
+Vous devriez utiliser une boucle `for` pour cela.
 
 ```js
 assert(/for\s*\([^)]+?\)/.test(code));
 ```
 
-You should be using the array method `push`.
+Vous devriez utiliser la méthode de tableau `push`.
 
 ```js
 assert(code.match(/myArray.push/));
 ```
 
-`myArray` should equal `[9, 7, 5, 3, 1]`.
+`myArray` devrait être égal à `[9, 7, 5, 3, 1]`.
 
 ```js
 assert.deepEqual(myArray, [9, 7, 5, 3, 1]);
@@ -63,7 +63,7 @@ if(typeof myArray !== "undefined"){(function(){return myArray;})();}
 // Setup
 const myArray = [];
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 

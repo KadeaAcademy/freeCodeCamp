@@ -1,6 +1,5 @@
 import { Button, Modal } from '@freecodecamp/react-bootstrap';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { ButtonSpacer } from '../helpers';
 
@@ -11,7 +10,6 @@ type ResetModalProps = {
 };
 
 function ResetModal(props: ResetModalProps): JSX.Element {
-  const { t } = useTranslation();
   const { show, onHide } = props;
 
   return (
@@ -26,38 +24,44 @@ function ResetModal(props: ResetModalProps): JSX.Element {
     >
       <Modal.Header closeButton={true}>
         <Modal.Title id='modal-title'>
-          {t('settings.danger.reset-heading')}
+          {'Réinitialiser ma progression'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{t('settings.danger.reset-p1')}</p>
-        <p>{t('settings.danger.reset-p2')}</p>
+        <p>
+          {
+            'Cela supprimera vraiment tous vos progrès, vos points, les défis terminés, tout.'
+          }
+        </p>
+        <p>
+          {
+            "Nous ne pourrons plus rien récupérer pour vous par la suite, même si vous changez d'avis."
+          }
+        </p>
         <hr />
         <Button
+          className='action-btn btn-secondary standard-radius-5'
           block={true}
           bsSize='lg'
           bsStyle='primary'
-          className='btn-invert'
           onClick={props.onHide}
           type='button'
         >
-          {t('settings.danger.nevermind-2')}
+          {"C'est pas grave, je ne veux pas effacer toute ma progression."}
         </Button>
         <ButtonSpacer />
         <Button
+          className='action-btn btn-primary standard-radius-5'
           block={true}
           bsSize='lg'
           bsStyle='danger'
-          className='btn-danger'
           onClick={props.reset}
           type='button'
         >
-          {t('settings.danger.reset-confirm')}
+          {'Remettez tout à zéro. Je veux recommencer depuis le début'}
         </Button>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>{t('buttons.close')}</Button>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }

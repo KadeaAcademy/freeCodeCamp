@@ -1,6 +1,5 @@
 import { Button } from '@freecodecamp/react-bootstrap';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 function BlockSaveButton({
   children,
@@ -9,17 +8,16 @@ function BlockSaveButton({
   children?: React.ReactNode;
   disabled?: boolean;
 }): JSX.Element {
-  const { t } = useTranslation();
-
   return (
     <Button
+      className='btn-secondary standard-radius-5'
       block={true}
       bsSize='lg'
       bsStyle='primary'
       type='submit'
       {...restProps}
     >
-      {children || t('buttons.save')}
+      {children || 'Sauvegarder'}
     </Button>
   );
 }

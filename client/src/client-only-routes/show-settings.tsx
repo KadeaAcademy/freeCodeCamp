@@ -1,33 +1,41 @@
-import { Grid } from '@freecodecamp/react-bootstrap';
-import React from 'react';
+import { Grid, Row, Col, HelpBlock } from '@freecodecamp/react-bootstrap';
+import React, { useEffect, useState } from 'react';
+
 import Helmet from 'react-helmet';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import envData from '../../../config/env.json';
 import { createFlashMessage } from '../components/Flash/redux';
 import { Loader, Spacer } from '../components/helpers';
-import Certification from '../components/settings/certification';
 import About from '../components/settings/about';
+import Modal from '../components/settings/modal';
+import Education from '../components/settings/education';
+import WorkExperience from '../components/settings/work-experience';
 import DangerZone from '../components/settings/danger-zone';
-import Email from '../components/settings/email';
-import Honesty from '../components/settings/honesty';
+// import Email from '../components/settings/email';
 import Internet from '../components/settings/internet';
-import Portfolio from '../components/settings/portfolio';
-import Privacy from '../components/settings/privacy';
 import { Themes } from '../components/settings/theme';
-import WebhookToken from '../components/settings/webhook-token';
+
 import {
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
   hardGoTo as navigate
 } from '../redux';
-import { User } from '../redux/prop-types';
-import { submitNewAbout, updateUserFlag, verifyCert } from '../redux/settings';
 
-const { apiLocation, deploymentEnv } = envData;
+import { User } from '../redux/prop-types';
+
+import {
+  submitNewAbout,
+  updateUserFlag,
+  verifyCert,
+  submitNewEducation,
+  submitNewWorkExperience
+} from '../redux/settings';
+
+const { apiLocation } = envData;
 
 // TODO: update types for actions
 interface ShowSettingsProps {
@@ -36,6 +44,8 @@ interface ShowSettingsProps {
   navigate: (location: string) => void;
   showLoading: boolean;
   submitNewAbout: () => void;
+  submitNewEducation: () => void;
+  submitNewWorkExperience: () => void;
   toggleNightMode: (theme: Themes) => void;
   toggleSoundMode: (sound: boolean) => void;
   updateInternetSettings: () => void;
@@ -62,6 +72,8 @@ const mapDispatchToProps = {
   createFlashMessage,
   navigate,
   submitNewAbout,
+  submitNewEducation,
+  submitNewWorkExperience,
   toggleNightMode: (theme: Themes) => updateUserFlag({ theme }),
   toggleSoundMode: (sound: boolean) => updateUserFlag({ sound }),
   updateInternetSettings: updateUserFlag,
@@ -73,56 +85,68 @@ const mapDispatchToProps = {
 };
 
 export function ShowSettings(props: ShowSettingsProps): JSX.Element {
-  const { t } = useTranslation();
+  const [courseLink, setCourseLink] = useState<string>('');
+  // const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+  let queryString = '';
+  if (typeof window !== 'undefined') {
+    queryString = window.location.search;
+  }
+
+  function removeEqualSignAtEnd(string: string) {
+    if (string.endsWith('=')) {
+      string = string.slice(0, string.length - 1);
+    }
+    return string;
+  }
+
+  useEffect(() => {
+    const urlparams: string = new URLSearchParams(queryString).toString();
+    const decodelink = decodeURIComponent(`${urlparams}`);
+    const link = removeEqualSignAtEnd(decodelink);
+
+    setCourseLink(`${link}`);
+    handleOpenModal();
+  }, [queryString]);
   const {
-    createFlashMessage,
     isSignedIn,
     submitNewAbout,
-    toggleNightMode,
-    toggleSoundMode,
+    submitNewEducation,
+    submitNewWorkExperience,
     user: {
-      completedChallenges,
       email,
-      is2018DataVisCert,
-      isApisMicroservicesCert,
-      isJsAlgoDataStructCert,
-      isBackEndCert,
-      isDataVisCert,
-      isFrontEndCert,
-      isInfosecQaCert,
-      isQaCertV7,
-      isInfosecCertV7,
-      isFrontEndLibsCert,
-      isFullStackCert,
-      isRespWebDesignCert,
-      isSciCompPyCertV7,
-      isDataAnalysisPyCertV7,
-      isMachineLearningPyCertV7,
-      isRelationalDatabaseCertV8,
-      isEmailVerified,
-      isHonest,
-      sendQuincyEmail,
+      // isEmailVerified,
+      // sendQuincyEmail,
       username,
       about,
-      picture,
       points,
-      theme,
-      sound,
       location,
       name,
+      phone,
+      whatsapp,
+      gender,
+      codeTime,
+      fieldOfStudy,
+      levelOfStudy,
+      employedWhere,
+      sinceWhen,
+      position,
       githubProfile,
       linkedin,
       twitter,
-      website,
-      portfolio
+      website
     },
     navigate,
     showLoading,
-    updateQuincyEmail,
-    updateInternetSettings,
-    updatePortfolio,
-    updateIsHonest,
-    verifyCert
+    // updateQuincyEmail,
+    updateInternetSettings
   } = props;
 
   if (showLoading) {
@@ -133,79 +157,196 @@ export function ShowSettings(props: ShowSettingsProps): JSX.Element {
     navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
+  if (courseLink) {
+    if (name && phone) {
+      setTimeout(() => {
+        navigate(courseLink);
+      }, 3000);
+      return <Loader fullScreen={true} />;
+    }
+  }
 
   return (
     <>
-      <Helmet title={`${t('buttons.settings')} | freeCodeCamp.org`} />
-      <Grid>
+      {/* <Helmet title={`${t('buttons.settings')} | Code Learning Plateform`} /> */}
+      <Helmet title={`Profil | Kadea Online`} />
+      <Grid fluid={false} className='bg-light'>
         <main>
+          <div className=''>
+            <Spacer size={1} />
+            <Row className='super-block-intro-page'>
+              <Col md={12} sm={12} xs={12}>
+                <div className=''>
+                  <h1
+                    className='big-subheading'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {'Informations personnelles'}
+                  </h1>
+                  {!courseLink ? (
+                    <HelpBlock className='none-help-block'>{'none'}</HelpBlock>
+                  ) : (
+                    <>
+                      <Modal
+                        isOpen={isOpen}
+                        onClose={handleCloseModal}
+                        title='Vueillez compléter vos informations personnelles avant de commencer le cours'
+                      ></Modal>
+
+                      <HelpBlock className='text-danger'>
+                        {`Vueillez compléter vos informations personnelles avant de commencer le cours `}
+                      </HelpBlock>
+                    </>
+                  )}
+                </div>
+              </Col>
+              <Col className='' md={12} sm={12} xs={12}>
+                <Spacer size={1} />
+                <div className='block-ui bg-secondary standard-radius-5'>
+                  <About
+                    about={about}
+                    location={location}
+                    name={name}
+                    gender={gender}
+                    codeTime={codeTime}
+                    points={points}
+                    phone={phone}
+                    whatsapp={whatsapp}
+                    submitNewAbout={submitNewAbout}
+                    username={username}
+                    email={email}
+                  />
+                </div>
+                <Spacer size={1} />
+              </Col>
+            </Row>
+            <Spacer size={1} />
+          </div>
           <Spacer size={2} />
-          <h1 className='text-center' style={{ overflowWrap: 'break-word' }}>
-            {t('settings.for', { username: username })}
-          </h1>
-          <About
-            about={about}
-            currentTheme={theme}
-            location={location}
-            name={name}
-            picture={picture}
-            points={points}
-            sound={sound}
-            submitNewAbout={submitNewAbout}
-            toggleNightMode={toggleNightMode}
-            toggleSoundMode={toggleSoundMode}
-            username={username}
-          />
-          <Spacer />
-          <Privacy />
-          <Spacer />
-          <Email
-            email={email}
-            isEmailVerified={isEmailVerified}
-            sendQuincyEmail={sendQuincyEmail}
-            updateQuincyEmail={updateQuincyEmail}
-          />
-          <Spacer />
-          <Internet
-            githubProfile={githubProfile}
-            linkedin={linkedin}
-            twitter={twitter}
-            updateInternetSettings={updateInternetSettings}
-            website={website}
-          />
-          <Spacer />
-          {/* @ts-expect-error Portfolio types mismatch */}
-          <Portfolio portfolio={portfolio} updatePortfolio={updatePortfolio} />
-          <Spacer />
-          <Honesty isHonest={isHonest} updateIsHonest={updateIsHonest} />
-          <Spacer />
-          <Certification
-            completedChallenges={completedChallenges}
-            createFlashMessage={createFlashMessage}
-            is2018DataVisCert={is2018DataVisCert}
-            isApisMicroservicesCert={isApisMicroservicesCert}
-            isBackEndCert={isBackEndCert}
-            isDataAnalysisPyCertV7={isDataAnalysisPyCertV7}
-            isDataVisCert={isDataVisCert}
-            isFrontEndCert={isFrontEndCert}
-            isFrontEndLibsCert={isFrontEndLibsCert}
-            isFullStackCert={isFullStackCert}
-            isHonest={isHonest}
-            isInfosecCertV7={isInfosecCertV7}
-            isInfosecQaCert={isInfosecQaCert}
-            isJsAlgoDataStructCert={isJsAlgoDataStructCert}
-            isMachineLearningPyCertV7={isMachineLearningPyCertV7}
-            isQaCertV7={isQaCertV7}
-            isRelationalDatabaseCertV8={isRelationalDatabaseCertV8}
-            isRespWebDesignCert={isRespWebDesignCert}
-            isSciCompPyCertV7={isSciCompPyCertV7}
-            username={username}
-            verifyCert={verifyCert}
-          />
-          {deploymentEnv == 'staging' && <Spacer />}
-          {deploymentEnv == 'staging' && <WebhookToken />}
-          <Spacer />
-          <DangerZone />
+          <div className=''>
+            <Spacer size={1} />
+            <Row className='super-block-intro-page'>
+              <Col md={12} sm={12} xs={12}>
+                <div className=''>
+                  <h1
+                    className='big-subheading'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {'Éducation'}
+                  </h1>
+                </div>
+              </Col>
+              <Col className='' md={12} sm={12} xs={12}>
+                <Spacer size={1} />
+                <div className='block-ui bg-secondary standard-radius-5'>
+                  <Education
+                    fieldOfStudy={fieldOfStudy}
+                    levelOfStudy={levelOfStudy}
+                    submitNewEducation={submitNewEducation}
+                  />
+                </div>
+                <Spacer size={1} />
+              </Col>
+            </Row>
+            <Spacer size={1} />
+          </div>
+          <Spacer size={2} />
+          <div className=''>
+            <Spacer size={1} />
+            <Row className='super-block-intro-page'>
+              <Col md={12} sm={12} xs={12}>
+                <div className=''>
+                  <h1
+                    className='big-subheading'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {'Expérience professionnelle'}
+                  </h1>
+                </div>
+              </Col>
+              <Col className='' md={12} sm={12} xs={12}>
+                <Spacer size={1} />
+                <div className='block-ui bg-secondary standard-radius-5'>
+                  <WorkExperience
+                    employedWhere={employedWhere}
+                    sinceWhen={sinceWhen}
+                    position={position}
+                    submitNewWorkExperience={submitNewWorkExperience}
+                  />
+                </div>
+                <Spacer size={1} />
+              </Col>
+            </Row>
+            <Spacer size={1} />
+          </div>
+          {/* <Spacer size={2} />
+          <div className=''>
+            <Spacer size={1} />
+            <Row className='super-block-intro-page'>
+              <Col md={12} sm={12} xs={12}>
+                <div className=''>
+                  <h2
+                    className='big-subheading'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {"Paramètres d'email"}
+                  </h2>
+                </div>
+              </Col>
+              <Col className='' md={12} sm={12} xs={12}>
+                <Spacer size={1} />
+                <div className='block-ui bg-secondary standard-radius-5'>
+                  <Email
+                    email={email}
+                    isEmailVerified={isEmailVerified}
+                    sendQuincyEmail={sendQuincyEmail}
+                    updateQuincyEmail={updateQuincyEmail}
+                  />
+                </div>
+                <Spacer size={1} />
+              </Col>
+            </Row>
+            <Spacer size={1} />
+          </div> */}
+          <Spacer size={2} />
+          <div className=''>
+            <Spacer size={1} />
+            <Row className='super-block-intro-page'>
+              <Col md={12} sm={12} xs={12}>
+                <div className=''>
+                  <h2
+                    className='big-subheading'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {'Votre présence sur internet'}
+                  </h2>
+                </div>
+              </Col>
+              <Col className='' md={12} sm={12} xs={12}>
+                <Spacer size={1} />
+                <div className='block-ui bg-secondary standard-radius-5'>
+                  <Internet
+                    githubProfile={githubProfile}
+                    linkedin={linkedin}
+                    twitter={twitter}
+                    updateInternetSettings={updateInternetSettings}
+                    website={website}
+                  />
+                </div>
+                <Spacer size={1} />
+              </Col>
+            </Row>
+            <Spacer size={1} />
+          </div>
+
+          <div>
+            <Spacer />
+            <Row>
+              <Col className='' md={12} sm={12} xs={12}>
+                <DangerZone />
+              </Col>
+            </Row>
+          </div>
         </main>
       </Grid>
     </>

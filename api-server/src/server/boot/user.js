@@ -17,6 +17,7 @@ import {
 } from '../utils/publicUserProps';
 import { getRedirectParams } from '../utils/redirection';
 import { trimTags } from '../utils/validators';
+import { getAllUsers, countUserDocuments } from '../utils/user-stats';
 
 const log = debugFactory('fcc:boot:user');
 const sendNonUserToHome = ifNoUserRedirectHome();
@@ -31,6 +32,7 @@ function bootUser(app) {
   const deleteWebhookToken = createDeleteWebhookToken(app);
 
   api.get('/account', sendNonUserToHome, getAccount);
+  api.get('/all-users', sendNonUserToHome, getUserList);
   api.get('/account/unlink/:social', sendNonUserToHome, getUnlinkSocial);
   api.get('/user/get-session-user', getSessionUser);
 
@@ -168,6 +170,53 @@ function getAccount(req, res) {
   return res.redirect('/' + username);
 }
 
+async function getUserList(req, res) {
+  console.log('requette', req.query);
+  // destructure page and limit and set default values
+  const {
+    page = 1,
+    limit = 3,
+    classRoom = null,
+    memberName = null
+  } = req.query;
+  try {
+    let userList = [];
+    let usersCount = [];
+    let filter = {};
+    if (classRoom && classRoom != 'all') {
+      filter = { groups: classRoom };
+
+      if (memberName) {
+        filter.name = new RegExp(`${memberName}`, 'i');
+        filter.email = new RegExp(`${memberName}`, 'i');
+      }
+
+      userList = await getAllUsers(page, limit, filter);
+      usersCount = await countUserDocuments(filter);
+    } else if (classRoom == 'all' && memberName) {
+      filter.name = new RegExp(`${memberName}`, 'i');
+      filter.email = new RegExp(`${memberName}`, 'i');
+
+      userList = await getAllUsers(page, limit, filter);
+      usersCount = await countUserDocuments(filter);
+    } else {
+      userList = await getAllUsers(page, limit);
+      usersCount = await countUserDocuments();
+    }
+
+    return res.json({
+      userList: userList,
+      totalPages: Math.ceil(usersCount.length / limit),
+      currentPage: page,
+      countUsers: usersCount.length
+    });
+  } catch (error) {
+    return res.json({
+      error: error
+    });
+  }
+}
+
 function getUnlinkSocial(req, res, next) {
   const { user } = req;
   const { username } = user;
@@ -251,7 +300,8 @@ function postResetProgress(req, res, next) {
       isDataAnalysisPyCertV7: false,
       isMachineLearningPyCertV7: false,
       isRelationalDatabaseCertV8: false,
-      completedChallenges: []
+      completedChallenges: [],
+      currentsSuperBlock: []
     },
     function (err) {
       if (err) {

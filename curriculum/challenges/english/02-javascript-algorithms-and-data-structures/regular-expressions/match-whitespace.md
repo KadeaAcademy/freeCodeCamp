@@ -1,6 +1,6 @@
 ---
 id: 587d7db8367417b2b2512ba3
-title: Match Whitespace
+title: Faire correspondre les espaces blancs
 challengeType: 1
 forumTopicId: 301359
 dashedName: match-whitespace
@@ -8,51 +8,51 @@ dashedName: match-whitespace
 
 # --description--
 
-The challenges so far have covered matching letters of the alphabet and numbers. You can also match the whitespace or spaces between letters.
+Jusqu'à présent, les défis ont porté sur la correspondance des lettres de l'alphabet et des chiffres. Vous pouvez également faire correspondre les espaces entre les lettres.
 
-You can search for whitespace using `\s`, which is a lowercase `s`. This pattern not only matches whitespace, but also carriage return, tab, form feed, and new line characters. You can think of it as similar to the character class `[ \r\t\f\n\v]`.
+Vous pouvez rechercher les espaces en utilisant `\s`, qui est un `s` minuscule. Ce motif ne correspond pas seulement aux espaces, mais aussi aux caractères retour chariot, tabulation, saut de page et nouvelle ligne. Vous pouvez le considérer comme similaire à la classe de caractères `[ \r\t\f\n\v]`.
 
 ```js
-let whiteSpace = "Whitespace. Whitespace everywhere!"
+let whiteSpace = "Les espaces. Des espaces partout !"
 let spaceRegex = /\s/g;
 whiteSpace.match(spaceRegex);
 ```
 
-This `match` call would return `[" ", " "]`.
+Cet appel à `match` renvoie `[" ", " ", " ", " "]`.
 # --instructions--
 
-Change the regex `countWhiteSpace` to look for multiple whitespace characters in a string.
+Changez la regex `countWhiteSpace` pour rechercher les caractères d'espacement multiples dans une chaîne.
 
 # --hints--
 
-Your regex should use the global flag.
+Votre regex doit utiliser le marqueur global.
 
 ```js
 assert(countWhiteSpace.global);
 ```
 
-Your regex should use the shorthand character `\s` to match all whitespace characters.
+Votre regex doit utiliser le caractère raccourci `\s` pour correspondre à tous les caractères d'espacement.
 
 ```js
 assert(/\\s/.test(countWhiteSpace.source));
 ```
 
-Your regex should find eight spaces in the string `Men are from Mars and women are from Venus.`
+Votre regex doit trouver huit espaces dans la chaîne de caractères `Les hommes viennent de Mars et les femmes de Vénus.`
 
 ```js
 assert(
-  'Men are from Mars and women are from Venus.'.match(countWhiteSpace).length ==
-    8
+  'Les hommes viennent de Mars et les femmes de Vénus.'.match(countWhiteSpace).length ==
+    9
 );
 ```
 
-Your regex should find three spaces in the string `Space: the final frontier.`
+Votre regex doit trouver trois espaces dans la chaîne de caractères `L'espace: la dernière frontière.`
 
 ```js
-assert('Space: the final frontier.'.match(countWhiteSpace).length == 3);
+assert("L'espace: la dernière frontière.".match(countWhiteSpace).length == 3);
 ```
 
-Your regex should find no spaces in the string `MindYourPersonalSpace`
+Votre regex ne doit pas trouver d'espace dans la chaîne de caractères `MindYourPersonalSpace`
 
 ```js
 assert('MindYourPersonalSpace'.match(countWhiteSpace) == null);
@@ -63,15 +63,15 @@ assert('MindYourPersonalSpace'.match(countWhiteSpace) == null);
 ## --seed-contents--
 
 ```js
-let sample = "Whitespace is important in separating words";
-let countWhiteSpace = /change/; // Change this line
+let sample = "Les espaces sont importants pour séparer les mots";
+let countWhiteSpace = /change/; // Modifiez cette ligne
 let result = sample.match(countWhiteSpace);
 ```
 
 # --solutions--
 
 ```js
-let sample = "Whitespace is important in separating words";
+let sample = "Les espaces sont importants pour séparer les mots";
 let countWhiteSpace = /\s/g;
 let result = sample.match(countWhiteSpace);
 ```

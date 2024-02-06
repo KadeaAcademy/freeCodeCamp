@@ -1,6 +1,6 @@
 ---
 id: 587d7b87367417b2b2512b41
-title: Declare a Read-Only Variable with the const Keyword
+title: Déclarer une variable en lecture seule avec le mot-clé const
 challengeType: 1
 forumTopicId: 301201
 dashedName: declare-a-read-only-variable-with-the-const-keyword
@@ -8,54 +8,54 @@ dashedName: declare-a-read-only-variable-with-the-const-keyword
 
 # --description--
 
-The keyword `let` is not the only new way to declare variables. In ES6, you can also declare variables using the `const` keyword.
+Le mot-clé `let` n'est pas la seule nouvelle façon de déclarer des variables. Dans ES6, vous pouvez également déclarer des variables en utilisant le mot-clé `const`.
 
-`const` has all the awesome features that `let` has, with the added bonus that variables declared using `const` are read-only. They are a constant value, which means that once a variable is assigned with `const`, it cannot be reassigned:
+Le mot-clé `const` possède les mêmes caractéristiques que le mot-clé `let`, avec en prime le fait que les variables déclarées à l'aide de `const` sont en lecture seule. Elles sont une valeur constante, ce qui signifie qu'une fois qu'une variable est affectée avec `const`, elle ne peut pas être réaffectée :
 
 ```js
 const FAV_PET = "Cats";
 FAV_PET = "Dogs";
 ```
 
-The console will display an error due to reassigning the value of `FAV_PET`.
+La console affichera une erreur due à la réaffectation de la valeur de `FAV_PET`.
 
-You should always name variables you don't want to reassign using the `const` keyword. This helps when you accidentally attempt to reassign a variable that is meant to stay constant.
+Vous devriez toujours nommer les variables que vous ne voulez pas réaffecter en utilisant le mot-clé `const`. Ceci est utile lorsque vous tentez accidentellement de réaffecter une variable qui est censée rester constante.
 
-**Note:** It is common for developers to use uppercase variable identifiers for immutable values and lowercase or camelCase for mutable values (objects and arrays). You will learn more about objects, arrays, and immutable and mutable values in later challenges. Also in later challenges, you will see examples of uppercase, lowercase, or camelCase variable identifiers.
+**Note:** Il est courant pour les développeurs d'utiliser des identifiants de variables en majuscules pour les valeurs immuables et en minuscules ou en camelCase pour les valeurs mutables (objets et tableaux). Vous en apprendrez davantage sur les objets, les tableaux et les valeurs immuables et mutables dans les prochains défis. Vous verrez également dans les prochains défis des exemples d'identifiants de variables en majuscules, minuscules ou camelCase.
 
 # --instructions--
 
-Change the code so that all variables are declared using `let` or `const`. Use `let` when you want the variable to change, and `const` when you want the variable to remain constant. Also, rename variables declared with `const` to conform to common practices.
+Modifiez le code de sorte que toutes les variables soient déclarées à l'aide de `let` ou de `const`. Utilisez `let` lorsque vous voulez que la variable change, et `const` lorsque vous voulez que la variable reste constante. Renommez également les variables déclarées avec `const` pour vous conformer aux pratiques courantes.
 
 # --hints--
 
-`var` should not exist in your code.
+`var` ne doit pas exister dans votre code.
 
 ```js
 assert.notMatch(code, /var/g);
 ```
 
-You should change `fCC` to all uppercase.
+Vous devriez changer `fCC` en majuscules.
 
 ```js
 assert.match(code, /(FCC)/);
 assert.notMatch(code, /(fCC)/);
 ```
 
-`FCC` should be a constant variable declared with `const`.
+`FCC` devrait être une constante déclarée avec `const`.
 
 ```js
 assert.equal(FCC, 'freeCodeCamp');
 assert.match(code, /const\s+FCC/);
 ```
 
-`fact` should be declared with `let`.
+`fact` doit être déclaré avec `let`.
 
 ```js
 assert.match(code, /(let\s+fact)/g);
 ```
 
-`console.log` should be changed to print the `FCC` and `fact` variables.
+`console.log` doit être modifié pour imprimer les variables `FCC` et `fact`.
 
 ```js
 assert.match(code, /console\.log\(\s*FCC\s*\,\s*fact\s*\)\s*;?/g);

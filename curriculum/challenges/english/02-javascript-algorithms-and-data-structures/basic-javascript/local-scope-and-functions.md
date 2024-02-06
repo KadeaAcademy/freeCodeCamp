@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244bf
-title: Local Scope and Functions
+title: Portée locale et fonctions
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cd62NhM'
 forumTopicId: 18227
@@ -9,9 +9,9 @@ dashedName: local-scope-and-functions
 
 # --description--
 
-Variables which are declared within a function, as well as the function parameters, have <dfn>local</dfn> scope. That means they are only visible within that function.
+Les variables qui sont déclarées dans une fonction, ainsi que les paramètres de la fonction, ont une portée <dfn>locale</dfn>. Cela signifie qu'elles ne sont visibles qu'au sein de cette fonction.
 
-Here is a function `myTest` with a local variable called `loc`.
+Voici une fonction `myTest` avec une variable locale appelée `loc`.
 
 ```js
 function myTest() {
@@ -23,17 +23,17 @@ myTest();
 console.log(loc);
 ```
 
-The `myTest()` function call will display the string `foo` in the console. The `console.log(loc)` line (outside of the `myTest` function) will throw an error, as `loc` is not defined outside of the function.
+L'appel à la fonction "myTest()`" affichera la chaîne "foo" dans la console. La ligne `console.log(loc)` (en dehors de la fonction `myTest`) provoquera une erreur, car `loc` n'est pas défini en dehors de la fonction.
 
 # --instructions--
 
-The editor has two `console.log`s to help you see what is happening. Check the console as you code to see how it changes. Declare a local variable `myVar` inside `myLocalScope` and run the tests.
+L'éditeur a deux `console.log`s pour vous aider à voir ce qui se passe. Vérifiez la console pendant que vous codez pour voir comment elle change. Déclarez une variable locale `myVar` dans `myLocalScope` et exécutez les tests.
 
-**Note:** The console will still display `ReferenceError: myVar is not defined`, but this will not cause the tests to fail.
+**Remarque:** La console affichera toujours `ReferenceError : myVar is not defined`, mais cela ne fera pas échouer les tests.
 
 # --hints--
 
-The code should not contain a global `myVar` variable.
+Le code ne doit pas contenir une variable globale `myVar`.
 
 ```js
 function declared() {
@@ -43,7 +43,7 @@ function declared() {
 assert.throws(declared, ReferenceError);
 ```
 
-You should add a local `myVar` variable.
+Vous devez ajouter une variable locale `myVar`.
 
 ```js
 assert(
@@ -59,14 +59,14 @@ assert(
 
 ```js
 function myLocalScope() {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
   console.log('inside myLocalScope', myVar);
 }
 myLocalScope();
 
-// Run and check the console
-// myVar is not defined outside of myLocalScope
+// Exécuter et vérifier la console
+// myVar n'est pas définie en dehors de myLocalScope
 console.log('outside myLocalScope', myVar);
 ```
 
@@ -74,13 +74,13 @@ console.log('outside myLocalScope', myVar);
 
 ```js
 function myLocalScope() {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
   let myVar;
   console.log('inside myLocalScope', myVar);
 }
 myLocalScope();
 
-// Run and check the console
-// myVar is not defined outside of myLocalScope
+// Exécuter et vérifier la console
+// myVar n'est pas définie en dehors de myLocalScope
 console.log('outside myLocalScope', myVar);
 ```

@@ -1,3 +1,4 @@
+// import { NumberQuestionOptions } from 'inquirer';
 import PropTypes from 'prop-types';
 import { HandlerProps } from 'react-reflex';
 import { SuperBlocks } from '../../../config/certification-settings';
@@ -55,7 +56,32 @@ export const UserPropType = PropTypes.shape({
   theme: PropTypes.string,
   twitter: PropTypes.string,
   username: PropTypes.string,
-  website: PropTypes.string
+  website: PropTypes.string,
+  gender: PropTypes.string,
+  phone: PropTypes.string,
+  whatsapp: PropTypes.string,
+  codeTime: PropTypes.string,
+  fieldOfStudy: PropTypes.string,
+  levelOfStudy: PropTypes.string,
+  employedWhere: PropTypes.string,
+  sinceWhen: PropTypes.string,
+  position: PropTypes.string,
+  currentsSuperBlock: PropTypes.arrayOf(
+    PropTypes.shape({
+      superBlockName: PropTypes.string,
+      superBlockTranslatedName: PropTypes.string,
+      superBlockDashedName: PropTypes.string,
+      blockName: PropTypes.string,
+      blockDashedName: PropTypes.string,
+      isCurrentBlockCompleted: PropTypes.bool,
+      superBlockPath: PropTypes.string,
+      currentChallengeId: PropTypes.string,
+      totalChallenges: PropTypes.number,
+      totalCompletedChallenges: PropTypes.number
+    })
+  ),
+  role: PropTypes.string,
+  userGroup: PropTypes.arrayOf(PropTypes.string)
 });
 
 export const CurrentCertsPropType = PropTypes.arrayOf(
@@ -142,6 +168,24 @@ export type ChallengeWithCompletedNode = {
   order: number;
   superBlock: SuperBlocks;
   title: string;
+};
+
+export type CurrentChallengeNode = {
+  node: {
+    challenge: {
+      block: string;
+      challengeType: number;
+      dashedName: string;
+      fields: {
+        blockName: string;
+        slug: string;
+      };
+      id: string;
+      order: number;
+      superBlock: SuperBlocks;
+      title: string;
+    };
+  };
 };
 
 export type ChallengeNode = {
@@ -275,6 +319,18 @@ export type User = {
   website: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   yearsTopContributor: any[];
+  gender: string;
+  phone: string;
+  whatsapp: string;
+  codeTime: string;
+  fieldOfStudy: string;
+  levelOfStudy: string;
+  employedWhere: string;
+  sinceWhen: string;
+  position: string;
+  currentsSuperBlock: CurrentSuperBlock[];
+  role: string;
+  userGroup: string[];
 } & ClaimedCertifications;
 
 export type ProfileUI = {
@@ -341,6 +397,23 @@ export type Portfolio = {
   url?: string;
   image?: string;
   description?: string;
+};
+
+export type CurrentSuperBlock = {
+  superBlockName?: string;
+  superBlockTranslatedName?: string;
+  superBlockDashedName?: string;
+  blockName?: string;
+  blockDashedName?: string;
+  isCurrentBlockCompleted?: boolean;
+  superBlockPath?: string;
+  currentChallengeId?: string;
+  totalChallenges?: number;
+  totalCompletedChallenges?: number;
+};
+
+export type CurrentsSuperBlockList = {
+  currentsSuperBlock?: CurrentSuperBlock[];
 };
 
 export type FileKeyChallenge = {

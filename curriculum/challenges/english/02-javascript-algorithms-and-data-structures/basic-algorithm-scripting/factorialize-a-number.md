@@ -1,6 +1,6 @@
 ---
 id: a302f7aae1aa3152a5b413bc
-title: Factorialize a Number
+title: Factoriser un nombre
 challengeType: 5
 forumTopicId: 16013
 dashedName: factorialize-a-number
@@ -8,43 +8,43 @@ dashedName: factorialize-a-number
 
 # --description--
 
-Return the factorial of the provided integer.
+Retourne la factorielle de l'entier fourni.
 
-If the integer is represented with the letter `n`, a factorial is the product of all positive integers less than or equal to `n`.
+Si l'entier est représenté par la lettre `n`, une factorielle est le produit de tous les entiers positifs inférieurs ou égaux à `n`.
 
-Factorials are often represented with the shorthand notation `n!`
+Les factorielles sont souvent représentées par la notation abrégée `n!`.
 
-For example: `5! = 1 * 2 * 3 * 4 * 5 = 120`
+Par exemple : `5! = 1 * 2 * 3 * 4 * 5 = 120`.
 
-Only integers greater than or equal to zero will be supplied to the function.
+Seuls les entiers supérieurs ou égaux à zéro seront fournis à la fonction.
 
 # --hints--
 
-`factorialize(5)` should return a number.
+`factorialize(5)` doit retourner un nombre.
 
 ```js
 assert(typeof factorialize(5) === 'number');
 ```
 
-`factorialize(5)` should return `120`.
+`factorialize(5)` doit retourner `120`.
 
 ```js
 assert(factorialize(5) === 120);
 ```
 
-`factorialize(10)` should return `3628800`.
+`factorialize(10)` doit retourner `3628800`.
 
 ```js
 assert(factorialize(10) === 3628800);
 ```
 
-`factorialize(20)` should return `2432902008176640000`.
+`factorialize(20)` doit retourner `2432902008176640000`.
 
 ```js
 assert(factorialize(20) === 2432902008176640000);
 ```
 
-`factorialize(0)` should return `1`.
+`factorialize(0)` doit retourner `1`.
 
 ```js
 assert(factorialize(0) === 1);

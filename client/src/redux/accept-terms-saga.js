@@ -1,4 +1,4 @@
-import { navigate } from 'gatsby';
+// import { navigate } from 'gatsby';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 import { createFlashMessage } from '../components/Flash/redux';
@@ -17,13 +17,13 @@ function* acceptTermsSaga({ payload: quincyEmails }) {
   }
 }
 
-function* acceptCompleteSaga() {
-  yield call(navigate, '/learn');
-}
+// function* acceptCompleteSaga() {
+//   yield call(navigate, '/learn');
+// }
 
 export function createAcceptTermsSaga(types) {
   return [
-    takeEvery(types.acceptTerms, acceptTermsSaga),
-    takeEvery(types.acceptTermsComplete, acceptCompleteSaga)
+    takeEvery(types.acceptTerms, acceptTermsSaga)
+    // takeEvery(types.acceptTermsComplete, acceptCompleteSaga)
   ];
 }

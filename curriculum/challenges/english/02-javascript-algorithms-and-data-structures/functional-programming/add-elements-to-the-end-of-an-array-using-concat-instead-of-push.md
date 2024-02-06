@@ -1,6 +1,6 @@
 ---
 id: 587d7da9367417b2b2512b67
-title: Add Elements to the End of an Array Using concat Instead of push
+title: Ajouter des éléments à la fin d'un tableau en utilisant concat au lieu de push
 challengeType: 1
 forumTopicId: 301226
 dashedName: add-elements-to-the-end-of-an-array-using-concat-instead-of-push
@@ -8,50 +8,50 @@ dashedName: add-elements-to-the-end-of-an-array-using-concat-instead-of-push
 
 # --description--
 
-Functional programming is all about creating and using non-mutating functions.
+La programmation fonctionnelle consiste à créer et à utiliser des fonctions non mutantes.
 
-The last challenge introduced the `concat` method as a way to combine arrays into a new one without mutating the original arrays. Compare `concat` to the `push` method. `push` adds an item to the end of the same array it is called on, which mutates that array. Here's an example:
+Le dernier défi a présenté la méthode `concat` comme un moyen de combiner des tableaux dans un nouveau tableau sans modifier les tableaux d'origine. Comparez `concat` à la méthode `push`. `push` ajoute un élément à la fin du même tableau que celui sur lequel elle est appelée, ce qui modifie ce tableau. Voici un exemple :
 
 ```js
 const arr = [1, 2, 3];
 arr.push([4, 5, 6]);
 ```
 
-`arr` would have a modified value of `[1, 2, 3, [4, 5, 6]]`, which is not the functional programming way.
+`arr` aurait une valeur modifiée de `[1, 2, 3, [4, 5, 6]]`, ce qui n'est pas la méthode de programmation fonctionnelle.
 
-`concat` offers a way to add new items to the end of an array without any mutating side effects.
+`concat` offre un moyen d'ajouter de nouveaux éléments à la fin d'un tableau sans effets secondaires de mutation.
 
 # --instructions--
 
-Change the `nonMutatingPush` function so it uses `concat` to add `newItem` to the end of `original` instead of `push`. The function should return an array.
+Modifier la fonction `nonMutatingPush` pour qu'elle utilise `concat` pour ajouter `newItem` à la fin de `original` au lieu de `push`. La fonction devrait retourner un tableau.
 
 # --hints--
 
-Your code should use the `concat` method.
+Votre code doit utiliser la méthode `concat`.
 
 ```js
 assert(code.match(/\.concat/g));
 ```
 
-Your code should not use the `push` method.
+Votre code ne doit pas utiliser la méthode `push`.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?push/g));
 ```
 
-The `first` array should not change.
+Le tableau `first` ne doit pas changer.
 
 ```js
 assert(JSON.stringify(first) === JSON.stringify([1, 2, 3]));
 ```
 
-The `second` array should not change.
+Le tableau `second` ne doit pas changer.
 
 ```js
 assert(JSON.stringify(second) === JSON.stringify([4, 5]));
 ```
 
-`nonMutatingPush([1, 2, 3], [4, 5])` should return `[1, 2, 3, 4, 5]`.
+`nonMutatingPush([1, 2, 3], [4, 5])` doit retourner `[1, 2, 3, 4, 5]`.
 
 ```js
 assert(
@@ -66,10 +66,10 @@ assert(
 
 ```js
 function nonMutatingPush(original, newItem) {
-  // Only change code below this line
+  // Ne modifiez que le code situé en dessous de cette ligne
   return original.push(newItem);
 
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
 }
 
 const first = [1, 2, 3];

@@ -1,6 +1,6 @@
 ---
 id: 587d7dae367417b2b2512b7b
-title: Understand Own Properties
+title: Comprendre les propriétés propres
 challengeType: 1
 forumTopicId: 301326
 dashedName: understand-own-properties
@@ -8,7 +8,7 @@ dashedName: understand-own-properties
 
 # --description--
 
-In the following example, the `Bird` constructor defines two properties: `name` and `numLegs`:
+Dans l'exemple suivant, le constructeur `Bird` définit deux propriétés : `name` et `numLegs` :
 
 ```js
 function Bird(name) {
@@ -20,7 +20,7 @@ let duck = new Bird("Donald");
 let canary = new Bird("Tweety");
 ```
 
-`name` and `numLegs` are called <dfn>own properties</dfn>, because they are defined directly on the instance object. That means that `duck` and `canary` each has its own separate copy of these properties. In fact every instance of `Bird` will have its own copy of these properties. The following code adds all of the own properties of `duck` to the array `ownProps`:
+`name` et `numLegs` sont appelées <dfn>propres propriétés</dfn>, parce qu'elles sont définies directement sur l'objet instance. Cela signifie que `duck` et `canary` ont chacun leur propre copie de ces propriétés. En fait, chaque instance de `Bird` aura sa propre copie de ces propriétés. Le code suivant ajoute toutes les propriétés propres de `duck` au tableau `ownProps` :
 
 ```js
 let ownProps = [];
@@ -34,27 +34,27 @@ for (let property in duck) {
 console.log(ownProps);
 ```
 
-The console would display the value `["name", "numLegs"]`.
+La console affichera la valeur `["name", "numLegs"]`.
 
 # --instructions--
 
-Add the own properties of `canary` to the array `ownProps`.
+Ajoute les propriétés propres de `canary` au tableau `ownProps`.
 
 # --hints--
 
-`ownProps` should include the values `numLegs` and `name`.
+`ownProps` doit inclure les valeurs `numLegs` et `name`.
 
 ```js
 assert(ownProps.indexOf('name') !== -1 && ownProps.indexOf('numLegs') !== -1);
 ```
 
-You should solve this challenge without using the built in method `Object.keys()`.
+Vous devez résoudre ce problème sans utiliser la méthode intégrée `Object.keys()`.
 
 ```js
 assert(!/Object(\.keys|\[(['"`])keys\2\])/.test(code));
 ```
 
-You should solve this challenge without hardcoding the `ownProps` array.
+Vous devriez résoudre ce problème sans coder en dur le tableau `ownProps`.
 
 ```js
 assert(
@@ -76,7 +76,7 @@ function Bird(name) {
 
 let canary = new Bird("Tweety");
 let ownProps = [];
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 ```
 
 # --solutions--

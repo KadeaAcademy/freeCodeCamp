@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392d1
-title: Updating Object Properties
+title: Mettre à jour les propriétés des objets
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c9yEJT4'
 forumTopicId: 18336
@@ -9,9 +9,9 @@ dashedName: updating-object-properties
 
 # --description--
 
-After you've created a JavaScript object, you can update its properties at any time just like you would update any other variable. You can use either dot or bracket notation to update.
+Une fois que vous avez créé un objet JavaScript, vous pouvez mettre à jour ses propriétés à tout moment, comme vous le feriez pour n'importe quelle autre variable. Vous pouvez utiliser la notation par points ou par crochets pour mettre à jour.
 
-For example, let's look at `ourDog`:
+Par exemple, regardons `ourDog` :
 
 ```js
 const ourDog = {
@@ -22,21 +22,21 @@ const ourDog = {
 };
 ```
 
-Since he's a particularly happy dog, let's change his name to the string `Happy Camper`. Here's how we update his object's name property: `ourDog.name = "Happy Camper";` or `ourDog["name"] = "Happy Camper";` Now when we evaluate `ourDog.name`, instead of getting `Camper`, we'll get his new name, `Happy Camper`.
+Puisque c'est un chien particulièrement heureux, changeons son nom par la chaîne `Happy Camper`. Voici comment mettre à jour la propriété name de son objet : `ourDog.name = "Happy Camper";` ou `ourDog["name"] = "Happy Camper";` Maintenant, lorsque nous évaluons `ourDog.name`, au lieu d'obtenir `Camper`, nous obtiendrons son nouveau nom, `Happy Camper`.
 
 # --instructions--
 
-Update the `myDog` object's name property. Let's change her name from `Coder` to `Happy Coder`. You can use either dot or bracket notation.
+Mettez à jour la propriété name de l'objet `myDog`. Changeons son nom de `Coder` en `Happy Coder`. Vous pouvez utiliser la notation par points ou par parenthèses.
 
 # --hints--
 
-You should update `myDog`'s `name` property to equal the string `Happy Coder`.
+Vous devriez mettre à jour la propriété `name` de `myDog` pour qu'elle soit égale à la chaîne `Happy Coder`.
 
 ```js
 assert(/happy coder/gi.test(myDog.name));
 ```
 
-You should not edit the `myDog` definition.
+Vous ne devez pas modifier la définition de `myDog`.
 
 ```js
 assert(/"name": "Coder"/.test(code));
@@ -61,7 +61,7 @@ const myDog = {
   "friends": ["freeCodeCamp Campers"]
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 

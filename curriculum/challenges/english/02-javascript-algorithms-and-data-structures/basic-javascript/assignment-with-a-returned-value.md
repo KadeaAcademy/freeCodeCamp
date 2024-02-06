@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c3
-title: Assignment with a Returned Value
+title: Affectation avec une valeur renvoyée
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/ce2pEtB'
 forumTopicId: 16658
@@ -9,29 +9,29 @@ dashedName: assignment-with-a-returned-value
 
 # --description--
 
-If you'll recall from our discussion of [Storing Values with the Assignment Operator](/learn/javascript-algorithms-and-data-structures/basic-javascript/storing-values-with-the-assignment-operator), everything to the right of the equal sign is resolved before the value is assigned. This means we can take the return value of a function and assign it to a variable.
+Si vous vous souvenez de notre discussion sur [le stockage des valeurs avec l'opérateur d'affectation](/learn/javascript-algorithms-and-data-structures/basic-javascript/storing-values-with-the-assignment-operator), tout ce qui se trouve à droite du signe égal est résolu avant l'affectation de la valeur. Cela signifie que nous pouvons prendre la valeur de retour d'une fonction et l'affecter à une variable.
 
-Assume we have pre-defined a function `sum` which adds two numbers together, then:
+Supposons que nous ayons prédéfini une fonction `sum` qui ajoute deux nombres ensemble, alors :
 
 ```js
 ourSum = sum(5, 12);
 ```
 
-will call the `sum` function, which returns a value of `17` and assigns it to the `ourSum` variable.
+appelle la fonction `sum`, qui retourne la valeur `17` et l'affecte à la variable `ourSum`.
 
 # --instructions--
 
-Call the `processArg` function with an argument of `7` and assign its return value to the variable `processed`.
+Appelez la fonction `processArg` avec pour argument `7` et affectez sa valeur de retour à la variable `processed`.
 
 # --hints--
 
-`processed` should have a value of `2`
+`processed` devrait avoir comme valeur `2`.
 
 ```js
 assert(processed === 2);
 ```
 
-You should assign `processArg` to `processed`
+Vous devez affecter `processArg` à `processed`.
 
 ```js
 assert(/processed\s*=\s*processArg\(\s*7\s*\)/.test(code));
@@ -55,7 +55,7 @@ function processArg(num) {
   return (num + 3) / 5;
 }
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 

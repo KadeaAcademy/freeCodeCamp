@@ -1,0 +1,39 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "videoTitle": "Twice the qualified leads at a quarter of the cost",
+      "videoDescription": "Academies get your customers a product focused experience and provide them with the instant product knowledge they are looking for. Not only that but they are available anytime and anywhere through any digital portal. Because the content in academies is educational, it also aligns with the customer’s career ambitions, giving technical employees the domain expertise they need to do their jobs.",
+      "videoTime": "000:01:05",
+      "videoUrl": "https://freenaturestock.com/wp-content/uploads/freenaturestock-golden-water-ripples.mp4"
+    },
+    {
+      "id": 2,
+      "videoTitle": "Academies As Top Of Funnel Customer Acquisition",
+      "videoDescription": "Why are digital academies such a powerful solution for marketers? They get your customers the product experience and product education they’re looking for without being hard-sold. This gives your customer instant product knowledge which helps them grow their careers and puts them in the driving seat to make a purchase decision or recommendation to their leadership.",
+      "videoTime": "000:02:07",
+      "videoUrl": "https://freenaturestock.com/wp-content/uploads/freenaturestock-moody-sun-clouds-trees.mp4"
+    },
+    {
+      "id": 3,
+      "videoTitle": "Nobody wants to be sold to",
+      "videoDescription": "Your customers' behavior has changed. They want to be in control of the buying process. At the same time they also want to make sure that they are driving their own careers forward through gaining expertise and knowledge about the product for years. The best way for them to do that is by providing them with an academy or you can give them the content but they need to make great purchase decisions and help them become domain experts. Our customers are generating twice as many qualified leads at a quarter of the cost of acquisition.&nbsp;",
+      "videoTime": "000:01:00",
+      "videoUrl": "https://freenaturestock.com/wp-content/uploads/freenaturestock-rocky-river-shoreline.mp4"
+    },
+    {
+      "id": 4,
+      "videoTitle": "How Academy's work to drive qualified leads",
+      "video_description": "Our product provides an integrated solution for customer acquisition and is a nurturing platform for both growth marketers and customer success teams. By using prospect desired product knowledge we fill the top of the funnel with qualified leads at twice the rates of alternative platforms and then nurture customers and non-customers until they are ready to make a purchase. This powerful one-two approach gives you a platform that punches above its weight class and does the work of multiple products in your current marketing stack. Software and retail leaders already using our platform are reducing their overhead of owning and managing multiple platforms while giving their customer success team an environment to drive renewals and account referrals.&nbsp;",
+      "videoTime": "000:03:00",
+      "videoUrl": "https://freenaturestock.com/wp-content/uploads/freenaturestock-rotating-clouds-sun.mp4"
+    },
+    {
+      "id": 5,
+      "videoTitle": "Academies create high retention rates with educated employees",
+      "videoDescription": "Academies don't just drive leads, they help engage employees and improve their career prospects by increasing knowledge and domain expertise. ",
+      "videoTime": "000:02:04",
+      "videoUrl": "https://freenaturestock.com/wp-content/uploads/freenaturestock-falling-leaves-swaying-trees.mp4"
+    }
+  ]
+}

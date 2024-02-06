@@ -42,7 +42,19 @@ export const publicUserProps = [
   'twitter',
   'username',
   'website',
-  'yearsTopContributor'
+  'yearsTopContributor',
+  'gender',
+  'phone',
+  'whatsapp',
+  'codeTime',
+  'fieldOfStudy',
+  'levelOfStudy',
+  'employedWhere',
+  'sinceWhen',
+  'position',
+  'currentsSuperBlock',
+  'role',
+  'userGroup'
 ];
 
 export const userPropsForSession = [

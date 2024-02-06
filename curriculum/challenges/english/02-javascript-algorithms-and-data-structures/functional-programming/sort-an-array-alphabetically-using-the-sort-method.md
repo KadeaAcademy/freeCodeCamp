@@ -1,6 +1,6 @@
 ---
 id: 587d7da9367417b2b2512b69
-title: Sort an Array Alphabetically using the sort Method
+title: Trier un tableau par ordre alphabétique à l'aide de la méthode de tri
 challengeType: 1
 forumTopicId: 18303
 dashedName: sort-an-array-alphabetically-using-the-sort-method
@@ -8,9 +8,9 @@ dashedName: sort-an-array-alphabetically-using-the-sort-method
 
 # --description--
 
-The `sort` method sorts the elements of an array according to the callback function.
+La méthode `sort` trie les éléments d'un tableau selon la fonction de rappel.
 
-For example:
+Par exemple, la méthode `sort` permet de trier les éléments d'un tableau selon la fonction de rappel :
 
 ```js
 function ascendingOrder(arr) {
@@ -22,7 +22,7 @@ function ascendingOrder(arr) {
 ascendingOrder([1, 5, 2, 3, 4]);
 ```
 
-This would return the value `[1, 2, 3, 4, 5]`.
+Cela renverrait la valeur `[1, 2, 3, 4, 5]`.
 
 ```js
 function reverseAlpha(arr) {
@@ -34,23 +34,23 @@ function reverseAlpha(arr) {
 reverseAlpha(['l', 'h', 'z', 'b', 's']);
 ```
 
-This would return the value `['z', 's', 'l', 'h', 'b']`.
+Cela renverrait la valeur `['z', 's', 'l', 'h', 'b']`.
 
-JavaScript's default sorting method is by string Unicode point value, which may return unexpected results. Therefore, it is encouraged to provide a callback function to specify how to sort the array items. When such a callback function, normally called `compareFunction`, is supplied, the array elements are sorted according to the return value of the `compareFunction`: If `compareFunction(a,b)` returns a value less than 0 for two elements `a` and `b`, then `a` will come before `b`. If `compareFunction(a,b)` returns a value greater than 0 for two elements `a` and `b`, then `b` will come before `a`. If `compareFunction(a,b)` returns a value equal to 0 for two elements `a` and `b`, then `a` and `b` will remain unchanged.
+La méthode de tri par défaut de JavaScript est la valeur ponctuelle Unicode de la chaîne de caractères, ce qui peut donner des résultats inattendus. Il est donc recommandé de fournir une fonction de rappel pour spécifier comment trier les éléments du tableau. Lorsqu'une telle fonction de rappel, normalement appelée `compareFunction`, est fournie, les éléments du tableau sont triés en fonction de la valeur de retour de la `compareFunction` : Si `compareFunction(a,b)` renvoie une valeur inférieure à 0 pour deux éléments `a` et `b`, alors `a` sera placé avant `b`. Si `compareFunction(a,b)` retourne une valeur supérieure à 0 pour deux éléments `a` et `b`, alors `b` viendra avant `a`. Si `compareFunction(a,b)` retourne une valeur égale à 0 pour deux éléments `a` et `b`, alors `a` et `b` resteront inchangés.
 
 # --instructions--
 
-Use the `sort` method in the `alphabeticalOrder` function to sort the elements of `arr` in alphabetical order. The function should return the sorted array.
+Utilisez la méthode `sort` de la fonction `alphabeticalOrder` pour trier les éléments de `arr` par ordre alphabétique. La fonction doit renvoyer le tableau trié.
 
 # --hints--
 
-Your code should use the `sort` method.
+Votre code doit utiliser la méthode `sort`.
 
 ```js
 assert(code.match(/\.sort/g));
 ```
 
-`alphabeticalOrder(["a", "d", "c", "a", "z", "g"])` should return `["a", "a", "c", "d", "g", "z"]`.
+`alphabeticalOrder(["a", "d", "c", "a", "z", "g"])` devrait retourner `["a", "a", "c", "d", "g", "z"]`.
 
 ```js
 assert(
@@ -59,7 +59,7 @@ assert(
 );
 ```
 
-`alphabeticalOrder(["x", "h", "a", "m", "n", "m"])` should return `["a", "h", "m", "m", "n", "x"]`.
+`alphabeticalOrder(["x", "h", "a", "m", "n", "m"])` devrait retourner `["a", "h", "m", "m", "n", "x"]`.
 
 ```js
 assert(
@@ -68,7 +68,7 @@ assert(
 );
 ```
 
-`alphabeticalOrder(["a", "a", "a", "a", "x", "t"])` should return `["a", "a", "a", "a", "t", "x"]`.
+`alphabeticalOrder(["a", "a", "a", "a", "x", "t"])` devrait retourner `["a", "a", "a", "a", "t", "x"]`.
 
 ```js
 assert(
@@ -83,10 +83,10 @@ assert(
 
 ```js
 function alphabeticalOrder(arr) {
-  // Only change code below this line
+  // Ne modifiez que le code situé en dessous de cette ligne
 
   return arr
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
 }
 
 alphabeticalOrder(["a", "d", "c", "a", "z", "g"]);

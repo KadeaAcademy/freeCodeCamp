@@ -8,33 +8,33 @@ dashedName: falsy-bouncer
 
 # --description--
 
-Remove all falsy values from an array.
+Supprime toutes les valeurs falsy d'un tableau.
 
-Falsy values in JavaScript are `false`, `null`, `0`, `""`, `undefined`, and `NaN`.
+Les valeurs faibles en JavaScript sont `false`, `null`, `0`, `""`, `undefined`, et `NaN`.
 
-Hint: Try converting each value to a Boolean.
+Astuce : Essayez de convertir chaque valeur en booléen.
 
 # --hints--
 
-`bouncer([7, "ate", "", false, 9])` should return `[7, "ate", 9]`.
+`bouncer([7, "ate", "", false, 9])` doit retourner `[7, "ate", 9]`.
 
 ```js
 assert.deepEqual(bouncer([7, 'ate', '', false, 9]), [7, 'ate', 9]);
 ```
 
-`bouncer(["a", "b", "c"])` should return `["a", "b", "c"]`.
+`bouncer(["a", "b", "c"])` doit retourner `["a", "b", "c"]`.
 
 ```js
 assert.deepEqual(bouncer(['a', 'b', 'c']), ['a', 'b', 'c']);
 ```
 
-`bouncer([false, null, 0, NaN, undefined, ""])` should return `[]`.
+`bouncer([false, null, 0, NaN, undefined, ""])` doit retourner `[]`.
 
 ```js
 assert.deepEqual(bouncer([false, null, 0, NaN, undefined, '']), []);
 ```
 
-`bouncer([null, NaN, 1, 2, undefined])` should return `[1, 2]`.
+`bouncer([null, NaN, 1, 2, undefined])` doit retourner `[1, 2]`.
 
 ```js
 assert.deepEqual(bouncer([null, NaN, 1, 2, undefined]), [1, 2]);

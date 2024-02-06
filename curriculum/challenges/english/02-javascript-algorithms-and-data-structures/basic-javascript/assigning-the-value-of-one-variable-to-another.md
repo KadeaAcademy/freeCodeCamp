@@ -1,6 +1,6 @@
 ---
 id: 5ee127a03c3b35dd45426493
-title: Assigning the Value of One Variable to Another
+title: Assigner la valeur d'une variable à une autre
 challengeType: 1
 videoUrl: ''
 forumTopicId: 418265
@@ -9,36 +9,36 @@ dashedName: assigning-the-value-of-one-variable-to-another
 
 # --description--
 
-After a value is assigned to a variable using the <dfn>assignment</dfn> operator, you can assign the value of that variable to another variable using the <dfn>assignment</dfn> operator.
+Une fois qu'une valeur est affectée à une variable à l'aide de l'opérateur <dfn>affectation</dfn>, vous pouvez affecter la valeur de cette variable à une autre variable à l'aide de l'opérateur <dfn>affectation</dfn>.
 
 ```js
-var myVar;
-myVar = 5;
-var myNum;
-myNum = myVar;
+var maVar ;
+maVar = 5 ;
+var monNum ;
+monNum = maVar ;
 ```
 
-The above declares a `myVar` variable with no value, then assigns it the value `5`. Next, a variable named `myNum` is declared with no value. Then, the contents of `myVar` (which is `5`) is assigned to the variable `myNum`. Now, `myNum` also has the value of `5`.
+L'exemple ci-dessus déclare une variable `maVar` sans valeur, puis lui attribue la valeur `5`. Ensuite, une variable nommée `monNum` est déclarée sans valeur. Ensuite, le contenu de `maVar` (qui est `5`) est affecté à la variable `monNum`. Maintenant, la valeur de la variable `monNum` est également égale à `5`.
 
 # --instructions--
 
-Assign the contents of `a` to variable `b`.
+Assignez le contenu de `a` à la variable `b`.
 
 # --hints--
 
-You should not change code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(/var a;/.test(code) && /a = 7;/.test(code) && /var b;/.test(code));
 ```
 
-`b` should have a value of `7`.
+`b` devrait avoir la valeur `7`.
 
 ```js
 assert(typeof b === 'number' && b === 7);
 ```
 
-`a` should be assigned to `b` with `=`.
+`a` doit être assigné à `b` avec `=`.
 
 ```js
 assert(/b\s*=\s*a\s*/g.test(code));
@@ -68,12 +68,12 @@ if (typeof b != 'undefined') {
 ## --seed-contents--
 
 ```js
-// Setup
+// Configuration
 var a;
 a = 7;
 var b;
 
-// Only change code below this line
+// Ne modifiez que le code en dessous de cette ligne
 ```
 
 # --solutions--

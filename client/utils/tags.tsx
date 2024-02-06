@@ -8,7 +8,7 @@ const { homeLocation } = env;
 
 export function getheadTagComponents(): JSX.Element[] {
   const socialImage =
-    'https://cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png';
+    'https://online-kadea-resources.fra1.cdn.digitaloceanspaces.com/online-kadea-brand-resources/kda-learning-plateform-landing-logo.png';
 
   const pathToBootstrap = withPrefix('/css/bootstrap.min.css');
 
@@ -20,7 +20,7 @@ export function getheadTagComponents(): JSX.Element[] {
       rel='preload'
     />,
     <link href={pathToBootstrap} key='bootstrap-min' rel='stylesheet' />,
-    <meta content='freeCodeCamp.org' key='og:title' name='og:title' />,
+    <meta content='Kadea Online' key='og:title' name='og:title' />,
     <meta
       content={i18next.t('metaTags:social-description')}
       key='og:description'
@@ -37,11 +37,11 @@ export function getheadTagComponents(): JSX.Element[] {
       key='twitter:image:src'
       name='twitter:image:src'
     />,
-    <meta
-      content='freeCodeCamp.org'
-      key='twitter:title'
-      name='twitter:title'
-    />,
+    // <meta
+    //   content='freeCodeCamp.org'
+    //   key='twitter:title'
+    //   name='twitter:title'
+    // />,
     <meta
       content={i18next.t('metaTags:social-description')}
       key='twitter:description'

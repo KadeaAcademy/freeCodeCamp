@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392ce
-title: Manipulate Arrays With unshift()
+title: Manipuler les tableaux avec unshift()
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/ckNDESv'
 forumTopicId: 18239
@@ -9,27 +9,27 @@ dashedName: manipulate-arrays-with-unshift
 
 # --description--
 
-Not only can you `shift` elements off of the beginning of an array, you can also `unshift` elements to the beginning of an array i.e. add elements in front of the array.
+Non seulement vous pouvez `shift` des éléments du début d'un tableau, mais vous pouvez aussi `unshift` des éléments du début d'un tableau, c'est-à-dire ajouter des éléments au début du tableau.
 
-`.unshift()` works exactly like `.push()`, but instead of adding the element at the end of the array, `unshift()` adds the element at the beginning of the array.
+`.unshift()` fonctionne exactement comme `.push()`, mais au lieu d'ajouter l'élément à la fin du tableau, `unshift()` ajoute l'élément au début du tableau.
 
-Example:
+Exemple :
 
 ```js
-const ourArray = ["Stimpson", "J", "cat"];
-ourArray.shift();
-ourArray.unshift("Happy");
+const notreTableau = ["Stimpson", "J", "cat"];
+notreTableau.shift();
+notreTableau.unshift("Happy");
 ```
 
-After the `shift`, `ourArray` would have the value `["J", "cat"]`. After the `unshift`, `ourArray` would have the value `["Happy", "J", "cat"]`.
+Après le `shift`, `notreTableau` aura comme la valeur `["J", "chat"]`. Après le `unshift`, `notreTableau` aura comme valeur `["Happy", "J", "cat"]`.
 
 # --instructions--
 
-Add `["Paul", 35]` to the beginning of the `myArray` variable using `unshift()`.
+Ajoutez `["Paul", 35]` au début de la variable `monTableau` en utilisant `unshift()`.
 
 # --hints--
 
-`myArray` should now have `[["Paul", 35], ["dog", 3]]`.
+`monTableau` devrait maintenant avoir `[["Paul", 35], ["dog", 3]]`.
 
 ```js
 assert(
@@ -47,7 +47,7 @@ assert(
     } else {
       return false;
     }
-  })(myArray)
+  })(monTableau)
 );
 ```
 
@@ -56,24 +56,24 @@ assert(
 ## --after-user-code--
 
 ```js
-(function(y, z){return 'myArray = ' + JSON.stringify(y);})(myArray);
+(function(y, z){return 'monTableau = ' + JSON.stringify(y);})(monTableau);
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myArray = [["John", 23], ["dog", 3]];
-myArray.shift();
+const monTableau = [["John", 23], ["dog", 3]];
+monTableau.shift();
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 
 # --solutions--
 
 ```js
-const myArray = [["John", 23], ["dog", 3]];
-myArray.shift();
-myArray.unshift(["Paul", 35]);
+const monTableau = [["John", 23], ["dog", 3]];
+monTableau.shift();
+monTableau.unshift(["Paul", 35]);
 ```

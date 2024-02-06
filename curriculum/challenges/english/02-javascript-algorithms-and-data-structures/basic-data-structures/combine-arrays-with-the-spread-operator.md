@@ -1,6 +1,6 @@
 ---
 id: 587d7b7b367417b2b2512b17
-title: Combine Arrays with the Spread Operator
+title: Combiner des tableaux avec l'opérateur d'étalement
 challengeType: 1
 forumTopicId: 301156
 dashedName: combine-arrays-with-the-spread-operator
@@ -8,7 +8,7 @@ dashedName: combine-arrays-with-the-spread-operator
 
 # --description--
 
-Another huge advantage of the <dfn>spread</dfn> operator is the ability to combine arrays, or to insert all the elements of one array into another, at any index. With more traditional syntaxes, we can concatenate arrays, but this only allows us to combine arrays at the end of one, and at the start of another. Spread syntax makes the following operation extremely simple:
+Un autre avantage énorme de l'opérateur <dfn>spread</dfn> est la possibilité de combiner des tableaux, ou d'insérer tous les éléments d'un tableau dans un autre, à n'importe quel index. Avec des syntaxes plus traditionnelles, nous pouvons concaténer des tableaux, mais cela ne nous permet de combiner des tableaux qu'à la fin de l'un, et au début d'un autre. La syntaxe Spread rend l'opération suivante extrêmement simple :
 
 ```js
 let thisArray = ['sage', 'rosemary', 'parsley', 'thyme'];
@@ -16,23 +16,23 @@ let thisArray = ['sage', 'rosemary', 'parsley', 'thyme'];
 let thatArray = ['basil', 'cilantro', ...thisArray, 'coriander'];
 ```
 
-`thatArray` would have the value `['basil', 'cilantro', 'sage', 'rosemary', 'parsley', 'thyme', 'coriander']`.
+`thatArray` devrait avoir la valeur `['basil', 'cilantro', 'sage', 'rosemary', 'parsley', 'thyme', 'coriander']`.
 
-Using spread syntax, we have just achieved an operation that would have been more complex and more verbose had we used traditional methods.
+En utilisant la syntaxe étalée (Spread), nous venons de réaliser une opération qui aurait été plus complexe et plus verbeuse si nous avions utilisé les méthodes traditionnelles.
 
 # --instructions--
 
-We have defined a function `spreadOut` that returns the variable `sentence`. Modify the function using the <dfn>spread</dfn> operator so that it returns the array `['learning', 'to', 'code', 'is', 'fun']`.
+Nous avons défini une fonction `spreadOut` qui renvoie la variable `sentence`. Modifiez la fonction en utilisant l'opérateur <dfn>spread</dfn> de façon à ce qu'elle renvoie le tableau `['learning', 'to', 'code', 'is', 'fun']`.
 
 # --hints--
 
-`spreadOut` should return `["learning", "to", "code", "is", "fun"]`
+`spreadOut` devrait renvoyer `["learning", "to", "code", "is", "fun"]`
 
 ```js
 assert.deepEqual(spreadOut(), ['learning', 'to', 'code', 'is', 'fun']);
 ```
 
-The `spreadOut` function should utilize spread syntax
+La fonction `spreadOut` doit utiliser la syntaxe spread.
 
 ```js
 assert.notStrictEqual(spreadOut.toString().search(/[...]/), -1);
@@ -45,7 +45,7 @@ assert.notStrictEqual(spreadOut.toString().search(/[...]/), -1);
 ```js
 function spreadOut() {
   let fragment = ['to', 'code'];
-  let sentence; // Change this line
+  let sentence; // Modifiez cette ligne
   return sentence;
 }
 

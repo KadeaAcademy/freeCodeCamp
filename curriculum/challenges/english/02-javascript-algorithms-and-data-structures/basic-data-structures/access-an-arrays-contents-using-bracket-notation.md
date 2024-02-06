@@ -1,6 +1,6 @@
 ---
 id: 5a661e0f1068aca922b3ef17
-title: Access an Array's Contents Using Bracket Notation
+title: Accéder au contenu d'un tableau en utilisant la notation des crochets
 challengeType: 1
 forumTopicId: 301149
 dashedName: access-an-arrays-contents-using-bracket-notation
@@ -8,55 +8,55 @@ dashedName: access-an-arrays-contents-using-bracket-notation
 
 # --description--
 
-The fundamental feature of any data structure is, of course, the ability to not only store data, but to be able to retrieve that data on command. So, now that we've learned how to create an array, let's begin to think about how we can access that array's information.
+La caractéristique fondamentale de toute structure de données est, bien sûr, la capacité non seulement de stocker des données, mais aussi de pouvoir les récupérer sur commande. Donc, maintenant que nous avons appris à créer un tableau, commençons à réfléchir à la façon dont nous pouvons accéder aux informations de ce tableau.
 
-When we define a simple array as seen below, there are 3 items in it:
+Lorsque nous définissons un tableau simple, comme indiqué ci-dessous, il contient 3 éléments :
 
 ```js
 let ourArray = ["a", "b", "c"];
 ```
 
-In an array, each array item has an <dfn>index</dfn>. This index doubles as the position of that item in the array, and how you reference it. However, it is important to note, that JavaScript arrays are <dfn>zero-indexed</dfn>, meaning that the first element of an array is actually at the ***zeroth*** position, not the first. In order to retrieve an element from an array we can enclose an index in brackets and append it to the end of an array, or more commonly, to a variable which references an array object. This is known as <dfn>bracket notation</dfn>. For example, if we want to retrieve the `a` from `ourArray` and assign it to a variable, we can do so with the following code:
+Dans un tableau, chaque élément du tableau a un indice. Cet indice sert à déterminer la position de l'élément dans le tableau et à le référencer. Cependant, il est important de noter que les tableaux JavaScript sont à indexation zéro, ce qui signifie que le premier élément d'un tableau se trouve en fait à la position ***zéro***, et non à la première. Afin de récupérer un élément d'un tableau, nous pouvons mettre un indice entre crochets et l'ajouter à la fin d'un tableau, ou plus communément, à une variable qui fait référence à un objet tableau. C'est ce qu'on appelle la notation entre crochets. Par exemple, si nous voulons récupérer le `a` de `ourArray` et l'assigner à une variable, nous pouvons le faire avec le code suivant :
 
 ```js
 let ourVariable = ourArray[0];
 ```
 
-Now `ourVariable` has the value of `a`.
+Maintenant, `ourVariable` a la valeur `a`.
 
-In addition to accessing the value associated with an index, you can also *set* an index to a value using the same notation:
+En plus d'accéder à la valeur associée à un indice, vous pouvez également *fixer* un indice à une valeur en utilisant la même notation :
 
 ```js
 ourArray[1] = "not b anymore";
 ```
 
-Using bracket notation, we have now reset the item at index 1 from the string `b`, to `not b anymore`. Now `ourArray` is `["a", "not b anymore", "c"]`.
+En utilisant la notation entre crochets, nous avons maintenant réinitialisé l'élément à l'indice 1 de la chaîne `b`, en `not b anymore`. Maintenant, `ourArray` est `["a", "not b anymore", "c"]`.
 
 # --instructions--
 
-In order to complete this challenge, set the 2nd position (index `1`) of `myArray` to anything you want, besides the letter `b`.
+Pour relever ce défi, donnez à la deuxième position ( indice `1`) de `myArray` la valeur que vous voulez, à part la lettre `b`.
 
 # --hints--
 
-`myArray[0]` should be equal to the letter `a`
+`myArray[0]` doit être égal à la lettre `a`
 
 ```js
 assert.strictEqual(myArray[0], 'a');
 ```
 
-`myArray[1]` should not be equal to the letter `b`
+`myArray[1]` ne doit pas être égal à la lettre `b`
 
 ```js
 assert.notStrictEqual(myArray[1], 'b');
 ```
 
-`myArray[2]` should be equal to the letter `c`
+`myArray[2]` doit être égal à la lettre `c`
 
 ```js
 assert.strictEqual(myArray[2], 'c');
 ```
 
-`myArray[3]` should be equal to the letter `d`
+`myArray[3]` doit être égal à la lettre `d`
 
 ```js
 assert.strictEqual(myArray[3], 'd');
@@ -68,9 +68,9 @@ assert.strictEqual(myArray[3], 'd');
 
 ```js
 let myArray = ["a", "b", "c", "d"];
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 console.log(myArray);
 ```
 

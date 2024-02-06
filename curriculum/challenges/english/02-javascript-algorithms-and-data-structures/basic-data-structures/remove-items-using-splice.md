@@ -1,6 +1,6 @@
 ---
 id: 587d78b2367417b2b2512b10
-title: Remove Items Using splice()
+title: Supprimer des éléments en utilisant splice()
 challengeType: 1
 forumTopicId: 301166
 dashedName: remove-items-using-splice
@@ -8,9 +8,9 @@ dashedName: remove-items-using-splice
 
 # --description--
 
-Ok, so we've learned how to remove elements from the beginning and end of arrays using `shift()` and `pop()`, but what if we want to remove an element from somewhere in the middle? Or remove more than one element at once? Well, that's where `splice()` comes in. `splice()` allows us to do just that: **remove any number of consecutive elements** from anywhere in an array.
+Nous avons appris à retirer des éléments du début et de la fin d'un tableau à l'aide de shift() et pop(), mais que faire si nous voulons retirer un élément au milieu ? Ou supprimer plus d'un élément à la fois ? C'est là que la fonction splice() intervient. splice() nous permet de faire exactement cela : retirer un nombre quelconque d'éléments consécutifs de n'importe où dans un tableau.
 
-`splice()` can take up to 3 parameters, but for now, we'll focus on just the first 2. The first two parameters of `splice()` are integers which represent indexes, or positions, of the array that `splice()` is being called upon. And remember, arrays are *zero-indexed*, so to indicate the first element of an array, we would use `0`. `splice()`'s first parameter represents the index on the array from which to begin removing elements, while the second parameter indicates the number of elements to delete. For example:
+`splice()` peut prendre jusqu'à 3 paramètres, mais pour l'instant, nous allons nous concentrer sur les 2 premiers. Les deux premiers paramètres de `splice()` sont des entiers qui représentent les indices, ou positions, du tableau sur lequel `splice()` est appelé. Rappelez-vous que les tableaux sont indexés à zéro, donc pour indiquer le premier élément d'un tableau, nous utiliserons 0. Le premier paramètre de `splice()` représente l'index du tableau à partir duquel il faut commencer à supprimer des éléments, tandis que le second paramètre indique le nombre d'éléments à supprimer. Par exemple :
 
 ```js
 let array = ['today', 'was', 'not', 'so', 'great'];
@@ -18,9 +18,9 @@ let array = ['today', 'was', 'not', 'so', 'great'];
 array.splice(2, 2);
 ```
 
-Here we remove 2 elements, beginning with the third element (at index 2). `array` would have the value `['today', 'was', 'great']`.
+Ici, nous supprimons 2 éléments, en commençant par le troisième élément (à l'indice 2). `array` aurait la valeur `['today', 'was', 'great']`.
 
-`splice()` not only modifies the array it's being called on, but it also returns a new array containing the value of the removed elements:
+`splice()` ne modifie pas seulement le tableau sur lequel il est appelé, mais il retourne également un nouveau tableau contenant la valeur des éléments supprimés :
 
 ```js
 let array = ['I', 'am', 'feeling', 'really', 'happy'];
@@ -28,15 +28,15 @@ let array = ['I', 'am', 'feeling', 'really', 'happy'];
 let newArray = array.splice(3, 2);
 ```
 
-`newArray` has the value `['really', 'happy']`.
+`newArray` a pour valeur`['really', 'happy']`.
 
 # --instructions--
 
-We've initialized an array `arr`. Use `splice()` to remove elements from `arr`, so that it only contains elements that sum to the value of `10`.
+Nous avons initialisé un tableau `arr`. Utilisez `splice()` pour supprimer des éléments de `arr`, de sorte qu'il ne contienne que des éléments dont la somme est égale à la valeur de `10`.
 
 # --hints--
 
-You should not change the original line of `const arr = [2, 4, 5, 1, 7, 5, 2, 1];`.
+Vous ne devez pas modifier la ligne originale de `const arr = [2, 4, 5, 1, 7, 5, 2, 1];`.
 
 ```js
 assert(
@@ -44,7 +44,7 @@ assert(
 );
 ```
 
-`arr` should only contain elements that sum to `10`.
+`arr` ne doit contenir que des éléments dont la somme est égale à `10`.
 
 ```js
 assert.strictEqual(
@@ -53,13 +53,13 @@ assert.strictEqual(
 );
 ```
 
-Your code should utilize the `splice()` method on `arr`.
+Votre code devrait utiliser la méthode `splice()` sur `arr`.
 
 ```js
 assert(__helpers.removeWhiteSpace(code).match(/arr\.splice\(/));
 ```
 
-The splice should only remove elements from `arr` and not add any additional elements to `arr`.
+Le splice doit uniquement supprimer des éléments de `arr` et ne pas ajouter d'éléments supplémentaires à `arr`.
 
 ```js
 assert(
@@ -73,9 +73,9 @@ assert(
 
 ```js
 const arr = [2, 4, 5, 1, 7, 5, 2, 1];
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 console.log(arr);
 ```
 

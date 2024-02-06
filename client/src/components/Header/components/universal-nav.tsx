@@ -22,17 +22,19 @@ export const UniversalNav = ({
   fetchState
 }: UniversalNavProps): JSX.Element => {
   return (
-    <nav className='nav-bar'>
-      <Link id='' to='/'>
-        <NavLogo />
-      </Link>
+    <nav className='nav-bar '>
+      <div className='container menu-bar'>
+        <Link className='link-logo' to='/'>
+          <NavLogo />
+        </Link>
 
-      <NavLinks
-        displayMenu={displayMenu}
-        fetchState={fetchState}
-        toggleDisplayMenu={toggleDisplayMenu}
-        user={user}
-      />
+        <NavLinks
+          displayMenu={displayMenu}
+          fetchState={fetchState}
+          toggleDisplayMenu={toggleDisplayMenu}
+          user={user}
+        />
+      </div>
     </nav>
   );
 };

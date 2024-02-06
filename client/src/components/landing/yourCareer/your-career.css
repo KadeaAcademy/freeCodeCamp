@@ -1,0 +1,17 @@
+.career-title {
+  color: var(--primary-background) !important;
+}
+
+.career-img {
+  /* position: relative;
+    top: 200px; */
+  /* position: absolute;
+    top: 100px; */
+  padding: 5%;
+}
+
+@media (max-width: 992px) {
+  .hide-on-mobile-career-img {
+    display: none;
+  }
+}

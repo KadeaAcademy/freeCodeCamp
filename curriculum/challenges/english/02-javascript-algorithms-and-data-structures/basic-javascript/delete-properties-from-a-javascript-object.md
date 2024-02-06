@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392d3
-title: Delete Properties from a JavaScript Object
+title: Supprimer les propriétés d'un objet JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cDqKdTv'
 forumTopicId: 17560
@@ -9,53 +9,53 @@ dashedName: delete-properties-from-a-javascript-object
 
 # --description--
 
-We can also delete properties from objects like this:
+Nous pouvons également supprimer les propriétés des objets comme ceci
 
 ```js
-delete ourDog.bark;
+delete notrechien.aboie;
 ```
 
-Example:
+Exemple:
 
 ```js
-const ourDog = {
-  "name": "Camper",
-  "legs": 4,
-  "tails": 1,
-  "friends": ["everything!"],
-  "bark": "bow-wow"
-};
+const notreChien = {
+  "nom" : "Campeur",
+  "pattes" : 4,
+  "queues" : 1,
+  "amis" : ["tout !"],
+  "aboie" : "bow-wow"
+} ;
 
-delete ourDog.bark;
+delete notrechien.aboie;
 ```
 
-After the last line shown above, `ourDog` looks like:
+Après la dernière ligne montrée ci-dessus, `notreChien` ressemble à ceci :
 
 ```js
 {
-  "name": "Camper",
-  "legs": 4,
-  "tails": 1,
-  "friends": ["everything!"]
+  "nom" : "Campeur",
+  "pattes" : 4,
+  "queues" : 1,
+  "amis" : ["tout !"]
 }
 ```
 
 # --instructions--
 
-Delete the `tails` property from `myDog`. You may use either dot or bracket notation.
+Supprimez la propriété `queues` de `monChien`. Vous pouvez utiliser la notation par points ou par crochets.
 
 # --hints--
 
-You should delete the property `tails` from `myDog`.
+Vous devez supprimer la propriété `queues` de `monChien`.
 
 ```js
-assert(typeof myDog === 'object' && myDog.tails === undefined);
+assert(typeof monChien === 'object' && monChien.queues === undefined);
 ```
 
-You should not modify the `myDog` setup.
+Vous ne devez pas modifier la structure de `monChien`.
 
 ```js
-assert(code.match(/"tails": 1/g).length > 0);
+assert(code.match(/"queues": 1/g).length > 0);
 ```
 
 # --seed--
@@ -63,34 +63,34 @@ assert(code.match(/"tails": 1/g).length > 0);
 ## --after-user-code--
 
 ```js
-(function(z){return z;})(myDog);
+(function(z){return z;})(monChien);
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myDog = {
-  "name": "Happy Coder",
-  "legs": 4,
-  "tails": 1,
-  "friends": ["freeCodeCamp Campers"],
-  "bark": "woof"
+const monChien = {
+  "nom": "Happy Coder",
+  "pattes": 4,
+  "queues": 1,
+  "amis": ["Kadea Campeurs"],
+  "aboie": "woof"
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 
 # --solutions--
 
 ```js
-const myDog = {
-  "name": "Happy Coder",
-  "legs": 4,
-  "tails": 1,
-  "friends": ["freeCodeCamp Campers"],
-  "bark": "woof"
+const monChien = {
+  "nom": "Happy Coder",
+  "pattes": 4,
+  "queues": 1,
+  "amis": ["kadea Campeurs"],
+  "aboie": "woof"
 };
-delete myDog.tails;
+delete monChien.queues;
 ```

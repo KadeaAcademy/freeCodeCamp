@@ -62,5 +62,13 @@
   "WebhookToken": {
     "dataSource": "db",
     "public": false
+  },
+  "userGroup": {
+    "dataSource": "db",
+    "public": true
+  },
+  "userRole": {
+    "dataSource": "db",
+    "public": true
   }
 }

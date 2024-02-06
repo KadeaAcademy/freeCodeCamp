@@ -1,6 +1,6 @@
 ---
 id: 587d7db0367417b2b2512b84
-title: Inherit Behaviors from a Supertype
+title: Hériter des comportements d'un super-type
 challengeType: 1
 forumTopicId: 301319
 dashedName: inherit-behaviors-from-a-supertype
@@ -8,7 +8,7 @@ dashedName: inherit-behaviors-from-a-supertype
 
 # --description--
 
-In the previous challenge, you created a `supertype` called `Animal` that defined behaviors shared by all animals:
+Dans le défi précédent, vous avez créé un `supertype` appelé `Animal` qui définit les comportements partagés par tous les animaux :
 
 ```js
 function Animal() { }
@@ -17,46 +17,46 @@ Animal.prototype.eat = function() {
 };
 ```
 
-This and the next challenge will cover how to reuse the methods of `Animal` inside `Bird` and `Dog` without defining them again. It uses a technique called inheritance. This challenge covers the first step: make an instance of the `supertype` (or parent). You already know one way to create an instance of `Animal` using the `new` operator:
+Ce défi et le suivant vont couvrir la façon de réutiliser les méthodes de `Animal` dans `Bird` et `Dog` sans les définir à nouveau. Cette technique s'appelle l'héritage. Ce défi couvre la première étape : créer une instance du `supertype` (ou parent). Vous connaissez déjà une façon de créer une instance de `Animal` en utilisant l'opérateur `new` :
 
 ```js
 let animal = new Animal();
 ```
 
-There are some disadvantages when using this syntax for inheritance, which are too complex for the scope of this challenge. Instead, here's an alternative approach without those disadvantages:
+L'utilisation de cette syntaxe pour l'héritage présente certains inconvénients, qui sont trop complexes pour l'objet de ce défi. Voici donc une approche alternative qui ne présente pas ces inconvénients :
 
 ```js
 let animal = Object.create(Animal.prototype);
 ```
 
-`Object.create(obj)` creates a new object, and sets `obj` as the new object's `prototype`. Recall that the `prototype` is like the "recipe" for creating an object. By setting the `prototype` of `animal` to be the `prototype` of `Animal`, you are effectively giving the `animal` instance the same "recipe" as any other instance of `Animal`.
+`Object.create(obj)` crée un nouvel objet, et définit `obj` comme `prototype` du nouvel objet. Rappelons que le `prototype` est comme la "recette" de la création d'un objet. En fixant le `prototype` de `animal` comme étant le `prototype` de `Animal`, vous donnez effectivement à l'instance de `animal` la même "recette" que n'importe quelle autre instance de `Animal`.
 
 ```js
 animal.eat();
 animal instanceof Animal;
 ```
 
-The `instanceof` method here would return `true`.
+La méthode `instanceof` retournerait ici `true`.
 
 # --instructions--
 
-Use `Object.create` to make two instances of `Animal` named `duck` and `beagle`.
+Utilisez `Object.create` pour créer deux instances de `Animal` nommées `duck` et `beagle`.
 
 # --hints--
 
-The `duck` variable should be defined.
+La variable `duck` doit être définie.
 
 ```js
 assert(typeof duck !== 'undefined');
 ```
 
-The `beagle` variable should be defined.
+La variable `beagle` doit être définie.
 
 ```js
 assert(typeof beagle !== 'undefined');
 ```
 
-The `duck` variable should be initialised with `Object.create`.
+La variable `duck` doit être initialisée avec `Object.create`.
 
 ```js
 assert(
@@ -66,7 +66,7 @@ assert(
 );
 ```
 
-The `beagle` variable should be initialised with `Object.create`.
+La variable `beagle` doit être initialisée avec `Object.create`.
 
 ```js
 assert(
@@ -76,13 +76,13 @@ assert(
 );
 ```
 
-`duck` should have a `prototype` of `Animal`.
+`duck` devrait avoir un `prototype` de `Animal`.
 
 ```js
 assert(duck instanceof Animal);
 ```
 
-`beagle` should have a `prototype` of `Animal`.
+`beagle` devrait avoir un `prototype` de `Animal`.
 
 ```js
 assert(beagle instanceof Animal);
@@ -102,10 +102,10 @@ Animal.prototype = {
   }
 };
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
-let duck; // Change this line
-let beagle; // Change this line
+let duck; // Modifiez cette ligne
+let beagle; // Modifiez cette ligne
 ```
 
 # --solutions--

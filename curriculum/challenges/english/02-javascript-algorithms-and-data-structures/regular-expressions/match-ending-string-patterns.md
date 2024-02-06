@@ -1,6 +1,6 @@
 ---
 id: 587d7db7367417b2b2512b9e
-title: Match Ending String Patterns
+title: Faire correspondre des modèles de chaînes de caractères de fin
 challengeType: 1
 forumTopicId: 301352
 dashedName: match-ending-string-patterns
@@ -8,9 +8,9 @@ dashedName: match-ending-string-patterns
 
 # --description--
 
-In the last challenge, you learned to use the caret character to search for patterns at the beginning of strings. There is also a way to search for patterns at the end of strings.
+Dans le dernier défi, vous avez appris à utiliser le caractère accentuation pour rechercher des motifs au début des chaînes de caractères. Il existe également un moyen de rechercher des motifs à la fin des chaînes de caractères.
 
-You can search the end of strings using the dollar sign character `$` at the end of the regex.
+Vous pouvez rechercher la fin des chaînes de caractères en utilisant le signe dollar `$` à la fin de la regex.
 
 ```js
 let theEnding = "This is a never ending story";
@@ -20,27 +20,27 @@ let noEnding = "Sometimes a story will have to end";
 storyRegex.test(noEnding);
 ```
 
-The first `test` call would return `true`, while the second would return `false`.
+Le premier appel à `test` retournera `true`, tandis que le second retournera `false`.
 
 # --instructions--
 
-Use the anchor character (`$`) to match the string `caboose` at the end of the string `caboose`.
+Utilisez le caractère d'ancrage (`$`) pour faire correspondre la chaîne `caboose` à la fin de la chaîne `caboose`.
 
 # --hints--
 
-You should search for `caboose` with the dollar sign `$` anchor in your regex.
+Vous devez rechercher `caboose` avec le signe dollar `$` ancré dans votre regex.
 
 ```js
 assert(lastRegex.source == 'caboose$');
 ```
 
-Your regex should not use any flags.
+Votre regex ne doit pas utiliser de marqueur.
 
 ```js
 assert(lastRegex.flags == '');
 ```
 
-You should match `caboose` at the end of the string `The last car on a train is the caboose`
+Vous devez faire correspondre `caboose` à la fin de la chaîne `The last car on a train is the caboose`.
 
 ```js
 lastRegex.lastIndex = 0;
@@ -53,7 +53,7 @@ assert(lastRegex.test('The last car on a train is the caboose'));
 
 ```js
 let caboose = "The last car on a train is the caboose";
-let lastRegex = /change/; // Change this line
+let lastRegex = /change/; // Modifiez cette ligne
 let result = lastRegex.test(caboose);
 ```
 
@@ -61,6 +61,6 @@ let result = lastRegex.test(caboose);
 
 ```js
 let caboose = "The last car on a train is the caboose";
-let lastRegex = /caboose$/; // Change this line
+let lastRegex = /caboose$/; // Modifiez cette ligne
 let result = lastRegex.test(caboose);
 ```

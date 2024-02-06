@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d0
-title: Comparison with the Equality Operator
+title: Comparaison avec l'opérateur d'égalité
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cKyVMAL'
 forumTopicId: 16784
@@ -9,20 +9,20 @@ dashedName: comparison-with-the-equality-operator
 
 # --description--
 
-There are many <dfn>comparison operators</dfn> in JavaScript. All of these operators return a boolean `true` or `false` value.
+Il existe de nombreux <dfn>opérateurs de comparaison</dfn> en JavaScript. Tous ces opérateurs renvoient une valeur booléenne `true` ou `false`.
 
-The most basic operator is the equality operator `==`. The equality operator compares two values and returns `true` if they're equivalent or `false` if they are not. Note that equality is different from assignment (`=`), which assigns the value on the right of the operator to a variable on the left.
+L'opérateur le plus basique est l'opérateur d'égalité `==`. L'opérateur d'égalité compare deux valeurs et renvoie la valeur `true` si elles sont équivalentes ou `false` si elles ne le sont pas. Notez que l'égalité est différente de l'affectation (`=`), qui attribue la valeur à droite de l'opérateur à une variable à gauche.
 
 ```js
 function equalityTest(myVal) {
   if (myVal == 10) {
-    return "Equal";
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 ```
 
-If `myVal` is equal to `10`, the equality operator returns `true`, so the code in the curly braces will execute, and the function will return `Equal`. Otherwise, the function will return `Not Equal`. In order for JavaScript to compare two different <dfn>data types</dfn> (for example, `numbers` and `strings`), it must convert one type to another. This is known as Type Coercion. Once it does, however, it can compare terms as follows:
+Si `myVal` est égal à `10`, l'opérateur d'égalité renvoie `true`, donc le code entre accolades sera exécuté, et la fonction renverra `Egal`.Sinon, la fonction renvoie `Non Egal`. Pour que JavaScript puisse comparer deux <dfn>types de données</dfn> différents (par exemple, des "nombres" et des "chaînes de caractères"), il doit convertir un type en un autre. Cette opération est connue sous le nom de coercition de type. Mais une fois qu'il l'a fait, il peut comparer les termes comme suit :
 
 ```js
 1   ==  1  // true
@@ -33,29 +33,29 @@ If `myVal` is equal to `10`, the equality operator returns `true`, so the code i
 
 # --instructions--
 
-Add the equality operator to the indicated line so that the function will return the string `Equal` when `val` is equivalent to `12`.
+Ajoutez l'opérateur d'égalité à la ligne indiquée pour que la fonction renvoie la chaîne `Egal` lorsque `val` est équivalent à `12`.
 
 # --hints--
 
-`testEqual(10)` should return the string `Not Equal`
+`testEqual(10)` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testEqual(10) === 'Not Equal');
+assert(testEqual(10) === 'Pas Egal');
 ```
 
-`testEqual(12)` should return the string `Equal`
+`testEqual(12)` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testEqual(12) === 'Equal');
+assert(testEqual(12) === 'Egal');
 ```
 
-`testEqual("12")` should return the string `Equal`
+`testEqual("12")` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testEqual('12') === 'Equal');
+assert(testEqual('12') === 'Egal');
 ```
 
-You should use the `==` operator
+Vous devez utiliser l'opérateur `==`.
 
 ```js
 assert(code.match(/==/g) && !code.match(/===/g));
@@ -68,10 +68,10 @@ assert(code.match(/==/g) && !code.match(/===/g));
 ```js
 // Setup
 function testEqual(val) {
-  if (val) { // Change this line
-    return "Equal";
+  if (val) { // Modifiez cette ligne
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 
 testEqual(10);
@@ -82,8 +82,8 @@ testEqual(10);
 ```js
 function testEqual(val) {
   if (val == 12) {
-    return "Equal";
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 ```

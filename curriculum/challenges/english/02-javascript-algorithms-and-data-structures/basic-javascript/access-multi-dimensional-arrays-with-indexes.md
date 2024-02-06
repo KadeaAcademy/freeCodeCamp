@@ -1,6 +1,6 @@
 ---
 id: 56592a60ddddeae28f7aa8e1
-title: Access Multi-Dimensional Arrays With Indexes
+title: Accéder aux tableaux multidimensionnels avec des indices
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/ckND4Cq'
 forumTopicId: 16159
@@ -9,43 +9,43 @@ dashedName: access-multi-dimensional-arrays-with-indexes
 
 # --description--
 
-One way to think of a <dfn>multi-dimensional</dfn> array, is as an *array of arrays*. When you use brackets to access your array, the first set of brackets refers to the entries in the outer-most (the first level) array, and each additional pair of brackets refers to the next level of entries inside.
+Une façon d'envisager un tableau <dfn>multidimensionnel</dfn>, c'est comme un *tableau de tableaux*. Lorsque vous utilisez des parenthèses pour accéder à votre tableau, le premier ensemble de crochets fait référence aux entrées du tableau le plus extérieur (le premier niveau), et chaque paire de crochets supplémentaire fait référence au niveau suivant d'entrées à l'intérieur.
 
 **Example**
 
 ```js
-const arr = [
+const tab = [
   [1, 2, 3],
   [4, 5, 6],
   [7, 8, 9],
   [[10, 11, 12], 13, 14]
 ];
 
-arr[3];
-arr[3][0];
-arr[3][0][1];
+tab[3];
+tab[3][0];
+tab[3][0][1];
 ```
 
-`arr[3]` is `[[10, 11, 12], 13, 14]`, `arr[3][0]` is `[10, 11, 12]`, and `arr[3][0][1]` is `11`.
+`tab[3]` est `[[10, 11, 12], 13, 14]`, `tab[3][0]` est `[10, 11, 12]`, et `tab[3][0][1]` est `11`.
 
-**Note:** There shouldn't be any spaces between the array name and the square brackets, like `array [0][0]` and even this `array [0] [0]` is not allowed. Although JavaScript is able to process this correctly, this may confuse other programmers reading your code.
+**Remarque :** Il ne doit pas y avoir d'espace entre le nom du tableau et les crochets, comme `tableau [0][0]` et même ce `tableau [0] [0]` n'est pas autorisé. Bien que JavaScript soit capable de traiter cela correctement, cela peut perturber les autres programmeurs qui lisent votre code.
 
 # --instructions--
 
-Using bracket notation select an element from `myArray` such that `myData` is equal to `8`.
+En utilisant la notation entre crochets, sélectionnez un élément de `monTableau` tel que `myData` soit égal à `8`.
 
 # --hints--
 
-`myData` should be equal to `8`.
+`myData` devrait être égal à `8`.
 
 ```js
 assert(myData === 8);
 ```
 
-You should be using bracket notation to read the correct value from `myArray`.
+Vous devriez utiliser la notation entre crochets pour lire la valeur correcte de `monTableau`.
 
 ```js
-assert(/myData=myArray\[2\]\[1\]/.test(__helpers.removeWhiteSpace(code)));
+assert(/myData=monTableau\[2\]\[1\]/.test(__helpers.removeWhiteSpace(code)));
 ```
 
 # --seed--
@@ -53,25 +53,25 @@ assert(/myData=myArray\[2\]\[1\]/.test(__helpers.removeWhiteSpace(code)));
 ## --after-user-code--
 
 ```js
-if(typeof myArray !== "undefined"){(function(){return "myData: " + myData + " myArray: " + JSON.stringify(myArray);})();}
+if(typeof monTableau !== "undefined"){(function(){return "myData: " + myData + " monTableau: " + JSON.stringify(monTableau);})();}
 ```
 
 ## --seed-contents--
 
 ```js
-const myArray = [
+const monTableau = [
   [1, 2, 3],
   [4, 5, 6],
   [7, 8, 9],
   [[10, 11, 12], 13, 14],
 ];
 
-const myData = myArray[0][0];
+const myData = monTableau[0][0];
 ```
 
 # --solutions--
 
 ```js
-const myArray = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [[10, 11, 12], 13, 14]];
-const myData = myArray[2][1];
+const monTableau = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [[10, 11, 12], 13, 14]];
+const myData = monTableau[2][1];
 ```

@@ -1,6 +1,6 @@
 ---
 id: 587d7db1367417b2b2512b86
-title: Reset an Inherited Constructor Property
+title: Réinitialiser une propriété de constructeur héritée 
 challengeType: 1
 forumTopicId: 301324
 dashedName: reset-an-inherited-constructor-property
@@ -8,9 +8,9 @@ dashedName: reset-an-inherited-constructor-property
 
 # --description--
 
-When an object inherits its `prototype` from another object, it also inherits the supertype's constructor property.
+Lorsqu'un objet hérite de son `prototype` d'un autre objet, il hérite également de la propriété du constructeur du supertype.
 
-Here's an example:
+Voici un exemple :
 
 ```js
 function Bird() { }
@@ -19,7 +19,7 @@ let duck = new Bird();
 duck.constructor
 ```
 
-But `duck` and all instances of `Bird` should show that they were constructed by `Bird` and not `Animal`. To do so, you can manually set the constructor property of `Bird` to the `Bird` object:
+Mais `duck` et toutes les instances de `Bird` devraient montrer qu'ils ont été construits par `Bird` et non par `Animal`. Pour ce faire, vous pouvez manuellement définir la propriété constructor de `Bird` à l'objet `Bird` :
 
 ```js
 Bird.prototype.constructor = Bird;
@@ -28,29 +28,29 @@ duck.constructor
 
 # --instructions--
 
-Fix the code so `duck.constructor` and `beagle.constructor` return their respective constructors.
+Corriger le code pour que `duck.constructor` et `beagle.constructor` renvoient leurs constructeurs respectifs.
 
 # --hints--
 
-`Bird.prototype` should be an instance of `Animal`.
+`Bird.prototype` doit être une instance de `Animal`.
 
 ```js
 assert(Animal.prototype.isPrototypeOf(Bird.prototype));
 ```
 
-`duck.constructor` should return `Bird`.
+`duck.constructor` devrait retourner `Bird`.
 
 ```js
 assert(duck.constructor === Bird);
 ```
 
-`Dog.prototype` should be an instance of `Animal`.
+`Dog.prototype` doit être une instance de `Animal`.
 
 ```js
 assert(Animal.prototype.isPrototypeOf(Dog.prototype));
 ```
 
-`beagle.constructor` should return `Dog`.
+`beagle.constructor` devrait retourner `Dog`.
 
 ```js
 assert(beagle.constructor === Dog);
@@ -68,7 +68,7 @@ function Dog() { }
 Bird.prototype = Object.create(Animal.prototype);
 Dog.prototype = Object.create(Animal.prototype);
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
 

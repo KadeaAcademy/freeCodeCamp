@@ -1,6 +1,6 @@
 ---
 id: cf1111c1c11feddfaeb9bdef
-title: Generate Random Fractions with JavaScript
+title: Générer des fractions aléatoires avec JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cyWJJs3'
 forumTopicId: 18185
@@ -9,31 +9,31 @@ dashedName: generate-random-fractions-with-javascript
 
 # --description--
 
-Random numbers are useful for creating random behavior.
+Les nombres aléatoires sont utiles pour créer un comportement aléatoire.
 
-JavaScript has a `Math.random()` function that generates a random decimal number between `0` (inclusive) and `1` (exclusive). Thus `Math.random()` can return a `0` but never return a `1`.
+JavaScript possède une fonction `Math.random()` qui génère un nombre décimal aléatoire entre `0` (inclusif) et `1` (exclusif). Ainsi, `Math.random()` peut retourner un `0` mais jamais un `1`.
 
-**Note:** Like [Storing Values with the Assignment Operator](/learn/javascript-algorithms-and-data-structures/basic-javascript/storing-values-with-the-assignment-operator), all function calls will be resolved before the `return` executes, so we can `return` the value of the `Math.random()` function.
+**Note:** Comme pour [Stockage des valeurs avec l'opérateur d'affectation](/learn/javascript-algorithms-and-data-structures/basic-javascript/storing-values-with-the-assignment-operator), tous les appels de fonction seront résolus avant l'exécution du `return`, nous pouvons donc `retourner` la valeur de la fonction `Math.random()`.
 
 # --instructions--
 
-Change `randomFraction` to return a random number instead of returning `0`.
+Changez `randomFraction` pour retourner un nombre aléatoire au lieu de retourner `0`.
 
 # --hints--
 
-`randomFraction` should return a random number.
+`randomFraction` doit renvoyer un nombre aléatoire.
 
 ```js
 assert(typeof randomFraction() === 'number');
 ```
 
-The number returned by `randomFraction` should be a decimal.
+Le nombre retourné par `randomFraction` doit être un décimal.
 
 ```js
 assert((randomFraction() + '').match(/\./g));
 ```
 
-You should be using `Math.random` to generate the random decimal number.
+Vous devriez utiliser `Math.random` pour générer le nombre décimal aléatoire.
 
 ```js
 assert(code.match(/Math\.random/g).length >= 0);
@@ -52,11 +52,11 @@ assert(code.match(/Math\.random/g).length >= 0);
 ```js
 function randomFraction() {
 
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
   return 0;
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 ```
 

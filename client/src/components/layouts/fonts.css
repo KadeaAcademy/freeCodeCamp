@@ -1,43 +1,3 @@
-@font-face {
-  font-family: 'Lato';
-  src: url('../../../static/fonts/lato/Lato-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../../static/fonts/lato/Lato-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../../static/fonts/lato/Lato-Italic.woff') format('woff');
-  font-weight: normal;
-  font-style: italic;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../../static/fonts/lato/Lato-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../../static/fonts/lato/Lato-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: fallback;
-}
-
 /* roboto mono */
 
 @font-face {
@@ -62,6 +22,119 @@
   font-family: 'Roboto Mono';
   src: url('../../../static/fonts/roboto-mono/RobotoMono-Bold.woff')
     format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+
+/* titillium web */
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Bold.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Bold.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Bold.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Bold.ttf')
+      format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Black.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Black.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Black.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Black.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Black.ttf')
+      format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-ExtraLight.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-ExtraLight.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-ExtraLight.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-ExtraLight.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-ExtraLight.ttf')
+      format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Light.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Light.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Light.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Light.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Light.ttf')
+      format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Regular.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Regular.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Regular.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-Regular.ttf')
+      format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-SemiBold.eot');
+  src: url('../../../static/fonts/titillium-web/TitilliumWeb-SemiBold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-SemiBold.woff2')
+      format('woff2'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-SemiBold.woff')
+      format('woff'),
+    url('../../../static/fonts/titillium-web/TitilliumWeb-SemiBold.ttf')
+      format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: fallback;
+}
+
+/* vodafone */
+
+@font-face {
+  font-family: 'Vodafone Rg';
+  src: url('../../../static/fonts/vodafone/VodafoneRg-Bold.eot');
+  src: url('../../../static/fonts/vodafone/VodafoneRg-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../../static/fonts/vodafone/VodafoneRg-Bold.woff2') format('woff2'),
+    url('../../../static/fonts/vodafone/VodafoneRg-Bold.woff') format('woff'),
+    url('../../../static/fonts/vodafone/VodafoneRg-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
   font-display: fallback;

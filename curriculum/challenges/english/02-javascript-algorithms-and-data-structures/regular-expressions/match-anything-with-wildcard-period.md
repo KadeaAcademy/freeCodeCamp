@@ -1,6 +1,6 @@
 ---
 id: 587d7db5367417b2b2512b94
-title: Match Anything with Wildcard Period
+title: Faites correspondre n'importe quoi avec le point 
 challengeType: 1
 forumTopicId: 301348
 dashedName: match-anything-with-wildcard-period
@@ -8,74 +8,74 @@ dashedName: match-anything-with-wildcard-period
 
 # --description--
 
-Sometimes you won't (or don't need to) know the exact characters in your patterns. Thinking of all words that match, say, a misspelling would take a long time. Luckily, you can save time using the wildcard character: `.`
+Parfois, vous ne connaîtrez pas (ou n'aurez pas besoin de connaître) les caractères exacts de vos motifs. Penser à tous les mots qui correspondent, par exemple, à une faute d'orthographe, prendrait beaucoup de temps. Heureusement, vous pouvez gagner du temps en utilisant le caractère générique : `.`.
 
-The wildcard character `.` will match any one character. The wildcard is also called `dot` and `period`. You can use the wildcard character just like any other character in the regex. For example, if you wanted to match `hug`, `huh`, `hut`, and `hum`, you can use the regex `/hu./` to match all four words.
+Le caractère générique `.` correspond à n'importe quel caractère. Le caractère générique est également appelé `point`. Vous pouvez utiliser le caractère générique comme n'importe quel autre caractère dans une regex. Par exemple, si vous voulez faire correspondre `présumer`, `prédire`, `précoccuper`, et `président`, vous pouvez utiliser la regex `/pré./` pour faire correspondre les quatre mots.
 
 ```js
-let humStr = "I'll hum a song";
-let hugStr = "Bear hug";
-let huRegex = /hu./;
-huRegex.test(humStr);
-huRegex.test(hugStr);
+let presidentStr = "Le président a signé a décret";
+let predireStr = "Comment prédire l'avenir";
+let preRegex = /pré./;
+preRegex.test(presidentStr);
+preRegex.test(predireStr);
 ```
 
-Both of these `test` calls would return `true`.
+Ces deux appels à `test` renverront `true`.
 
 # --instructions--
 
-Complete the regex `unRegex` so that it matches the strings `run`, `sun`, `fun`, `pun`, `nun`, and `bun`. Your regex should use the wildcard character.
+Complétez la regex `unRegex` pour qu'elle corresponde aux chaînes de caractères `run`, `sun`, `fun`, `pun`, `nun`, et `bun`. Votre regex doit utiliser le caractère générique.
 
 # --hints--
 
-You should use the `.test()` method.
+Vous devez utiliser la méthode `.test()`.
 
 ```js
 assert(code.match(/\.test\(.*\)/));
 ```
 
-You should use the wildcard character in your regex `unRegex`
+Vous devez utiliser le caractère générique dans votre regex `unRegex`.
 
 ```js
 assert(/\./.test(unRegex.source));
 ```
 
-Your regex `unRegex` should match `run` in the string `Let us go on a run.`
+Votre regex `unRegex` devrait correspondre à `run` dans la chaîne `Let us go on a run.`
 
 ```js
 unRegex.lastIndex = 0;
 assert(unRegex.test('Let us go on a run.'));
 ```
 
-Your regex `unRegex` should match `sun` in the string `The sun is out today.`
+Votre regex `unRegex` devrait correspondre à `sun` dans la chaîne de caractères `The sun is out today.`
 
 ```js
 unRegex.lastIndex = 0;
 assert(unRegex.test('The sun is out today.'));
 ```
 
-Your regex `unRegex` should match `fun` in the string `Coding is a lot of fun.`
+Votre regex `unRegex` devrait correspondre à `fun` dans la chaîne `Coding is a lot of fun.`
 
 ```js
 unRegex.lastIndex = 0;
 assert(unRegex.test('Coding is a lot of fun.'));
 ```
 
-Your regex `unRegex` should match `pun` in the string `Seven days without a pun makes one weak.`
+Votre regex `unRegex` devrait correspondre à `pun` dans la chaîne `Seven days without a pun makes one weak`.
 
 ```js
 unRegex.lastIndex = 0;
 assert(unRegex.test('Seven days without a pun makes one weak.'));
 ```
 
-Your regex `unRegex` should match `nun` in the string `One takes a vow to be a nun.`
+Votre regex `unRegex` devrait correspondre à `nun` dans la chaîne `One takes a vow to be a nun.`
 
 ```js
 unRegex.lastIndex = 0;
 assert(unRegex.test('One takes a vow to be a nun.'));
 ```
 
-Your regex `unRegex` should match `bun` in the string `She got fired from the hot dog stand for putting her hair in a bun.`
+Votre regex `unRegex` devrait correspondre à `bun` dans la chaîne `She got fired from the hot dog stand for putting her hair in a bun.`
 
 ```js
 unRegex.lastIndex = 0;
@@ -86,14 +86,14 @@ assert(
 );
 ```
 
-Your regex `unRegex` should not match the string `There is a bug in my code.`
+Votre regex `unRegex` ne doit pas correspondre à la chaîne `There is a bug in my code.`
 
 ```js
 unRegex.lastIndex = 0;
 assert(!unRegex.test('There is a bug in my code.'));
 ```
 
-Your regex `unRegex` should not match the string `Catch me if you can.`
+Votre regex `unRegex` ne doit pas correspondre à la chaîne `Catch me if you can.`
 
 ```js
 unRegex.lastIndex = 0;
@@ -106,7 +106,7 @@ assert(!unRegex.test('Catch me if you can.'));
 
 ```js
 let exampleStr = "Let's have fun with regular expressions!";
-let unRegex = /change/; // Change this line
+let unRegex = /change/; // Modifiez cette ligne
 let result = unRegex.test(exampleStr);
 ```
 
@@ -114,6 +114,6 @@ let result = unRegex.test(exampleStr);
 
 ```js
 let exampleStr = "Let's have fun with regular expressions!";
-let unRegex = /.un/; // Change this line
+let unRegex = /.un/; // Modifiez cette ligne
 let result = unRegex.test(exampleStr);
 ```

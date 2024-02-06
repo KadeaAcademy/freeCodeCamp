@@ -1,0 +1,24 @@
+.side-bar-nav-list {
+  list-style: none;
+}
+
+.side-bar-nav-item {
+  margin: 0.2rem 0;
+}
+
+.side-bar-nav-list .side-bar-nav-item a {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  display: block;
+  text-decoration: none;
+  color: var(--gray-00);
+  font-weight: 600;
+  border-right: solid 5px rgba(255, 255, 255, 0);
+  transition: all 0.3s ease;
+}
+
+.side-bar-nav-list .side-bar-nav-item a:hover,
+.side-bar-nav-list .side-bar-nav-item a:focus,
+.side-bar-nav-list .side-bar-nav-item .active {
+  border-right-color: solid 5px var(--gray-00);
+  background: #34394b !important;
+}

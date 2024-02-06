@@ -209,14 +209,14 @@ class UsernameSettings extends Component<UsernameProps, UsernameState> {
       characterValidation: { valid, error },
       submitClicked
     } = this.state;
-    const { isValidUsername, t, validating } = this.props;
+    const { isValidUsername, validating } = this.props;
 
     return (
       <form id='usernameSettings' onSubmit={this.handleSubmit}>
-        <FullWidthRow>
+        <div>
           <FormGroup>
             <ControlLabel htmlFor='username-settings'>
-              <strong>{t('settings.labels.username')}</strong>
+              <strong>{'Nom d’utilisateur'}</strong>
             </ControlLabel>
             <FormControl
               name='username-settings'
@@ -224,16 +224,16 @@ class UsernameSettings extends Component<UsernameProps, UsernameState> {
               value={formValue}
             />
           </FormGroup>
-        </FullWidthRow>
+        </div>
         {!isFormPristine &&
           this.renderAlerts(validating, error, isValidUsername)}
-        <FullWidthRow>
+        <div>
           <BlockSaveButton
             disabled={
               !(isValidUsername && valid && !isFormPristine) || submitClicked
             }
           />
-        </FullWidthRow>
+        </div>
       </form>
     );
   }

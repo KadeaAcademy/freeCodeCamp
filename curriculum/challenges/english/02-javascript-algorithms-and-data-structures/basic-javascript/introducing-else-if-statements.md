@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244db
-title: Introducing Else If Statements
+title: Introduction des instructions Else If
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/caeJ2hm'
 forumTopicId: 18206
@@ -9,37 +9,37 @@ dashedName: introducing-else-if-statements
 
 # --description--
 
-If you have multiple conditions that need to be addressed, you can chain `if` statements together with `else if` statements.
+Si plusieurs conditions doivent être prises en compte, vous pouvez enchaîner les instructions `if` avec des instructions `else if`.
 
 ```js
 if (num > 15) {
-  return "Bigger than 15";
+  return "Plus grand que 15";
 } else if (num < 5) {
-  return "Smaller than 5";
+  return "Plus petit que 5";
 } else {
-  return "Between 5 and 15";
+  return "Entre 5 et 15";
 }
 ```
 
 # --instructions--
 
-Convert the logic to use `else if` statements.
+Convertissez la logique pour utiliser les instructions `else if`.
 
 # --hints--
 
-You should have at least two `else` statements
+Vous devez avoir au moins deux instructions `else`
 
 ```js
 assert(code.match(/else/g).length > 1);
 ```
 
-You should have at least two `if` statements
+Vous devez avoir au moins deux instructions `if`.
 
 ```js
 assert(code.match(/if/g).length > 1);
 ```
 
-You should have closing and opening curly braces for each `if else` code block.
+Vous devez avoir des accolades fermantes et ouvrantes pour chaque bloc de code `if else`.
 
 ```js
 assert(
@@ -49,34 +49,34 @@ assert(
 );
 ```
 
-`testElseIf(0)` should return the string `Smaller than 5`
+`testElseIf(0)` devrait retourner la chaîne `Plus petit que 5`.
 
 ```js
-assert(testElseIf(0) === 'Smaller than 5');
+assert(testElseIf(0) === 'Plus petit que 5');
 ```
 
-`testElseIf(5)` should return the string `Between 5 and 10`
+`testElseIf(5)` devrait retourner la chaîne `Entre 5 et 10`
 
 ```js
-assert(testElseIf(5) === 'Between 5 and 10');
+assert(testElseIf(5) === 'Entre 5 et 10');
 ```
 
-`testElseIf(7)` should return the string `Between 5 and 10`
+`testElseIf(7)` devrait retourner la chaîne `Entre 5 et 10`
 
 ```js
-assert(testElseIf(7) === 'Between 5 and 10');
+assert(testElseIf(7) === 'Entre 5 et 10');
 ```
 
-`testElseIf(10)` should return the string `Between 5 and 10`
+`testElseIf(10)` devrait retourner la chaîne `Entre 5 et 10`
 
 ```js
-assert(testElseIf(10) === 'Between 5 and 10');
+assert(testElseIf(10) === 'Entre 5 et 10');
 ```
 
-`testElseIf(12)` should return the string `Greater than 10`
+`testElseIf(12)` devrait retourner la chaîne `Plus grand que 10`
 
 ```js
-assert(testElseIf(12) === 'Greater than 10');
+assert(testElseIf(12) === 'Plus grand que 10');
 ```
 
 # --seed--
@@ -86,14 +86,14 @@ assert(testElseIf(12) === 'Greater than 10');
 ```js
 function testElseIf(val) {
   if (val > 10) {
-    return "Greater than 10";
+    return "Plus grand que 10";
   }
 
   if (val < 5) {
-    return "Smaller than 5";
+    return "Plus petit que 5";
   }
 
-  return "Between 5 and 10";
+  return "Entre 5 et 10";
 }
 
 testElseIf(7);
@@ -104,11 +104,11 @@ testElseIf(7);
 ```js
 function testElseIf(val) {
   if(val > 10) {
-    return "Greater than 10";
+    return "Plus grand que 10";
   } else if(val < 5) {
-    return "Smaller than 5";
+    return "Plus petit que 5";
   } else {
-    return "Between 5 and 10";
+    return "Entre 5 et 10";
   }
 }
 ```

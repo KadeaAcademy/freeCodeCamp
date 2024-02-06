@@ -1,6 +1,6 @@
 ---
 id: af4afb223120f7348cdfc9fd
-title: Map the Debris
+title: Cartographier les débris
 challengeType: 5
 forumTopicId: 16021
 dashedName: map-the-debris
@@ -8,15 +8,15 @@ dashedName: map-the-debris
 
 # --description--
 
-Return a new array that transforms the elements' average altitude into their orbital periods (in seconds).
+Retourne un nouveau tableau qui transforme l'altitude moyenne des éléments en leur période orbitale (en secondes).
 
-The array will contain objects in the format `{name: 'name', avgAlt: avgAlt}`.
+Le tableau contiendra des objets au format `{name : 'name', avgAlt : avgAlt}`.
 
-You can read about orbital periods [on Wikipedia](http://en.wikipedia.org/wiki/Orbital_period).
+Vous pouvez vous renseigner sur les périodes orbitales [sur Wikipedia](http://en.wikipedia.org/wiki/Orbital_period).
 
-The values should be rounded to the nearest whole number. The body being orbited is Earth.
+Les valeurs doivent être arrondies au nombre entier le plus proche. Le corps en orbite est la Terre.
 
-The radius of the earth is 6367.4447 kilometers, and the GM value of earth is 398600.4418 km<sup>3</sup>s<sup>-2</sup>.
+Le rayon de la terre est de 6367,4447 kilomètres, et la valeur GM de la terre est de 398600,4418 km.<sup>3</sup>s<sup>-2</sup>.
 
 # --hints--
 

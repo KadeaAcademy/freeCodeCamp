@@ -1,6 +1,6 @@
 ---
 id: 587d7db4367417b2b2512b93
-title: Find More Than the First Match
+title: Trouver plus que la première correspondance
 challengeType: 1
 forumTopicId: 301342
 dashedName: find-more-than-the-first-match
@@ -8,7 +8,7 @@ dashedName: find-more-than-the-first-match
 
 # --description--
 
-So far, you have only been able to extract or search a pattern once.
+Jusqu'à présent, vous n'avez pu extraire ou rechercher un motif qu'une seule fois.
 
 ```js
 let testStr = "Repeat, Repeat, Repeat";
@@ -16,39 +16,39 @@ let ourRegex = /Repeat/;
 testStr.match(ourRegex);
 ```
 
-Here `match` would return `["Repeat"]`.
+Ici, `match` renverrait `["Repeat"]`.
 
-To search or extract a pattern more than once, you can use the `g` flag.
+Pour rechercher ou extraire un motif plus d'une fois, vous pouvez utiliser le drapeau `g`.
 
 ```js
 let repeatRegex = /Repeat/g;
 testStr.match(repeatRegex);
 ```
 
-And here `match` returns the value `["Repeat", "Repeat", "Repeat"]`
+Et ici `match` renvoie la valeur `["Repeat", "Repeat", "Repeat"]`.
 
 # --instructions--
 
-Using the regex `starRegex`, find and extract both `Twinkle` words from the string `twinkleStar`.
+En utilisant la regex `starRegex`, trouvez et extrayez les deux mots `Twinkle` de la chaîne `twinkleStar`.
 
 **Note**  
-You can have multiple flags on your regex like `/search/gi`
+Vous pouvez avoir plusieurs marqueurs sur votre regex comme `/search/gi`.
 
 # --hints--
 
-Your regex `starRegex` should use the global flag `g`
+Votre regex `starRegex` doit utiliser le marqueur global `g`.
 
 ```js
 assert(starRegex.flags.match(/g/).length == 1);
 ```
 
-Your regex `starRegex` should use the case insensitive flag `i`
+Votre regex `starRegex` doit utiliser le marqueur insensible à la casse `i`.
 
 ```js
 assert(starRegex.flags.match(/i/).length == 1);
 ```
 
-Your match should match both occurrences of the word `Twinkle`
+Votre correspondance doit correspondre aux deux occurrences du mot `Twinkle`.
 
 ```js
 assert(
@@ -60,7 +60,7 @@ assert(
 );
 ```
 
-Your match `result` should have two elements in it.
+Votre match `result` doit contenir deux éléments.
 
 ```js
 assert(result.length == 2);
@@ -72,8 +72,8 @@ assert(result.length == 2);
 
 ```js
 let twinkleStar = "Twinkle, twinkle, little star";
-let starRegex = /change/; // Change this line
-let result = twinkleStar; // Change this line
+let starRegex = /change/; // Modifiez cette ligne
+let result = twinkleStar; // Modifiez cette ligne
 ```
 
 # --solutions--

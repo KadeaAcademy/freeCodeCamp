@@ -1,7 +1,8 @@
 import React from 'react';
+import { Row, Col } from '@freecodecamp/react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { SuperBlocks } from '../../../../../config/certification-settings';
-import { generateIconComponent } from '../../../assets/icons';
+// import { generateIconComponent } from '../../../assets/icons';
 import { Spacer } from '../../../components/helpers';
 
 interface SuperBlockIntroProps {
@@ -25,18 +26,41 @@ function SuperBlockIntro(props: SuperBlockIntroProps): JSX.Element {
 
   return (
     <>
-      <h1 className='text-center big-heading'>{i18nSuperBlock}</h1>
-      <Spacer />
-      {generateIconComponent(superBlock, 'cert-header-icon')}
-      <Spacer />
-      {superBlockIntroText.map((str, i) => (
-        <p key={i}>{str}</p>
-      ))}
-      {superBlockNoteText && (
-        <div className='alert alert-info' style={{ marginTop: '2rem' }}>
-          {superBlockNoteText}
-        </div>
-      )}
+      <div>
+        <Row className='super-block-intro-page'>
+          <Col md={12} sm={12} xs={12}>
+            <p className='text-love-light fw-bold'>
+              {/* {t(`intro:misc-text.courses`)} */}
+              Cours
+            </p>
+            <h1 className='big-heading'>{i18nSuperBlock}</h1>
+            <Spacer size={1} />
+          </Col>
+          {/* {generateIconComponent(superBlock, 'cert-header-icon')} */}
+          {/* <Spacer /> */}
+          <Col className='' md={12} sm={12} xs={12}>
+            <div className=''>
+              {superBlockNoteText && (
+                <div
+                  className='alert alert-info standard-radius-5'
+                  style={{ marginTop: '2rem' }}
+                >
+                  {superBlockNoteText}
+                </div>
+              )}
+            </div>
+            <Spacer size={1} />
+          </Col>
+          <Col className='' md={12} sm={12} xs={12}>
+            <div className='alert bg-secondary standard-radius-5'>
+              {superBlockIntroText.map((str, i) => (
+                <p key={i}>{str}</p>
+              ))}
+            </div>
+          </Col>
+          <Spacer />
+        </Row>
+      </div>
     </>
   );
 }

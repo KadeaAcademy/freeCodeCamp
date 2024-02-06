@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244b8
-title: Concatenating Strings with the Plus Equals Operator
+title: Concaténer des chaînes de caractères avec l'opérateur Plus-Egal
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cbQmmC4'
 forumTopicId: 16803
@@ -9,32 +9,32 @@ dashedName: concatenating-strings-with-the-plus-equals-operator
 
 # --description--
 
-We can also use the `+=` operator to <dfn>concatenate</dfn> a string onto the end of an existing string variable. This can be very helpful to break a long string over several lines.
+Nous pouvons également utiliser l'opérateur `+=` pour <dfn>concaténer</dfn> une chaîne de caractères à la fin d'une variable chaîne existante. Cela peut être très utile pour casser une longue chaîne sur plusieurs lignes.
 
-**Note:** Watch out for spaces. Concatenation does not add spaces between concatenated strings, so you'll need to add them yourself.
+**Note:** Faites attention aux espaces. La concaténation n'ajoute pas d'espaces entre les chaînes concaténées, vous devrez donc les ajouter vous-même.
 
-Example:
+Exemple :
 
 ```js
-let ourStr = "I come first. ";
-ourStr += "I come second.";
+let ourStr = "Je suis le premier. ";
+ourStr += "Je viens en second.";
 ```
 
-`ourStr` now has a value of the string `I come first. I come second.`.
+`ourStr` a maintenant une valeur de chaîne `Je suis le premier. Je viens en second.`
 
 # --instructions--
 
-Build `myStr` over several lines by concatenating these two strings: `This is the first sentence.` and `This is the second sentence.` using the `+=` operator. Use the `+=` operator similar to how it is shown in the example and be sure to include a space between the two strings. Start by assigning the first string to `myStr`, then add on the second string.
+Construisez `myStr` sur plusieurs lignes en concaténant ces deux chaînes de caractères : `Voici la première phrase.` et `Voici la deuxième phrase.`, en utilisant l'opérateur "+=". Utilisez l'opérateur `+=` de la même manière que dans l'exemple et assurez-vous d'inclure un espace entre les deux chaînes de caractères. Commencez par affecter la première chaîne à `myStr`, puis ajoutez la deuxième chaîne.
 
 # --hints--
 
-`myStr` should have a value of the string `This is the first sentence. This is the second sentence.`
+`myStr` devrait avoir une valeur de chaîne `Voici la première phrase. Voici la deuxième phrase.`
 
 ```js
-assert(myStr === 'This is the first sentence. This is the second sentence.');
+assert(myStr === 'Voici la première phrase. Voici la deuxième phrase.');
 ```
 
-You should use the `+=` operator to build `myStr`.
+Vous devez utiliser l'opérateur `+=` pour construire `myStr`.
 
 ```js
 assert(code.match(/myStr\s*\+=\s*(["']).*\1/g));
@@ -63,6 +63,6 @@ let myStr;
 # --solutions--
 
 ```js
-let myStr = "This is the first sentence. ";
-myStr += "This is the second sentence.";
+let myStr = "Voici la première phrase. ";
+myStr += "Voici la deuxième phrase.";
 ```

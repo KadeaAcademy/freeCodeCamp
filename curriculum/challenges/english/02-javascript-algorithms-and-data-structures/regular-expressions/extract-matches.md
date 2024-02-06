@@ -1,6 +1,6 @@
 ---
 id: 587d7db4367417b2b2512b92
-title: Extract Matches
+title: Extraire les correspondances
 challengeType: 1
 forumTopicId: 301340
 dashedName: extract-matches
@@ -8,11 +8,11 @@ dashedName: extract-matches
 
 # --description--
 
-So far, you have only been checking if a pattern exists or not within a string. You can also extract the actual matches you found with the `.match()` method.
+Jusqu'à présent, vous n'avez fait que vérifier si un motif existe ou non dans une chaîne de caractères. Vous pouvez également extraire les correspondances que vous avez trouvées avec la méthode `.match()`.
 
-To use the `.match()` method, apply the method on a string and pass in the regex inside the parentheses.
+Pour utiliser la méthode `.match()`, appliquez la méthode sur une chaîne et passez la regex entre les parenthèses.
 
-Here's an example:
+Voici un exemple :
 
 ```js
 "Hello, World!".match(/Hello/);
@@ -21,9 +21,9 @@ let ourRegex = /expressions/;
 ourStr.match(ourRegex);
 ```
 
-Here the first `match` would return `["Hello"]` and the second would return `["expressions"]`.
+Ici, le premier `match` renverrait `["Hello"]` et le second renverrait `["expressions"]`.
 
-Note that the `.match` syntax is the "opposite" of the `.test` method you have been using thus far:
+Notez que la syntaxe `.match` est le "contraire" de la méthode `.test` que vous avez utilisée jusqu'à présent :
 
 ```js
 'string'.match(/regex/);
@@ -32,23 +32,23 @@ Note that the `.match` syntax is the "opposite" of the `.test` method you have b
 
 # --instructions--
 
-Apply the `.match()` method to extract the string `coding`.
+Appliquez la méthode `.match()` pour extraire la chaîne `coding`.
 
 # --hints--
 
-The `result` should have the string `coding`
+Le `resultat` doit avoir la chaîne `coding`.
 
 ```js
 assert(result.join() === 'coding');
 ```
 
-Your regex `codingRegex` should search for the string `coding`
+Votre regex `codingRegex` doit rechercher la chaîne `coding`.
 
 ```js
 assert(codingRegex.source === 'coding');
 ```
 
-You should use the `.match()` method.
+Vous devez utiliser la méthode `.match()`.
 
 ```js
 assert(code.match(/\.match\(.*\)/));
@@ -59,15 +59,15 @@ assert(code.match(/\.match\(.*\)/));
 ## --seed-contents--
 
 ```js
-let extractStr = "Extract the word 'coding' from this string.";
-let codingRegex = /change/; // Change this line
-let result = extractStr; // Change this line
+let extractStr = "Extraire le mot 'coding' de cette chaîne.";
+let codingRegex = /change/; // Modifiez cette ligne
+let result = extractStr; // Modifiez cette ligne
 ```
 
 # --solutions--
 
 ```js
-let extractStr = "Extract the word 'coding' from this string.";
-let codingRegex = /coding/; // Change this line
-let result = extractStr.match(codingRegex); // Change this line
+let extractStr = "Extraire le mot 'coding' de cette chaîne.";
+let codingRegex = /coding/; // Modifiez cette ligne
+let result = extractStr.match(codingRegex); // Modifiez cette ligne
 ```

@@ -1,6 +1,6 @@
 ---
 id: 587d7b89367417b2b2512b48
-title: Use the Spread Operator to Evaluate Arrays In-Place
+title: Utilisez l'opérateur d'étalement (Spread) pour évaluer des tableaux sur place.
 challengeType: 1
 forumTopicId: 301222
 dashedName: use-the-spread-operator-to-evaluate-arrays-in-place
@@ -8,27 +8,27 @@ dashedName: use-the-spread-operator-to-evaluate-arrays-in-place
 
 # --description--
 
-ES6 introduces the <dfn>spread operator</dfn>, which allows us to expand arrays and other expressions in places where multiple parameters or elements are expected.
+ES6 introduit l'opérateur <dfn>spread</dfn>, qui nous permet d'étendre les tableaux et autres expressions dans les endroits où plusieurs paramètres ou éléments sont attendus.
 
-The ES5 code below uses `apply()` to compute the maximum value in an array:
+Le code ES5 ci-dessous utilise `apply()` pour calculer la valeur maximale dans un tableau :
 
 ```js
 var arr = [6, 89, 3, 45];
 var maximus = Math.max.apply(null, arr);
 ```
 
-`maximus` would have a value of `89`.
+La valeur de `maximus` serait de `89`.
 
-We had to use `Math.max.apply(null, arr)` because `Math.max(arr)` returns `NaN`. `Math.max()` expects comma-separated arguments, but not an array. The spread operator makes this syntax much better to read and maintain.
+Nous avons dû utiliser `Math.max.apply(null, arr)` car `Math.max(arr)` renvoie `NaN`. `Math.max()` attend des arguments séparés par des virgules, mais pas un tableau. L'opérateur d'étalement rend cette syntaxe beaucoup plus facile à lire et à maintenir.
 
 ```js
 const arr = [6, 89, 3, 45];
 const maximus = Math.max(...arr);
 ```
 
-`maximus` would have a value of `89`.
+La valeur de `maximus` serait de `89`.
 
-`...arr` returns an unpacked array. In other words, it *spreads* the array. However, the spread operator only works in-place, like in an argument to a function or in an array literal. The following code will not work:
+`...arr` renvoie un tableau non empaqueté. En d'autres termes, il *étale* le tableau. Cependant, l'opérateur d'étalement ne fonctionne que sur place, comme dans un argument d'une fonction ou dans un littéral de tableau. Le code suivant ne fonctionnera pas :
 
 ```js
 const spreaded = ...arr;
@@ -36,23 +36,23 @@ const spreaded = ...arr;
 
 # --instructions--
 
-Copy all contents of `arr1` into another array `arr2` using the spread operator.
+Copiez tout le contenu de `arr1` dans un autre tableau `arr2` en utilisant l'opérateur d'étalement.
 
 # --hints--
 
-`arr2` should be correct copy of `arr1`.
+`arr2` doit être une copie correcte de `arr1`.
 
 ```js
 assert(arr2.every((v, i) => v === arr1[i]) && arr2.length);
 ```
 
-`...` spread operator should be used to duplicate `arr1`.
+L'opérateur d'étalement `...` doit être utilisé pour dupliquer `arr1`.
 
 ```js
 assert(code.match(/Array\(\s*\.\.\.arr1\s*\)|\[\s*\.\.\.arr1\s*\]/));
 ```
 
-`arr2` should remain unchanged when `arr1` is changed.
+`arr2` doit rester inchangé lorsque `arr1` est modifié.
 
 ```js
 assert((arr1, arr2) => {
@@ -69,7 +69,7 @@ assert((arr1, arr2) => {
 const arr1 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY'];
 let arr2;
 
-arr2 = [];  // Change this line
+arr2 = [];  // Modifiez cette ligne
 
 console.log(arr2);
 ```

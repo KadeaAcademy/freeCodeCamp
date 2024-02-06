@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392cc
-title: Manipulate Arrays With pop()
+title: Manipuler les tableaux avec pop()
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cRbVZAB'
 forumTopicId: 18236
@@ -9,11 +9,11 @@ dashedName: manipulate-arrays-with-pop
 
 # --description--
 
-Another way to change the data in an array is with the `.pop()` function.
+Une autre façon de modifier les données d'un tableau est d'utiliser la fonction `.pop()`.
 
-`.pop()` is used to pop a value off of the end of an array. We can store this popped off value by assigning it to a variable. In other words, `.pop()` removes the last element from an array and returns that element.
+La fonction `.pop()` est utilisée pour retirer une valeur de la fin d'un tableau. Nous pouvons stocker cette valeur extraite en l'assignant à une variable. En d'autres termes, `.pop()` enlève le dernier élément d'un tableau et retourne cet élément.
 
-Any type of entry can be popped off of an array - numbers, strings, even nested arrays.
+N'importe quel type d'entrée peut être supprimé d'un tableau - des nombres, des chaînes de caractères, et même des tableaux imbriqués.
 
 ```js
 const threeArr = [1, 4, 6];
@@ -22,15 +22,15 @@ console.log(oneDown);
 console.log(threeArr);
 ```
 
-The first `console.log` will display the value `6`, and the second will display the value `[1, 4]`.
+Le premier `console.log` affichera la valeur `6`, et le second la valeur `[1, 4]`.
 
 # --instructions--
 
-Use the `.pop()` function to remove the last item from `myArray` and assign the popped off value to a new variable, `removedFromMyArray`.
+Utilisez la fonction `.pop()` pour retirer le dernier élément de `monTableau` et affectez la valeur retirée à une nouvelle variable, `retireDeMonTableau`.
 
 # --hints--
 
-`myArray` should only contain `[["John", 23]]`.
+`monTableau` ne doit contenir que `[["John", 23]]`.
 
 ```js
 assert(
@@ -40,17 +40,17 @@ assert(
     } else {
       return false;
     }
-  })(myArray)
+  })(monTableau)
 );
 ```
 
-You should use `pop()` on `myArray`.
+Vous devriez utiliser `pop()` sur `monTableau`.
 
 ```js
-assert(/removedFromMyArray\s*=\s*myArray\s*.\s*pop\s*(\s*)/.test(code));
+assert(/retireDeMonTableau\s*=\s*monTableau\s*.\s*pop\s*(\s*)/.test(code));
 ```
 
-`removedFromMyArray` should only contain `["cat", 2]`.
+`retireDeMonTableau` ne doit contenir que `["cat", 2]`.
 
 ```js
 assert(
@@ -60,7 +60,7 @@ assert(
     } else {
       return false;
     }
-  })(removedFromMyArray)
+  })(retireDeMonTableau)
 );
 ```
 
@@ -69,22 +69,22 @@ assert(
 ## --after-user-code--
 
 ```js
-if (typeof removedFromMyArray !== 'undefined') (function(y, z){return 'myArray = ' + JSON.stringify(y) + ' & removedFromMyArray = ' + JSON.stringify(z);})(myArray, removedFromMyArray);
+if (typeof retireDeMonTableau !== 'undefined') (function(y, z){return 'monTableau = ' + JSON.stringify(y) + ' & retireDeMonTableau = ' + JSON.stringify(z);})(monTableau, retireDeMonTableau);
 ```
 
 ## --seed-contents--
 
 ```js
 // Setup
-const myArray = [["John", 23], ["cat", 2]];
+const monTableau = [["John", 23], ["cat", 2]];
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 ```
 
 # --solutions--
 
 ```js
-const myArray = [["John", 23], ["cat", 2]];
-const removedFromMyArray = myArray.pop();
+const monTableau = [["John", 23], ["cat", 2]];
+const retireDeMonTableau = monTableau.pop();
 ```

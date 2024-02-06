@@ -1,6 +1,6 @@
 ---
 id: 5cdafbd72913098997531681
-title: Handle a Fulfilled Promise with then
+title: Gérer une promesse tenue avec ten
 challengeType: 1
 forumTopicId: 301203
 dashedName: handle-a-fulfilled-promise-with-then
@@ -8,7 +8,7 @@ dashedName: handle-a-fulfilled-promise-with-then
 
 # --description--
 
-Promises are most useful when you have a process that takes an unknown amount of time in your code (i.e. something asynchronous), often a server request. When you make a server request it takes some amount of time, and after it completes you usually want to do something with the response from the server. This can be achieved by using the `then` method. The `then` method is executed immediately after your promise is fulfilled with `resolve`. Here’s an example:
+Les promesses sont très utiles lorsque vous avez un processus qui prend un temps inconnu dans votre code (c'est-à-dire quelque chose d'asynchrone), souvent une requête de serveur. Lorsque vous faites une requête au serveur, elle prend un certain temps, et après qu'elle soit terminée, vous voulez généralement faire quelque chose avec la réponse du serveur. Pour ce faire, vous pouvez utiliser la méthode `then`. La méthode `then` est exécutée immédiatement après que votre promesse ait été remplie avec `resolve`. Voici un exemple :
 
 ```js
 myPromise.then(result => {
@@ -16,15 +16,15 @@ myPromise.then(result => {
 });
 ```
 
-`result` comes from the argument given to the `resolve` method.
+`result` provient de l'argument donné à la méthode `resolve`.
 
 # --instructions--
 
-Add the `then` method to your promise. Use `result` as the parameter of its callback function and log `result` to the console.
+Ajoutez la méthode `then` à votre promesse. Utilisez `result` comme paramètre de sa fonction de rappel et affichez `result` dans la console.
 
 # --hints--
 
-You should call the `then` method on the promise.
+Vous devez appeler la méthode `then` sur la promesse.
 
 ```js
 assert(
@@ -32,13 +32,13 @@ assert(
 );
 ```
 
-Your `then` method should have a callback function with `result` as its parameter.
+Votre méthode `then` doit avoir une fonction de rappel avec `result` comme paramètre.
 
 ```js
 assert(resultIsParameter);
 ```
 
-You should log `result` to the console.
+Vous devriez afficher `result` dans la console.
 
 ```js
 assert(
@@ -61,7 +61,7 @@ const resultIsParameter = /\.then\((function\(result\){|result|\(result\)=>)/.te
 
 ```js
 const makeServerRequest = new Promise((resolve, reject) => {
-  // responseFromServer is set to true to represent a successful response from a server
+  // responseFromServer est défini à true pour représenter une réponse réussie d'un serveur.
   let responseFromServer = true;
     
   if(responseFromServer) {
@@ -76,7 +76,7 @@ const makeServerRequest = new Promise((resolve, reject) => {
 
 ```js
 const makeServerRequest = new Promise((resolve, reject) => {
-  // responseFromServer is set to true to represent a successful response from a server
+  // responseFromServer est défini à true pour représenter une réponse réussie d'un serveur.
   let responseFromServer = true;
     
   if(responseFromServer) {

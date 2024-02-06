@@ -1,6 +1,6 @@
 ---
 id: a97fd23d9b809dac9921074f
-title: Arguments Optional
+title: Arguments Optionnels
 challengeType: 5
 forumTopicId: 14271
 dashedName: arguments-optional
@@ -8,59 +8,59 @@ dashedName: arguments-optional
 
 # --description--
 
-Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+Créez une fonction qui additionne deux arguments. Si un seul argument est fourni, alors une fonction qui attend un argument et renvoie la somme sera renvoyée.
 
-For example, `addTogether(2, 3)` should return `5`, and `addTogether(2)` should return a function.
+Par exemple, `addTogether(2, 3)` devrait retourner `5`, et `addTogether(2)` devrait retourner une fonction.
 
-Calling this returned function with a single argument will then return the sum:
+L'appel de cette fonction retournée avec un seul argument renverra alors la somme :
 
 ```js
 var sumTwoAnd = addTogether(2);
 ```
 
-`sumTwoAnd(3)` returns `5`.
+`sumTwoAnd(3)` renvoie `5`.
 
-If either argument isn't a valid number, return undefined.
+Si l'un des arguments n'est pas un nombre valide, la fonction retourne undefined.
 
 # --hints--
 
-`addTogether(2, 3)` should return 5.
+`addTogether(2, 3)` devrait retourner 5.
 
 ```js
 assert.deepEqual(addTogether(2, 3), 5);
 ```
 
-`addTogether(23, 30)` should return 53.
+`addTogether(23, 30)` devrait retourner 53.
 
 ```js
 assert.deepEqual(addTogether(23, 30), 53);
 ```
 
-`addTogether(5)(7)` should return 12.
+`addTogether(5)(7)` devrait retourner 12.
 
 ```js
 assert.deepEqual(addTogether(5)(7), 12);
 ```
 
-`addTogether("https://www.youtube.com/watch?v=dQw4w9WgXcQ")` should return `undefined`.
+`addTogether("https://www.youtube.com/watch?v=dQw4w9WgXcQ")` devrait retourner `undefined`.
 
 ```js
 assert.isUndefined(addTogether('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
 ```
 
-`addTogether(2, "3")` should return `undefined`.
+`addTogether(2, "3")` devrait retourner `undefined`.
 
 ```js
 assert.isUndefined(addTogether(2, '3'));
 ```
 
-`addTogether(2)([3])` should return `undefined`.
+`addTogether(2)([3])` devrait retourner `undefined`.
 
 ```js
 assert.isUndefined(addTogether(2)([3]));
 ```
 
-`addTogether("2", 3)` should return `undefined`.
+`addTogether("2", 3)` devrait retourner `undefined`.
 
 ```js
 assert.isUndefined(addTogether('2', 3));

@@ -1,6 +1,6 @@
 ---
 id: 587d7b86367417b2b2512b3d
-title: Prevent Infinite Loops with a Valid Terminal Condition
+title: Empêcher les boucles infinies avec une condition finale valide
 challengeType: 1
 forumTopicId: 301192
 dashedName: prevent-infinite-loops-with-a-valid-terminal-condition
@@ -8,9 +8,9 @@ dashedName: prevent-infinite-loops-with-a-valid-terminal-condition
 
 # --description--
 
-The final topic is the dreaded infinite loop. Loops are great tools when you need your program to run a code block a certain number of times or until a condition is met, but they need a terminal condition that ends the looping. Infinite loops are likely to freeze or crash the browser, and cause general program execution mayhem, which no one wants.
+Le dernier sujet abordé est la redoutable boucle infinie. Les boucles sont d'excellents outils lorsque vous avez besoin que votre programme exécute un bloc de code un certain nombre de fois ou jusqu'à ce qu'une condition soit remplie, mais elles ont besoin d'une condition finale qui met fin à la boucle. Les boucles infinies sont susceptibles de geler ou de faire planter le navigateur, et de provoquer un désordre général dans l'exécution du programme, ce que personne ne souhaite.
 
-There was an example of an infinite loop in the introduction to this section - it had no terminal condition to break out of the `while` loop inside `loopy()`. Do NOT call this function!
+Il y avait un exemple de boucle infinie dans l'introduction de cette section - il n'y avait pas de condition terminale pour sortir de la boucle `while` dans `loopy()`. N'appelez PAS cette fonction !
 
 ```js
 function loopy() {
@@ -20,21 +20,21 @@ function loopy() {
 }
 ```
 
-It's the programmer's job to ensure that the terminal condition, which tells the program when to break out of the loop code, is eventually reached. One error is incrementing or decrementing a counter variable in the wrong direction from the terminal condition. Another one is accidentally resetting a counter or index variable within the loop code, instead of incrementing or decrementing it.
+C'est le travail du programmeur de s'assurer que la condition terminale, qui indique au programme quand sortir du code de la boucle, est finalement atteinte. Une erreur consiste à incrémenter ou décrémenter une variable de compteur dans la mauvaise direction à partir de la condition terminale. Une autre erreur consiste à réinitialiser accidentellement un compteur ou une variable d'index dans le code de la boucle, au lieu de l'incrémenter ou de la décrémenter.
 
 # --instructions--
 
-The `myFunc()` function contains an infinite loop because the terminal condition `i != 4` will never evaluate to `false` (and break the looping) - `i` will increment by 2 each pass, and jump right over 4 since `i` is odd to start. Fix the comparison operator in the terminal condition so the loop only runs for `i` less than or equal to 4.
+La fonction `myFunc()` contient une boucle infinie parce que la condition terminale `i != 4` ne sera jamais évaluée à `false` (et interrompra la boucle) - `i` sera incrémenté de 2 à chaque passage, et sautera directement sur 4 puisque `i` est impair au départ. Corrigez l'opérateur de comparaison dans la condition finale pour que la boucle ne s'exécute que pour `i` inférieur ou égal à 4.
 
 # --hints--
 
-Your code should change the comparison operator in the terminal condition (the middle part) of the `for` loop.
+Votre code devrait changer l'opérateur de comparaison dans la condition terminale (la partie centrale) de la boucle `for`.
 
 ```js
 assert(code.match(/i\s*?<=\s*?4;/g).length == 1);
 ```
 
-Your code should fix the comparison operator in the terminal condition of the loop.
+Votre code doit fixer l'opérateur de comparaison dans la condition terminale de la boucle.
 
 ```js
 assert(!code.match(/i\s*?!=\s*?4;/g));

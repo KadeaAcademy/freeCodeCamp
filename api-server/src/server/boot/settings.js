@@ -1,6 +1,6 @@
 import debug from 'debug';
 import { check } from 'express-validator';
-import isURL from 'validator/lib/isURL';
+// import isURL from 'validator/lib/isURL';
 
 import { isValidUsername } from '../../../../utils/validate';
 import { alertTypes } from '../../common/utils/flash.js';
@@ -27,6 +27,13 @@ export default function settingsController(app) {
   api.post('/update-my-portfolio', ifNoUser401, updateMyPortfolio);
   api.post('/update-my-theme', deprecatedEndpoint);
   api.put('/update-my-about', ifNoUser401, updateMyAbout);
+  api.put('/update-my-education', ifNoUser401, updateMyEducation);
+  api.put(
+    '/update-my-currents-super-block',
+    ifNoUser401,
+    updateMyCurrentsSuperBlock
+  );
+  api.put('/update-my-work-experience', ifNoUser401, updateMyWorkExperience);
   api.put(
     '/update-my-email',
     ifNoUser401,
@@ -57,6 +64,24 @@ const createStandardHandler = (req, res, next) => err => {
     return next(err);
   }
   return res.status(200).json(standardSuccessMessage);
+};
+
+const standardProgressErrorMessage = {
+  type: 'danger',
+  message: 'Un problème est survenu lors de la mise à jour de ta progression.'
+};
+
+const standardProgressSuccessMessage = {
+  type: 'success',
+  message: 'Nous avons mis à jour ta progression.'
+};
+
+const createStandardProgressHandler = (req, res, next) => err => {
+  if (err) {
+    res.status(500).json(standardProgressErrorMessage);
+    return next(err);
+  }
+  return res.status(200).json(standardProgressSuccessMessage);
 };
 
 const updateMyEmailValidators = [
@@ -126,13 +151,50 @@ function updateMyProfileUI(req, res, next) {
 function updateMyAbout(req, res, next) {
   const {
     user,
-    body: { name, location, about, picture }
+    body: { name, location, gender, phone, whatsapp, codeTime, about, picture }
   } = req;
-  log(name, location, picture, about);
+  log(name, location, gender, codeTime, about, phone, whatsapp, picture);
   // prevent dataurls from being stored
-  const update = isURL(picture, { require_protocol: true })
-    ? { name, location, about, picture }
-    : { name, location, about };
+  // const update = isURL(picture, { require_protocol: true })
+  //   ? { name, location, gender, codeTime, about, picture }
+  //   : { name, location, gender, codeTime, about };
+  const update = { name, location, gender, phone, whatsapp, codeTime, about };
+  return user.updateAttributes(update, createStandardHandler(req, res, next));
+}
+
+function updateMyEducation(req, res, next) {
+  const {
+    user,
+    body: { fieldOfStudy, levelOfStudy }
+  } = req;
+  log(fieldOfStudy, levelOfStudy);
+  // prevent dataurls from being stored
+  const update = { fieldOfStudy, levelOfStudy };
+  return user.updateAttributes(update, createStandardHandler(req, res, next));
+}
+
+function updateMyCurrentsSuperBlock(req, res, next) {
+  const {
+    user,
+    body: { currentsSuperBlock }
+  } = req;
+  log(currentsSuperBlock);
+  // prevent dataurls from being stored
+  const update = { currentsSuperBlock };
+  return user.updateAttributes(
+    update,
+    createStandardProgressHandler(req, res, next)
+  );
+}
+
+function updateMyWorkExperience(req, res, next) {
+  const {
+    user,
+    body: { employedWhere, sinceWhen, position }
+  } = req;
+  log(employedWhere, sinceWhen, position);
+  // prevent dataurls from being stored
+  const update = { employedWhere, sinceWhen, position };
   return user.updateAttributes(update, createStandardHandler(req, res, next));
 }
 

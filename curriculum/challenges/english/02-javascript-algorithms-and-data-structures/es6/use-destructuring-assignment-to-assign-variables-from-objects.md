@@ -1,6 +1,6 @@
 ---
 id: 587d7b89367417b2b2512b49
-title: Use Destructuring Assignment to Assign Variables from Objects
+title: Utiliser l'affectation de la déstructuration pour affecter des variables à partir d'objets
 challengeType: 1
 forumTopicId: 301215
 dashedName: use-destructuring-assignment-to-assign-variables-from-objects
@@ -8,29 +8,29 @@ dashedName: use-destructuring-assignment-to-assign-variables-from-objects
 
 # --description--
 
-Destructuring allows you to assign a new variable name when extracting values. You can do this by putting the new name after a colon when assigning the value.
+La déstructuration vous permet d'attribuer un nouveau nom de variable lors de l'extraction des valeurs. Pour ce faire, il suffit de placer le nouveau nom après les deux points lors de l'attribution de la valeur.
 
-Using the same object from the last example:
+En utilisant le même objet que dans le dernier exemple :
 
 ```js
 const user = { name: 'John Doe', age: 34 };
 ```
 
-Here's how you can give new variable names in the assignment:
+Voici comment vous pouvez donner de nouveaux noms de variables dans l'affectation :
 
 ```js
 const { name: userName, age: userAge } = user;
 ```
 
-You may read it as "get the value of `user.name` and assign it to a new variable named `userName`" and so on. The value of `userName` would be the string `John Doe`, and the value of `userAge` would be the number `34`.
+Vous pouvez le lire comme suit : " récupérer la valeur de `user.name` et l'affecter à une nouvelle variable nommée `userName` " et ainsi de suite. La valeur de `userName` serait la chaîne `John Doe`, et la valeur de `userAge` serait le nombre `34`.
 
 # --instructions--
 
-Replace the two assignments with an equivalent destructuring assignment. It should still assign the variables `highToday` and `highTomorrow` the values of `today` and `tomorrow` from the `HIGH_TEMPERATURES` object.
+Remplacez les deux affectations par une affectation de déstructuration équivalente. Elle devrait toujours affecter aux variables `highToday` et `highTomorrow` les valeurs de `today` et `tomorrow` de l'objet `HIGH_TEMPERATURES`.
 
 # --hints--
 
-You should remove the ES5 assignment syntax.
+Vous devez supprimer la syntaxe d'affectation ES5.
 
 ```js
 assert(
@@ -39,7 +39,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `highToday` variable.
+Vous devez utiliser la déstructuration pour créer la variable `highToday`.
 
 ```js
 assert(
@@ -49,7 +49,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `highTomorrow` variable.
+Vous devez utiliser la déstructuration pour créer la variable `highTomorrow`.
 
 ```js
 assert(
@@ -59,7 +59,7 @@ assert(
 );
 ```
 
-`highToday` should be equal to `77` and `highTomorrow` should be equal to `80`.
+`highToday` doit être égal à `77` et `highTomorrow` doit être égal à `80`.
 
 ```js
 assert(highToday === 77 && highTomorrow === 80);
@@ -76,12 +76,12 @@ const HIGH_TEMPERATURES = {
   tomorrow: 80
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
   
 const highToday = HIGH_TEMPERATURES.today;
 const highTomorrow = HIGH_TEMPERATURES.tomorrow; 
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 ```
 
 # --solutions--

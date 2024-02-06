@@ -1,6 +1,6 @@
 ---
 id: 587d7b8e367417b2b2512b5e
-title: Avoid Mutations and Side Effects Using Functional Programming
+title: Éviter les mutations et les effets secondaires grâce à la programmation fonctionnelle
 challengeType: 1
 forumTopicId: 301228
 dashedName: avoid-mutations-and-side-effects-using-functional-programming
@@ -8,39 +8,39 @@ dashedName: avoid-mutations-and-side-effects-using-functional-programming
 
 # --description--
 
-If you haven't already figured it out, the issue in the previous challenge was with the `splice` call in the `tabClose()` function. Unfortunately, `splice` changes the original array it is called on, so the second call to it used a modified array, and gave unexpected results.
+Si vous ne l'avez pas encore compris, le problème dans le défi précédent était l'appel à `splice` dans la fonction `tabClose()`. Malheureusement, `splice` modifie le tableau original sur lequel il est appelé, donc le second appel a utilisé un tableau modifié, et a donné des résultats inattendus.
 
-This is a small example of a much larger pattern - you call a function on a variable, array, or an object, and the function changes the variable or something in the object.
+Il s'agit d'un petit exemple d'un schéma beaucoup plus large - vous appelez une fonction sur une variable, un tableau ou un objet, et la fonction modifie la variable ou quelque chose dans l'objet.
 
-One of the core principles of functional programming is to not change things. Changes lead to bugs. It's easier to prevent bugs knowing that your functions don't change anything, including the function arguments or any global variable.
+L'un des principes fondamentaux de la programmation fonctionnelle est de ne pas modifier les choses. Les modifications entraînent des bogues. Il est plus facile de prévenir les bogues en sachant que vos fonctions ne modifient rien, y compris les arguments de la fonction ou toute variable globale.
 
-The previous example didn't have any complicated operations but the `splice` method changed the original array, and resulted in a bug.
+L'exemple précédent ne comportait pas d'opérations compliquées, mais la méthode `splice` a modifié le tableau original, ce qui a entraîné un bogue.
 
-Recall that in functional programming, changing or altering things is called <dfn>mutation</dfn>, and the outcome is called a <dfn>side effect</dfn>. A function, ideally, should be a <dfn>pure function</dfn>, meaning that it does not cause any side effects.
+Souvenez-vous qu'en programmation fonctionnelle, le fait de changer ou d'altérer des choses est appelé <dfn>mutation</dfn>, et le résultat est appelé <dfn>effet secondaire</dfn>. Idéalement, une fonction devrait être une <dfn>fonction pure</dfn>, c'est-à-dire qu'elle ne provoque aucun effet secondaire.
 
-Let's try to master this discipline and not alter any variable or object in our code.
+Essayons de maîtriser cette discipline et de ne modifier aucune variable ni aucun objet dans notre code.
 
 # --instructions--
 
-Fill in the code for the function `incrementer` so it returns the value of the global variable `fixedValue` increased by one.
+Complétez le code de la fonction `incrementer` pour qu'elle renvoie la valeur de la variable globale `fixedValue` augmentée de un.
 
 # --hints--
 
-Your function `incrementer` should not change the value of `fixedValue` (which is `4`).
+Votre fonction `incrementer` ne doit pas changer la valeur de `fixedValue` (qui est `4`).
 
 ```js
 incrementer();
 assert(fixedValue === 4);
 ```
 
-Your `incrementer` function should return a value that is one larger than the `fixedValue` value.
+Votre fonction `incrementer` doit retourner une valeur supérieure d'une unité à la valeur `fixedValue`.
 
 ```js
 const __newValue = incrementer();
 assert(__newValue === 5);
 ```
 
-Your `incrementer` function should return a value based on the global `fixedValue` variable value.
+Votre fonction `incrementer` doit retourner une valeur basée sur la valeur globale de la variable `fixedValue`.
 
 ```js
 (function () {
@@ -56,14 +56,14 @@ Your `incrementer` function should return a value based on the global `fixedValu
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 let fixedValue = 4;
 
 function incrementer() {
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 }
 ```
 

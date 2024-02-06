@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c7
-title: Accessing Object Properties with Dot Notation
+title: Accès aux propriétés des objets avec la notation en points
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cGryJs8'
 forumTopicId: 16164
@@ -9,11 +9,11 @@ dashedName: accessing-object-properties-with-dot-notation
 
 # --description--
 
-There are two ways to access the properties of an object: dot notation (`.`) and bracket notation (`[]`), similar to an array.
+Il existe deux façons d'accéder aux propriétés d'un objet : la notation par points (`.`) et la notation par crochets (`[]`), similaire à celle d'un tableau.
 
-Dot notation is what you use when you know the name of the property you're trying to access ahead of time.
+La notation par points est celle que vous utilisez lorsque vous connaissez à l'avance le nom de la propriété à laquelle vous voulez accéder.
 
-Here is a sample of using dot notation (`.`) to read an object's property:
+Voici un exemple d'utilisation de la notation par points (`.`) pour lire la propriété d'un objet :
 
 ```js
 const myObj = {
@@ -25,39 +25,39 @@ const prop1val = myObj.prop1;
 const prop2val = myObj.prop2;
 ```
 
-`prop1val` would have a value of the string `val1`, and `prop2val` would have a value of the string `val2`.
+`prop1val` aura pour valeur la chaîne `val1`, et `prop2val` aura pour valeur la chaîne `val2`.
 
 # --instructions--
 
-Read in the property values of `testObj` using dot notation. Set the variable `hatValue` equal to the object's property `hat` and set the variable `shirtValue` equal to the object's property `shirt`.
+Lisez les valeurs des propriétés de `testObj` en utilisant la notation par points. Déclarez la variable `hatValue` avec comme valeur la propriété `hat` de l'objet et déclarez la variable `shirtValue` avec comme valeur la propriété `shirt` de l'objet.
 
 # --hints--
 
-`hatValue` should be a string
+`hatValue` doit être une chaîne de caractères
 
 ```js
 assert(typeof hatValue === 'string');
 ```
 
-The value of `hatValue` should be the string `ballcap`
+La valeur de `hatValue` doit être la chaîne `ballcap`.
 
 ```js
 assert(hatValue === 'ballcap');
 ```
 
-`shirtValue` should be a string
+`shirtValue` devrait être une chaîne de caractères
 
 ```js
 assert(typeof shirtValue === 'string');
 ```
 
-The value of `shirtValue` should be the string `jersey`
+La valeur de `shirtValue` doit être la chaîne `jersey`.
 
 ```js
 assert(shirtValue === 'jersey');
 ```
 
-You should use dot notation twice
+Vous devez utiliser la notation par points deux fois
 
 ```js
 assert(code.match(/testObj\.\w+/g).length > 1);
@@ -81,9 +81,9 @@ const testObj = {
   "shoes": "cleats"
 };
 
-// Only change code below this line
-const hatValue = testObj;      // Change this line
-const shirtValue = testObj;    // Change this line
+// Ne changez que le code en dessous de cette ligne
+const hatValue = testObj;      // Modifiez cette ligne
+const shirtValue = testObj;    // Modifiez cette ligne
 ```
 
 # --solutions--

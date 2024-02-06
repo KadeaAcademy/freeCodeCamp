@@ -1,7 +1,7 @@
 import { TabPane, Tabs } from '@freecodecamp/react-bootstrap';
 import i18next from 'i18next';
 import React, { Component, ReactElement } from 'react';
-
+import { Spacer } from '../../../components/helpers';
 import ToolPanel from '../components/tool-panel';
 import EditorTabs from './editor-tabs';
 
@@ -80,6 +80,7 @@ class MobileLayout extends Component<MobileLayoutProps, MobileLayoutState> {
             <TabPane
               eventKey={Tab.Instructions}
               title={i18next.t('learn.editor-tabs.info')}
+              className='padding-t-b-10 bg-light'
             >
               {instructions}
             </TabPane>
@@ -87,6 +88,7 @@ class MobileLayout extends Component<MobileLayoutProps, MobileLayoutState> {
           <TabPane
             eventKey={Tab.Editor}
             title={i18next.t('learn.editor-tabs.code')}
+            className='padding-t-b-10 bg-light'
             {...editorTabPaneProps}
           >
             {usesMultifileEditor && <EditorTabs />}
@@ -95,6 +97,7 @@ class MobileLayout extends Component<MobileLayoutProps, MobileLayoutState> {
           <TabPane
             eventKey={Tab.Console}
             title={i18next.t('learn.editor-tabs.tests')}
+            className='padding-t-b-10'
             {...editorTabPaneProps}
           >
             {testOutput}
@@ -103,6 +106,7 @@ class MobileLayout extends Component<MobileLayoutProps, MobileLayoutState> {
             <TabPane
               eventKey={Tab.Notes}
               title={i18next.t('learn.editor-tabs.notes')}
+              className='padding-t-b-10 bg-light'
             >
               {notes}
             </TabPane>
@@ -111,12 +115,19 @@ class MobileLayout extends Component<MobileLayoutProps, MobileLayoutState> {
             <TabPane
               eventKey={Tab.Preview}
               title={i18next.t('learn.editor-tabs.preview')}
+              className='padding-t-b-10 bg-light'
             >
               {preview}
             </TabPane>
           )}
         </Tabs>
-        <ToolPanel guideUrl={guideUrl} isMobile={true} videoUrl={videoUrl} />
+        <Spacer size={1} />
+        <ToolPanel
+          guideUrl={guideUrl}
+          isMobile={true}
+          videoUrl={videoUrl}
+          switchOnTestOutputTab={this.switchTab}
+        />
       </>
     );
   }

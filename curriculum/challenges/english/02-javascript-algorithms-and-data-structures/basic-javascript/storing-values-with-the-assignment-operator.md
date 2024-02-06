@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244a8
-title: Storing Values with the Assignment Operator
+title: Stockage des valeurs avec l'opérateur d'affectation
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cEanysE'
 forumTopicId: 18310
@@ -9,36 +9,36 @@ dashedName: storing-values-with-the-assignment-operator
 
 # --description--
 
-In JavaScript, you can store a value in a variable with the <dfn>assignment</dfn> operator (`=`).
+En JavaScript, vous pouvez stocker une valeur dans une variable avec l'opérateur d'affectation (=).
 
 ```js
-myVariable = 5;
+maVariable = 5;
 ```
 
-This assigns the `Number` value `5` to `myVariable`.
+Ceci affecte la valeur numérique  `5` à `maVariable`.
 
-If there are any calculations to the right of the `=` operator, those are performed before the value is assigned to the variable on the left of the operator.
+S'il y a des calculs à droite de l'opérateur `=`, ils sont effectués avant que la valeur soit affectée à la variable à gauche de l'opérateur.
 
 ```js
-var myVar;
-myVar = 5;
+var maVar ;
+maVar = 5 ;
 ```
 
-First, this code creates a variable named `myVar`. Then, the code assigns `5` to `myVar`. Now, if `myVar` appears again in the code, the program will treat it as if it is `5`.
+Tout d'abord, ce code crée une variable nommée `maVar`. Ensuite, le code affecte `5` à `maVar`. Maintenant, si `maVar` réapparaît dans le code, le programme la traitera comme s'il s'agissait de "5".
 
 # --instructions--
 
-Assign the value `7` to variable `a`.
+Affectez la valeur `7` à la variable `a`.
 
 # --hints--
 
-You should not change code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(/var a;/.test(code));
 ```
 
-`a` should have a value of 7.
+`a` devrait avoir la valeur 7.
 
 ```js
 assert(typeof a === 'number' && a === 7);
@@ -63,10 +63,10 @@ if (typeof a != 'undefined') {
 ## --seed-contents--
 
 ```js
-// Setup
+// Configuration
 var a;
 
-// Only change code below this line
+// Ne modifiez que le code sous cette ligne
 ```
 
 # --solutions--

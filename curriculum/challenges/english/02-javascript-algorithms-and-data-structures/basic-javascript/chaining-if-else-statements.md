@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244dc
-title: Chaining If Else Statements
+title: Enchaînement d'instructions If Else
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/caeJgsw'
 forumTopicId: 16772
@@ -9,106 +9,106 @@ dashedName: chaining-if-else-statements
 
 # --description--
 
-`if/else` statements can be chained together for complex logic. Here is <dfn>pseudocode</dfn> of multiple chained `if` / `else if` statements:
+Les instructions `if/else` peuvent être enchaînées pour obtenir une logique complexe. Voici le pseudo-code de plusieurs instructions `if` / `else if` enchaînées :
 
 ```js
 if (condition1) {
-  statement1
+  instruction1
 } else if (condition2) {
-  statement2
+  instruction2
 } else if (condition3) {
-  statement3
+  instruction3
 . . .
 } else {
-  statementN
+  instructionN
 }
 ```
 
 # --instructions--
 
-Write chained `if`/`else if` statements to fulfill the following conditions:
+Rédigez des instructions `if` et `else if` enchaînées pour remplir les conditions suivantes :
 
-`num < 5` - return `Tiny`  
-`num < 10` - return `Small`  
-`num < 15` - return `Medium`  
-`num < 20` - return `Large`  
-`num >= 20` - return `Huge`
+`num < 5` - retourne `Tiny`  
+`num < 10` - retourne `Small`  
+`num < 15` - retourne `Medium`  
+`num < 20` - retourne `Large`  
+`num >= 20` - retourne `Huge`
 
 # --hints--
 
-You should have at least four `else` statements
+Vous devez avoir au moins quatre instructions `else`.
 
 ```js
 assert(code.match(/else/g).length > 3);
 ```
 
-You should have at least four `if` statements
+Vous devez avoir au moins quatre instructions `if`.
 
 ```js
 assert(code.match(/if/g).length > 3);
 ```
 
-You should have at least one `return` statement
+Vous devez avoir au moins une déclaration `return`.
 
 ```js
 assert(code.match(/return/g).length >= 1);
 ```
 
-`testSize(0)` should return the string `Tiny`
+`testSize(0)` doit retourner la chaîne `Tiny`
 
 ```js
 assert(testSize(0) === 'Tiny');
 ```
 
-`testSize(4)` should return the string `Tiny`
+`testSize(4)` doit retourner la chaîne `Tiny`
 
 ```js
 assert(testSize(4) === 'Tiny');
 ```
 
-`testSize(5)` should return the string `Small`
+`testSize(5)` doit retourner la chaîne `Small`
 
 ```js
 assert(testSize(5) === 'Small');
 ```
 
-`testSize(8)` should return the string `Small`
+`testSize(8)` doit retourner la chaîne `Small`
 
 ```js
 assert(testSize(8) === 'Small');
 ```
 
-`testSize(10)` should return the string `Medium`
+`testSize(10)` doit retourner la chaîne `Medium`
 
 ```js
 assert(testSize(10) === 'Medium');
 ```
 
-`testSize(14)` should return the string `Medium`
+`testSize(14)` doit retourner la chaîne `Medium`
 
 ```js
 assert(testSize(14) === 'Medium');
 ```
 
-`testSize(15)` should return the string `Large`
+`testSize(15)` doit retourner la chaîne `Large`
 
 ```js
 assert(testSize(15) === 'Large');
 ```
 
-`testSize(17)` should return the string `Large`
+`testSize(17)` doit retourner la chaîne `Large`
 
 ```js
 assert(testSize(17) === 'Large');
 ```
 
-`testSize(20)` should return the string `Huge`
+`testSize(20)` doit retourner la chaîne `Huge`
 
 ```js
 assert(testSize(20) === 'Huge');
 ```
 
-`testSize(25)` should return the string `Huge`
+`testSize(25)` doit retourner la chaîne `Huge`
 
 ```js
 assert(testSize(25) === 'Huge');
@@ -120,11 +120,11 @@ assert(testSize(25) === 'Huge');
 
 ```js
 function testSize(num) {
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
 
   return "Change Me";
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 
 testSize(7);

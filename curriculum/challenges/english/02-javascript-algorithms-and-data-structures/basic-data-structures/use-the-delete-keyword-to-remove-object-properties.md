@@ -1,6 +1,6 @@
 ---
 id: 587d7b7c367417b2b2512b1b
-title: Use the delete Keyword to Remove Object Properties
+title: Utiliser le mot clé delete pour supprimer les propriétés d'un objet
 challengeType: 1
 forumTopicId: 301168
 dashedName: use-the-delete-keyword-to-remove-object-properties
@@ -8,40 +8,40 @@ dashedName: use-the-delete-keyword-to-remove-object-properties
 
 # --description--
 
-Now you know what objects are and their basic features and advantages. In short, they are key-value stores which provide a flexible, intuitive way to structure data, ***and***, they provide very fast lookup time. Throughout the rest of these challenges, we will describe several common operations you can perform on objects so you can become comfortable applying these useful data structures in your programs.
+Vous savez maintenant ce que sont les objets, leurs caractéristiques de base et leurs avantages. En bref, ce sont des conteneurs clé-valeur qui offrent un moyen flexible et intuitif de structurer les données, ***et***, ils offrent un temps de recherche très rapide. Dans le reste de ces défis, nous décrirons plusieurs opérations courantes que vous pouvez effectuer sur les objets afin que vous puissiez vous familiariser avec l'utilisation de ces structures de données utiles dans vos programmes.
 
-In earlier challenges, we have both added to and modified an object's key-value pairs. Here we will see how we can *remove* a key-value pair from an object.
+Dans les défis précédents, nous avons à la fois ajouté et modifié les paires clé-valeur d'un objet. Ici, nous allons voir comment *supprimer* une paire clé-valeur d'un objet.
 
-Let's revisit our `foods` object example one last time. If we wanted to remove the `apples` key, we can remove it by using the `delete` keyword like this:
+Reprenons l'exemple de notre objet `fruits` une dernière fois. Si nous voulons supprimer la clé `pommes`, nous pouvons le faire en utilisant le mot-clé `delete` comme ceci :
 
 ```js
-delete foods.apples;
+delete fruits.pommes;
 ```
 
 # --instructions--
 
-Use the delete keyword to remove the `oranges`, `plums`, and `strawberries` keys from the `foods` object.
+Utilisez le mot-clé delete pour supprimer les clés `oranges`, `prunes`, et `fraises` de l'objet `fruits`.
 
 # --hints--
 
-The `foods` object should only have three keys: `apples`, `grapes`, and `bananas`.
+L'objet `fruits` ne devrait avoir que trois clés : `pommes`, `raisins`, et `bananes`.
 
 ```js
 assert(
-  !foods.hasOwnProperty('oranges') &&
-    !foods.hasOwnProperty('plums') &&
-    !foods.hasOwnProperty('strawberries') &&
-    Object.keys(foods).length === 3
+  !fruits.hasOwnProperty('oranges') &&
+    !fruits.hasOwnProperty('prunes') &&
+    !fruits.hasOwnProperty('fraises') &&
+    Object.keys(fruits).length === 3
 );
 ```
 
-The `oranges`, `plums`, and `strawberries` keys should be removed using `delete`.
+Les clés `oranges`, `prunes`, et `fraises` doivent être supprimées en utilisant `delete`.
 
 ```js
 assert(
   code.search(/oranges:/) !== -1 &&
-    code.search(/plums:/) !== -1 &&
-    code.search(/strawberries:/) !== -1
+    code.search(/prunes:/) !== -1 &&
+    code.search(/fraises:/) !== -1
 );
 ```
 
@@ -50,37 +50,37 @@ assert(
 ## --seed-contents--
 
 ```js
-let foods = {
-  apples: 25,
+let fruits = {
+  pommes: 25,
   oranges: 32,
-  plums: 28,
-  bananas: 13,
-  grapes: 35,
-  strawberries: 27
+  prunes: 28,
+  bananes: 13,
+  raisins: 35,
+  fraises: 27
 };
 
 // Only change code below this line
 
 // Only change code above this line
 
-console.log(foods);
+console.log(fruits);
 ```
 
 # --solutions--
 
 ```js
-let foods = {
-  apples: 25,
+let fruits = {
+  pommes: 25,
   oranges: 32,
-  plums: 28,
-  bananas: 13,
-  grapes: 35,
-  strawberries: 27
+  prunes: 28,
+  bananes: 13,
+  raisins: 35,
+  fraises: 27
 };
 
-delete foods.oranges;
-delete foods.plums;
-delete foods.strawberries;
+delete fruits.oranges;
+delete fruits.prunes;
+delete fruits.fraises;
 
-console.log(foods);
+console.log(fruits);
 ```

@@ -1,6 +1,6 @@
 ---
 id: 587d7b87367417b2b2512b42
-title: Mutate an Array Declared with const
+title: Mutation d'un tableau déclaré avec const.
 challengeType: 1
 forumTopicId: 301206
 dashedName: mutate-an-array-declared-with-const
@@ -8,13 +8,13 @@ dashedName: mutate-an-array-declared-with-const
 
 # --description--
 
-If you are unfamiliar with `const`, check out [this challenge](/learn/javascript-algorithms-and-data-structures/basic-javascript/declare-a-read-only-variable-with-the-const-keyword).
+Si vous n'êtes pas familier avec `const`, consultez [ce défi](/learn/javascript-algorithms-and-data-structures/basic-javascript/declare-a-read-only-variable-with-the-const-keyword).
 
-The `const` declaration has many use cases in modern JavaScript.
+La déclaration `const` a de nombreux cas d'utilisation dans le JavaScript moderne.
 
-Some developers prefer to assign all their variables using `const` by default, unless they know they will need to reassign the value. Only in that case, they use `let`.
+Certains développeurs préfèrent affecter toutes leurs variables en utilisant `const` par défaut, à moins qu'ils ne sachent qu'ils auront besoin de réaffecter la valeur. Dans ce cas seulement, ils utilisent `let`.
 
-However, it is important to understand that objects (including arrays and functions) assigned to a variable using `const` are still mutable. Using the `const` declaration only prevents reassignment of the variable identifier.
+Cependant, il est important de comprendre que les objets (y compris les tableaux et les fonctions) affectés à une variable en utilisant `const` sont toujours mutables. L'utilisation de la déclaration `const` empêche seulement la réaffectation de l'identifiant de la variable.
 
 ```js
 const s = [5, 6, 7];
@@ -23,29 +23,29 @@ s[2] = 45;
 console.log(s);
 ```
 
-`s = [1, 2, 3]` will result in an error. The `console.log` will display the value `[5, 6, 45]`.
+`s = [1, 2, 3]` entraînera une erreur. Le fichier `console.log` affichera la valeur `[5, 6, 45]`.
 
-As you can see, you can mutate the object `[5, 6, 7]` itself and the variable `s` will still point to the altered array `[5, 6, 45]`. Like all arrays, the array elements in `s` are mutable, but because `const` was used, you cannot use the variable identifier `s` to point to a different array using the assignment operator.
+Comme vous pouvez le voir, vous pouvez modifier l'objet `[5, 6, 7]` lui-même et la variable `s` pointera toujours vers le tableau modifié `[5, 6, 45]`. Comme tous les tableaux, les éléments du tableau `s` sont mutables, mais comme `const` a été utilisé, vous ne pouvez pas utiliser l'identifiant de la variable `s` pour pointer vers un tableau différent en utilisant l'opérateur d'affectation.
 
 # --instructions--
 
-An array is declared as `const s = [5, 7, 2]`. Change the array to `[2, 5, 7]` using various element assignments.
+Un tableau est déclaré comme `const s = [5, 7, 2]`. Changez le tableau en `[2, 5, 7]` en utilisant diverses affectations d'éléments.
 
 # --hints--
 
-You should not replace `const` keyword.
+Vous ne devez pas remplacer le mot-clé `const`.
 
 ```js
 (getUserInput) => assert(getUserInput('index').match(/const/g));
 ```
 
-`s` should be a constant variable (by using `const`).
+`s` devrait être une variable constante (en utilisant `const`).
 
 ```js
 (getUserInput) => assert(getUserInput('index').match(/const\s+s/g));
 ```
 
-You should not change the original array declaration.
+Vous ne devez pas modifier la déclaration originale du tableau.
 
 ```js
 (getUserInput) =>
@@ -56,7 +56,7 @@ You should not change the original array declaration.
   );
 ```
 
-`s` should be equal to `[2, 5, 7]`.
+`s` devrait être égal à `[2, 5, 7]`.
 
 ```js
 assert.deepEqual(s, [2, 5, 7]);
@@ -69,11 +69,11 @@ assert.deepEqual(s, [2, 5, 7]);
 ```js
 const s = [5, 7, 2];
 function editInPlace() {
-  // Only change code below this line
+  // Ne changez le code qu'en dessous de cette ligne
 
-  // Using s = [2, 5, 7] would be invalid
+  // Utiliser s = [2, 5, 7] ne serait pas valide.
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
 }
 editInPlace();
 ```

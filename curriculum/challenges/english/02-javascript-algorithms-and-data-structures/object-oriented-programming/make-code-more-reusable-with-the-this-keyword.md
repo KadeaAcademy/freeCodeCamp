@@ -1,6 +1,6 @@
 ---
 id: 587d7dad367417b2b2512b76
-title: Make Code More Reusable with the this Keyword
+title: Rendre le code plus réutilisable avec le mot-clé this
 challengeType: 1
 forumTopicId: 301321
 dashedName: make-code-more-reusable-with-the-this-keyword
@@ -8,42 +8,42 @@ dashedName: make-code-more-reusable-with-the-this-keyword
 
 # --description--
 
-The last challenge introduced a method to the `duck` object. It used `duck.name` dot notation to access the value for the `name` property within the return statement:
+Le dernier défi a introduit une méthode dans l'objet `canard`. Elle utilise la notation pointée `canard.nom` pour accéder à la valeur de la propriété `nom` dans la déclaration de retour :
 
 ```js
-sayName: function() {return "The name of this duck is " + duck.name + ".";}
+citerLeNom: function() {return "Le nom de ce canard est " + canard.name + ".";}
 ```
 
-While this is a valid way to access the object's property, there is a pitfall here. If the variable name changes, any code referencing the original name would need to be updated as well. In a short object definition, it isn't a problem, but if an object has many references to its properties there is a greater chance for error.
+Bien qu'il s'agisse d'un moyen valable d'accéder à la propriété de l'objet, il y a un piège à éviter. Si le nom de la variable change, tout code faisant référence au nom original devra également être mis à jour. Dans une courte définition d'objet, ce n'est pas un problème, mais si un objet a de nombreuses références à ses propriétés, le risque d'erreur est plus grand.
 
-A way to avoid these issues is with the `this` keyword:
+Le mot-clé `this` permet d'éviter ces problèmes :
 
 ```js
-let duck = {
+let canard = {
   name: "Aflac",
-  numLegs: 2,
-  sayName: function() {return "The name of this duck is " + this.name + ".";}
+  nombreDePattes: 2,
+  citerLeNom: function() {return "Le nom de ce canard est " + this.name + ".";}
 };
 ```
 
-`this` is a deep topic, and the above example is only one way to use it. In the current context, `this` refers to the object that the method is associated with: `duck`. If the object's name is changed to `mallard`, it is not necessary to find all the references to `duck` in the code. It makes the code reusable and easier to read.
+`this` est un sujet profond, et l'exemple ci-dessus n'est qu'une façon de l'utiliser. Dans le contexte actuel, `this` fait référence à l'objet auquel la méthode est associée : `canard`. Si le nom de l'objet est changé en `mallard`, il n'est pas nécessaire de trouver toutes les références à `canard` dans le code. Cela rend le code réutilisable et plus facile à lire.
 
 # --instructions--
 
-Modify the `dog.sayLegs` method to remove any references to `dog`. Use the `duck` example for guidance.
+Modifiez la méthode `chien.compterPattes` pour supprimer toute référence à `chien`. Utilisez l'exemple `canard` pour vous guider.
 
 # --hints--
 
-`dog.sayLegs()` should return the given string.
+`chien.compterPattes()` doit renvoyer la chaîne choisie.
 
 ```js
-assert(dog.sayLegs() === 'This dog has 4 legs.');
+assert(chien.compterPattes() === 'Ce chien a 4 pattes.');
 ```
 
-Your code should use the `this` keyword to access the `numLegs` property of `dog`.
+Votre code doit utiliser le mot-clé `this` pour accéder à la propriété `nombreDePattes` de `chien`.
 
 ```js
-assert(code.match(/this\.numLegs/g));
+assert(code.match(/this\.nombreDePattes/g));
 ```
 
 # --seed--
@@ -51,25 +51,25 @@ assert(code.match(/this\.numLegs/g));
 ## --seed-contents--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4,
-  sayLegs: function() {return "This dog has " + dog.numLegs + " legs.";}
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4,
+  compterPattes: function() {return "Ce chien a " + chien.nombreDePattes + " pattes.";}
 };
 
-dog.sayLegs();
+chien.compterPattes();
 ```
 
 # --solutions--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4,
-  sayLegs () {
-    return 'This dog has ' + this.numLegs + ' legs.';
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4,
+  compterPattes () {
+    return 'Ce chien a ' + this.nombreDePattes + ' pattes.';
   }
 };
 
-dog.sayLegs();
+chien.compterPattes();
 ```

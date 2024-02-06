@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d8
-title: Comparisons with the Logical And Operator
+title: Comparaisons avec l'opérateur logique Et
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cvbRVtr'
 forumTopicId: 16799
@@ -9,9 +9,9 @@ dashedName: comparisons-with-the-logical-and-operator
 
 # --description--
 
-Sometimes you will need to test more than one thing at a time. The <dfn>logical and</dfn> operator (`&&`) returns `true` if and only if the <dfn>operands</dfn> to the left and right of it are true.
+Parfois, vous devrez tester plus d'une chose à la fois. L'opérateur <dfn>logique et</dfn> (`&&`) renvoie `true` si et seulement si les <dfn>opérandes</dfn> à sa gauche et à sa droite sont vrais.
 
-The same effect could be achieved by nesting an if statement inside another if:
+Le même effet pourrait être obtenu en imbriquant une instruction if dans une autre if :
 
 ```js
 if (num > 5) {
@@ -22,7 +22,7 @@ if (num > 5) {
 return "No";
 ```
 
-will only return `Yes` if `num` is greater than `5` and less than `10`. The same logic can be written as:
+ne renverra `Yes` que si `num` est supérieur à `5` et inférieur à `10`. La même logique peut s'écrire :
 
 ```js
 if (num > 5 && num < 10) {
@@ -33,65 +33,65 @@ return "No";
 
 # --instructions--
 
-Replace the two if statements with one statement, using the `&&` operator, which will return the string `Yes` if `val` is less than or equal to `50` and greater than or equal to `25`. Otherwise, will return the string `No`.
+Remplacez les deux instructions if par une seule, en utilisant l'opérateur `&&`, qui renverra la chaîne `Yes` si `val` est inférieur ou égal à `50` et supérieur ou égal à `25`. Sinon, renverra la chaîne `No`.
 
 # --hints--
 
-You should use the `&&` operator once
+Vous devez utiliser l'opérateur `&&` une fois
 
 ```js
 assert(code.match(/&&/g).length === 1);
 ```
 
-You should only have one `if` statement
+Vous ne devriez avoir qu'une seule instruction `if`
 
 ```js
 assert(code.match(/if/g).length === 1);
 ```
 
-`testLogicalAnd(0)` should return the string `No`
+`testLogicalAnd(0)` doit renvoyer la chaîne `No`
 
 ```js
 assert(testLogicalAnd(0) === 'No');
 ```
 
-`testLogicalAnd(24)` should return the string `No`
+`testLogicalAnd(24)` doit renvoyer la chaîne `No`
 
 ```js
 assert(testLogicalAnd(24) === 'No');
 ```
 
-`testLogicalAnd(25)` should return the string `Yes`
+`testLogicalAnd(25)` doit renvoyer la chaîne `Yes`
 
 ```js
 assert(testLogicalAnd(25) === 'Yes');
 ```
 
-`testLogicalAnd(30)` should return the string `Yes`
+`testLogicalAnd(30)` doit renvoyer la chaîne `Yes`
 
 ```js
 assert(testLogicalAnd(30) === 'Yes');
 ```
 
-`testLogicalAnd(50)` should return the string `Yes`
+`testLogicalAnd(50)` doit renvoyer la chaîne `Yes`
 
 ```js
 assert(testLogicalAnd(50) === 'Yes');
 ```
 
-`testLogicalAnd(51)` should return the string `No`
+`testLogicalAnd(51)` doit renvoyer la chaîne `No`
 
 ```js
 assert(testLogicalAnd(51) === 'No');
 ```
 
-`testLogicalAnd(75)` should return the string `No`
+`testLogicalAnd(75)` doit renvoyer la chaîne `No`
 
 ```js
 assert(testLogicalAnd(75) === 'No');
 ```
 
-`testLogicalAnd(80)` should return the string `No`
+`testLogicalAnd(80)` doit renvoyer la chaîne `No`
 
 ```js
 assert(testLogicalAnd(80) === 'No');
@@ -103,7 +103,7 @@ assert(testLogicalAnd(80) === 'No');
 
 ```js
 function testLogicalAnd(val) {
-  // Only change code below this line
+  // Ne modifiez le code qu'en dessous de cette ligne
 
   if (val) {
     if (val) {
@@ -111,7 +111,7 @@ function testLogicalAnd(val) {
     }
   }
 
-  // Only change code above this line
+  // Ne modifiez que le code au-dessus de cette ligne
   return "No";
 }
 

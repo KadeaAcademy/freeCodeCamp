@@ -1,6 +1,6 @@
 ---
 id: 587d7b7b367417b2b2512b15
-title: Iterate Through All an Array's Items Using For Loops
+title: Itérer à travers tous les éléments d'un tableau en utilisant des boucles "For".
 challengeType: 1
 forumTopicId: 301161
 dashedName: iterate-through-all-an-arrays-items-using-for-loops
@@ -8,9 +8,9 @@ dashedName: iterate-through-all-an-arrays-items-using-for-loops
 
 # --description--
 
-Sometimes when working with arrays, it is very handy to be able to iterate through each item to find one or more elements that we might need, or to manipulate an array based on which data items meet a certain set of criteria. JavaScript offers several built in methods that each iterate over arrays in slightly different ways to achieve different results (such as `every()`, `forEach()`, `map()`, etc.), however the technique which is most flexible and offers us the greatest amount of control is a simple `for` loop.
+Parfois, lorsque l'on travaille avec des tableaux, il est très pratique de pouvoir itérer sur chaque élément pour trouver un ou plusieurs éléments dont on pourrait avoir besoin, ou de manipuler un tableau en fonction des éléments de données qui répondent à un certain ensemble de critères. JavaScript propose plusieurs méthodes intégrées qui permettent d'itérer sur des tableaux de manière légèrement différente pour obtenir des résultats différents (comme `every()`, `forEach()`, `map()`, etc.), mais la technique la plus flexible et qui nous offre le plus de contrôle est une simple boucle `for`.
 
-Consider the following:
+Prenons l'exemple suivant :
 
 ```js
 function greaterThanTen(arr) {
@@ -26,15 +26,15 @@ function greaterThanTen(arr) {
 greaterThanTen([2, 12, 8, 14, 80, 0, 1]);
 ```
 
-Using a `for` loop, this function iterates through and accesses each element of the array, and subjects it to a simple test that we have created. In this way, we have easily and programmatically determined which data items are greater than `10`, and returned a new array, `[12, 14, 80]`, containing those items.
+En utilisant une boucle `for`, cette fonction parcourt et accède à chaque élément du tableau, et le soumet à un test simple que nous avons créé. De cette façon, nous avons facilement et par programme déterminé quels éléments de données sont supérieurs à `10`, et renvoyé un nouveau tableau, `[12, 14, 80]`, contenant ces éléments.
 
 # --instructions--
 
-We have defined a function, `filteredArray`, which takes `arr`, a nested array, and `elem` as arguments, and returns a new array. `elem` represents an element that may or may not be present on one or more of the arrays nested within `arr`. Modify the function, using a `for` loop, to return a filtered version of the passed array such that any array nested within `arr` containing `elem` has been removed.
+Nous avons défini une fonction, `filteredArray`, qui prend `arr`, un tableau imbriqué, et `elem` comme arguments, et retourne un nouveau tableau. `elem` représente un élément qui peut ou non être présent dans un ou plusieurs des tableaux imbriqués dans `arr`. Modifiez la fonction, en utilisant une boucle `for`, pour retourner une version filtrée du tableau passé, de sorte que tout tableau imbriqué dans `arr` contenant `elem` ait été supprimé.
 
 # --hints--
 
-`filteredArray([[10, 8, 3], [14, 6, 23], [3, 18, 6]], 18)` should return `[[10, 8, 3], [14, 6, 23]]`
+`filteredArray([[10, 8, 3], [14, 6, 23], [3, 18, 6]], 18)` devrait renvoyer `[[10, 8, 3], [14, 6, 23]]`
 
 ```js
 assert.deepEqual(
@@ -53,7 +53,7 @@ assert.deepEqual(
 );
 ```
 
-`filteredArray([["trumpets", 2], ["flutes", 4], ["saxophones", 2]], 2)` should return `[["flutes", 4]]`
+`filteredArray([["trumpets", 2], ["flutes", 4], ["saxophones", 2]], 2)` devrait renvoyer `[["flutes", 4]]`
 
 ```js
 assert.deepEqual(
@@ -69,7 +69,7 @@ assert.deepEqual(
 );
 ```
 
-`filteredArray([["amy", "beth", "sam"], ["dave", "sean", "peter"]], "peter")` should return `[["amy", "beth", "sam"]]`
+`filteredArray([["amy", "beth", "sam"], ["dave", "sean", "peter"]], "peter")` devrait renvoyer `[["amy", "beth", "sam"]]`
 
 ```js
 assert.deepEqual(
@@ -84,7 +84,7 @@ assert.deepEqual(
 );
 ```
 
-`filteredArray([[3, 2, 3], [1, 6, 3], [3, 13, 26], [19, 3, 9]], 3)` should return `[]`
+`filteredArray([[3, 2, 3], [1, 6, 3], [3, 13, 26], [19, 3, 9]], 3)` devrait renvoyer `[]`
 
 ```js
 assert.deepEqual(
@@ -101,7 +101,7 @@ assert.deepEqual(
 );
 ```
 
-The `filteredArray` function should utilize a `for` loop
+La fonction `filteredArray` doit utiliser une boucle `for`.
 
 ```js
 assert.notStrictEqual(filteredArray.toString().search(/for/), -1);
@@ -114,9 +114,9 @@ assert.notStrictEqual(filteredArray.toString().search(/for/), -1);
 ```js
 function filteredArray(arr, elem) {
   let newArr = [];
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return newArr;
 }
 

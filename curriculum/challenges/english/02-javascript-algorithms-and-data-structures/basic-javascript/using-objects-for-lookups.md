@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244ca
-title: Using Objects for Lookups
+title: Utilisation d'objets pour les recherches
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cdBk8sM'
 forumTopicId: 18373
@@ -9,9 +9,9 @@ dashedName: using-objects-for-lookups
 
 # --description--
 
-Objects can be thought of as a key/value storage, like a dictionary. If you have tabular data, you can use an object to lookup values rather than a `switch` statement or an `if/else` chain. This is most useful when you know that your input data is limited to a certain range.
+Les objets peuvent être considérés comme un stockage clé/valeur, comme un dictionnaire. Si vous avez des données tabulaires, vous pouvez utiliser un objet pour rechercher des valeurs plutôt qu'une instruction `switch` ou une chaîne `if/else`. Ceci est particulièrement utile lorsque vous savez que vos données d'entrée sont limitées à une certaine plage.
 
-Here is an example of a simple reverse alphabet lookup:
+Voici un exemple d'une simple recherche inversée dans l'alphabet :
 
 ```js
 const alpha = {
@@ -32,63 +32,63 @@ const value = 2;
 alpha[value];
 ```
 
-`alpha[2]` is the string `Y`, `alpha[24]` is the string `C`, and `alpha[value]` is the string `Y`.
+`alpha[2]` est la chaîne `Y`, `alpha[24]` est la chaîne `C`, et `alpha[valeur]` est la chaîne `Y`.
 
 # --instructions--
 
-Convert the switch statement into an object called `lookup`. Use it to look up `val` and assign the associated string to the `result` variable.
+Convertissez l'instruction switch en un objet appelé `lookup`. Utilisez-le pour rechercher `val` et assigner la chaîne associée à la variable `result`.
 
 # --hints--
 
-`phoneticLookup("alpha")` should equal the string `Adams`
+`phoneticLookup("alpha")` devrait être égal à la chaîne `Adams`.
 
 ```js
 assert(phoneticLookup('alpha') === 'Adams');
 ```
 
-`phoneticLookup("bravo")` should equal the string `Boston`
+`phoneticLookup("bravo")` devrait être égal à la chaîne `Boston`.
 
 ```js
 assert(phoneticLookup('bravo') === 'Boston');
 ```
 
-`phoneticLookup("charlie")` should equal the string `Chicago`
+`phoneticLookup("charlie")` devrait être égal à la chaîne `Chicago`.
 
 ```js
 assert(phoneticLookup('charlie') === 'Chicago');
 ```
 
-`phoneticLookup("delta")` should equal the string `Denver`
+`phoneticLookup("delta")` devrait être égal à la chaîne `Denver`.
 
 ```js
 assert(phoneticLookup('delta') === 'Denver');
 ```
 
-`phoneticLookup("echo")` should equal the string `Easy`
+`phoneticLookup("echo")` devrait être égal à la chaîne `Easy`.
 
 ```js
 assert(phoneticLookup('echo') === 'Easy');
 ```
 
-`phoneticLookup("foxtrot")` should equal the string `Frank`
+`phoneticLookup("foxtrot")` devrait être égal à la chaîne `Frank`.
 
 ```js
 assert(phoneticLookup('foxtrot') === 'Frank');
 ```
 
-`phoneticLookup("")` should equal `undefined`
+`phoneticLookup("")` devrait être égal à `undefined`.
 
 ```js
 assert(typeof phoneticLookup('') === 'undefined');
 ```
 
-You should not modify the `return` statement
+Vous ne devez pas modifier l'instruction `return`.
 
 ```js
 assert(code.match(/return\sresult;/));
 ```
 
-You should not use `case`, `switch`, or `if` statements
+Vous ne devez pas utiliser les instructions `case`, `switch` ou `if`.
 
 ```js
 assert(
@@ -105,7 +105,7 @@ assert(
 function phoneticLookup(val) {
   let result = "";
 
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
   switch(val) {
     case "alpha":
       result = "Adams";
@@ -126,7 +126,7 @@ function phoneticLookup(val) {
       result = "Frank";
   }
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return result;
 }
 

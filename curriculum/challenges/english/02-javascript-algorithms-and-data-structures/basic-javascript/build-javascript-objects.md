@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392d0
-title: Build JavaScript Objects
+title: Construire des objets JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cWGkbtd'
 forumTopicId: 16769
@@ -9,13 +9,13 @@ dashedName: build-javascript-objects
 
 # --description--
 
-You may have heard the term `object` before.
+Vous avez peut-être déjà entendu le terme "objet".
 
-Objects are similar to `arrays`, except that instead of using indexes to access and modify their data, you access the data in objects through what are called `properties`.
+Les objets sont similaires aux tableaux, sauf qu'au lieu d'utiliser des indices pour accéder à leurs données et les modifier, vous accédez aux données des objets par le biais de ce que l'on appelle des "propriétés".
 
-Objects are useful for storing data in a structured way, and can represent real world objects, like a cat.
+Les objets sont utiles pour stocker des données de manière structurée, et peuvent représenter des objets du monde réel, comme un chat.
 
-Here's a sample cat object:
+Voici un exemple d'objet chat :
 
 ```js
 const cat = {
@@ -26,7 +26,7 @@ const cat = {
 };
 ```
 
-In this example, all the properties are stored as strings, such as `name`, `legs`, and `tails`. However, you can also use numbers as properties. You can even omit the quotes for single-word string properties, as follows:
+Dans cet exemple, toutes les propriétés sont stockées sous forme de chaînes de caractères, telles que `name`, `legs`, et `tails`. Cependant, vous pouvez également utiliser des nombres comme propriétés. Vous pouvez même omettre les guillemets pour les propriétés de chaînes de caractères d'un seul mot, comme suit :
 
 ```js
 const anotherObject = {
@@ -36,17 +36,17 @@ const anotherObject = {
 };
 ```
 
-However, if your object has any non-string properties, JavaScript will automatically typecast them as strings.
+Toutefois, si votre objet possède des propriétés autres que des chaînes de caractères, JavaScript les convertira automatiquement en chaînes de caractères.
 
 # --instructions--
 
-Make an object that represents a dog called `myDog` which contains the properties `name` (a string), `legs`, `tails` and `friends`.
+Créez un objet représentant un chien appelé `myDog` qui contient les propriétés `name` (une chaîne), `legs`, `tails` et `friends`.
 
-You can set these object properties to whatever values you want, as long as `name` is a string, `legs` and `tails` are numbers, and `friends` is an array.
+Vous pouvez donner à ces propriétés d'objet les valeurs que vous voulez, à condition que `name` soit une chaîne de caractères, que `legs` et `tails` soient des nombres et que `friends` soit un tableau.
 
 # --hints--
 
-`myDog` should contain the property `name` and it should be a `string`.
+`myDog` doit contenir la propriété `name` et doit être une `string`.
 
 ```js
 assert(
@@ -64,7 +64,7 @@ assert(
 );
 ```
 
-`myDog` should contain the property `legs` and it should be a `number`.
+`myDog` doit contenir la propriété `legs` et doit être un `number`.
 
 ```js
 assert(
@@ -82,7 +82,7 @@ assert(
 );
 ```
 
-`myDog` should contain the property `tails` and it should be a `number`.
+`myDog` doit contenir la propriété `tails` et doit être un `nombre`.
 
 ```js
 assert(
@@ -100,7 +100,7 @@ assert(
 );
 ```
 
-`myDog` should contain the property `friends` and it should be an `array`.
+`myDog` doit contenir la propriété `friends` et doit être un `tableau`.
 
 ```js
 assert(
@@ -118,7 +118,7 @@ assert(
 );
 ```
 
-`myDog` should only contain all the given properties.
+`myDog` ne doit contenir que toutes les propriétés données.
 
 ```js
 assert(
@@ -140,10 +140,10 @@ assert(
 
 ```js
 const myDog = {
-  // Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 
-  // Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 };
 ```
 

@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392cf
-title: Write Reusable JavaScript with Functions
+title: Écrire du JavaScript réutilisable avec des fonctions
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cL6dqfy'
 forumTopicId: 18378
@@ -9,9 +9,9 @@ dashedName: write-reusable-javascript-with-functions
 
 # --description--
 
-In JavaScript, we can divide up our code into reusable parts called <dfn>functions</dfn>.
+En JavaScript, nous pouvons diviser notre code en parties réutilisables appelées <dfn>fonctions</dfn>.
 
-Here's an example of a function:
+Voici un exemple de fonction :
 
 ```js
 function functionName() {
@@ -19,34 +19,34 @@ function functionName() {
 }
 ```
 
-You can call or <dfn>invoke</dfn> this function by using its name followed by parentheses, like this: `functionName();` Each time the function is called it will print out the message `Hello World` on the dev console. All of the code between the curly braces will be executed every time the function is called.
+Vous pouvez appeler ou <dfn>invoquer</dfn> cette fonction en utilisant son nom suivi de parenthèses, comme ceci : `functionName();` Chaque fois que la fonction est appelée, elle imprimera le message `Hello World` sur la console dev. Tout le code entre les accolades sera exécuté à chaque fois que la fonction sera appelée.
 
 # --instructions--
 
 <ol>
   <li>
-    Create a function called <code>reusableFunction</code> which prints the string <code>Hi World</code> to the dev console.
+    Créez une fonction appelée  <code>reusableFunction</code> qui imprime la chaîne <code>Hi World</code> sur la console dev.
   </li>
   <li>
-    Call the function.
+    Appelez la fonction.
   </li>
 </ol>
 
 # --hints--
 
-`reusableFunction` should be a function.
+`reusableFunction` devrait être une fonction.
 
 ```js
 assert(typeof reusableFunction === 'function');
 ```
 
-If `reusableFunction` is called, it should output the string `Hi World` to the console.
+Si `reusableFunction` est appelée, elle devrait afficher la chaîne de caractères `Hi World` sur la console.
 
 ```js
 assert(testConsole());
 ```
 
-You should call `reusableFunction` once it is defined.
+Vous devez appeler `reusableFunction` une fois qu'elle est définie.
 
 ```js
 const functionStr = reusableFunction && __helpers.removeWhiteSpace(reusableFunction.toString());

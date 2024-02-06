@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d1
-title: Comparison with the Strict Equality Operator
+title: Comparaison avec l'opérateur d'égalité stricte
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cy87atr'
 forumTopicId: 16790
@@ -9,44 +9,44 @@ dashedName: comparison-with-the-strict-equality-operator
 
 # --description--
 
-Strict equality (`===`) is the counterpart to the equality operator (`==`). However, unlike the equality operator, which attempts to convert both values being compared to a common type, the strict equality operator does not perform a type conversion.
+L'égalité stricte (`===`) est la contrepartie de l'opérateur d'égalité (`==`). Toutefois, contrairement à l'opérateur d'égalité, qui tente de convertir les deux valeurs comparées en un type commun, l'opérateur d'égalité stricte n'effectue pas de conversion de type.
 
-If the values being compared have different types, they are considered unequal, and the strict equality operator will return false.
+Si les valeurs comparées ont des types différents, elles sont considérées comme inégales et l'opérateur d'égalité stricte renvoie false.
 
-**Examples**
+**Exemples**
 
 ```js
 3 ===  3  // true
 3 === '3' // false
 ```
 
-In the second example, `3` is a `Number` type and `'3'` is a `String` type.
+Dans le deuxième exemple, `3` est un type "Nombre" et `'3'` est de type `String`.
 
 # --instructions--
 
-Use the strict equality operator in the `if` statement so the function will return the string `Equal` when `val` is strictly equal to `7`.
+Utilisez l'opérateur d'égalité stricte dans l'instruction `if` pour que la fonction renvoie la chaîne `Egal` lorsque `val` est strictement égal à `7`.
 
 # --hints--
 
-`testStrict(10)` should return the string `Not Equal`
+`testStrict(10)` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testStrict(10) === 'Not Equal');
+assert(testStrict(10) === 'Pas Egal');
 ```
 
-`testStrict(7)` should return the string `Equal`
+`testStrict(7)` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testStrict(7) === 'Equal');
+assert(testStrict(7) === 'Egal');
 ```
 
-`testStrict("7")` should return the string `Not Equal`
+`testStrict("7")` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testStrict('7') === 'Not Equal');
+assert(testStrict('7') === 'Pas Egal');
 ```
 
-You should use the `===` operator
+Vous devez utiliser l'opérateur `===`.
 
 ```js
 assert(code.match(/(val\s*===\s*\d+)|(\d+\s*===\s*val)/g).length > 0);
@@ -59,10 +59,10 @@ assert(code.match(/(val\s*===\s*\d+)|(\d+\s*===\s*val)/g).length > 0);
 ```js
 // Setup
 function testStrict(val) {
-  if (val) { // Change this line
-    return "Equal";
+  if (val) { // Modifiez cette ligne
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 
 testStrict(10);
@@ -73,8 +73,8 @@ testStrict(10);
 ```js
 function testStrict(val) {
   if (val === 7) {
-    return "Equal";
+    return "Egal";
   }
-  return "Not Equal";
+  return "Pas Egal";
 }
 ```

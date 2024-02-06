@@ -1,6 +1,6 @@
 ---
 id: 5c3dda8b4d8df89bea71600f
-title: Check For Mixed Grouping of Characters
+title: Vérifier le regroupement mixte des caractères
 challengeType: 1
 forumTopicId: 301339
 dashedName: check-for-mixed-grouping-of-characters
@@ -8,11 +8,11 @@ dashedName: check-for-mixed-grouping-of-characters
 
 # --description--
 
-Sometimes we want to check for groups of characters using a Regular Expression and to achieve that we use parentheses `()`.
+Parfois, nous voulons vérifier des groupes de caractères à l'aide d'une expression régulière et pour cela, nous utilisons les parenthèses `()`.
 
-If you want to find either `Penguin` or `Pumpkin` in a string, you can use the following Regular Expression: `/P(engu|umpk)in/g`
+Si vous voulez trouver `Penguin` ou `Pumpkin` dans une chaîne de caractères, vous pouvez utiliser l'expression régulière suivante : `/P(engu|umpk)in/g`.
 
-Then check whether the desired string groups are in the test string by using the `test()` method.
+Vérifiez ensuite si les groupes de chaînes souhaités se trouvent dans la chaîne de test en utilisant la méthode `test()`.
 
 ```js
 let testStr = "Pumpkin";
@@ -20,51 +20,51 @@ let testRegex = /P(engu|umpk)in/;
 testRegex.test(testStr);
 ```
 
-The `test` method here would return `true`.
+La méthode `test` renverrait ici `true`.
 
 # --instructions--
 
-Fix the regex so that it checks for the names of `Franklin Roosevelt` or `Eleanor Roosevelt` in a case sensitive manner and it should make concessions for middle names.
+Corrigez l'expression pour qu'elle vérifie les noms de `Franklin Roosevelt` ou `Eleanor Roosevelt` en respectant la casse et en faisant des concessions pour les seconds prénoms.
 
-Then fix the code so that the regex that you have created is checked against `myString` and either `true` or `false` is returned depending on whether the regex matches.
+Corrigez ensuite le code pour que l'expression de remplacement que vous avez créée soit vérifiée par rapport à `myString` et qu'elle renvoie soit `true` soit `false` selon que l'expression de remplacement correspond ou non.
 
 # --hints--
 
-Your regex `myRegex` should return `true` for the string `Franklin D. Roosevelt`
+Votre regex `myRegex` doit retourner `true` pour la chaîne `Franklin D. Roosevelt`.
 
 ```js
 myRegex.lastIndex = 0;
 assert(myRegex.test('Franklin D. Roosevelt'));
 ```
 
-Your regex `myRegex` should return `true` for the string `Eleanor Roosevelt`
+Votre regex `myRegex` devrait retourner `true` pour la chaîne `Eleanor Roosevelt`.
 
 ```js
 myRegex.lastIndex = 0;
 assert(myRegex.test('Eleanor Roosevelt'));
 ```
 
-Your regex `myRegex` should return `false` for the string `Franklin Rosevelt`
+Votre regex `myRegex` devrait retourner `false` pour la chaîne `Franklin Rosevelt`.
 
 ```js
 myRegex.lastIndex = 0;
 assert(!myRegex.test('Franklin Rosevelt'));
 ```
 
-Your regex `myRegex` should return `false` for the string `Frank Roosevelt`
+Votre regex `myRegex` devrait retourner `false` pour la chaîne `Frank Roosevelt`.
 
 ```js
 myRegex.lastIndex = 0;
 assert(!myRegex.test('Frank Roosevelt'));
 ```
 
-You should use `.test()` to test the regex.
+Vous devriez utiliser `.test()` pour tester la regex.
 
 ```js
 assert(code.match(/myRegex.test\(\s*myString\s*\)/));
 ```
 
-Your result should return `true`.
+Votre résultat devrait retourner `true`.
 
 ```js
 assert(result === true);
@@ -76,9 +76,9 @@ assert(result === true);
 
 ```js
 let myString = "Eleanor Roosevelt";
-let myRegex = /False/; // Change this line
-let result = false; // Change this line
-// After passing the challenge experiment with myString and see how the grouping works
+let myRegex = /False/; // Modifiez cette ligne
+let result = false; // Modifiez cette ligne
+// Après avoir réussi le défi, expérimentez avec myString et voyez comment le regroupement fonctionne.
 ```
 
 # --solutions--

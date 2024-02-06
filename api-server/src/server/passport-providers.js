@@ -41,8 +41,10 @@ const passportProviders = {
     state: false,
     successRedirect: successRedirect,
     failureRedirect: failureRedirect,
-    scope: ['openid profile email'],
-    failureFlash: true
+    scope: ['openid email profile'],
+    failureFlash: true,
+    idpLogout: true,
+    auth0Logout: true
   }
 };
 

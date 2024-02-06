@@ -28,10 +28,10 @@ import {
 import Spacer from '../helpers/spacer';
 import { Themes } from '../settings/theme';
 import DonateCompletion from './donate-completion';
-import PatreonButton from './patreon-button';
+//import PatreonButton from './patreon-button';
 import type { AddDonationData } from './paypal-button';
-import PaypalButton from './paypal-button';
-import StripeCardForm, { HandleAuthentication } from './stripe-card-form';
+// import PaypalButton from './paypal-button';
+// import StripeCardForm, { HandleAuthentication } from './stripe-card-form';
 import WalletsWrapper from './walletsButton';
 
 import './donation.css';
@@ -62,7 +62,7 @@ type DonateFormProps = {
     paymentMethodId: string;
     amount: number;
     duration: string;
-    handleAuthentication: HandleAuthentication;
+    // handleAuthentication: HandleAuthentication;
   }) => void;
   defaultTheme?: Themes;
   email: string;
@@ -230,8 +230,8 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
   }
 
   postStripeCardDonation(
-    paymentMethodId: string,
-    handleAuthentication: HandleAuthentication
+    paymentMethodId: string
+    // handleAuthentication: HandleAuthentication
   ) {
     const { donationAmount: amount, donationDuration: duration } = this.state;
     this.props.handleProcessing(
@@ -242,8 +242,8 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
     this.props.postChargeStripeCard({
       paymentMethodId,
       amount,
-      duration,
-      handleAuthentication
+      duration
+      // handleAuthentication
     });
   }
 
@@ -307,15 +307,11 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
   renderButtonGroup() {
     const { donationAmount, donationDuration } = this.state;
     const {
-      donationFormState: { loading, processing },
-      handleProcessing,
-      addDonation,
+      donationFormState: { loading },
       defaultTheme,
       theme,
       t,
-      isMinimalForm,
-      isSignedIn,
-      isDonating
+      isMinimalForm
     } = this.props;
     const priorityTheme = defaultTheme ? defaultTheme : theme;
     const isOneTime = donationDuration === 'onetime';
@@ -323,7 +319,7 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
       isOneTime ? 'donate.wallet-label' : 'donate.wallet-label-1',
       { usd: donationAmount / 100 }
     )}:`;
-    const showMinimalPayments = isSignedIn && (isMinimalForm || !isDonating);
+    // const showMinimalPayments = isSignedIn && (isMinimalForm || !isDonating);
 
     return (
       <>
@@ -342,7 +338,7 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
             refreshErrorMessage={t('donate.refresh-needed')}
             theme={priorityTheme}
           />
-          <PaypalButton
+          {/* <PaypalButton
             addDonation={addDonation}
             donationAmount={donationAmount}
             donationDuration={donationDuration}
@@ -353,11 +349,11 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
             isSignedIn={isSignedIn}
             onDonationStateChange={this.onDonationStateChange}
             theme={priorityTheme}
-          />
-          {(!loading.stripe || !loading.paypal) && (
+          /> */}
+          {/* {(!loading.stripe || !loading.paypal) && (
             <PatreonButton postPatreonRedirect={this.postPatreonRedirect} />
-          )}
-          {showMinimalPayments && (
+          )} */}
+          {/* {showMinimalPayments && (
             <>
               <div className='separator'>{t('donate.or-card')}</div>
               <StripeCardForm
@@ -368,7 +364,7 @@ class DonateForm extends Component<DonateFormProps, DonateFormComponentState> {
                 theme={priorityTheme}
               />
             </>
-          )}
+          )} */}
         </div>
       </>
     );

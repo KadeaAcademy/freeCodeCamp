@@ -1,6 +1,6 @@
 ---
 id: 587d7dad367417b2b2512b75
-title: Create a Method on an Object
+title: Créer une méthode sur un objet
 challengeType: 1
 forumTopicId: 301318
 dashedName: create-a-method-on-an-object
@@ -8,37 +8,37 @@ dashedName: create-a-method-on-an-object
 
 # --description--
 
-Objects can have a special type of property, called a <dfn>method</dfn>.
+Les objets peuvent avoir un type spécial de propriété, appelé <dfn>méthode</dfn>.
 
-Methods are properties that are functions. This adds different behavior to an object. Here is the `duck` example with a method:
+Les méthodes sont des propriétés qui sont des fonctions. Elles ajoutent un comportement différent à un objet. Voici l'exemple de `canard` avec une méthode :
 
 ```js
-let duck = {
-  name: "Aflac",
-  numLegs: 2,
-  sayName: function() {return "The name of this duck is " + duck.name + ".";}
+let canard = {
+  nom: "Aflac",
+  nombreDePattes: 2,
+  citerLeNom: function() {return "Le nom de ce canard est " + canard.nom + ".";}
 };
-duck.sayName();
+canard.citerLeNom();
 ```
 
-The example adds the `sayName` method, which is a function that returns a sentence giving the name of the `duck`. Notice that the method accessed the `name` property in the return statement using `duck.name`. The next challenge will cover another way to do this.
+L'exemple ajoute la méthode `citerLeNom`, qui est une fonction qui retourne une phrase donnant le nom du `canard`. Notez que la méthode accède à la propriété `nom` dans la déclaration de retour en utilisant `canard.nom`. Le prochain défi couvrira une autre façon de faire cela.
 
 # --instructions--
 
-Using the `dog` object, give it a method called `sayLegs`. The method should return the sentence `This dog has 4 legs.`
+En utilisant l'objet `chien`, donnez-lui une méthode appelée `compterPattes`. La méthode doit retourner la phrase `Ce chien a 4 pattes`.
 
 # --hints--
 
-`dog.sayLegs()` should be a function.
+`chien.compterPattes()` devrait être une fonction.
 
 ```js
-assert(typeof dog.sayLegs === 'function');
+assert(typeof chien.compterPattes === 'function');
 ```
 
-`dog.sayLegs()` should return the given string - note that punctuation and spacing matter.
+`chien.compterPattes()` doit renvoyer la chaîne donnée - notez que la ponctuation et l'espacement sont importants.
 
 ```js
-assert(dog.sayLegs() === 'This dog has 4 legs.');
+assert(chien.compterPattes() === 'Ce chien a 4 pattes.');
 ```
 
 # --seed--
@@ -46,25 +46,25 @@ assert(dog.sayLegs() === 'This dog has 4 legs.');
 ## --seed-contents--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4,
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4,
 
 };
 
-dog.sayLegs();
+chien.compterPattes();
 ```
 
 # --solutions--
 
 ```js
-let dog = {
-  name: "Spot",
-  numLegs: 4,
-  sayLegs () {
-    return 'This dog has ' + this.numLegs + ' legs.';
+let chien = {
+  nom: "Spot",
+  nombreDePattes: 4,
+  compterPattes () {
+    return 'Ce chien a ' + this.nombreDePattes + ' pattes.';
   }
 };
 
-dog.sayLegs();
+chien.compterPattes();
 ```

@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244c2
-title: Return a Value from a Function with Return
+title: Retourner une valeur à partir d'une fonction avec Return
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cy87wue'
 forumTopicId: 18271
@@ -9,7 +9,7 @@ dashedName: return-a-value-from-a-function-with-return
 
 # --description--
 
-We can pass values into a function with <dfn>arguments</dfn>. You can use a `return` statement to send a value back out of a function.
+On peut passer des valeurs dans une fonction avec <dfn>arguments</dfn>. On peut utiliser une instruction `return` pour renvoyer une valeur depuis une fonction.
 
 **Example**
 
@@ -21,35 +21,35 @@ function plusThree(num) {
 const answer = plusThree(5);
 ```
 
-`answer` has the value `8`.
+`answer` a la valeur `8`.
 
-`plusThree` takes an <dfn>argument</dfn> for `num` and returns a value equal to `num + 3`.
+`plusThree` prend un <dfn>argument</dfn> pour `num` et retourne une valeur égale à `num + 3`.
 
 # --instructions--
 
-Create a function `timesFive` that accepts one argument, multiplies it by `5`, and returns the new value.
+Créez une fonction `timesFive` qui accepte un argument, le multiplie par `5`, et retourne la nouvelle valeur.
 
 # --hints--
 
-`timesFive` should be a function
+`timesFive` devrait être une fonction
 
 ```js
 assert(typeof timesFive === 'function');
 ```
 
-`timesFive(5)` should return `25`
+`timesFive(5)` devrait donner `25`.
 
 ```js
 assert(timesFive(5) === 25);
 ```
 
-`timesFive(2)` should return `10`
+`timesFive(2)` devrait retourner `10`.
 
 ```js
 assert(timesFive(2) === 10);
 ```
 
-`timesFive(0)` should return `0`
+`timesFive(0)` devrait retourner `0`.
 
 ```js
 assert(timesFive(0) === 0);

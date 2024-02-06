@@ -120,6 +120,133 @@ export function getUserById(id, User = loopback.getModelByType('User')) {
   );
 }
 
+export function getAllUsers(
+  page,
+  limit,
+  filter,
+  User = loopback.getModelByType('User')
+) {
+  return new Promise((resolve, reject) => {
+    console.log('filtre ex', filter);
+    if (filter) {
+      console.log('filtre', filter);
+      if (filter.name && filter.email) {
+        if (filter.userGroup) {
+          User.find(
+            {
+              where: {
+                or: [{ name: filter.name }, { email: filter.email }],
+                and: [{ groups: { $in: filter.userGroup } }]
+              },
+              skip: (page - 1) * limit,
+              limit: limit * 1
+            },
+            (err, instance) => {
+              if (err || isEmpty(instance)) {
+                return reject(err || 'No users found ');
+              }
+
+              return resolve(instance);
+            }
+          );
+        } else {
+          User.find(
+            {
+              where: {
+                or: [{ name: filter.name }, { email: filter.email }]
+              },
+              skip: (page - 1) * limit,
+              limit: limit * 1
+            },
+            (err, instance) => {
+              if (err || isEmpty(instance)) {
+                return reject(err || 'No users found ');
+              }
+
+              return resolve(instance);
+            }
+          );
+        }
+      } else {
+        User.find(
+          {
+            where: filter,
+            skip: (page - 1) * limit,
+            limit: limit * 1
+          },
+          (err, instance) => {
+            if (err || isEmpty(instance)) {
+              return reject(err || 'No users found ');
+            }
+
+            return resolve(instance);
+          }
+        );
+      }
+    } else {
+      User.find(
+        { skip: (page - 1) * limit, limit: limit * 1 },
+        (err, instance) => {
+          if (err || isEmpty(instance)) {
+            return reject(err || 'No users found');
+          }
+
+          return resolve(instance);
+        }
+      );
+    }
+  });
+}
+
+export function countUserDocuments(
+  filter,
+  User = loopback.getModelByType('User')
+) {
+  return new Promise((resolve, reject) => {
+    if (filter) {
+      if (filter.name && filter.email) {
+        User.find(
+          {
+            where: { or: [{ name: filter.name }, { email: filter.email }] }
+          },
+          (err, instance) => {
+            if (err || isEmpty(instance)) {
+              return reject(err || 'No users found  g');
+            }
+
+            return resolve(instance);
+          }
+        );
+      } else {
+        User.find({ where: filter }, (err, count) => {
+          if (err || isEmpty(count)) {
+            return reject(err || 'can not count user collection');
+          }
+          return resolve(count);
+        });
+      }
+    } else {
+      User.find((err, count) => {
+        if (err || isEmpty(count)) {
+          return reject(err || 'can not count user collection');
+        }
+        return resolve(count);
+      });
+    }
+  });
+}
+
+// export function userDocumentsFiltered(User = loopback.getModeb lByType('User')) {
+//   return new Promise((resolve, reject) =>
+//     User.find({ where: { about: 'kadea-dev-web' } }, (err, instance) => {
+//       if (err || isEmpty(instance)) {
+//         return reject(err || 'can not count user collection');
+//       }
+//       return resolve(instance);
+//     })
+//   );
+// }
+
 function getCompletedCertCount(user) {
   return [
     'isApisMicroservicesCert',

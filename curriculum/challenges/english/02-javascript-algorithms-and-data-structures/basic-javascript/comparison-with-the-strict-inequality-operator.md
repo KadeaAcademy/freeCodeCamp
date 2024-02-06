@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d3
-title: Comparison with the Strict Inequality Operator
+title: Comparaison avec l'opérateur d'inégalité stricte
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cKekkUy'
 forumTopicId: 16791
@@ -9,9 +9,9 @@ dashedName: comparison-with-the-strict-inequality-operator
 
 # --description--
 
-The strict inequality operator (`!==`) is the logical opposite of the strict equality operator. It means "Strictly Not Equal" and returns `false` where strict equality would return `true` and *vice versa*. The strict inequality operator will not convert data types.
+L'opérateur d'inégalité stricte (`!==`) est l'opposé logique de l'opérateur d'égalité stricte. Il signifie "Strictement non égal" et renvoie `false` là où une égalité stricte renverrait `true` et *vice versa*. L'opérateur d'inégalité stricte ne convertit pas les types de données.
 
-**Examples**
+**Exemples**
 
 ```js
 3 !==  3  // false
@@ -21,35 +21,35 @@ The strict inequality operator (`!==`) is the logical opposite of the strict equ
 
 # --instructions--
 
-Add the strict inequality operator to the `if` statement so the function will return the string `Not Equal` when `val` is not strictly equal to `17`
+Ajoutez l'opérateur d'inégalité stricte à l'instruction `if` pour que la fonction renvoie la chaîne `Pas Egal` lorsque `val` n'est pas strictement égal à `17`.
 
 # --hints--
 
-`testStrictNotEqual(17)` should return the string `Equal`
+`testStrictNotEqual(17)` devrait retourner la chaîne `Egal`.
 
 ```js
-assert(testStrictNotEqual(17) === 'Equal');
+assert(testStrictNotEqual(17) === 'Egal');
 ```
 
-`testStrictNotEqual("17")` should return the string `Not Equal`
+`testStrictNotEqual("17")` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testStrictNotEqual('17') === 'Not Equal');
+assert(testStrictNotEqual('17') === 'Pas Egal');
 ```
 
-`testStrictNotEqual(12)` should return the string `Not Equal`
+`testStrictNotEqual(12)` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testStrictNotEqual(12) === 'Not Equal');
+assert(testStrictNotEqual(12) === 'Pas Egal');
 ```
 
-`testStrictNotEqual("bob")` should return the string `Not Equal`
+`testStrictNotEqual("bob")` devrait retourner la chaîne `Pas Egal`.
 
 ```js
-assert(testStrictNotEqual('bob') === 'Not Equal');
+assert(testStrictNotEqual('bob') === 'Pas Egal');
 ```
 
-You should use the `!==` operator
+Vous devez utiliser l'opérateur `!==`.
 
 ```js
 assert(code.match(/(val\s*!==\s*\d+)|(\d+\s*!==\s*val)/g).length > 0);
@@ -62,10 +62,10 @@ assert(code.match(/(val\s*!==\s*\d+)|(\d+\s*!==\s*val)/g).length > 0);
 ```js
 // Setup
 function testStrictNotEqual(val) {
-  if (val) { // Change this line
-    return "Not Equal";
+  if (val) { // Modifiez cette ligne
+    return "Pas Egal";
   }
-  return "Equal";
+  return "Egal";
 }
 
 testStrictNotEqual(10);
@@ -76,8 +76,8 @@ testStrictNotEqual(10);
 ```js
 function testStrictNotEqual(val) {
   if (val !== 17) {
-    return "Not Equal";
+    return "Pas Egal";
   }
-  return "Equal";
+  return "Egal";
 }
 ```

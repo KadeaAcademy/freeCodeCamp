@@ -1,6 +1,6 @@
 ---
 id: 587d7db3367417b2b2512b8e
-title: Using the Test Method
+title: Utiliser la méthode test
 challengeType: 1
 forumTopicId: 301369
 dashedName: using-the-test-method
@@ -8,33 +8,33 @@ dashedName: using-the-test-method
 
 # --description--
 
-Regular expressions are used in programming languages to match parts of strings. You create patterns to help you do that matching.
+Les expressions régulières sont utilisées dans les langages de programmation pour faire correspondre des parties de chaînes de caractères. Vous créez des schémas pour vous aider à effectuer cette correspondance.
 
-If you want to find the word `the` in the string `The dog chased the cat`, you could use the following regular expression: `/the/`. Notice that quote marks are not required within the regular expression.
+Si vous voulez trouver le mot `the` dans la chaîne `The dog chased the cat`, vous pouvez utiliser l'expression régulière suivante : `/the/`. Notez que les guillemets ne sont pas obligatoires dans l'expression régulière.
 
-JavaScript has multiple ways to use regexes. One way to test a regex is using the `.test()` method. The `.test()` method takes the regex, applies it to a string (which is placed inside the parentheses), and returns `true` or `false` if your pattern finds something or not.
+JavaScript propose plusieurs façons d'utiliser les expressions régulières. L'une d'elles consiste à utiliser la méthode `.test()` pour tester une regex. La méthode `.test()` prend l'expression régulière, l'applique à une chaîne de caractères (qui est placée à l'intérieur des parenthèses), et renvoie `true` ou `false` si votre schéma trouve quelque chose ou pas.
 
 ```js
-let testStr = "freeCodeCamp";
-let testRegex = /Code/;
+let testStr = "Kadea Learning Plateform";
+let testRegex = /Kadea/;
 testRegex.test(testStr);
 ```
 
-The `test` method here returns `true`.
+La méthode `test` renvoie ici `true`.
 
 # --instructions--
 
-Apply the regex `myRegex` on the string `myString` using the `.test()` method.
+Appliquez la regex `myRegex` sur la chaîne `myString` en utilisant la méthode `.test()`.
 
 # --hints--
 
-You should use `.test()` to test the regex.
+Vous devriez utiliser `.test()` pour tester la regex.
 
 ```js
 assert(code.match(/myRegex.test\(\s*myString\s*\)/));
 ```
 
-Your result should return `true`.
+Votre résultat devrait retourner `true`.
 
 ```js
 assert(result === true);
@@ -47,7 +47,7 @@ assert(result === true);
 ```js
 let myString = "Hello, World!";
 let myRegex = /Hello/;
-let result = myRegex; // Change this line
+let result = myRegex; // Modifiez cette ligne
 ```
 
 # --solutions--
@@ -55,5 +55,5 @@ let result = myRegex; // Change this line
 ```js
 let myString = "Hello, World!";
 let myRegex = /Hello/;
-let result = myRegex.test(myString); // Change this line
+let result = myRegex.test(myString); // Modifiez cette ligne
 ```

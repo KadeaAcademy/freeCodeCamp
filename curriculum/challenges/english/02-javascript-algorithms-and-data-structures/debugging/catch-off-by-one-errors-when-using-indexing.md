@@ -1,6 +1,6 @@
 ---
 id: 587d7b86367417b2b2512b3b
-title: Catch Off By One Errors When Using Indexing
+title: Attraper les erreurs de décalage lors de l'utilisation de l'indexation
 challengeType: 1
 forumTopicId: 301189
 dashedName: catch-off-by-one-errors-when-using-indexing
@@ -8,9 +8,9 @@ dashedName: catch-off-by-one-errors-when-using-indexing
 
 # --description--
 
-<dfn>Off by one errors</dfn> (sometimes called OBOE) crop up when you're trying to target a specific index of a string or array (to slice or access a segment), or when looping over the indices of them. JavaScript indexing starts at zero, not one, which means the last index is always one less than the length of the item. If you try to access an index equal to the length, the program may throw an "index out of range" reference error or print `undefined`.
+Les erreurs de type de décalage <dfn>"Off by one errors"</dfn> (parfois appelées OBOE) apparaissent lorsque vous essayez de cibler un indice spécifique d'une chaîne ou d'un tableau (pour découper ou accéder à un segment), ou lorsque vous bouclez sur leurs indices. L'indexation en JavaScript commence à zéro et non à un, ce qui signifie que le dernier indice est toujours inférieur d'une unité à la longueur de l'élément. Si vous essayez d'accéder à un index égal à la longueur, le programme peut lancer une erreur de référence "index out of range" ou afficher `undefined`.
 
-When you use string or array methods that take index ranges as arguments, it helps to read the documentation and understand if they are inclusive (the item at the given index is part of what's returned) or not. Here are some examples of off by one errors:
+Lorsque vous utilisez des méthodes de chaîne ou de tableau qui prennent des plages d'index comme arguments, il est utile de lire la documentation et de comprendre si elles sont inclusives (l'élément à l'index donné fait partie de ce qui est retourné) ou non. Voici quelques exemples d'erreurs de type "off by one" :
 
 ```js
 let alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -26,33 +26,33 @@ for (let k = 0; k < len; k++) {
 }
 ```
 
-The first example here loops one too many times, and the second loops one too few times (missing the first index, 0). The third example is correct.
+Le premier exemple boucle une fois de trop, et le deuxième boucle une fois de trop (il manque le premier indice, 0). Le troisième exemple est correct.
 
 # --instructions--
 
-Fix the two indexing errors in the following function so all the numbers 1 through 5 are printed to the console.
+Corrigez les deux erreurs d'indexation dans la fonction suivante afin que tous les chiffres de 1 à 5 soient imprimés sur la console.
 
 # --hints--
 
-Your code should set the initial condition of the loop so it starts at the first index.
+Votre code doit définir la condition initiale de la boucle pour qu'elle commence au premier indice.
 
 ```js
 assert(code.match(/i\s*?=\s*?0\s*?;/g).length == 1);
 ```
 
-Your code should fix the initial condition of the loop so that the index starts at 0.
+Votre code doit fixer la condition initiale de la boucle pour que l'index commence à 0.
 
 ```js
 assert(!code.match(/i\s?=\s*?1\s*?;/g));
 ```
 
-Your code should set the terminal condition of the loop so it stops at the last index.
+Votre code doit définir la condition finale de la boucle pour qu'elle s'arrête au dernier indice.
 
 ```js
 assert(code.match(/i\s*?<\s*?len\s*?;/g).length == 1);
 ```
 
-Your code should fix the terminal condition of the loop so that it stops at 1 before the length.
+Votre code doit fixer la condition terminale de la boucle pour qu'elle s'arrête à 1 avant la longueur.
 
 ```js
 assert(!code.match(/i\s*?<=\s*?len;/g));
@@ -66,9 +66,9 @@ assert(!code.match(/i\s*?<=\s*?len;/g));
 function countToFive() {
   let firstFive = "12345";
   let len = firstFive.length;
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
   for (let i = 1; i <= len; i++) {
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
     console.log(firstFive[i]);
   }
 }
@@ -82,9 +82,9 @@ countToFive();
 function countToFive() {
  let firstFive = "12345";
  let len = firstFive.length;
- // Only change code below this line
+ // Ne changez que le code en dessous de cette ligne
  for (let i = 0; i < len; i++) {
- // Only change code above this line
+ // Ne changez que le code au-dessus de cette ligne
    console.log(firstFive[i]);
  }
 }

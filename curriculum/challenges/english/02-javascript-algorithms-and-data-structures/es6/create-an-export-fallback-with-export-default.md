@@ -1,6 +1,6 @@
 ---
 id: 587d7b8c367417b2b2512b58
-title: Create an Export Fallback with export default
+title: Créer un export fallback avec export default
 challengeType: 1
 forumTopicId: 301199
 dashedName: create-an-export-fallback-with-export-default
@@ -8,11 +8,11 @@ dashedName: create-an-export-fallback-with-export-default
 
 # --description--
 
-In the `export` lesson, you learned about the syntax referred to as a <dfn>named export</dfn>. This allowed you to make multiple functions and variables available for use in other files.
+Dans la leçon `export`, vous avez appris la syntaxe de l'exportation nommée. Elle vous permet de mettre à disposition plusieurs fonctions et variables pour les utiliser dans d'autres fichiers.
 
-There is another `export` syntax you need to know, known as <dfn>export default</dfn>. Usually you will use this syntax if only one value is being exported from a file. It is also used to create a fallback value for a file or module.
+Il existe une autre syntaxe `export` que vous devez connaître, appelée export default. En général, vous utiliserez cette syntaxe si une seule valeur est exportée d'un fichier. Elle est également utilisée pour créer une valeur de repli pour un fichier ou un module.
 
-Below are examples using `export default`:
+Voici des exemples d'utilisation de `export default` :
 
 ```js
 export default function add(x, y) {
@@ -24,17 +24,17 @@ export default function(x, y) {
 }
 ```
 
-The first is a named function, and the second is an anonymous function.
+La première est une fonction nommée, et la seconde est une fonction anonyme.
 
-Since `export default` is used to declare a fallback value for a module or file, you can only have one value be a default export in each module or file. Additionally, you cannot use `export default` with `var`, `let`, or `const`
+Comme `export default` est utilisé pour déclarer une valeur de repli pour un module ou un fichier, vous ne pouvez avoir qu'une seule valeur d'exportation par défaut dans chaque module ou fichier. De plus, vous ne pouvez pas utiliser `export default` avec `var`, `let` ou `const`.
 
 # --instructions--
 
-The following function should be the fallback value for the module. Please add the necessary code to do so.
+La fonction suivante doit être la valeur de repli pour le module. Veuillez ajouter le code nécessaire à cet effet.
 
 # --hints--
 
-Your code should use an `export` fallback.
+Votre code devrait utiliser une solution de repli `export`.
 
 ```js
 assert(

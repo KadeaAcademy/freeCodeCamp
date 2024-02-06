@@ -1,5 +1,14 @@
 header {
-  z-index: 999;
+  z-index: 998;
   width: 100%;
-  position: fixed;
+  position: sticky;
+  top: -1px;
 }
+/* @media (max-width: 800px) {
+  header {
+    z-index: 999;
+    width: 100%;
+    position: sticky;
+    top: 0px;
+  }
+} */

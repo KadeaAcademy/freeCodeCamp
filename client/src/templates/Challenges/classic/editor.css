@@ -3,6 +3,17 @@
   color: var(--primary-color);
 }
 
+/* .margin-view-overlays {
+  background-color: var(--secondary-background);
+  width: 70%;
+}
+
+.vs {
+  width: 100%;
+  margin-left: -5%;
+  padding-right: 2rem;
+} */
+
 .vs .monaco-scrollable-element > .scrollbar > .slider {
   z-index: 11;
 }
@@ -47,7 +58,6 @@
 
 .description-container h1 {
   color: var(--secondary-color);
-  font-family: Roboto Mono, monospace;
   font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.1;
@@ -99,4 +109,15 @@
 /* Unless we increase the z-index the help widget gets obscured by the jaws */
 .accessibilityHelpWidget {
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .monaco-scrollable-element.editor-scrollable.vs {
+    left: 55px !important;
+    width: 100% !important;
+  }
+
+  .scrollbar {
+    right: 56px !important;
+  }
 }

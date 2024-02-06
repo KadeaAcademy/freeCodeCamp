@@ -85,6 +85,47 @@
       "type": "string",
       "default": ""
     },
+    "gender": {
+      "type": "string",
+      "default": ""
+    },
+    "phone": {
+      "type": "string",
+      "default": ""
+    },
+    "whatsapp": {
+      "type": "string",
+      "default": ""
+    },
+
+    "createAt": {
+      "type": "date",
+      "defaultFn": "now"
+    },
+    "codeTime": {
+      "type": "string",
+      "default": ""
+    },
+    "fieldOfStudy": {
+      "type": "string",
+      "default": ""
+    },
+    "levelOfStudy": {
+      "type": "string",
+      "default": ""
+    },
+    "employedWhere": {
+      "type": "string",
+      "default": ""
+    },
+    "sinceWhen": {
+      "type": "string",
+      "default": ""
+    },
+    "position": {
+      "type": "string",
+      "default": ""
+    },
     "location": {
       "type": "string",
       "default": ""
@@ -101,6 +142,15 @@
     },
     "twitter": {
       "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "default": ""
+    },
+
+    "groups": {
+      "type": "array",
+      "default": []
     },
     "acceptedPrivacyTerms": {
       "type": "boolean",
@@ -241,6 +291,53 @@
       ],
       "default": []
     },
+    "currentsSuperBlock": {
+      "type": [
+        {
+          "superBlockName": {
+            "type": "string",
+            "default": ""
+          },
+          "superBlockTranslatedName": {
+            "type": "string",
+            "default": ""
+          },
+          "superBlockDashedName": {
+            "type": "string",
+            "default": ""
+          },
+          "blockName": {
+            "type": "string",
+            "default": ""
+          },
+          "blockDashedName": {
+            "type": "string",
+            "default": ""
+          },
+          "isCurrentBlockCompleted": {
+            "type": "boolean",
+            "default": false
+          },
+          "superBlockPath": {
+            "type": "string",
+            "default": ""
+          },
+          "currentChallengeId": {
+            "type": "string",
+            "default": ""
+          },
+          "totalChallenges": {
+            "type": "number",
+            "default": 0
+          },
+          "totalCompletedChallenges": {
+            "type": "number",
+            "default": 0
+          }
+        }
+      ],
+      "default": []
+    },
     "partiallyCompletedChallenges": {
       "type": [
         {
@@ -313,6 +410,12 @@
       "foreignKey": "",
       "modal": "donation"
     },
+    "userGroup": {
+      "type": "belongsTo",
+      "model": "userGroup",
+      "foreignKey": "userGroup"
+    },
+
     "credentials": {
       "type": "hasMany",
       "model": "userCredential",

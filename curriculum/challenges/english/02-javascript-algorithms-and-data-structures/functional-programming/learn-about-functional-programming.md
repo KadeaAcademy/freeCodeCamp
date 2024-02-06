@@ -1,6 +1,6 @@
 ---
 id: 587d7b8d367417b2b2512b5b
-title: Learn About Functional Programming
+title: Apprendre la programmation fonctionnelle
 challengeType: 1
 forumTopicId: 301233
 dashedName: learn-about-functional-programming
@@ -8,34 +8,34 @@ dashedName: learn-about-functional-programming
 
 # --description--
 
-Functional programming is a style of programming where solutions are simple, isolated functions, without any side effects outside of the function scope: `INPUT -> PROCESS -> OUTPUT`
+La programmation fonctionnelle est un style de programmation dans lequel les solutions sont des fonctions simples et isolées, sans effets secondaires en dehors de la portée de la fonction : `ENTRÉE -> PROCESSUS -> SORTIE`
 
-Functional programming is about:
+La programmation fonctionnelle, ça concerne.. :
 
-1) Isolated functions - there is no dependence on the state of the program, which includes global variables that are subject to change
+1) Fonctions isolées - il n'y a pas de dépendance à l'égard de l'état du programme, ce qui inclut les variables globales susceptibles d'être modifiées.
 
-2) Pure functions - the same input always gives the same output
+2) Fonctions pures - la même entrée donne toujours la même sortie
 
-3) Functions with limited side effects - any changes, or mutations, to the state of the program outside the function are carefully controlled
+3) Fonctions avec effets secondaires limités - tout changement, ou mutation, de l'état du programme en dehors de la fonction est soigneusement contrôlé.
 
 # --instructions--
 
-The members of freeCodeCamp happen to love tea.
+Les membres de Kadea aiment le thé.
 
-In the code editor, the `prepareTea` and `getTea` functions are already defined for you. Call the `getTea` function to get 40 cups of tea for the team, and store them in the `tea4TeamFCC` variable.
+Dans l'éditeur de code, les fonctions `prepareTea` et `getTea` sont déjà définies pour vous. Appelez la fonction `getTea` pour obtenir 40 tasses de thé pour l'équipe, et stockez-les dans la variable `tea4TeamKadea`.
 
 # --hints--
 
-The `tea4TeamFCC` variable should hold 40 cups of tea for the team.
+La variable `tea4TeamKadea` doit contenir 40 tasses de thé pour l'équipe.
 
 ```js
-assert(tea4TeamFCC.length === 40);
+assert(tea4TeamKadea.length === 40);
 ```
 
-The `tea4TeamFCC` variable should hold cups of green tea.
+La variable `tea4TeamKadea` doit contenir des tasses de thé vert (green tea).
 
 ```js
-assert(tea4TeamFCC[0] === 'greenTea');
+assert(tea4TeamKadea[0] === 'greenTea');
 ```
 
 # --seed--
@@ -43,13 +43,11 @@ assert(tea4TeamFCC[0] === 'greenTea');
 ## --seed-contents--
 
 ```js
-// Function that returns a string representing a cup of green tea
+// Fonction qui renvoie une chaîne de caractères représentant une tasse de thé vert
 const prepareTea = () => 'greenTea';
 
 /*
-Given a function (representing the tea type) and number of cups needed, the
-following function returns an array of strings (each representing a cup of
-a specific type of tea).
+Étant donné une fonction (représentant le type de thé) et le nombre de tasses nécessaires, la fonction suivante renvoie un tableau de chaînes de caractères (chacune représentant une tasse d'un type de thé spécifique).
 */
 const getTea = (numOfCups) => {
   const teaCups = [];
@@ -61,9 +59,9 @@ const getTea = (numOfCups) => {
   return teaCups;
 };
 
-// Only change code below this line
-const tea4TeamFCC = null;
-// Only change code above this line
+// Ne modifiez que le code situé en dessous de cette ligne
+const tea4TeamKadea = null;
+// Ne modifiez que le code au-dessus de cette ligne
 ```
 
 # --solutions--
@@ -82,5 +80,5 @@ const getTea = (numOfCups) => {
   return teaCups;
 };
 
-const tea4TeamFCC = getTea(40); 
+const tea4TeamKadea = getTea(40); 
 ```

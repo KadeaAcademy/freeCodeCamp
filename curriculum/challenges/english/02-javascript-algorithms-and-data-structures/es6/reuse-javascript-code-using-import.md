@@ -1,6 +1,6 @@
 ---
 id: 587d7b8c367417b2b2512b55
-title: Reuse JavaScript Code Using import
+title: Réutiliser le code JavaScript en utilisant import
 challengeType: 1
 forumTopicId: 301208
 dashedName: reuse-javascript-code-using-import
@@ -8,15 +8,15 @@ dashedName: reuse-javascript-code-using-import
 
 # --description--
 
-`import` allows you to choose which parts of a file or module to load. In the previous lesson, the examples exported `add` from the `math_functions.js` file. Here's how you can import it to use in another file:
+`import` vous permet de choisir les parties d'un fichier ou d'un module à charger. Dans la leçon précédente, les exemples ont exporté `add` du fichier `math_functions.js`. Voici comment vous pouvez l'importer pour l'utiliser dans un autre fichier :
 
 ```js
 import { add } from './math_functions.js';
 ```
 
-Here, `import` will find `add` in `math_functions.js`, import just that function for you to use, and ignore the rest. The `./` tells the import to look for the `math_functions.js` file in the same folder as the current file. The relative file path (`./`) and file extension (`.js`) are required when using import in this way.
+Ici, `import` trouvera `add` dans `math_functions.js`, importera juste cette fonction pour que vous l'utilisiez, et ignorera le reste. Le `./` indique à l'import de chercher le fichier `math_functions.js` dans le même dossier que le fichier actuel. Le chemin d'accès relatif (`./`) et l'extension de fichier (`.js`) sont nécessaires lorsque vous utilisez import de cette manière.
 
-You can import more than one item from the file by adding them in the `import` statement like this:
+Vous pouvez importer plus d'un élément du fichier en les ajoutant dans l'instruction `import` comme ceci :
 
 ```js
 import { add, subtract } from './math_functions.js';
@@ -24,11 +24,11 @@ import { add, subtract } from './math_functions.js';
 
 # --instructions--
 
-Add the appropriate `import` statement that will allow the current file to use the `uppercaseString` and `lowercaseString` functions you exported in the previous lesson. These functions are in a file called `string_functions.js`, which is in the same directory as the current file.
+Ajoutez l'instruction `import` appropriée qui permettra au fichier actuel d'utiliser les fonctions `uppercaseString` et `lowercaseString` que vous avez exportées dans la leçon précédente. Ces fonctions se trouvent dans un fichier appelé `string_functions.js`, qui se trouve dans le même répertoire que le fichier actuel.
 
 # --hints--
 
-You should properly import `uppercaseString`.
+Vous devez importer correctement `uppercaseString`.
 
 ```js
 assert(
@@ -38,7 +38,7 @@ assert(
 );
 ```
 
-You should properly import `lowercaseString`.
+Vous devez importer correctement `lowercaseString`.
 
 ```js
 assert(
@@ -54,7 +54,7 @@ assert(
 
 ```js
   
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 
 uppercaseString("hello");
 lowercaseString("WORLD!");

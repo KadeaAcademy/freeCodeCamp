@@ -1,6 +1,6 @@
 ---
 id: 587d7dbb367417b2b2512bab
-title: Use Capture Groups to Search and Replace
+title: Utiliser les groupes de capture pour rechercher et remplacer
 challengeType: 1
 forumTopicId: 301368
 dashedName: use-capture-groups-to-search-and-replace
@@ -8,57 +8,57 @@ dashedName: use-capture-groups-to-search-and-replace
 
 # --description--
 
-Searching is useful. However, you can make searching even more powerful when it also changes (or replaces) the text you match.
+La recherche est utile. Cependant, vous pouvez rendre la recherche encore plus puissante lorsqu'elle modifie (ou remplace) également le texte que vous recherchez.
 
-You can search and replace text in a string using `.replace()` on a string. The inputs for `.replace()` is first the regex pattern you want to search for. The second parameter is the string to replace the match or a function to do something.
+Vous pouvez rechercher et remplacer du texte dans une chaîne en utilisant `.replace()` sur une chaîne. Les entrées de `.replace()` sont d'abord le motif regex que vous voulez rechercher. Le second paramètre est la chaîne de caractères à remplacer ou une fonction pour faire quelque chose.
 
 ```js
-let wrongText = "The sky is silver.";
-let silverRegex = /silver/;
-wrongText.replace(silverRegex, "blue");
+let wrongText = "Le ciel est argenté.";
+let silverRegex = /argenté/;
+wrongText.replace(silverRegex, "bleu");
 ```
 
-The `replace` call would return the string `The sky is blue.`.
+L'appel à `replace` renverrait la chaîne `Le ciel est bleu.`.
 
-You can also access capture groups in the replacement string with dollar signs (`$`).
+Vous pouvez également accéder aux groupes de capture dans la chaîne de remplacement avec des signes de dollar (`$`).
 
 ```js
 "Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1');
 ```
 
-The `replace` call would return the string `Camp Code`.
+L'appel `replace` renverrait la chaîne `Camp Code`
 
 # --instructions--
 
-Write a regex `fixRegex` using three capture groups that will search for each word in the string `one two three`. Then update the `replaceText` variable to replace `one two three` with the string `three two one` and assign the result to the `result` variable. Make sure you are utilizing capture groups in the replacement string using the dollar sign (`$`) syntax.
+Écrivez une regex `fixRegex` utilisant trois groupes de capture qui recherchera chaque mot de la chaîne `un deux trois`. Mettez ensuite à jour la variable `replaceText` pour remplacer `un deux trois` par la chaîne `trois deux un` et affectez le résultat à la variable `result`. Assurez-vous que vous utilisez les groupes de capture dans la chaîne de remplacement en utilisant la syntaxe du signe dollar (`$`).
 
 # --hints--
 
-You should use `.replace()` to search and replace.
+Vous devriez utiliser `.replace()` pour rechercher et remplacer.
 
 ```js
 assert(code.match(/\.replace\(.*\)/));
 ```
 
-Your regex should change the string `one two three` to the string `three two one`
+Votre regex devrait changer la chaîne `un deux trois` en la chaîne `trois deux un`.
 
 ```js
-assert(result === 'three two one');
+assert(result === 'trois deux un');
 ```
 
-You should not change the last line.
+Vous ne devez pas changer la dernière ligne.
 
 ```js
 assert(code.match(/result\s*=\s*str\.replace\(.*?\)/));
 ```
 
-`fixRegex` should use at least three capture groups.
+`fixRegex` doit utiliser au moins trois groupes de capture.
 
 ```js
 assert(new RegExp(fixRegex.source + '|').exec('').length - 1 >= 3);
 ```
 
-`replaceText` should use parenthesized submatch string(s) (i.e. the nth parenthesized submatch string, $n, corresponds to the nth capture group).
+`replaceText` doit utiliser des chaînes de sous-matchs entre parenthèses (c'est-à-dire que la nième chaîne de sous-matchs entre parenthèses, $n, correspond au nième groupe de capture).
 
 ```js
 {
@@ -72,17 +72,17 @@ assert(new RegExp(fixRegex.source + '|').exec('').length - 1 >= 3);
 ## --seed-contents--
 
 ```js
-let str = "one two three";
-let fixRegex = /change/; // Change this line
-let replaceText = ""; // Change this line
+let str = "un deux trois";
+let fixRegex = /change/; // Modifiez cette ligne
+let replaceText = ""; // Modifiez cette ligne
 let result = str.replace(fixRegex, replaceText);
 ```
 
 # --solutions--
 
 ```js
-let str = "one two three";
-let fixRegex = /(\w+) (\w+) (\w+)/g; // Change this line
-let replaceText = "$3 $2 $1"; // Change this line
+let str = "un deux trois";
+let fixRegex = /(\w+) (\w+) (\w+)/g; // Modifiez cette ligne
+let replaceText = "$3 $2 $1"; // Modifiez cette ligne
 let result = str.replace(fixRegex, replaceText);
 ```

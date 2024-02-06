@@ -1,6 +1,6 @@
 ---
 id: 587d7db4367417b2b2512b91
-title: Ignore Case While Matching
+title: Ignorer la casse lors de la correspondance
 challengeType: 1
 forumTopicId: 301344
 dashedName: ignore-case-while-matching
@@ -8,86 +8,87 @@ dashedName: ignore-case-while-matching
 
 # --description--
 
-Up until now, you've looked at regexes to do literal matches of strings. But sometimes, you might want to also match case differences.
+Jusqu'à présent, vous avez utilisé les regex pour effectuer des correspondances littérales de chaînes de caractères. Mais parfois, vous pouvez aussi vouloir faire correspondre des différences de casse.
 
-Case (or sometimes letter case) is the difference between uppercase letters and lowercase letters. Examples of uppercase are `A`, `B`, and `C`. Examples of lowercase are `a`, `b`, and `c`.
+La casse (ou parfois la casse des lettres) est la différence entre les lettres majuscules et les lettres minuscules. Des exemples de majuscules sont `A`, `B`, et `C`. Les exemples de minuscules sont `a`, `b`, et `c`.
 
-You can match both cases using what is called a flag. There are other flags but here you'll focus on the flag that ignores case - the `i` flag. You can use it by appending it to the regex. An example of using this flag is `/ignorecase/i`. This regex can match the strings `ignorecase`, `igNoreCase`, and `IgnoreCase`.
+Vous pouvez faire correspondre les deux cas en utilisant ce qu'on appelle un marqueur. Il existe d'autres marqueur, mais nous nous concentrerons ici sur celui qui ignore la casse : le marqueur `i`. Vous pouvez l'utiliser en l'ajoutant à l'expression rationnelle. Un exemple d'utilisation de ce marqueur est `/ignorecase/i`. Cette regex peut correspondre aux chaînes de caractères `ignorecase`, `igNoreCase`, et `IgnoreCase`.
+
 
 # --instructions--
 
-Write a regex `fccRegex` to match `freeCodeCamp`, no matter its case. Your regex should not match any abbreviations or variations with spaces.
+Écrivez une expression régulière `kadeaRegex` qui correspond à `kadeaAcademyLearn`, quelle que soit sa casse. Votre regex ne doit pas correspondre à des abréviations ou des variations avec des espaces.
 
 # --hints--
 
-Your regex should match the string `freeCodeCamp`
+Votre expression régulière doit correspondre à la chaîne `kadeaAcademyLearn`.
 
 ```js
-fccRegex.lastIndex = 0; 
-assert(fccRegex.test('freeCodeCamp'));
+kadeaRegex.lastIndex = 0; 
+assert(kadeaRegex.test('kadeaAcademyLearn'));
 ```
 
-Your regex should match the string `FreeCodeCamp`
+Votre expression rationnelle doit correspondre à la chaîne `KadeaAcademyLearn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FreeCodeCamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KadeaAcademyLearn'));
 ```
 
-Your regex should match the string `FreecodeCamp`
+Votre regex doit correspondre à la chaîne `KadeaacademyLearn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FreecodeCamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KadeaacademyLearn'));
 ```
 
-Your regex should match the string `FreeCodecamp`
+Votre regex doit correspondre à la chaîne `KadeaAcademylearn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FreeCodecamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KadeaAcademylearn'));
 ```
 
-Your regex should not match the string `Free Code Camp`
+Votre regex ne doit pas correspondre à la chaîne `Kadea Academy Learn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(!fccRegex.test('Free Code Camp'));
+kadeaRegex.lastIndex = 0;
+assert(!kadeaRegex.test('Kadea Academy Learn'));
 ```
 
-Your regex should match the string `FreeCOdeCamp`
+Votre expression rationnelle doit correspondre à la chaîne `KadeaACademyLearn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FreeCOdeCamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KadeaACademyLearn'));
 ```
 
-Your regex should not match the string `FCC`
+Votre regex ne doit pas correspondre à la chaîne `KAL`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(!fccRegex.test('FCC'));
+kadeaRegex.lastIndex = 0;
+assert(!kadeaRegex.test('KAL'));
 ```
 
-Your regex should match the string `FrEeCoDeCamp`
+Votre expression rationnelle doit correspondre à la chaîne `KadeaACademyLEarn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FrEeCoDeCamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KadeaACademyLEarn'));
 ```
 
-Your regex should match the string `FrEeCodECamp`
+Votre expression rationnelle doit correspondre à la chaîne `KAdeaACademylEArn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FrEeCodECamp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KAdeaACademylEArn'));
 ```
 
-Your regex should match the string `FReeCodeCAmp`
+Votre expression rationnelle doit correspondre à la chaîne `KADEAaCademylEArn`.
 
 ```js
-fccRegex.lastIndex = 0;
-assert(fccRegex.test('FReeCodeCAmp'));
+kadeaRegex.lastIndex = 0;
+assert(kadeaRegex.test('KADEAaCademylEArn'));
 ```
 
 # --seed--
@@ -95,15 +96,15 @@ assert(fccRegex.test('FReeCodeCAmp'));
 ## --seed-contents--
 
 ```js
-let myString = "freeCodeCamp";
-let fccRegex = /change/; // Change this line
-let result = fccRegex.test(myString);
+let myString = "kadeaAcademyLearn";
+let kadeaRegex = /change/; // Modifiez cette ligne
+let result = kadeaRegex.test(myString);
 ```
 
 # --solutions--
 
 ```js
-let myString = "freeCodeCamp";
-let fccRegex = /freecodecamp/i; // Change this line
-let result = fccRegex.test(myString);
+let myString = "kadeaAcademyLearn";
+let kadeaRegex = /kadeaAcademyLearn/i; // Modifiez cette ligne
+let result = kadeaRegex.test(myString);
 ```

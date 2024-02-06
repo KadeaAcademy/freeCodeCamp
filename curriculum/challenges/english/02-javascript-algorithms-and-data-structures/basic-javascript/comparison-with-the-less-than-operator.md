@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244d6
-title: Comparison with the Less Than Operator
+title: Comparaison avec l'opérateur inférieur à
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cNVRWtB'
 forumTopicId: 16789
@@ -9,9 +9,9 @@ dashedName: comparison-with-the-less-than-operator
 
 # --description--
 
-The less than operator (`<`) compares the values of two numbers. If the number to the left is less than the number to the right, it returns `true`. Otherwise, it returns `false`. Like the equality operator, the less than operator converts data types while comparing.
+L'opérateur inférieur à (`<`) compare les valeurs de deux nombres. Si le nombre à gauche est inférieur au nombre à droite, il renvoie `true`. Sinon, il renvoie `false`. Comme l'opérateur d'égalité, l'opérateur <dfn>inférieur à</dfn> convertit les types de données pendant la comparaison.
 
-**Examples**
+**Exemples**
 
 ```js
 2   < 5 // true
@@ -23,44 +23,44 @@ The less than operator (`<`) compares the values of two numbers. If the number t
 
 # --instructions--
 
-Add the less than operator to the indicated lines so that the return statements make sense.
+Ajoutez l'opérateur <dfn>inférieur à</dfn> sur les lignes indiquées afin que les déclarations de retour aient un sens.
 
 # --hints--
 
-`testLessThan(0)` should return the string `Under 25`
+`testLessThan(0)` devrait retourner la chaîne `Moins de 25`.
 
 ```js
-assert(testLessThan(0) === 'Under 25');
+assert(testLessThan(0) === 'Moins de 25');
 ```
 
-`testLessThan(24)` should return the string `Under 25`
+`testLessThan(24)` devrait retourner la chaîne `Moins de 25`
 
 ```js
-assert(testLessThan(24) === 'Under 25');
+assert(testLessThan(24) === 'Moins de 25');
 ```
 
-`testLessThan(25)` should return the string `Under 55`
+`testLessThan(25)` devrait retourner la chaîne `Moins de 55`
 
 ```js
-assert(testLessThan(25) === 'Under 55');
+assert(testLessThan(25) === 'Moins de 55');
 ```
 
-`testLessThan(54)` should return the string `Under 55`
+`testLessThan(54)` devrait retourner la chaîne `Moins de 55`
 
 ```js
-assert(testLessThan(54) === 'Under 55');
+assert(testLessThan(54) === 'Moins de 55');
 ```
 
-`testLessThan(55)` should return the string `55 or Over`
+`testLessThan(55)` devrait retourner la chaîne `55 ou plus`
 
 ```js
-assert(testLessThan(55) === '55 or Over');
+assert(testLessThan(55) === '55 ou plus');
 ```
 
-`testLessThan(99)` should return the string `55 or Over`
+`testLessThan(99)` devrait retourner la chaîne `55 ou plus`
 
 ```js
-assert(testLessThan(99) === '55 or Over');
+assert(testLessThan(99) === '55 ou plus');
 ```
 
 You should use the `<` operator at least twice
@@ -75,15 +75,15 @@ assert(code.match(/val\s*<\s*('|")*\d+('|")*/g).length > 1);
 
 ```js
 function testLessThan(val) {
-  if (val) {  // Change this line
-    return "Under 25";
+  if (val) {  // Modifiez cette ligne
+    return "Moins de 25";
   }
 
-  if (val) {  // Change this line
-    return "Under 55";
+  if (val) {  // Modifiez cette ligne
+    return "Moins de 55";
   }
 
-  return "55 or Over";
+  return "55 ou plus";
 }
 
 testLessThan(10);
@@ -93,14 +93,14 @@ testLessThan(10);
 
 ```js
 function testLessThan(val) {
-  if (val < 25) {  // Change this line
-    return "Under 25";
+  if (val < 25) {  // Modifiez cette ligne
+    return "Moins de 25";
   }
 
-  if (val < 55) {  // Change this line
-    return "Under 55";
+  if (val < 55) {  // Modifiez cette ligne
+    return "Moins de 55";
   }
 
-  return "55 or Over";
+  return "55 ou plus";
 }
 ```

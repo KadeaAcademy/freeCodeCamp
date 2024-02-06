@@ -2,14 +2,19 @@ import { omit } from 'lodash-es';
 import { call, delay, put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 import { createFlashMessage } from '../../components/Flash/redux';
+
 import {
   getUsernameExists,
   putUpdateMyAbout,
+  putUpdateMyEducation,
+  putUpdateMyWorkExperience,
   putUpdateMyProfileUI,
   putUpdateMyUsername,
   putUpdateUserFlag,
-  putVerifyCert
+  putVerifyCert,
+  putUpdateMyCurrentsSuperBlock
 } from '../../utils/ajax';
+
 import {
   updateUserFlagComplete,
   updateUserFlagError,
@@ -17,6 +22,12 @@ import {
   validateUsernameError,
   submitNewAboutComplete,
   submitNewAboutError,
+  submitNewEducationComplete,
+  submitNewEducationError,
+  submitNewCurrentsSuperBlockComplete,
+  submitNewCurrentsSuperBlockError,
+  submitNewWorkExperienceComplete,
+  submitNewWorkExperienceError,
   submitNewUsernameComplete,
   submitNewUsernameError,
   submitProfileUIComplete,
@@ -32,6 +43,36 @@ function* submitNewAboutSaga({ payload }) {
     yield put(createFlashMessage(response));
   } catch (e) {
     yield put(submitNewAboutError(e));
+  }
+}
+
+function* submitNewEducationSaga({ payload }) {
+  try {
+    const response = yield call(putUpdateMyEducation, payload);
+    yield put(submitNewEducationComplete({ ...response, payload }));
+    yield put(createFlashMessage(response));
+  } catch (e) {
+    yield put(submitNewEducationError(e));
+  }
+}
+
+function* submitNewCurrentsSuperBlockSaga({ payload }) {
+  try {
+    const response = yield call(putUpdateMyCurrentsSuperBlock, payload);
+    yield put(submitNewCurrentsSuperBlockComplete({ ...response, payload }));
+    yield put(createFlashMessage(response));
+  } catch (e) {
+    yield put(submitNewCurrentsSuperBlockError(e));
+  }
+}
+
+function* submitNewWorkExperienceCompleteSaga({ payload }) {
+  try {
+    const response = yield call(putUpdateMyWorkExperience, payload);
+    yield put(submitNewWorkExperienceComplete({ ...response, payload }));
+    yield put(createFlashMessage(response));
+  } catch (e) {
+    yield put(submitNewWorkExperienceError(e));
   }
 }
 
@@ -105,6 +146,15 @@ export function createSettingsSagas(types) {
   return [
     takeEvery(types.updateUserFlag, updateUserFlagSaga),
     takeLatest(types.submitNewAbout, submitNewAboutSaga),
+    takeLatest(types.submitNewEducation, submitNewEducationSaga),
+    takeLatest(
+      types.submitNewCurrentsSuperBlock,
+      submitNewCurrentsSuperBlockSaga
+    ),
+    takeLatest(
+      types.submitNewWorkExperience,
+      submitNewWorkExperienceCompleteSaga
+    ),
     takeLatest(types.submitNewUsername, submitNewUsernameSaga),
     takeLatest(types.validateUsername, validateUsernameSaga),
     takeLatest(types.submitProfileUI, submitProfileUISaga),

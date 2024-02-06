@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244ac
-title: Increment a Number with JavaScript
+title: Incrémenter un nombre avec JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/ca8GLT9'
 forumTopicId: 18201
@@ -9,33 +9,33 @@ dashedName: increment-a-number-with-javascript
 
 # --description--
 
-You can easily <dfn>increment</dfn> or add one to a variable with the `++` operator.
+Vous pouvez facilement <dfn>incrémenter</dfn> ou ajouter un à une variable avec l'opérateur `++`.
 
 ```js
 i++;
 ```
 
-is the equivalent of
+est l'équivalent de
 
 ```js
 i = i + 1;
 ```
 
-**Note:** The entire line becomes `i++;`, eliminating the need for the equal sign.
+**Note:** La ligne entière devient `i++;`, éliminant le besoin du signe égal.
 
 # --instructions--
 
-Change the code to use the `++` operator on `myVar`.
+Modifiez le code pour utiliser l'opérateur `++` sur `myVar`.
 
 # --hints--
 
-`myVar` should equal `88`.
+`myVar` devrait être égal à `88`.
 
 ```js
 assert(myVar === 88);
 ```
 
-You should not use the assignment operator.
+Vous ne devez pas utiliser l'opérateur d'affectation.
 
 ```js
 assert(
@@ -43,13 +43,13 @@ assert(
 );
 ```
 
-You should use the `++` operator.
+Vous devez utiliser l'opérateur `++`.
 
 ```js
 assert(/[+]{2}\s*myVar|myVar\s*[+]{2}/.test(code));
 ```
 
-You should not change code above the specified comment.
+Vous ne devez pas modifier le code au-dessus du commentaire spécifié.
 
 ```js
 assert(/let myVar = 87;/.test(code));
@@ -68,7 +68,7 @@ assert(/let myVar = 87;/.test(code));
 ```js
 let myVar = 87;
 
-// Only change code below this line
+// Ne changez que le code sous cette ligne
 myVar = myVar + 1;
 ```
 

@@ -1,6 +1,6 @@
 ---
 id: 56bbb991ad1ed5201cd392d2
-title: Add New Properties to a JavaScript Object
+title: Ajouter de nouvelles propriétés à un objet JavaScript
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cQe38UD'
 forumTopicId: 301169
@@ -9,51 +9,51 @@ dashedName: add-new-properties-to-a-javascript-object
 
 # --description--
 
-You can add new properties to existing JavaScript objects the same way you would modify them.
+Vous pouvez ajouter de nouvelles propriétés à des objets JavaScript existants de la même manière que vous les modifiez.
 
-Here's how we would add a `bark` property to `ourDog`:
+Voici comment ajouter la propriété `aboie` à `notreChien` :
 
 ```js
-ourDog.bark = "bow-wow";
+notreChien.aboie = "bow-wow";
 ```
 
 or
 
 ```js
-ourDog["bark"] = "bow-wow";
+notreChien["aboie"] = "bow-wow";
 ```
 
-Now when we evaluate `ourDog.bark`, we'll get his bark, `bow-wow`.
+Maintenant, lorsque nous évaluons `notreChien.aboie`, nous obtenons son aboiement, `bow-wow`.
 
-Example:
+Exemple:
 
 ```js
-const ourDog = {
-  "name": "Camper",
+const notreChien = {
+  "nom": "Camper",
   "legs": 4,
   "tails": 1,
   "friends": ["everything!"]
 };
 
-ourDog.bark = "bow-wow";
+notreChien.aboie = "bow-wow";
 ```
 
 # --instructions--
 
-Add a `bark` property to `myDog` and set it to a dog sound, such as "woof". You may use either dot or bracket notation.
+Ajoutez une propriété `aboie` à `monChien` et attribuez-lui un cri de chien, tel que "woof". Vous pouvez utiliser la notation par points ou par parenthèses.
 
 # --hints--
 
-You should add the property `bark` to `myDog`.
+Vous devez ajouter la propriété `aboie` à `monChien`.
 
 ```js
-assert(myDog.bark !== undefined);
+assert(monChien.aboie !== undefined);
 ```
 
-You should not add `bark` to the initialization of `myDog`.
+Vous ne devez pas ajouter `aboie` à l'initialisation de `monChien`.
 
 ```js
-assert(!/bark[^\n]:/.test(code));
+assert(!/aboie[^\n]:/.test(code));
 ```
 
 # --seed--
@@ -61,14 +61,14 @@ assert(!/bark[^\n]:/.test(code));
 ## --after-user-code--
 
 ```js
-(function(z){return z;})(myDog);
+(function(z){return z;})(monChien);
 ```
 
 ## --seed-contents--
 
 ```js
-const myDog = {
-  "name": "Happy Coder",
+const monChien = {
+  "nom": "Happy Coder",
   "legs": 4,
   "tails": 1,
   "friends": ["freeCodeCamp Campers"]
@@ -80,11 +80,11 @@ const myDog = {
 # --solutions--
 
 ```js
-const myDog = {
-  "name": "Happy Coder",
-  "legs": 4,
-  "tails": 1,
-  "friends": ["freeCodeCamp Campers"]
+const monChien = {
+  "nom": "Happy Coder",
+  "pattes": 4,
+  "queues": 1,
+  "amis": ["freeCodeCamp Campers"]
 };
-myDog.bark = "Woof Woof";
+monChien.aboie = "Woof Woof";
 ```

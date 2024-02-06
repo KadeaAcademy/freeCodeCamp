@@ -1,6 +1,6 @@
 ---
 id: 587d7db1367417b2b2512b87
-title: Add Methods After Inheritance
+title: Ajouter des méthodes après l'héritage
 challengeType: 1
 forumTopicId: 301315
 dashedName: add-methods-after-inheritance
@@ -8,9 +8,9 @@ dashedName: add-methods-after-inheritance
 
 # --description--
 
-A constructor function that inherits its `prototype` object from a supertype constructor function can still have its own methods in addition to inherited methods.
+Une fonction constructeur qui hérite son objet `prototype` d'une fonction constructeur supertype peut toujours avoir ses propres méthodes en plus des méthodes héritées.
 
-For example, `Bird` is a constructor that inherits its `prototype` from `Animal`:
+Par exemple, `Bird` est un constructeur qui hérite son `prototype` de `Animal` :
 
 ```js
 function Animal() { }
@@ -22,7 +22,7 @@ Bird.prototype = Object.create(Animal.prototype);
 Bird.prototype.constructor = Bird;
 ```
 
-In addition to what is inherited from `Animal`, you want to add behavior that is unique to `Bird` objects. Here, `Bird` will get a `fly()` function. Functions are added to `Bird's` `prototype` the same way as any constructor function:
+En plus de ce qui est hérité de `Animal`, vous voulez ajouter un comportement unique aux objets `Bird`. Ici, `Bird` aura une fonction `fly()`. Les fonctions sont ajoutées au `prototype` de `Bird` de la même manière que n'importe quelle fonction constructeur :
 
 ```js
 Bird.prototype.fly = function() {
@@ -30,7 +30,7 @@ Bird.prototype.fly = function() {
 };
 ```
 
-Now instances of `Bird` will have both `eat()` and `fly()` methods:
+Maintenant, les instances de `Bird` auront les deux méthodes `eat()` et `fly()` :
 
 ```js
 let duck = new Bird();
@@ -38,45 +38,45 @@ duck.eat();
 duck.fly();
 ```
 
-`duck.eat()` would display the string `nom nom nom` in the console, and `duck.fly()` would display the string `I'm flying!`.
+`duck.eat()` afficherait la chaîne `nom nom nom` dans la console, et `duck.fly()` afficherait la chaîne `I'm flying!`.
 
 # --instructions--
 
-Add all necessary code so the `Dog` object inherits from `Animal` and the `Dog`'s `prototype` constructor is set to `Dog`. Then add a `bark()` method to the `Dog` object so that `beagle` can both `eat()` and `bark()`. The `bark()` method should print `Woof!` to the console.
+Ajoutez tout le code nécessaire pour que l'objet `Dog` hérite de `Animal` et que le constructeur `prototype` du `Dog` soit mis à `Dog`. Ensuite, ajoutez une méthode `bark()` à l'objet `Dog` pour que `beagle` puisse à la fois `eat()` et `bark()`. La méthode `bark()` devrait imprimer `Woof!` sur la console.
 
 # --hints--
 
-`Animal` should not respond to the `bark()` method.
+`Animal` ne doit pas répondre à la méthode `bark()`.
 
 ```js
 assert(typeof Animal.prototype.bark == 'undefined');
 ```
 
-`Dog` should inherit the `eat()` method from `Animal`.
+`Dog` doit hériter de la méthode `eat()` de `Animal`.
 
 ```js
 assert(typeof Dog.prototype.eat == 'function');
 ```
 
-The `Dog` prototype should have a `bark()` method.
+Le prototype `Dog` doit avoir une méthode `bark()`.
 
 ```js
 assert('bark' in Dog.prototype);
 ```
 
-`beagle` should be an `instanceof` `Animal`.
+`beagle` devrait être une `instance de` `Animal`.
 
 ```js
 assert(beagle instanceof Animal);
 ```
 
-The constructor for `beagle` should be set to `Dog`.
+Le constructeur de `beagle` doit être défini comme `Dog`.
 
 ```js
 assert(beagle.constructor === Dog);
 ```
 
-`beagle.eat()` should log the string `nom nom nom`
+`beagle.eat()` devrait afficher la chaîne de caractères `nom nom nom`
 
 ```js
 console.log = function (msg) {
@@ -85,7 +85,7 @@ console.log = function (msg) {
 assert.throws(() => beagle.eat(), 'nom nom nom');
 ```
 
-`beagle.bark()` should log the string `Woof!`
+`beagle.bark()` devrait afficher la chaîne de caractères `Woof!`
 
 ```js
 console.log = function (msg) {
@@ -104,12 +104,12 @@ Animal.prototype.eat = function() { console.log("nom nom nom"); };
 
 function Dog() { }
 
-// Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
 
 
 
-// Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
 
 let beagle = new Dog();
 ```

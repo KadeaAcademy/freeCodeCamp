@@ -1,6 +1,6 @@
 ---
 id: 5cdafbe72913098997531682
-title: Handle a Rejected Promise with catch
+title: Gérer une promesse rejetée avec catch
 challengeType: 1
 forumTopicId: 301204
 dashedName: handle-a-rejected-promise-with-catch
@@ -8,7 +8,7 @@ dashedName: handle-a-rejected-promise-with-catch
 
 # --description--
 
-`catch` is the method used when your promise has been rejected. It is executed immediately after a promise's `reject` method is called. Here’s the syntax:
+`catch` est la méthode utilisée lorsque votre promesse a été rejetée. Elle est exécutée immédiatement après l'appel de la méthode `reject` d'une promesse. Voici la syntaxe :
 
 ```js
 myPromise.catch(error => {
@@ -16,15 +16,15 @@ myPromise.catch(error => {
 });
 ```
 
-`error` is the argument passed in to the `reject` method.
+`error` est l'argument passé à la méthode `reject`.
 
 # --instructions--
 
-Add the `catch` method to your promise. Use `error` as the parameter of its callback function and log `error` to the console.
+Ajoutez la méthode `catch` à votre promesse. Utilisez `error` comme paramètre de sa fonction de rappel et affichez `error` dans la console.
 
 # --hints--
 
-You should call the `catch` method on the promise.
+Vous devez appeler la méthode `catch` sur la promesse.
 
 ```js
 assert(
@@ -32,13 +32,13 @@ assert(
 );
 ```
 
-Your `catch` method should have a callback function with `error` as its parameter.
+Votre méthode `catch` doit avoir une fonction de rappel avec `error` comme paramètre.
 
 ```js
 assert(errorIsParameter);
 ```
 
-You should log `error` to the console.
+Vous devriez afficher le message `error` dans la console.
 
 ```js
 assert(
@@ -61,7 +61,7 @@ const errorIsParameter = /\.catch\((function\(error\){|error|\(error\)=>)/.test(
 
 ```js
 const makeServerRequest = new Promise((resolve, reject) => {
-  // responseFromServer is set to false to represent an unsuccessful response from a server
+// responseFromServer est défini à false pour représenter une réponse infructueuse d'un serveur.
   let responseFromServer = false;
     
   if(responseFromServer) {
@@ -80,7 +80,7 @@ makeServerRequest.then(result => {
 
 ```js
 const makeServerRequest = new Promise((resolve, reject) => {
-  // responseFromServer is set to false to represent an unsuccessful response from a server
+ // responseFromServer est défini à false pour représenter une réponse infructueuse d'un serveur.
   let responseFromServer = false;
     
   if(responseFromServer) {

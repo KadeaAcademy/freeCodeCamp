@@ -25,11 +25,13 @@
   margin-top: 0;
 }
 
+/* 
 .landing-page h1,
 .landing-page h2,
 .landing-page p {
-  font-family: 'Lato', sans-serif;
+   
 }
+ */
 
 p.caption {
   margin: 10px 0 0;
@@ -38,19 +40,86 @@ p.caption {
 }
 
 .as-seen-in {
-  background-color: var(--gray-75);
-  color: var(--gray-15);
+  background-color: var(--love-light);
+  color: var(--primary-background);
+  padding: 4vw 0 6vw 0;
 }
 
 .as-seen-in .big-heading {
-  color: var(--gray-15);
+  color: var(--gray-00);
+}
+
+.as-seen-in .as-seen-in-text {
+  color: var(--primary-background) !important;
 }
 
 .landing-page .big-heading {
-  height: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
+  font-size: 2rem !important;
   line-height: 1.1;
   font-weight: 700;
+}
+
+/* .hero-text {
+  margin-bottom: 30px !important;
+} */
+
+.text-registration {
+  color: #fff !important;
+}
+
+.landing-top-content {
+  padding: 5px 0;
+}
+
+/*------Landing flex---------*/
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+  align-items: center;
+}
+
+.flex-child-hero {
+  width: 50%;
+}
+
+.img-block {
+  width: 80%;
+  margin: 10px 0;
+}
+
+@media (max-width: 1024px) {
+  .landing-top-content {
+    padding: 0px;
+  }
+}
+
+@media (max-width: 769px) {
+  .landing-top-content {
+    padding: 0px;
+  }
+
+  .landing-top-content p {
+    font-size: 0.9rem !important;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+  }
+
+  .flex-child-hero {
+    width: 100%;
+  }
+}
+
+@media (max-width: 426px) {
+  .landing-top-content {
+    padding: 30px 0;
+  }
 }
 
 .campers-images {
@@ -103,7 +172,7 @@ p.caption {
 
 .landing-top p {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 400;
   margin: 0.6rem 0;
 }
 
@@ -119,7 +188,6 @@ p.caption {
 
 .testimonials p,
 .testimonials strong {
-  font-family: 'Lato', sans-serif;
   font-size: 1.1rem;
   margin: 0;
   color: var(--quaternary-color);
@@ -181,10 +249,27 @@ p.caption {
   background-color: var(--primary-background);
 }
 .landing-top,
-.as-seen-in,
 .certification-section,
 .testimonials {
   padding: 4vw 0;
+}
+
+.landing-goals-pt-pb {
+  padding: 4vw 0 6vw 0;
+}
+
+.landing-top-pt-pb {
+  padding: 8vw 0 6vw;
+}
+
+@media (max-width: 426px) {
+  .landing-top-pt-pb {
+    padding: 1vw 0 6vw 0;
+  }
+}
+
+.pt-pb-5 {
+  padding: 5vw 0;
 }
 
 .map-ui .btn {
@@ -222,4 +307,80 @@ p.caption {
     min-width: 350px;
     padding-bottom: 0;
   }
+}
+
+.img-fluid {
+  width: 100%;
+  display: block;
+}
+
+.hero-heading {
+  font-size: 2.5rem;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .hero-heading {
+    font-size: 2rem;
+    overflow-wrap: break-word;
+  }
+}
+
+.d-flex-hero {
+  display: flex;
+  flex-direction: row;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+@media (max-width: 426px) {
+  .d-flex-hero {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.hero-main-bg {
+  background: url('../../assets/images/Element.svg');
+  color: #fff;
+  /* background-position: center; */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #202020;
+}
+
+@media (max-width: 767px) {
+  .hero-main-bg {
+    background: url('../../assets/images/dotted.svg'),
+      url('../../assets/images/Element.svg');
+    /* color: #fff; */
+    /* background-position: center; */
+    background-size: contain, contain;
+    background-repeat: repeat, no-repeat;
+    background-color: #202020;
+  }
+}
+
+.dotted-bg-top-left {
+  background-image: url('../../assets/images/startop.svg');
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position: left top;
+}
+
+.dotted-bg-bottom-right {
+  background-image: url('../../assets/images/starbottom.svg');
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position: right bottom;
+}
+
+.dotted-bg {
+  background-image: url('../../assets/images/startop.svg'),
+    url('../../assets/images/starbottom.svg');
+  background-size: 20%, 20%;
+  background-position: left top, right bottom;
+  background-repeat: no-repeat, no-repeat;
 }

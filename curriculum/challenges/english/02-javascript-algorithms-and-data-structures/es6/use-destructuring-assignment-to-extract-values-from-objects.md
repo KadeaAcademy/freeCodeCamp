@@ -1,6 +1,6 @@
 ---
 id: 5cfa550e84205a357704ccb6
-title: Use Destructuring Assignment to Extract Values from Objects
+title: Utiliser l'affectation de déstructuration pour extraire les valeurs des objets
 challengeType: 1
 forumTopicId: 301216
 dashedName: use-destructuring-assignment-to-extract-values-from-objects
@@ -8,9 +8,9 @@ dashedName: use-destructuring-assignment-to-extract-values-from-objects
 
 # --description--
 
-<dfn>Destructuring assignment</dfn> is special syntax introduced in ES6, for neatly assigning values taken directly from an object.
+<dfn>L'affectation de déstructuration</dfn> est une syntaxe spéciale introduite dans ES6, pour assigner proprement des valeurs prises directement dans un objet.
 
-Consider the following ES5 code:
+Considérons le code ES5 suivant :
 
 ```js
 const user = { name: 'John Doe', age: 34 };
@@ -19,27 +19,27 @@ const name = user.name;
 const age = user.age;
 ```
 
-`name` would have a value of the string `John Doe`, and `age` would have the number `34`.
+`name` aurait une valeur de la chaîne `John Doe`, et `age` aurait le nombre `34`.
 
-Here's an equivalent assignment statement using the ES6 destructuring syntax:
+Voici une instruction d'affectation équivalente utilisant la syntaxe de déstructuration ES6 :
 
 ```js
 const { name, age } = user;
 ```
 
-Again, `name` would have a value of the string `John Doe`, and `age` would have the number `34`.
+Encore une fois, `name` aura une valeur de la chaîne `John Doe`, et `age` aura le nombre `34`.
 
-Here, the `name` and `age` variables will be created and assigned the values of their respective values from the `user` object. You can see how much cleaner this is.
+Ici, les variables `name` et `age` seront créées et se verront attribuer les valeurs respectives tirées de l'objet `user`. Vous pouvez voir à quel point c'est plus propre.
 
-You can extract as many or few values from the object as you want.
+Vous pouvez extraire autant ou aussi peu de valeurs de l'objet que vous le souhaitez.
 
 # --instructions--
 
-Replace the two assignments with an equivalent destructuring assignment. It should still assign the variables `today` and `tomorrow` the values of `today` and `tomorrow` from the `HIGH_TEMPERATURES` object.
+Remplacez les deux affectations par une affectation de déstructuration équivalente. Elle devrait toujours affecter aux variables `today` et `tomorrow` les valeurs de `today` et `tomorrow` de l'objet `HIGH_TEMPERATURES`.
 
 # --hints--
 
-You should remove the ES5 assignment syntax.
+Vous devez supprimer la syntaxe d'affectation ES5.
 
 ```js
 assert(
@@ -47,7 +47,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `today` variable.
+Vous devez utiliser la déstructuration pour créer la variable `today`.
 
 ```js
 assert(
@@ -55,7 +55,7 @@ assert(
 );
 ```
 
-You should use destructuring to create the `tomorrow` variable.
+Vous devez utiliser la déstructuration pour créer la variable `tomorrow`.
 
 ```js
 assert(
@@ -63,7 +63,7 @@ assert(
 );
 ```
 
-`today` should be equal to `77` and `tomorrow` should be equal to `80`.
+`today` doit être égal à `77` et `tomorrow` doit être égal à `80`.
 
 ```js
 assert(today === 77 && tomorrow === 80);
@@ -80,12 +80,12 @@ const HIGH_TEMPERATURES = {
   tomorrow: 80
 };
 
-// Only change code below this line
+// Ne changez que le code en dessous de cette ligne
 
 const today = HIGH_TEMPERATURES.today;
 const tomorrow = HIGH_TEMPERATURES.tomorrow;
 
-// Only change code above this line
+// Ne changez que le code au-dessus de cette ligne
 ```
 
 # --solutions--

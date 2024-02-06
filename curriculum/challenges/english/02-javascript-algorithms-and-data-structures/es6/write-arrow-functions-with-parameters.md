@@ -1,6 +1,6 @@
 ---
 id: 587d7b88367417b2b2512b44
-title: Write Arrow Functions with Parameters
+title: Écrire des fonctions fléchées avec des paramètres
 challengeType: 1
 forumTopicId: 301223
 dashedName: write-arrow-functions-with-parameters
@@ -8,49 +8,49 @@ dashedName: write-arrow-functions-with-parameters
 
 # --description--
 
-Just like a regular function, you can pass arguments into an arrow function.
+Tout comme une fonction ordinaire, vous pouvez passer des arguments à une fonction fléchée.
 
 ```js
 const doubler = (item) => item * 2;
 doubler(4);
 ```
 
-`doubler(4)` would return the value `8`.
+`doubler(4)` renverrait la valeur `8`.
 
-If an arrow function has a single parameter, the parentheses enclosing the parameter may be omitted.
+Si une fonction fléchée a un seul paramètre, les parenthèses entourant le paramètre peuvent être omises.
 
 ```js
 const doubler = item => item * 2;
 ```
 
-It is possible to pass more than one argument into an arrow function.
+Il est possible de passer plus d'un argument à une fonction fléchée.
 
 ```js
 const multiplier = (item, multi) => item * multi;
 multiplier(4, 2);
 ```
 
-`multiplier(4, 2)` would return the value `8`.
+`multiplier(4, 2)` renverrait la valeur `8`.
 
 # --instructions--
 
-Rewrite the `myConcat` function which appends contents of `arr2` to `arr1` so that the function uses arrow function syntax.
+Réécrivez la fonction `myConcat` qui ajoute le contenu de `arr2` à `arr1` pour que la fonction utilise la syntaxe des fonctions fléchées.
 
 # --hints--
 
-You should replace the `var` keyword.
+Vous devez remplacer le mot-clé `var`.
 
 ```js
 (getUserInput) => assert(!getUserInput('index').match(/var/g));
 ```
 
-`myConcat` should be a constant variable (by using `const`).
+`myConcat` devrait être une constante (en utilisant `const`).
 
 ```js
 (getUserInput) => assert(getUserInput('index').match(/const\s+myConcat/g));
 ```
 
-`myConcat` should be an arrow function with two parameters
+`myConcat` doit être une fonction fléchée avec deux paramètres
 
 ```js
 assert(
@@ -59,13 +59,13 @@ assert(
 );
 ```
 
-`myConcat()` should return `[1, 2, 3, 4, 5]`.
+`myConcat()` devrait retourner `[1, 2, 3, 4, 5]`.
 
 ```js
 assert.deepEqual(myConcat([1, 2], [3, 4, 5]), [1, 2, 3, 4, 5]);
 ```
 
-The `function` keyword should not be used.
+Le mot-clé `function` ne doit pas être utilisé.
 
 ```js
 (getUserInput) => assert(!getUserInput('index').match(/function/g));

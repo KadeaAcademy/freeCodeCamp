@@ -1,6 +1,6 @@
 ---
 id: 587d7dbb367417b2b2512baa
-title: Reuse Patterns Using Capture Groups
+title: Réutiliser les modèles en utilisant les groupes de capture
 challengeType: 1
 forumTopicId: 301364
 dashedName: reuse-patterns-using-capture-groups
@@ -8,88 +8,88 @@ dashedName: reuse-patterns-using-capture-groups
 
 # --description--
 
-Say you want to match a word that occurs multiple times like below.
+Disons que vous voulez faire correspondre un mot qui apparaît plusieurs fois comme ci-dessous.
 
 ```js
 let repeatStr = "row row row your boat";
 ```
 
-You could use `/row row row/`, but what if you don't know the specific word repeated? <dfn>Capture groups</dfn> can be used to find repeated substrings.
+You pourriez utiliser `/row row row/`, mais que faire si vous ne connaissez pas le mot spécifique répété ? Les groupes de capture peuvent être utilisés pour trouver des sous-chaînes répétées.
 
-Capture groups are constructed by enclosing the regex pattern to be captured in parentheses. In this case, the goal is to capture a word consisting of alphanumeric characters so the capture group will be `\w+` enclosed by parentheses: `/(\w+)/`.
+Les groupes de capture sont construits en mettant entre parenthèses le motif regex à capturer. Dans ce cas, l'objectif est de capturer un mot composé de caractères alphanumériques. Le groupe de capture sera donc `\w+` entre parenthèses : `/(\w+)/`.
 
-The substring matched by the group is saved to a temporary "variable", which can be accessed within the same regex using a backslash and the number of the capture group (e.g. `\1`). Capture groups are automatically numbered by the position of their opening parentheses (left to right), starting at 1.
+La sous-chaîne correspondant au groupe est enregistrée dans une "variable" temporaire, à laquelle on peut accéder dans la même regex en utilisant une barre oblique inverse et le numéro du groupe de capture (par exemple `\1`). Les groupes de capture sont automatiquement numérotés en fonction de la position de leurs parenthèses ouvrantes (de gauche à droite), en commençant par 1.
 
-The example below matches a word that occurs thrice separated by spaces:
+L'exemple ci-dessous correspond à un mot qui apparaît trois fois, séparé par des espaces :
 
 ```js
 let repeatRegex = /(\w+) \1 \1/;
-repeatRegex.test(repeatStr); // Returns true
-repeatStr.match(repeatRegex); // Returns ["row row row", "row"]
+repeatRegex.test(repeatStr); // retourne true
+repeatStr.match(repeatRegex); // retourne ["row row row", "row"]
 ```
 
-Using the `.match()` method on a string will return an array with the matched substring, along with its captured groups.
+L'utilisation de la méthode `.match()` sur une chaîne de caractères renverra un tableau avec la sous-chaîne trouvée, ainsi que ses groupes capturés.
 
 
 # --instructions--
 
-Use capture groups in `reRegex` to match a string that consists of only the same number repeated exactly three times separated by single spaces.
+Utilisez les groupes de capture dans `reRegex` pour faire correspondre une chaîne de caractères qui consiste uniquement en un même nombre répété exactement trois fois et séparé par des espaces simples.
 
 # --hints--
 
-Your regex should use the shorthand character class for digits.
+Votre regex doit utiliser la classe de caractères raccourcis pour les chiffres.
 
 ```js
 assert(reRegex.source.match(/\\d/));
 ```
 
-Your regex should reuse a capture group twice.
+Votre regex doit réutiliser un groupe de capture deux fois.
 
 ```js
 assert(reRegex.source.match(/\\1|\\2/g).length >= 2);
 ```
 
-Your regex should match the string `42 42 42`.
+Votre regex doit correspondre à la chaîne de caractères `42 42 42`.
 
 ```js
 reRegex.lastIndex = 0;
 assert(reRegex.test('42 42 42'));
 ```
 
-Your regex should match the string `100 100 100`.
+Votre regex doit correspondre à la chaîne de caractères `100 100 100`.
 
 ```js
 reRegex.lastIndex = 0;
 assert(reRegex.test('100 100 100'));
 ```
 
-Your regex should not match the string `42 42 42 42`.
+Votre regex ne doit pas correspondre à la chaîne de caractères `42 42 42 42`.
 
 ```js
 assert.equal('42 42 42 42'.match(reRegex.source), null);
 ```
 
-Your regex should not match the string `42 42`.
+Votre regex ne doit pas correspondre à la chaîne de caractères `42 42`.
 
 ```js
 assert.equal('42 42'.match(reRegex.source), null);
 ```
 
-Your regex should not match the string `101 102 103`.
+Votre regex ne doit pas correspondre à la chaîne de caractères `101 102 103`.
 
 ```js
 reRegex.lastIndex = 0;
 assert(!reRegex.test('101 102 103'));
 ```
 
-Your regex should not match the string `1 2 3`.
+Votre regex ne doit pas correspondre à la chaîne de caractères `1 2 3`.
 
 ```js
 reRegex.lastIndex = 0;
 assert(!reRegex.test('1 2 3'));
 ```
 
-Your regex should match the string `10 10 10`.
+Votre regex doit correspondre à la chaîne de caractères `10 10 10`.
 
 ```js
 reRegex.lastIndex = 0;
@@ -102,7 +102,7 @@ assert(reRegex.test('10 10 10'));
 
 ```js
 let repeatNum = "42 42 42";
-let reRegex = /change/; // Change this line
+let reRegex = /change/; // Modifiez cette ligne
 let result = reRegex.test(repeatNum);
 ```
 

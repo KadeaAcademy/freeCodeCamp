@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244dd
-title: Selecting from Many Options with Switch Statements
+title: Sélection entre plusieurs options avec les instructions Switch
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/c4mv4fm'
 forumTopicId: 18277
@@ -9,9 +9,9 @@ dashedName: selecting-from-many-options-with-switch-statements
 
 # --description--
 
-If you have many options to choose from, use a <dfn>switch</dfn> statement. A `switch` statement tests a value and can have many <dfn>case</dfn> statements which define various possible values. Statements are executed from the first matched `case` value until a `break` is encountered.
+Si vous avez plusieurs options parmi lesquelles choisir, utilisez une instruction switch. Une instruction `switch` teste une valeur et peut avoir plusieurs instructions case qui définissent diverses valeurs possibles. Les instructions sont exécutées à partir de la première valeur `case` trouvée jusqu'à ce qu'un `break` soit rencontré.
 
-Here is an example of a `switch` statement:
+Voici un exemple d'instruction `switch` :
 
 ```js
 switch(lowercaseLetter) {
@@ -24,11 +24,12 @@ switch(lowercaseLetter) {
 }
 ```
 
-`case` values are tested with strict equality (`===`). The `break` tells JavaScript to stop executing statements. If the `break` is omitted, the next statement will be executed.
+Les valeurs `case` sont testées avec une égalité stricte (`===`). L'élément `break` indique à JavaScript d'arrêter l'exécution des instructions. Si le `break` est omis, l'instruction suivante sera exécutée.
 
 # --instructions--
 
-Write a switch statement which tests `val` and sets `answer` for the following conditions:  
+Écrivez une instruction switch qui teste `val` et définit `answer` pour les conditions suivantes :
+ 
 `1` - `alpha`  
 `2` - `beta`  
 `3` - `gamma`  
@@ -36,37 +37,37 @@ Write a switch statement which tests `val` and sets `answer` for the following c
 
 # --hints--
 
-`caseInSwitch(1)` should have a value of the string `alpha`
+`caseInSwitch(1)` devrait avoir la chaîne `alpha` comme valeur.
 
 ```js
 assert(caseInSwitch(1) === 'alpha');
 ```
 
-`caseInSwitch(2)` should have a value of the string `beta`
+`caseInSwitch(2)` devrait avoir la chaîne `beta` comme valeur.
 
 ```js
 assert(caseInSwitch(2) === 'beta');
 ```
 
-`caseInSwitch(3)` should have a value of the string `gamma`
+`caseInSwitch(3)` devrait avoir la chaîne `gamma` comme valeur.
 
 ```js
 assert(caseInSwitch(3) === 'gamma');
 ```
 
-`caseInSwitch(4)` should have a value of the string `delta`
+`caseInSwitch(4)` devrait avoir la chaîne `delta` comme valeur.
 
 ```js
 assert(caseInSwitch(4) === 'delta');
 ```
 
-You should not use any `if` or `else` statements
+Vous ne devez pas utiliser d'instructions `if` ou `else`.
 
 ```js
 assert(!/else/g.test(code) || !/if/g.test(code));
 ```
 
-You should have at least 3 `break` statements
+Vous devez avoir au moins 3 déclarations `break`
 
 ```js
 assert(code.match(/break/g).length > 2);
@@ -79,11 +80,11 @@ assert(code.match(/break/g).length > 2);
 ```js
 function caseInSwitch(val) {
   let answer = "";
-  // Only change code below this line
+  // Ne changez que le code en dessous de cette ligne
 
 
 
-  // Only change code above this line
+  // Ne changez que le code au-dessus de cette ligne
   return answer;
 }
 

@@ -3,14 +3,65 @@
   font-size: 1.1rem;
 }
 
+.tool-panel-group button {
+  background: var(--love-light);
+  color: var(--gray-00);
+  font-weight: 600;
+  font-size: 0.8rem;
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.tool-panel-group button:hover {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 0) !important;
+  border: solid 2px var(--love-light) !important;
+}
+
 .tool-panel-group-mobile button,
 .tool-panel-group-mobile a {
   font-size: 0.8rem;
 }
 
+.tool-panel-group .btn-primary {
+  background: var(--love-light);
+  color: var(--gray-00);
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.tool-panel-group .btn-primary:hover,
+.tool-panel-group .btn-primary:active {
+  color: var(--love-light) !important;
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+.tool-panel-group .btn-secondary {
+  background: rgba(255, 255, 255, 1);
+  color: var(--love-light);
+  border: solid 2px var(--love-light);
+  transition: all 0.3s ease;
+}
+
+.tool-panel-group .btn-secondary:hover,
+.tool-panel-group .btn-secondary:active {
+  color: var(--primary-background) !important;
+  background: var(--love-light) !important;
+}
+
+.btn-secondary:disabled,
+.btn-secondary:disabled:hover {
+  border: solid 2px rgba(255, 255, 255, 0) !important;
+  background: var(--quaternary-background) !important;
+  color: var(--primary-color) !important;
+}
+
 .tool-panel-group-mobile {
+  background: rgba(255, 255, 255, 1);
   display: flex;
-  flex-direction: row-reverse;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
 }
 
 .tool-panel-group-mobile > .btn-block,
@@ -50,4 +101,16 @@
 
 #get-help-dropdown > .caret {
   transform: rotate(180deg);
+}
+
+.btn-dropdown {
+  border-color: var(--gray-90);
+  color: var(--gray-90);
+}
+
+.btn-dropdown:hover,
+.btn-dropdown:focus {
+  background: var(--gray-90);
+  border-color: var(--gray-90) !important;
+  color: var(--theme-color);
 }

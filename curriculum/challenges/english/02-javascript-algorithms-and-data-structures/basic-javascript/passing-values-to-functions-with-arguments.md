@@ -1,6 +1,6 @@
 ---
 id: 56533eb9ac21ba0edf2244bd
-title: Passing Values to Functions with Arguments
+title: Passer des valeurs aux fonctions avec des arguments
 challengeType: 1
 videoUrl: 'https://scrimba.com/c/cy8rahW'
 forumTopicId: 18254
@@ -9,9 +9,9 @@ dashedName: passing-values-to-functions-with-arguments
 
 # --description--
 
-<dfn>Parameters</dfn> are variables that act as placeholders for the values that are to be input to a function when it is called. When a function is defined, it is typically defined along with one or more parameters. The actual values that are input (or <dfn>"passed"</dfn>) into a function when it is called are known as <dfn>arguments</dfn>.
+<dfn>Les paramètres</dfn> sont des variables qui servent de caractères de substitution pour les valeurs qui doivent être entrées dans une fonction lorsqu'elle est appelée. Lorsqu'une fonction est définie, elle est généralement définie avec un ou plusieurs paramètres. Les valeurs réelles qui sont entrées (ou <dfn>"passées"</dfn>) dans une fonction lorsqu'elle est appelée sont appelées <dfn>arguments</dfn>.
 
-Here is a function with two parameters, `param1` and `param2`:
+Voici une fonction avec deux paramètres, `param1` et `param2` :
 
 ```js
 function testFun(param1, param2) {
@@ -19,21 +19,21 @@ function testFun(param1, param2) {
 }
 ```
 
-Then we can call `testFun` like this: `testFun("Hello", "World");`. We have passed two string arguments, `Hello` and `World`. Inside the function, `param1` will equal the string `Hello` and `param2` will equal the string `World`. Note that you could call `testFun` again with different arguments and the parameters would take on the value of the new arguments.
+Nous pouvons alors appeler `testFun` comme ceci : `testFun("Hello", "World");`. Nous avons passé deux arguments de type chaîne, `Hello` et `World`. Dans la fonction, `param1` sera égal à la chaîne `Hello` et `param2` sera égal à la chaîne `World`. Notez que vous pouvez appeler `testFun` à nouveau avec des arguments différents et les paramètres prendront la valeur des nouveaux arguments.
 
 # --instructions--
 
-<ol><li>Create a function called <code>functionWithArgs</code> that accepts two arguments and outputs their sum to the dev console.</li><li>Call the function with two numbers as arguments.</li></ol>
+<ol><li>Créez une fonction appelée <code>functionWithArgs</code> qui accepte deux arguments et affiche leur somme dans la console dev.</li><li>Invoquez la fonction avec des nombres comme arguments</li></ol>
 
 # --hints--
 
-`functionWithArgs` should be a function.
+`functionWithArgs` doit être une fonction.
 
 ```js
 assert(typeof functionWithArgs === 'function');
 ```
 
-`functionWithArgs(1,2)` should output `3`.
+`functionWithArgs(1,2)` devrait afficher `3`.
 
 ```js
 if (typeof functionWithArgs === 'function') {
@@ -44,7 +44,7 @@ if (typeof functionWithArgs === 'function') {
 assert(logOutput == 3);
 ```
 
-`functionWithArgs(7,9)` should output `16`.
+`functionWithArgs(7,9)` devrait afficher `16`.
 
 ```js
 if (typeof functionWithArgs === 'function') {
@@ -55,7 +55,7 @@ if (typeof functionWithArgs === 'function') {
 assert(logOutput == 16);
 ```
 
-You should call `functionWithArgs` with two numbers after you define it.
+Vous devez appeler `functionWithArgs` avec deux chiffres après l'avoir défini.
 
 ```js
 assert(

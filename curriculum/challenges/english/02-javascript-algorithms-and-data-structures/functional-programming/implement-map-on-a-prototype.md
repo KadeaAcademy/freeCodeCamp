@@ -1,6 +1,6 @@
 ---
 id: 587d7b8f367417b2b2512b62
-title: Implement map on a Prototype
+title: Implémenter map sur un prototype
 challengeType: 1
 forumTopicId: 301230
 dashedName: implement-map-on-a-prototype
@@ -8,25 +8,24 @@ dashedName: implement-map-on-a-prototype
 
 # --description--
 
-As you have seen from applying `Array.prototype.map()`, or simply `map()` earlier, the `map` method returns an array of the same length as the one it was called on. It also doesn't alter the original array, as long as its callback function doesn't.
+Comme vous l'avez vu en appliquant `Array.prototype.map()`, ou simplement `map()` plus tôt, la méthode `map` retourne un tableau de la même longueur que celui sur lequel elle a été appelée. Elle ne modifie pas non plus le tableau original, tant que sa fonction de rappel ne le fait pas.
 
-In other words, `map` is a pure function, and its output depends solely on its inputs. Plus, it takes another function as its argument.
+En d'autres termes, `map` est une fonction pure, et sa sortie dépend uniquement de ses entrées. De plus, elle prend une autre fonction comme argument.
 
-You might learn a lot about the `map` method if you implement your own version of it. It is recommended you use a `for` loop or `Array.prototype.forEach()`.
-
+Vous pourriez en apprendre beaucoup sur la méthode `map` si vous implantiez votre propre version de celle-ci. Il est recommandé d'utiliser une boucle `for` ou `Array.prototype.forEach()`.
 # --instructions--
 
-Write your own `Array.prototype.myMap()`, which should behave exactly like `Array.prototype.map()`. You should not use the built-in `map` method. The `Array` instance can be accessed in the `myMap` method using `this`.
+Ecrivez votre propre `Array.prototype.myMap()`, qui devrait se comporter exactement comme `Array.prototype.map()`. Vous ne devez pas utiliser la méthode intégrée `map`. L'instance `Array` peut être accédée dans la méthode `myMap` en utilisant `this`.
 
 # --hints--
 
-`new_s` should equal `[46, 130, 196, 10]`.
+`new_s` devrait être égal `[46, 130, 196, 10]`.
 
 ```js
 assert(JSON.stringify(new_s) === JSON.stringify([46, 130, 196, 10]));
 ```
 
-Your code should not use the `map` method.
+Votre code ne doit pas utiliser la méthode `map`.
 
 ```js
 assert(!code.match(/\.?[\s\S]*?map/g));
@@ -37,14 +36,14 @@ assert(!code.match(/\.?[\s\S]*?map/g));
 ## --seed-contents--
 
 ```js
-// The global variable
+// La variable globale
 const s = [23, 65, 98, 5];
 
 Array.prototype.myMap = function(callback) {
   const newArray = [];
-  // Only change code below this line
+// Ne modifiez que le code situé en dessous de cette ligne
 
-  // Only change code above this line
+// Ne modifiez que le code au-dessus de cette ligne
   return newArray;
 };
 

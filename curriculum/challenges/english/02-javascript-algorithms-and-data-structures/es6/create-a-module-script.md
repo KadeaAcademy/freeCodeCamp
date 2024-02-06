@@ -1,6 +1,6 @@
 ---
 id: 5cddbfd622f1a59093ec611d
-title: Create a Module Script
+title: Créer un script de module
 challengeType: 6
 forumTopicId: 301198
 dashedName: create-a-module-script
@@ -8,27 +8,26 @@ dashedName: create-a-module-script
 
 # --description--
 
-JavaScript started with a small role to play on an otherwise mostly HTML web. Today, it’s huge, and some websites are built almost entirely with JavaScript. In order to make JavaScript more modular, clean, and maintainable; ES6 introduced a way to easily share code among JavaScript files. This involves exporting parts of a file for use in one or more other files, and importing the parts you need, where you need them. In order to take advantage of this functionality, you need to create a script in your HTML document with a `type` of `module`. Here’s an example:
+JavaScript a commencé avec un petit rôle à jouer sur un site Web essentiellement HTML. Aujourd'hui, il est énorme, et certains sites Web sont construits presque entièrement avec JavaScript. Afin de rendre JavaScript plus modulaire, propre et facile à maintenir, ES6 a introduit un moyen de partager facilement le code entre les fichiers JavaScript. Cela implique d'exporter des parties d'un fichier pour les utiliser dans un ou plusieurs autres fichiers, et d'importer les parties dont vous avez besoin, là où vous en avez besoin. Afin de profiter de cette fonctionnalité, vous devez créer un script dans votre document HTML avec un `type` de `module`. Voici un exemple :
 
 ```html
 <script type="module" src="filename.js"></script>
 ```
 
-A script that uses this `module` type can now use the `import` and `export` features you will learn about in the upcoming challenges.
-
+Un script qui utilise ce type `module` peut maintenant utiliser les fonctionnalités `import` et `export` que vous découvrirez dans les prochains défis.
 # --instructions--
 
-Add a script to the HTML document of type `module` and give it the source file of `index.js`
+Ajoutez au document HTML un script de type `module` et donnez-lui le fichier source de `index.js`.
 
 # --hints--
 
-You should create a `script` tag.
+Vous devez créer une balise `script`.
 
 ```js
 assert(code.match(/<\s*script[^>]*>\s*<\/\s*script\s*>/g));
 ```
 
-Your `script` tag should have the `type` attribute with a value of `module`.
+Votre balise `script` doit avoir l'attribut `type` avec une valeur de `module`.
 
 ```js
 assert(
@@ -38,7 +37,7 @@ assert(
 );
 ```
 
-Your `script` tag should have a `src` of `index.js`.
+Votre balise `script` devrait avoir un `src` égal à `index.js`.
 
 ```js
 assert(
@@ -55,9 +54,9 @@ assert(
 ```html
 <html>
   <body>
-    <!-- Only change code below this line -->
+    <!-- Ne changez que le code en dessous de cette ligne -->
 
-    <!-- Only change code above this line -->
+    <!-- Ne modifier que le code au-dessus de cette ligne -->
   </body>
 </html>
 ```
