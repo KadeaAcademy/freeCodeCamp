@@ -17,6 +17,7 @@ import AlgoIcon from '../assets/images/algorithmIcon.svg';
 import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
 
 import LaediesActIcon from '../assets/images/partners/we-act-logo.png';
+import NewBadge from '../assets/images/new.png';
 import { createFlashMessage } from '../components/Flash/redux';
 import {
   Loader,
@@ -122,6 +123,7 @@ export function Courses(props: CoursesProps): JSX.Element {
   } = props;
   const [moodleCourses, setMoodleCourses] =
     useState<MoodleCoursesCatalogue | null>();
+
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showFilter, setShowFilter] = useState<boolean>(false);
@@ -222,6 +224,10 @@ export function Courses(props: CoursesProps): JSX.Element {
       showFilter && setScreenWidth(window.innerWidth);
     });
   }
+
+  const formatdate = (data: number) => {
+    return new Date(data * 1000).toLocaleDateString();
+  };
 
   useEffect(() => {
     if (screenWidth > 990) setShowFilter(true);
@@ -359,12 +365,14 @@ export function Courses(props: CoursesProps): JSX.Element {
                             icon={PhBookBookmark}
                             phone={phone}
                             name={name}
+                            badgeIcon={NewBadge}
                             isAvailable={course.visible == 1}
                             isSignedIn={isSignedIn}
                             sameTab={true}
                             external={true}
                             title={`${course.displayname}`}
                             buttonText={`Suivre le cours  `}
+                            createAt={formatdate(course.timecreated)}
                             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                             link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
                             description={course.summary}

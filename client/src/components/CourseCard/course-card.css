@@ -12,7 +12,12 @@ img {
 }
 
 /*Card Styling*/
-
+.img-badge {
+  height: auto;
+  width: 64px;
+  padding-bottom: 1.8rem;
+  padding-left: 0.5rem;
+}
 .card-outlin-border {
   border: solid 1px #2b292b;
   width: 100%;
@@ -36,6 +41,10 @@ img {
 
 .card-course-detail-header {
   overflow: hidden;
+}
+.card-title {
+  display: flex;
+  align-items: center;
 }
 
 .card-course-detail-footer {

@@ -18,6 +18,7 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
+import validator from 'validator';
 import {
   createUserRole,
   updateMemberRole,
@@ -262,9 +263,11 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
-  if (!user.email.endsWith('@kadea.co')) {
-    navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
+  if (!validator.equals(user.role, 'Super-admin')) {
+    if (!validator.equals(user.role, 'Admin')) {
+      navigate(`${homeLocation}`);
+      return <Loader fullScreen={true} />;
+    }
   }
 
   return (
@@ -332,24 +335,44 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
                             )}
                           </>
                         )}
-                        <Button
-                          type='submit'
-                          className='standard-radius-5 btn-black'
-                          id='button-create'
-                          onClick={handeleCreateRole}
-                        >
-                          Créer un nouveau rôle
-                        </Button>
-                        &nbsp; &nbsp; &nbsp;
-                        {isUpdateAction && (
-                          <Button
-                            type='submit'
-                            className='standard-radius-5 btn-green'
-                            id='button-update'
-                            onClick={handleUpdateRolee}
-                          >
-                            Mettre à jour le rôle
-                          </Button>
+                        {validator.equals(user.role, 'Super-admin') ? (
+                          <>
+                            <Button
+                              type='submit'
+                              className='standard-radius-5 btn-black'
+                              id='button-create'
+                              onClick={handeleCreateRole}
+                            >
+                              Créer un nouveau rôle
+                            </Button>
+                            &nbsp; &nbsp; &nbsp;
+                            {isUpdateAction && (
+                              <Button
+                                type='submit'
+                                className='standard-radius-5 btn-green'
+                                id='button-update'
+                                onClick={handleUpdateRolee}
+                              >
+                                Mettre à jour le rôle
+                              </Button>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              type='submit'
+                              className='standard-radius-5 btn-black'
+                              id='button-create'
+                              onClick={handeleCreateRole}
+                              disabled
+                            >
+                              Créer un nouveau rôle
+                            </Button>
+                            <HelpBlock className='text-error'>
+                              {'Création de rôle réservée aux Super Admins'}
+                            </HelpBlock>
+                            &nbsp; &nbsp; &nbsp;
+                          </>
                         )}
                       </div>
                     </FormGroup>
@@ -364,6 +387,7 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
           membersRole={membersRole}
           currentPage={currentPage}
           totalPages={totalPages}
+          currentUserRole={user.role}
           navigateToPage={navigateToPage}
           deleteMemberRole={handleDeleteMemberRole}
           handleSelectMemberRoleToUpdate={handleSelectMemberRoleToUpdate}
@@ -378,6 +402,7 @@ interface TableMembersRoleProps {
   membersRole?: MemberRole[];
   currentPage: number;
   totalPages: number;
+  currentUserRole: string;
   deleteMemberRole: (memberRole: MemberRole) => void;
   handleSelectMemberRoleToUpdate: (memberRole: MemberRole) => void;
   navigateToPage: (forwardOrBackward: boolean) => void;
@@ -389,6 +414,7 @@ export function TableMembers(props: TableMembersRoleProps): JSX.Element {
     navigateToPage,
     currentPage,
     totalPages,
+    currentUserRole,
     deleteMemberRole,
     handleSelectMemberRoleToUpdate
   } = props;
@@ -409,7 +435,9 @@ export function TableMembers(props: TableMembersRoleProps): JSX.Element {
                   <tr>
                     <th className='text-light'>Rôle</th>
                     <th className='text-light'>Créé le</th>
-                    <th className='text-light'>Action</th>
+                    {validator.equals(currentUserRole, 'Super-admin') && (
+                      <th className='text-light'>Action</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -424,23 +452,27 @@ export function TableMembers(props: TableMembersRoleProps): JSX.Element {
                           {dateFormat(`${role.createAt}`)}
                         </td>
                         <td style={{ verticalAlign: 'middle' }}>
-                          <button
-                            className='action-btn-update'
-                            onClick={() => {
-                              handleSelectMemberRoleToUpdate(role);
-                            }}
-                          >
-                            Mettre à jour
-                          </button>
-                          &nbsp; | &nbsp;
-                          <button
-                            className='action-btn-delete'
-                            onClick={() => {
-                              deleteMemberRole(role);
-                            }}
-                          >
-                            Supprimer
-                          </button>
+                          {validator.equals(currentUserRole, 'Super-admin') && (
+                            <>
+                              <button
+                                className='action-btn-update'
+                                onClick={() => {
+                                  handleSelectMemberRoleToUpdate(role);
+                                }}
+                              >
+                                Mettre à jour
+                              </button>
+                              &nbsp; | &nbsp;
+                              <button
+                                className='action-btn-delete'
+                                onClick={() => {
+                                  deleteMemberRole(role);
+                                }}
+                              >
+                                Supprimer
+                              </button>
+                            </>
+                          )}
                         </td>
                       </tr>
                     );
