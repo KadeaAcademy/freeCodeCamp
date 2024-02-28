@@ -37,7 +37,11 @@ const {
   SHOW_NEW_CURRICULUM: showNewCurriculum,
   MOODLE_BASE_URL: moodleBaseUrl,
   MOODLE_API_BASE_URL: moodleApiBaseUrl,
-  MOODLE_API_TOKEN: moodleApiToken
+  MOODLE_API_TOKEN: moodleApiToken,
+  RAVEN_AWS_BASE_URL: ravenAwsBaseUrl,
+  RAVEN_AWS_API_KEY: ravenAwsApiKey,
+  RAVEN_AWS_CLIENT_ID: ravenAwsClientId,
+  RAVEN_AWS_CLIENT_SECRET_ID: ravenAwsClientSecretId
 } = process.env;
 
 const locations = {
@@ -51,7 +55,11 @@ const locations = {
     : radioLocation,
   moodleBaseUrl,
   moodleApiBaseUrl,
-  moodleApiToken
+  moodleApiToken,
+  ravenAwsBaseUrl,
+  ravenAwsApiKey,
+  ravenAwsClientId,
+  ravenAwsClientSecretId
 };
 
 module.exports = Object.assign(locations, {

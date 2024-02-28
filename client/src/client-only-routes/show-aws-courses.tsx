@@ -43,12 +43,10 @@ type MoodleCourse = {
   summary: string;
 };
 
-// type MoodleCourse = {
-//   userId: number;
-//   id: number;
-//   title: string;
-//   body: string;
-// };
+// type RavenTokenFormat = {
+//   status: string,
+//   message: string
+// }
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
@@ -69,18 +67,44 @@ const mapDispatchToProps = {
 export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
   const { showLoading, isSignedIn } = props;
   const [moodleCourses, setMoodleCourses] = useState<MoodleCourse[]>();
+  // const [ravenToken] = useState<RavenTokenFormat>();
 
   const getMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
     );
+
     if (moodleCatalogue != null) {
       setMoodleCourses(moodleCatalogue);
     } else {
       setMoodleCourses([]);
     }
   };
+
+  // const generateAccessToken = async () => {
+  //   const ravenTokenAccess = await generateRaven360AccessToken<RavenTokenFormat>(
+  //     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //     `${ravenAwsBaseUrl}/gettoken`,
+  //     {
+  //       apiKey: ravenAwsApiKey as string,
+  //       clientId: ravenAwsClientId as string,
+  //       clientSecret: ravenAwsClientSecretId as string
+  //     }
+  //   );
+
+  //   console.log('ravenTokenAccess : ', ravenTokenAccess)
+
+  //   if (ravenTokenAccess != null) {
+  //     setRavenToken(ravenTokenAccess);
+  //   } else {
+  //     setRavenToken({} as RavenTokenFormat);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   void generateAccessToken();
+  // }, []);
 
   useEffect(() => {
     void getMoodleCourses();

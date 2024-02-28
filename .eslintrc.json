@@ -79,7 +79,7 @@
           },
           {
             "selector": "typeProperty",
-            "format": ["camelCase", "PascalCase"]
+            "format": ["camelCase", "PascalCase", "snake_case"]
           },
           {
             "selector": "objectLiteralProperty",

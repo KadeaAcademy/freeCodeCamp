@@ -243,6 +243,40 @@ export async function postExternalResource<T>(
   }
   return response;
 }
+
+// interface RavenCredentials {
+//   apiKey: string,
+//   clientId: string,
+//   clientSecret: string
+// }
+
+export function generateRaven360AccessToken<T>() {
+  // urlEndPoint: string,
+  // data: RavenCredentials
+  let response: unknown;
+  // const input = {
+  //   client_id: data.clientId,
+  //   client_secret: data.clientSecret
+  // }
+
+  // try {
+  //   response = await requestModule<T>(`${urlEndPoint}`, {
+  //     method: 'POST', //GET, POST, PUT, DELETE, etc.
+  //     mode: 'no-cors', //no-cors,cors, same-origin
+  //     cache: 'no-cache', //default, no-cache, reload, force-cache, only-if-cached
+  //     body: JSON.stringify(input),
+  //     headers: {
+  //       'x-api-key': data.apiKey,
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     }
+  //   });
+  // } catch (error) {
+  //   response = error;
+
+  return response as T;
+}
+
 export async function getDatabaseResource<T>(urlEndPoint: string) {
   let response: T | null;
   try {

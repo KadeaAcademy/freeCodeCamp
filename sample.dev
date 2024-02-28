@@ -14,6 +14,11 @@ AUTH0_DOMAIN=example.auth0.com
 MOODLE_BASE_URL=moodle_base_url
 MOODLE_API_BASE_URL=moodle_api_base_url
 MOODLE_API_TOKEN=moodle_api_token
+# Raven360 credentials
+RAVEN_AWS_BASE_URL=raven_aws_base_url
+RAVEN_AWS_API_KEY=raven_aws_api_key
+RAVEN_AWS_CLIENT_ID=raven_aws_client_id
+RAVEN_AWS_CLIENT_SECRET_ID=raven_aws_client_secret_id
 # Session, Cookie and JWT encryption strings
 SESSION_SECRET=a_session_secret
 COOKIE_SECRET=a_cookie_secret

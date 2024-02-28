@@ -6,6 +6,7 @@ import ShowLearningPathDetail from '../client-only-routes/show-learning-path-det
 import ShowLearningPath from '../client-only-routes/show-learning-path';
 import ShowFccCourses from '../client-only-routes/show-fcc-courses';
 import RedirectHome from '../components/redirect-home';
+import ShowAwsCourses from '../client-only-routes/show-aws-courses';
 
 function Learningpath(): JSX.Element {
   return (
@@ -14,6 +15,7 @@ function Learningpath(): JSX.Element {
         path={withPrefix('/learning-path/:category/:categoryId')}
       />
       <ShowFccCourses path={withPrefix('/learning-path/developpement-web')} />
+      <ShowAwsCourses path={withPrefix('/learning-path/aws')} />
       <ShowLearningPath path={withPrefix('/learning-path')} />
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
