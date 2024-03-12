@@ -295,7 +295,6 @@ export function Courses(props: CoursesProps): JSX.Element {
               ></h2>
               <SearchButton
                 courseOrPath='course'
-                isDataOnLoading={isDataOnLoading}
                 setIsDataOnLoading={setIsDataOnLoading}
               />
             </div>

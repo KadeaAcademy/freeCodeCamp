@@ -8,11 +8,11 @@ import { MoodleCoursesFiltered } from '../CourseFilter/course-filter';
 
 const SearchButton = ({
   courseOrPath,
-  isDataOnLoading,
+
   setIsDataOnLoading
 }: {
   courseOrPath: 'course' | 'path';
-  isDataOnLoading: boolean;
+
   setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [searchKey, setSearchKey] = useState<string>('');
@@ -27,7 +27,7 @@ const SearchButton = ({
           `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&criterianame=${'search'}&criteriavalue=${searchKey}}&moodlewsrestformat=json`
         );
       if (moodleCourseFound != null)
-        console.log('Search moodle = ', moodleCourseFound, isDataOnLoading);
+        console.log('Search moodle = ', moodleCourseFound);
     } catch (error) {
       console.log(error);
     }
