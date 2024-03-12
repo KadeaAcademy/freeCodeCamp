@@ -9,12 +9,13 @@ import { MoodleCoursesFiltered } from '../CourseFilter/course-filter';
 const SearchButton = () => {
   const [searchKey, setSearchKey] = useState('');
 
+  // allowed values are: search,modulelist,blocklist,tagid
   const searchCourse = async () => {
     try {
       const moodleCourseFound: MoodleCoursesFiltered | null =
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         await getExternalResource<MoodleCoursesFiltered>(
-          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&name=${'Java'}&moodlewsrestformat=json`
+          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&criterianame=${'search'}&criteriavalue=${searchKey}}&moodlewsrestformat=json`
         );
       if (moodleCourseFound != null)
         console.log('Search moodle = ', moodleCourseFound);
@@ -24,20 +25,22 @@ const SearchButton = () => {
   };
 
   return (
-    <div className='search-button-container'>
+    <form
+      className='search-button-container'
+      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        if (searchKey) void searchCourse();
+      }}
+    >
       <input
         placeholder='Rechercher les cours.'
-        onChange={e => {
-          setSearchKey(e.target.value);
-          console.log(searchKey);
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchKey(event.target.value);
         }}
+        required
       />
-      <button
-        onClick={() => {
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          searchCourse();
-        }}
-      >
+      <button type='submit'>
         <svg
           width='25px'
           height='25px'
@@ -60,7 +63,7 @@ const SearchButton = () => {
           />
         </svg>
       </button>
-    </div>
+    </form>
   );
 };
 
