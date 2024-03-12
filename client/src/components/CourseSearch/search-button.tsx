@@ -6,11 +6,20 @@ const { moodleApiBaseUrl, moodleApiToken } = envData;
 import envData from '../../../../config/env.json';
 import { MoodleCoursesFiltered } from '../CourseFilter/course-filter';
 
-const SearchButton = () => {
-  const [searchKey, setSearchKey] = useState('');
+const SearchButton = ({
+  courseOrPath,
+  isDataOnLoading,
+  setIsDataOnLoading
+}: {
+  courseOrPath: 'course' | 'path';
+  isDataOnLoading: boolean;
+  setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [searchKey, setSearchKey] = useState<string>('');
 
   // allowed values are: search,modulelist,blocklist,tagid
-  const searchCourse = async () => {
+  const searchCourse = async (): Promise<void> => {
+    setIsDataOnLoading(true);
     try {
       const moodleCourseFound: MoodleCoursesFiltered | null =
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -18,10 +27,12 @@ const SearchButton = () => {
           `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&criterianame=${'search'}&criteriavalue=${searchKey}}&moodlewsrestformat=json`
         );
       if (moodleCourseFound != null)
-        console.log('Search moodle = ', moodleCourseFound);
+        console.log('Search moodle = ', moodleCourseFound, isDataOnLoading);
     } catch (error) {
       console.log(error);
     }
+    setIsDataOnLoading(false);
+    // setSearchKey('');
   };
 
   return (
@@ -29,18 +40,31 @@ const SearchButton = () => {
       className='search-button-container'
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        if (searchKey) void searchCourse();
+        if (searchKey) {
+          void searchCourse();
+        }
       }}
     >
       <input
-        placeholder='Rechercher les cours.'
+        placeholder={
+          courseOrPath == 'path'
+            ? 'Rechercher les parcours ...'
+            : 'Rechercher les cours ...'
+        }
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setSearchKey(event.target.value);
         }}
+        value={searchKey}
         required
       />
-      <button type='submit'>
+      <button
+        className={
+          courseOrPath == 'course'
+            ? 'course-search-button'
+            : 'path-search-button'
+        }
+        type='submit'
+      >
         <svg
           width='25px'
           height='25px'

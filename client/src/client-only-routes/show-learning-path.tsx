@@ -25,6 +25,7 @@ import {
 import { User } from '../redux/prop-types';
 import envData from '../../../config/env.json';
 import PathCard from '../components/PathCard/path-card';
+import SearchButton from '../components/CourseSearch/search-button';
 
 const { moodleApiBaseUrl, moodleApiToken } = envData;
 
@@ -147,6 +148,16 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
           `}
               </p>
             </div>
+
+            <div className='title-selected-filter'>
+              <h2>Tous les parcours</h2>
+              <SearchButton
+                courseOrPath={'path'}
+                isDataOnLoading={isDataOnLoading}
+                setIsDataOnLoading={setIsDataOnLoading}
+              />
+            </div>
+
             <Spacer />
             <div>
               {!isDataOnLoading ? (

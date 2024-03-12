@@ -38,12 +38,26 @@
   border: none !important;
   position: absolute;
   right: 0px;
+}
+
+.path-search-button {
   background: #000;
   color: white;
 }
 
-.search-button-container button:hover {
+.path-search-button:hover {
   background: red;
+  transition: all 0.2s ease-in-out;
+}
+
+.course-search-button {
+  background: red;
+  color: white;
+  border: 1px solid #000;
+}
+
+.course-search-button:hover {
+  background: #000;
   transition: all 0.2s ease-in-out;
 }
 
