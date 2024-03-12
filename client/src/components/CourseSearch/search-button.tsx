@@ -14,7 +14,7 @@ const SearchButton = () => {
       const moodleCourseFound: MoodleCoursesFiltered | null =
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         await getExternalResource<MoodleCoursesFiltered>(
-          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&value=${'Java'}&moodlewsrestformat=json`
+          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&name=${'Java'}&moodlewsrestformat=json`
         );
       if (moodleCourseFound != null)
         console.log('Search moodle = ', moodleCourseFound);
@@ -26,7 +26,7 @@ const SearchButton = () => {
   return (
     <div className='search-button-container'>
       <input
-        placeholder='Search'
+        placeholder='Rechercher les cours.'
         onChange={e => {
           setSearchKey(e.target.value);
           console.log(searchKey);
