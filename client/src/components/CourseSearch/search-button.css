@@ -46,14 +46,13 @@
 }
 
 .path-search-button:hover {
-  background: red;
+  background: #e30613;
   transition: all 0.2s ease-in-out;
 }
 
 .course-search-button {
-  background: red;
+  background: #e30613;
   color: white;
-  border: 1px solid #000;
 }
 
 .course-search-button:hover {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { navigate } from 'gatsby';
 import './search-button.css';
 import { getExternalResource } from '../../utils/ajax';
 
@@ -8,17 +9,16 @@ import { MoodleCoursesFiltered } from '../CourseFilter/course-filter';
 
 const SearchButton = ({
   courseOrPath,
-
   setIsDataOnLoading
 }: {
   courseOrPath: 'course' | 'path';
-
   setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
   // allowed values are: search,modulelist,blocklist,tagid
   const searchCourse = async (): Promise<void> => {
+    void navigate('/search/' + searchKey.toLocaleLowerCase());
     setIsDataOnLoading(true);
     try {
       const moodleCourseFound: MoodleCoursesFiltered | null =
@@ -32,6 +32,7 @@ const SearchButton = ({
       console.log(error);
     }
     setIsDataOnLoading(false);
+
     // setSearchKey('');
   };
 
