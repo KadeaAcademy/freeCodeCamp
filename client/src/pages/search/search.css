@@ -1,0 +1,46 @@
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.search-form div:first-child {
+  display: flex;
+  gap: 10px;
+  color: black;
+  border-bottom: 1px solid rgb(53, 53, 53);
+  padding-bottom: 15px;
+}
+
+.search-form div input {
+  width: 100%;
+  border: none !important;
+}
+
+.search-result div {
+  display: flex;
+  gap: 40px;
+}
+
+.search-result div button {
+  background: inherit;
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.search-result div button:hover {
+  color: #e30613;
+}
+
+.selected-field {
+  border-bottom: 3px solid #e30613 !important;
+  color: #e30613;
+  box-sizing: border-box;
+}

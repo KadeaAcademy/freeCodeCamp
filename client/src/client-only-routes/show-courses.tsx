@@ -293,10 +293,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                   }`
                 }}
               ></h2>
-              <SearchButton
-                courseOrPath='course'
-                setIsDataOnLoading={setIsDataOnLoading}
-              />
+              <SearchButton courseOrPath='course' />
             </div>
 
             <Spacer />

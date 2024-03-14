@@ -1,39 +1,16 @@
 import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 import './search-button.css';
-import { getExternalResource } from '../../utils/ajax';
-
-const { moodleApiBaseUrl, moodleApiToken } = envData;
-import envData from '../../../../config/env.json';
-import { MoodleCoursesFiltered } from '../CourseFilter/course-filter';
 
 const SearchButton = ({
-  courseOrPath,
-  setIsDataOnLoading
+  courseOrPath
 }: {
   courseOrPath: 'course' | 'path';
-  setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
-  // allowed values are: search,modulelist,blocklist,tagid
-  const searchCourse = async (): Promise<void> => {
+  const goToSearchPage = () => {
     void navigate('/search/' + searchKey.toLocaleLowerCase());
-    setIsDataOnLoading(true);
-    try {
-      const moodleCourseFound: MoodleCoursesFiltered | null =
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        await getExternalResource<MoodleCoursesFiltered>(
-          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&criterianame=${'search'}&criteriavalue=${searchKey}}&moodlewsrestformat=json`
-        );
-      if (moodleCourseFound != null)
-        console.log('Search moodle = ', moodleCourseFound);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsDataOnLoading(false);
-
-    // setSearchKey('');
   };
 
   return (
@@ -41,8 +18,8 @@ const SearchButton = ({
       className='search-button-container'
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (searchKey) {
-          void searchCourse();
+        if (searchKey.trim() !== '') {
+          void goToSearchPage();
         }
       }}
     >
