@@ -151,11 +151,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
 
             <div className='title-selected-filter'>
               <h2>Tous les parcours</h2>
-              <SearchButton
-                courseOrPath={'path'}
-                isDataOnLoading={isDataOnLoading}
-                setIsDataOnLoading={setIsDataOnLoading}
-              />
+              <SearchButton courseOrPath={'path'} />
             </div>
 
             <Spacer />

@@ -18,21 +18,18 @@
   border: none !important;
 }
 
-.search-result div {
-  display: flex;
-  gap: 40px;
+.field-switch-buttons {
+  /* display: flex; */
+  /* gap: 40px; */
+  border-bottom: 1px solid black;
 }
 
 .search-result div button {
   background: inherit;
-  padding: 0;
+  padding: 10px 20px;
   margin: 0;
   font-weight: bold;
   border: none;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .search-result div button:hover {

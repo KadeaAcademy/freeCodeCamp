@@ -4,17 +4,25 @@ import { Grid } from '@freecodecamp/react-bootstrap';
 import { Spacer, renderCourseCardSkeletons } from '../../components/helpers';
 import envData from '../../../../config/env.json';
 
-// import AlgoIcon from '../../assets/images/algorithmIcon.svg';
+import AlgoIcon from '../../assets/images/algorithmIcon.svg';
 // import LaptopIcon from '../../assets/images/algorithmIcon.svg';
-// import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
+import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 
 import './search.css';
 
 import { MoodleCoursesFiltered } from '../../components/CourseFilter/course-filter';
-import { getExternalResource } from '../../utils/ajax';
-// import CourseCard from '../../components/CourseCard/course-card';
+import { postRightExternalResource } from '../../utils/ajax';
+import CourseCard from '../../components/CourseCard/course-card';
+// import CourseSearchSkeletons from '../../components/helpers/course-search-skeletons';
 
 const { moodleApiBaseUrl, moodleApiToken } = envData;
+
+interface Data {
+  criterianame: string;
+  criteriavalue: string;
+  wsfunction: string;
+  wstoken: string;
+}
 
 function Searches({ params }: { params: { searchKey: string } }): JSX.Element {
   const { searchKey } = params;
@@ -25,18 +33,37 @@ function Searches({ params }: { params: { searchKey: string } }): JSX.Element {
 
   const [field, setField] = useState<'course' | 'path'>('course');
 
+  const [searchError, setSearchError] = useState<boolean>(false);
+
   async function searchCourse(key: string): Promise<void> {
+    /*
+     * For criterianame parameter (value: alpha),
+     * Allowed values are: search,modulelist,blocklist,tagid
+     */
+
     setIsDataOnLoading(true);
     try {
       const moodleCourseFound: MoodleCoursesFiltered | null =
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        await getExternalResource<MoodleCoursesFiltered>(
-          `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_search_courses&criterianame=${'search'}&criteriavalue=${key}}&moodlewsrestformat=json`
+        await postRightExternalResource<MoodleCoursesFiltered, Data>(
+          `${moodleApiBaseUrl}?moodlewsrestformat=json`,
+          {
+            wstoken: moodleApiToken,
+            wsfunction: 'core_course_search_courses',
+            criterianame: 'search',
+            criteriavalue: key
+          }
         );
-      if (moodleCourseFound != null)
+
+      if (moodleCourseFound != null) {
         console.log('Search moodle = ', moodleCourseFound);
+      }
+      setSearchError(false);
+      // if (moodleCourseFound.courses) setSearchError(false);
+      // else throw new Error('No Moodle Course found');
     } catch (error) {
-      console.log(error);
+      console.log('The error : ', error);
+      setSearchError(true);
     }
     setIsDataOnLoading(false);
   }
@@ -54,13 +81,14 @@ function Searches({ params }: { params: { searchKey: string } }): JSX.Element {
           className='search-form'
           onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            void navigate('/search/' + key.toLocaleLowerCase());
+            if (key.trim())
+              void navigate('/search/' + key.trim().toLocaleLowerCase());
           }}
         >
           <div>
             <svg
-              width='40px'
-              height='40px'
+              width='30px'
+              height='30px'
               viewBox='0 -0.5 25 25'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
@@ -91,99 +119,102 @@ function Searches({ params }: { params: { searchKey: string } }): JSX.Element {
           </div>
         </form>
         <Spacer size={1} />
-        {/* NOT FOUND */}
-        {/* <div>
-          <p>
-            Désolé, nous n'avons pas trouvé de résultats pour "
-            <span style={{ color: 'red' }}>{searchKey}</span>". Veuillez essayer
-            une autre requête.
-          </p>
-          <h1>D'autres apprenants prennent également :</h1>
-          <Spacer />
+        {isDataOnLoading ? (
+          <div>
+            {/* <CourseSearchSkeletons />
+            <Spacer size={2} /> */}
+            <div className='card-course-detail-container'>
+              {renderCourseCardSkeletons(6)}
+            </div>
+          </div>
+        ) : searchError ? (
+          <div>
+            <p>
+              {`Désolé, nous n'avons pas trouvé de résultats pour "`}
+              <span style={{ color: 'red' }}>{searchKey}</span>{' '}
+              {`". Veuillez
+              essayer une autre requête.`}
+            </p>
+            <h1>{`D'autres apprenants prennent également :`}</h1>
+            <Spacer />
 
-          <div className='card-course-detail-container'>
-            <CourseCard
-              icon={LaptopIcon}
-              sponsorIcon={LaediesActIcon}
-              alt=''
-              name={'Josh'}
-              isAvailable={true}
-              isSignedIn={true}
-              title={`Responsive Web Design`}
-              buttonText={`Suivre le cours  `}
-              link={'/learn/responsive-web-design/'}
-              description={`
+            <div className='card-course-detail-container'>
+              <CourseCard
+                icon={AlgoIcon}
+                sponsorIcon={LaediesActIcon}
+                alt=''
+                name={'Josh'}
+                isAvailable={true}
+                isSignedIn={true}
+                title={`Responsive Web Design`}
+                buttonText={`Suivre le cours  `}
+                link={'/learn/responsive-web-design/'}
+                description={`
                 Dans ce cours, tu apprendras les langages que les développeurs 
                 utilisent pour créer des pages Web : HTML (Hypertext Markup Language) 
                 pour le contenu, et CSS (Cascading Style Sheets) pour la conception. 
                 Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
                 `}
-            />
-            <CourseCard
-              icon={AlgoIcon}
-              alt=''
-              isAvailable={true}
-              isSignedIn={true}
-              name={'Josh'}
-              title={`JavaScript Algorithms and Data Structures`}
-              buttonText={`Suivre le cours  `}
-              link={`/learn/javascript-algorithms-and-data-structures`}
-              description={`Alors que HTML et CSS contrôlent le contenu et le style  d'une page, 
+              />
+              <CourseCard
+                icon={AlgoIcon}
+                alt=''
+                isAvailable={true}
+                isSignedIn={true}
+                name={'Josh'}
+                title={`JavaScript Algorithms and Data Structures`}
+                buttonText={`Suivre le cours  `}
+                link={`/learn/javascript-algorithms-and-data-structures`}
+                description={`Alors que HTML et CSS contrôlent le contenu et le style  d'une page, 
                 JavaScript est utilisé pour la rendre interactive. Dans le cadre du 
                 cours JavaScript Algorithm and Data Structures, tu apprendras 
                 les principes fondamentaux de JavaScript, etc.`}
-            />
-            <CourseCard
-              icon={AlgoIcon}
-              alt=''
-              isAvailable={true}
-              isSignedIn={true}
-              name={'Josh'}
-              title={`JavaScript Algorithms and Data Structures`}
-              buttonText={`Suivre le cours  `}
-              link={`/learn/javascript-algorithms-and-data-structures`}
-              description={`Alors que HTML et CSS contrôlent le contenu et le style  d'une page, 
+              />
+              {/* <CourseCard
+                icon={AlgoIcon}
+                alt=''
+                isAvailable={true}
+                isSignedIn={true}
+                name={'Josh'}
+                title={`JavaScript Algorithms and Data Structures`}
+                buttonText={`Suivre le cours  `}
+                link={`/learn/javascript-algorithms-and-data-structures`}
+                description={`Alors que HTML et CSS contrôlent le contenu et le style  d'une page, 
                 JavaScript est utilisé pour la rendre interactive. Dans le cadre du 
                 cours JavaScript Algorithm and Data Structures, tu apprendras 
                 les principes fondamentaux de JavaScript, etc.`}
-            />
-          </div>
-        </div> */}
-        {/* NOT FOUND */}
-        <div className=' search-result '>
-          <h1 className='big-subheading'>
-            Resultat de recherche de
-            <span style={{ color: 'red' }}>{searchKey}</span>
-          </h1>
-          <div>
-            <button
-              onClick={() => {
-                setField('course');
-              }}
-              className={` ${field == 'course' ? 'selected-field' : ''}`}
-            >
-              Cours
-            </button>
-            <button
-              className={` ${field == 'path' ? 'selected-field' : ''}`}
-              onClick={() => {
-                setField('path');
-              }}
-            >
-              Parcours
-            </button>
-          </div>
-          <Spacer size={1} />
-          {isDataOnLoading ? (
-            <div className='card-course-detail-container'>
-              {renderCourseCardSkeletons(6)}
+              /> */}
             </div>
-          ) : field == 'course' ? (
-            <div>Courses</div>
-          ) : (
-            <div>Parcours</div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className=' search-result '>
+            <h1 className='big-subheading'>
+              {`Resultat de recherche de "`}
+              <span style={{ color: 'red' }}>{searchKey}</span>
+              {`"`}
+            </h1>
+            <div className='field-switch-buttons'>
+              <button
+                onClick={() => {
+                  setField('course');
+                }}
+                className={` ${field == 'course' ? 'selected-field' : ''}`}
+              >
+                Cours
+              </button>
+              <button
+                className={` ${field == 'path' ? 'selected-field' : ''}`}
+                onClick={() => {
+                  setField('path');
+                }}
+              >
+                Parcours
+              </button>
+            </div>
+            <Spacer size={1} />
+            {field == 'course' ? <div>Courses</div> : <div>Parcours</div>}
+          </div>
+        )}
       </div>
     </Grid>
   );

@@ -243,6 +243,25 @@ export async function postExternalResource<T>(
   }
   return response;
 }
+
+export async function postRightExternalResource<T, S>(
+  urlEndPoint: string,
+  data: S
+) {
+  let response: T;
+  try {
+    response = await requestModule<T>(urlEndPoint, {
+      method: 'POST', //GET, POST, PUT, DELETE, etc.
+      mode: 'cors', //no-cors,cors, same-origin
+      cache: 'no-cache', //default, no-cache, reload, force-cache, only-if-cached
+      body: JSON.stringify(data)
+    });
+  } catch (error) {
+    response = error as T;
+  }
+  return response;
+}
+
 export async function getDatabaseResource<T>(urlEndPoint: string) {
   let response: T | null;
   try {
