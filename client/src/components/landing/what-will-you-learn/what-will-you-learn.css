@@ -82,7 +82,7 @@ img {
 }
 @media (max-width: 768px) {
   .card-course-detail-container-landing {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     height: 100%;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -91,9 +91,9 @@ img {
   }
 
   .card-course-detail-container-landing > * {
-    flex: 0 0 90%;
+    flex: 0 0 90% !important;
     width: 100%;
-    scroll-snap-align: start;
+    scroll-snap-align: start !important;
     border: solid 1px red;
     margin: 5%;
   }

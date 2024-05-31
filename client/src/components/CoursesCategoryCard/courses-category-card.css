@@ -1,0 +1,78 @@
+.categories-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.chevron {
+  display: flex;
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
+  gap: 2%;
+}
+.scroll-button {
+  display: flex;
+  background-color: white;
+  border: solid 1px;
+  color: #000000;
+  font-size: 20px;
+  width: 10px;
+  height: auto;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.scroll-button:hover {
+  background-color: #e5203d;
+}
+.categories-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2%;
+
+  height: auto;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;
+}
+
+.category-card {
+  display: inline-block;
+  flex-direction: column;
+
+  background-color: #000000;
+  color: white;
+  padding: 2%;
+  border-radius: 12px;
+  white-space: normal;
+  min-height: fit-content;
+  min-width: 300px; /* Fixed width for each card */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.category-card:hover {
+  background-color: #e5203d;
+  cursor: pointer;
+}
+
+.red-card > * {
+  color: white;
+}
+
+.img-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 4%;
+  color: white !important;
+}
+
+.category-name {
+  color: white;
+}

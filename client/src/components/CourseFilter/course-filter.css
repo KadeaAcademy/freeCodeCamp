@@ -21,6 +21,7 @@
 
 .card-filter-container {
   display: flex;
+
   gap: 4%;
 }
 
@@ -50,7 +51,15 @@
     transform: var(--details-translate, translateY(-0.5em));
   }
 }
+.card-courses-detail-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4%;
 
+  padding-left: 2rem;
+  width: 90%;
+}
 details[open] > *:not(summary) {
   animation: details-show 300ms ease-in-out;
 }

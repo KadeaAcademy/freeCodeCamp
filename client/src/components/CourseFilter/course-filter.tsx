@@ -219,7 +219,7 @@ const CourseFilter = ({
           )}
         </summary>
         <ul className=' filter-items-container '>
-          {courseCategories && (
+          {!courseCategories && (
             <button
               className={`filter-button ${
                 currentCategory == null ? 'selected-category' : ''
@@ -238,7 +238,7 @@ const CourseFilter = ({
             </button>
           )}
 
-          {courseCategories && (
+          {!courseCategories && (
             <button
               className={`filter-button ${
                 currentCategory == -1 ? 'selected-category' : ''
@@ -256,7 +256,7 @@ const CourseFilter = ({
               Programmation
             </button>
           )}
-          {courseCategories && (
+          {!courseCategories && (
             <button
               className={`filter-button ${
                 currentCategory == -2 ? 'selected-category' : ''

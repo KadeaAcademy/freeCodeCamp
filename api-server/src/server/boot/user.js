@@ -243,7 +243,7 @@ async function getRavenAwsUserProgress(req, res) {
 
 async function getRavenAwsPathCatalogue(req, res) {
   const apiKey = process.env.RAVEN_AWS_API_KEY;
-  const { awstoken, fromdate, toDate } = req.query;
+  const { awstoken } = req.query;
 
   const baseUrl = process.env.RAVEN_AWS_BASE_URL;
   const requestBody = JSON.stringify({
@@ -254,17 +254,6 @@ async function getRavenAwsPathCatalogue(req, res) {
   });
 
   try {
-    console.log(
-      'les token',
-      awstoken,
-      'les from:',
-      fromdate,
-      'les date to:',
-      toDate,
-      'les params: ',
-      req.query
-    );
-
     const response = await Axios.post(
       `${baseUrl}/administration/catalog/learningpaths`,
       requestBody,
