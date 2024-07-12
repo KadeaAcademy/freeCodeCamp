@@ -84,6 +84,15 @@ const CoursesCategoryCard = (): JSX.Element => {
           </div>
         </div>
       </div>
+
+      <div className='parcours-section'>
+        <span className='ti'>Nouveau Parcours</span>
+        <h2 className='path-title'>Decouvre le parcours Développement Web</h2>
+        <p className='path-description'>
+          Dans ce parcours en ligne, tu apprendras les langages que les
+          développeurs utilisent pour créer des pages Web{' '}
+        </p>
+      </div>
     </div>
   );
 };

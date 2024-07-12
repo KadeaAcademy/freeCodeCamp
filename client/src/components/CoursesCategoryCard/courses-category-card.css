@@ -1,3 +1,8 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .categories-wrapper {
   display: flex;
   flex-direction: column;
@@ -74,5 +79,22 @@
 }
 
 .category-name {
+  color: white;
+}
+.parcours-section {
+  border: #000000 1px solid;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 12px;
+  color: #000000;
+}
+
+.parcours-section:hover {
+  background-color: #e5203d;
+  cursor: pointer;
+  color: white;
+}
+.parcours-section:hover > * {
   color: white;
 }
