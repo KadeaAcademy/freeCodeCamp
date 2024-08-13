@@ -74,7 +74,7 @@ interface LearnPageProps {
 function LearnPage({ isSignedIn }: LearnPageProps) {
   // const { t } = useTranslation();
 
-  console.log(isSignedIn);
+  console.log(isSignedIn); //this for eslint debogue
 
   return (
     <LearnLayout>

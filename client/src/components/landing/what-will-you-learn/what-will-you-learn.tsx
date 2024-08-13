@@ -160,7 +160,7 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
 
   useEffect(() => {
     void getMoodleCourses();
-    console.log(isSignedIn);
+    console.log(isSignedIn); //this for slint debogue
 
     const timer = setTimeout(() => {
       if (isDataOnLoading) {
