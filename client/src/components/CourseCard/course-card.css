@@ -2,19 +2,25 @@
   float: right;
 }
 
-.push {
-  gap: 1rem;
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  width: 17rem;
-}
-
 .push__card {
   gap: 1rem;
   display: flex;
   align-items: baseline;
-  justify-content: flex-end;
+  justify-content: space-between;
+  width: 15rem;
+}
+.push__card__parcours {
+  gap: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 17rem;
+}
+.push {
+  gap: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   width: 15rem;
 }
 
@@ -259,11 +265,32 @@ img {
     /* margin-bottom: 5%; */
   }
 
-  .push {
-    width: 16rem;
+  .duration__language {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
 
   .push__card {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 16rem;
+  }
+
+  .push__card__parcours {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 21rem;
+  }
+  .push {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     width: 17rem;
   }
 }
@@ -273,16 +300,37 @@ img {
     width: 47%;
   }
 
-  .card-course-detail-unit {
-    width: 100%;
-  }
-
-  .push {
-    width: 17rem;
-  }
-
   .push__card {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 16rem;
+  }
+
+  .duration__language {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .push__card__parcours {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 16rem;
+  }
+  .push {
+    gap: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     width: 17rem;
+  }
+
+  .card-course-detail-unit {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -312,6 +360,11 @@ img {
   }
 
   .push__card {
+    width: 17rem;
+    gap: 6px;
+  }
+
+  .push__card__parcours {
     width: 17rem;
     gap: 6px;
   }
@@ -348,6 +401,10 @@ img {
   .push__card {
     width: 15rem;
   }
+
+  .push__card__parcours {
+    width: 15rem;
+  }
 }
 
 @media (max-width: 320px) {
@@ -356,11 +413,15 @@ img {
   }
 
   .card-outlin-border {
-    width: 20rem;
+    width: 100%;
     height: 33rem;
   }
 
   .push__card {
+    width: 13rem;
+  }
+
+  .push__card__parcours {
     width: 13rem;
   }
 }

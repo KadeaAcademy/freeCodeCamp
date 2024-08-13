@@ -231,6 +231,8 @@ export function Courses(props: CoursesProps): JSX.Element {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       valid_to: '06-24-2024'
     };
+    console.log(ravenData.token);
+
     const getReveanCourses = await getAwsCourses(ravenData);
     setRavenCourses(getReveanCourses as RavenCourse[]);
   };

@@ -157,7 +157,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
               <Spacer size={1} />
             </Col>
             <Col className='' md={12} sm={12} xs={12}>
-              <div className='alert bg-secondary standard-radius-5'>
+              <div className='alert bg-secondary standard-radius-5 '>
                 <p>
                   {`
                   Ce cours est conçu pour montrer aux participants comment 
@@ -167,7 +167,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
                   `}
                 </p>
                 <Spacer size={1} />
-                <p>
+                <p className='truncate_text'>
                   {`
                   Etant donné que les solutions architecturales peuvent varier selon 
                   le secteur, le type d'application et la taille de l'entreprise, 

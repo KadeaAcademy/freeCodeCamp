@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .super-block-intro-page p {
   font-size: 1.17rem;
 }
@@ -202,11 +208,6 @@ button.map-title {
   background: var(--primary-background);
 }
 
-.block-ui .block .block-description {
-  /*padding: 0 15px 15px;*/
-  /*border-bottom: 3px solid var(--secondary-background);*/
-}
-
 .map-cert-title > h3 {
   font-size: 1.17rem;
   margin: 0 0 0 15px;
@@ -355,10 +356,6 @@ button.map-title {
   margin-top: 1.45rem;
 }
 
-.intro-layout p,
-.intro-layout li {
-}
-
 .intro-toc .list-group-item {
   margin: 5px auto;
 }
@@ -455,7 +452,6 @@ button.map-title {
   background-color: var(--secondary-background);
   margin: 0 10px;
   width: 80%;
-  /* border-radius: 20px; */
   border-radius: 5px;
 }
 
@@ -572,13 +568,11 @@ button.map-title {
 hr {
   border: none;
   height: 2px;
-  /* Set the hr color */
   color: var(--secondary-background); /* old IE */
   background-color: var(--secondary-background); /* Modern Browsers */
 }
 
 .progress {
-  /* border-radius: 20px; */
   border-radius: 5px;
   -webkit-box-shadow: none;
   box-shadow: none;

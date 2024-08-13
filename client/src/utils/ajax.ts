@@ -264,23 +264,6 @@ export function getUsernameExists(username: string): Promise<boolean> {
   return get(`/api/users/exists?username=${username}`);
 }
 
-// interface MoodleCourse {
-//   id: number;
-//   shortname: string;
-//   categoryid: number;
-//   categorysortorder: number;
-//   fullname: string;
-//   displayname: string;
-//   summary: string;
-// }
-
-// interface MoodleCourse {
-//   userId: number;
-//   id: number;
-//   title: string;
-//   body: string;
-// }
-
 export async function getExternalResource<T>(urlEndPoint: string) {
   let response: T | null;
   try {
@@ -360,13 +343,16 @@ export function addRavenTokenToLocalStorage(
 
 export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== 'undefined') {
       const tokenDataString = localStorage.getItem('ravenToken');
+
       if (tokenDataString) {
         const tokenData = JSON.parse(tokenDataString) as RavenTokenData;
+
         return tokenData;
       } else {
         console.log('Aucune donnée de token trouvée dans le stockage local.');
+
         return null;
       }
     } else {

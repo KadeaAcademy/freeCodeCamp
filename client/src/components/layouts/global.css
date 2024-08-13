@@ -794,3 +794,19 @@ blockquote .small {
 .padding-bottom-0 {
   padding-bottom: 0;
 }
+
+@media (max-width: 320px) {
+  .truncate_text {
+    color: red;
+  }
+
+  .truncate_text ::after {
+    content: attr(data-text);
+    display: block;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150ch;
+  }
+}
