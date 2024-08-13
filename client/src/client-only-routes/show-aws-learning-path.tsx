@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+import envData from '../../../config/env.json';
 import { createFlashMessage } from '../components/Flash/redux';
 import { Loader, Spacer } from '../components/helpers';
 import VideoList from '../components/AwsCourses/AwsLearningPath/video-list';
@@ -22,11 +23,12 @@ import {
 import { User } from '../redux/prop-types';
 import datas from '../components/AwsCourses/AwsLearningPath/video-data.json';
 
-// const { apiLocation } = envData;
+const { apiLocation } = envData;
 
 // TODO: update types for actions
 interface ShowAwsLearningPathProps {
   createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -37,9 +39,10 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
@@ -51,13 +54,18 @@ const mapDispatchToProps = {
 export function ShowAwsLearningPath(
   props: ShowAwsLearningPathProps
 ): JSX.Element {
-  const { showLoading } = props;
+  const { showLoading, isSignedIn } = props;
   const params: Record<string, undefined> = useParams();
   const [selectedVideo, setSelectedVideo] = React.useState(datas.videos[0]);
   const awsCoursTitle: string | undefined =
     'course' in params ? params.course : '';
 
   if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
+
+  if (!isSignedIn) {
+    navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 

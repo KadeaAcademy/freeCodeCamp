@@ -28,9 +28,9 @@ import {
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
-// import envData from '../../../../config/env.json';
+import envData from '../../../../config/env.json';
 
-// const { apiLocation } = envData;
+const { apiLocation } = envData;
 type Tag = {
   title: string;
 };
@@ -41,6 +41,7 @@ type Category = {
 
 interface ShowAwsCoursesProps {
   createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -78,9 +79,10 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
@@ -90,7 +92,7 @@ const mapDispatchToProps = {
 };
 
 export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
-  const { showLoading } = props;
+  const { showLoading, isSignedIn } = props;
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
 
   const [ravenCourses, setRavenCourses] = useState<RavenCourse[]>([]);
@@ -144,6 +146,11 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
+  if (!isSignedIn) {
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
   return (
     <>
       <Helmet title={`Amazon Web Service | Kadea Online`} />
@@ -157,7 +164,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
               <Spacer size={1} />
             </Col>
             <Col className='' md={12} sm={12} xs={12}>
-              <div className='alert bg-secondary standard-radius-5 '>
+              <div className='alert bg-secondary standard-radius-5'>
                 <p>
                   {`
                   Ce cours est conçu pour montrer aux participants comment 
@@ -167,7 +174,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
                   `}
                 </p>
                 <Spacer size={1} />
-                <p className='truncate_text'>
+                <p>
                   {`
                   Etant donné que les solutions architecturales peuvent varier selon 
                   le secteur, le type d'application et la taille de l'entreprise, 
@@ -220,6 +227,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
                               key={course.name}
                               icon={awsLogo}
                               isAvailable={true}
+                              isSignedIn={isSignedIn}
                               title={`${index + 1}. ${course.name}`}
                               buttonText={`Suivre le cours`}
                               link={`${course.launch_url}`}
@@ -255,6 +263,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
                               language={language}
                               key={course.name}
                               isAvailable={true}
+                              isSignedIn={isSignedIn}
                               title={`${index + 1}. ${course.name}`}
                               buttonText={`Suivre le cours`}
                               link={`${course.launch_url}`}

@@ -15,7 +15,7 @@ import './what-will-you-learn.css';
 import CourseCard from '../../CourseCard/course-card';
 
 interface LandingDetailsProps {
-  isSignedIn?: true;
+  isSignedIn?: boolean;
 }
 import envData from '../../../../../config/env.json';
 import {
@@ -160,7 +160,6 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
 
   useEffect(() => {
     void getMoodleCourses();
-    console.log(isSignedIn); //this for slint debogue
 
     const timer = setTimeout(() => {
       if (isDataOnLoading) {
@@ -217,6 +216,7 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
                   sponsorIcon={LaediesActIcon}
                   alt=''
                   isAvailable={true}
+                  isSignedIn={isSignedIn}
                   title={`Responsive Web Design`}
                   buttonText={`Suivre le cours  `}
                   link={'/learn/responsive-web-design/'}
@@ -231,6 +231,7 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
                   icon={AlgoIcon}
                   alt=''
                   isAvailable={true}
+                  isSignedIn={isSignedIn}
                   title={`JavaScript Algorithms and Data Structures`}
                   buttonText={`Suivre le cours  `}
                   link={`/learn/javascript-algorithms-and-data-structures`}
@@ -249,6 +250,7 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
                     key={index}
                     icon={awsLogo}
                     isAvailable={true}
+                    isSignedIn={isSignedIn}
                     title={`${index + 1}. ${course.name}`}
                     buttonText={`Suivre le cours`}
                     link={`${course.launch_url}`}
@@ -262,6 +264,7 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
                   <CourseCard
                     key={index + course.id}
                     isAvailable={course.visible == 1}
+                    isSignedIn={isSignedIn}
                     sameTab={true}
                     external={true}
                     title={`${course.displayname}`}

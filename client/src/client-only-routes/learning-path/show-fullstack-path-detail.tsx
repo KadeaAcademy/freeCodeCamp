@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-// import envData from '../../../../config/env.json';
+import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
   Loader,
@@ -25,11 +25,12 @@ import {
 
 import { User } from '../../redux/prop-types';
 
-// const { apiLocation } = envData;
+const { apiLocation } = envData;
 
 // TODO: update types for actions
 interface ShowFccCoursesProps {
   createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -40,9 +41,10 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
@@ -53,7 +55,7 @@ const mapDispatchToProps = {
 
 export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
   // const { t } = useTranslation();
-  const { showLoading } = props;
+  const { isSignedIn, navigate, showLoading } = props;
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -69,6 +71,11 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
   }, []);
 
   if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
+
+  if (!isSignedIn) {
+    navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 
@@ -123,6 +130,7 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
                   sponsorIcon={LaediesActIcon}
                   alt=''
                   isAvailable={true}
+                  isSignedIn={isSignedIn}
                   title={`Responsive Web Design`}
                   link={`/learn/responsive-web-design`}
                   buttonText={`Suivre le cours  `}
@@ -138,6 +146,7 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
                   icon={AlgoIcon}
                   alt=''
                   isAvailable={true}
+                  isSignedIn={isSignedIn}
                   title={`JavaScript Algorithms and Data Structures`}
                   buttonText={`Suivre le cours  `}
                   link={`/learn/javascript-algorithms-and-data-structures`}

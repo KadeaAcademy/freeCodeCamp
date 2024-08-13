@@ -42,6 +42,7 @@ const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 // TODO: update types for actions
 interface ShowLearningPathProps {
   createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -95,9 +96,10 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
@@ -107,7 +109,7 @@ const mapDispatchToProps = {
 };
 
 export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
-  const { showLoading } = props;
+  const { showLoading, isSignedIn } = props;
   const [moodleCoursesCategories, setMoodleCoursesCategories] =
     useState<MoodleCoursesCatalogue | null>();
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
@@ -217,6 +219,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
                         icon={LaptopIcon}
                         alt=''
                         isAvailable={true}
+                        isSignedIn={isSignedIn}
                         title={`Développement Web`}
                         buttonText={`Suivre le parcours  `}
                         link={routes.learningPath.fullstack}
@@ -235,6 +238,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
                       icon={awsLogo}
                       alt=''
                       isAvailable={awsCoursesIsAviable}
+                      isSignedIn={isSignedIn}
                       title={`Parcours AWS`}
                       buttonText={`Suivre le parcours  `}
                       link={routes.learningPath.aws}
@@ -261,6 +265,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
                               <PathCard
                                 icon={PhBookBookmark}
                                 isAvailable={category.visible == 1}
+                                isSignedIn={isSignedIn}
                                 title={category.name.replace(/&amp;/g, 'et')}
                                 buttonText={`Suivre le parcours`}
                                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

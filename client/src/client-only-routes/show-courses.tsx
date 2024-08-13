@@ -63,7 +63,7 @@ const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl, ravenAwsApiKey } =
 // TODO: update types for actions
 interface CoursesProps {
   createFlashMessage: typeof createFlashMessage;
-  // isSignedIn: boolean;
+  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -167,10 +167,10 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn) => ({
     showLoading,
-    user
-    // isSignedIn
+    user,
+    isSignedIn
   })
 );
 
@@ -192,9 +192,9 @@ export const scrollTo = (top: number) => {
 export function Courses(props: CoursesProps): JSX.Element {
   // const { t } = useTranslation();
   const {
-    // isSignedIn,
-    showLoading
-    // user: { name, phone }
+    isSignedIn,
+    showLoading,
+    user: { name, phone }
   } = props;
   const [moodleCourses, setMoodleCourses] =
     useState<MoodleCoursesCatalogue | null>();
@@ -231,8 +231,6 @@ export function Courses(props: CoursesProps): JSX.Element {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       valid_to: '06-24-2024'
     };
-    console.log(ravenData.token);
-
     const getReveanCourses = await getAwsCourses(ravenData);
     setRavenCourses(getReveanCourses as RavenCourse[]);
   };
@@ -509,10 +507,10 @@ export function Courses(props: CoursesProps): JSX.Element {
                             icon={LaptopIcon}
                             sponsorIcon={LaediesActIcon}
                             alt=''
-                            // name={name}
-                            // phone={phone}
+                            name={name}
+                            phone={phone}
                             isAvailable={true}
-                            // isSignedIn={isSignedIn}
+                            isSignedIn={isSignedIn}
                             title='Responsive Web Design'
                             buttonText='Suivre le cours'
                             link='/learn/responsive-web-design/'
@@ -528,9 +526,9 @@ export function Courses(props: CoursesProps): JSX.Element {
                             icon={AlgoIcon}
                             alt=''
                             isAvailable={true}
-                            // isSignedIn={isSignedIn}
-                            // phone={phone}
-                            // name={name}
+                            isSignedIn={isSignedIn}
+                            phone={phone}
+                            name={name}
                             title='JavaScript Algorithms and Data Structures'
                             buttonText='Suivre le cours'
                             link='/learn/javascript-algorithms-and-data-structures'
@@ -555,7 +553,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                                 key={course.name}
                                 icon={awsLogo}
                                 isAvailable={true}
-                                // isSignedIn={isSignedIn}
+                                isSignedIn={isSignedIn}
                                 title={`${index + 1}. ${course.name}`}
                                 buttonText='Suivre le cours'
                                 link={course.launch_url}
@@ -571,7 +569,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                                 key={index.toString()}
                                 icon={awsLogo}
                                 isAvailable={true}
-                                // isSignedIn={isSignedIn}
+                                isSignedIn={isSignedIn}
                                 title={`${index + 1}. ${course.name}`}
                                 buttonText='Suivre le cours'
                                 link={course.launch_url}
@@ -587,7 +585,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                               key={`${index}-${course.id}`}
                               icon={PhBookBookmark} // Remplacer par le chemin réel de l'image
                               isAvailable={course.visible === 1}
-                              // isSignedIn={isSignedIn}
+                              isSignedIn={isSignedIn}
                               title={course.displayname}
                               buttonText='Suivre le cours'
                               link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
