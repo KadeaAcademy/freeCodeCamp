@@ -10,6 +10,11 @@
 .big-subheading {
   font-size: 2rem;
   overflow-wrap: break-word;
+  font-weight: 600;
+}
+
+.link {
+  text-decoration: none;
 }
 
 .block-header {
@@ -17,6 +22,20 @@
   justify-content: start;
   flex-direction: row;
   padding-left: 2%;
+}
+
+.course__number {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.course__number p,
+span {
+  font-size: 1.5rem;
+}
+
+.course__number p {
+  font-weight: bold;
 }
 
 .block-header .block-link {
@@ -30,7 +49,9 @@
 .block-link:active {
   background-color: var(--primary-background);
 }
-
+.course__language {
+  font-weight: bold;
+}
 a.cert-tag:hover,
 a.cert-tag:focus,
 a.cert-tag:active {
@@ -308,7 +329,7 @@ button.map-title {
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .intro-layout-container {
     padding: 0 10px;
   }
@@ -324,6 +345,9 @@ button.map-title {
   .map-title-completed {
     flex-shrink: 0;
     padding-left: 15px;
+  }
+  .course__number {
+    margin-bottom: 1rem;
   }
 }
 
@@ -614,5 +638,12 @@ hr {
 
   .card-challenge-action .link-action {
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 468px) {
+  .course__number p,
+  span {
+    font-size: 0.9rem;
   }
 }

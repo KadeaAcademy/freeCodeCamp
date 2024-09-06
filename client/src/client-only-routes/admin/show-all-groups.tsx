@@ -18,6 +18,7 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
+import validator from 'validator';
 import {
   createUserGroup,
   updateMemberGroup,
@@ -262,9 +263,11 @@ export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
-  if (!user.email.endsWith('@kadea.co')) {
-    navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
+  if (!validator.equals(user.role, 'Super-admin')) {
+    if (!validator.equals(user.role, 'Admin')) {
+      navigate(`${homeLocation}`);
+      return <Loader fullScreen={true} />;
+    }
   }
 
   return (

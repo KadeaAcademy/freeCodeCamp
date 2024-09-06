@@ -28,6 +28,7 @@ export default function prodErrorHandler() {
   return function (err, req, res, next) {
     const { origin } = getRedirectParams(req);
     const handled = unwrapHandledError(err);
+    console.error(errTemplate(err, req));
     // respect handled error status
     let status = handled.status || err.status || res.statusCode;
     if (!handled.status && status < 400) {
@@ -41,9 +42,7 @@ export default function prodErrorHandler() {
     const type = accept.type('json', 'html', 'text');
 
     const redirectTo = handled.redirectTo || `${origin}/`;
-    const message =
-      handled.message ||
-      'Oops! Something went wrong. Please try again in a moment.';
+    const message = err;
 
     if (isDev) {
       console.error(errTemplate(err, req));

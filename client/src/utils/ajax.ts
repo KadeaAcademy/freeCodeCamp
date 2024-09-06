@@ -6,8 +6,22 @@ import type {
   CompletedChallenge,
   User
 } from '../redux/prop-types';
+import {
+  MoodleCourse,
+  MoodleCourseCategory,
+  MoodleCoursesCatalogue,
+  RavenCourse
+} from '../client-only-routes/show-courses';
+import { splitArray } from '../components/helpers';
+import sortCourses from '../components/helpers/sort-course';
 
 const { apiLocation } = envData;
+
+export type CombinedCourses =
+  | MoodleCoursesCatalogue
+  | RavenCourse[]
+  | unknown
+  | null;
 
 const base = apiLocation;
 
@@ -44,18 +58,102 @@ function deleteRequest<T = void>(path: string, body: unknown): Promise<T> {
 async function request<T>(
   method: 'POST' | 'PUT' | 'DELETE',
   path: string,
-  body: unknown
+  body: unknown,
+  token = null
 ): Promise<T> {
   const options: RequestInit = {
     ...defaultOptions,
     method,
     headers: {
-      'CSRF-Token': getCSRFToken(),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'CSRF-Token': token ?? getCSRFToken(),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(body)
   };
   return fetch(`${base}${path}`, options).then<T>(res => res.json());
+}
+
+//liste des descriptions pour chaque parcours affichée sous le parcours
+
+export type CourseCategoryTitle =
+  | 'Développement'
+  | 'Design'
+  | 'Bureautique'
+  | 'Marketing'
+  | 'Communication'
+  | 'artificielle'
+  | 'amazon';
+
+export interface CourseDetails {
+  titre: string;
+  summury: string;
+  description: string;
+}
+
+export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
+  Développement: {
+    titre: 'Développement Web',
+    summury: `Dans ce parcours, tu apprendras à créer des pages Web avec HTML pour le contenu, CSS pour la conception, et JavaScript pour rendre les sites interactifs. Tu découvriras également les algorithmes, les structures de données, et les bases du langage JavaScript.`,
+    description: `Ce parcours te forme aux bases du développement web : HTML pour le contenu, CSS pour la conception, et JavaScript pour l'interactivité. Tu apprendras aussi à adapter tes pages à différentes tailles d'écran, ainsi que les algorithmes, les structures de données, et les principes du JavaScript.`
+  },
+  Design: {
+    titre: 'Design',
+    summury: `Apprends les bases du design : typographie, théorie des couleurs, mise en page. Utilise Figma et Adobe XD pour créer des prototypes de qualité.`,
+    description: `Dans ce parcours, tu apprendras les principes fondamentaux du design, y compris la typographie, la théorie des couleurs, et la mise en page.
+    Tu utiliseras des outils tels que Figma et Adobe XD pour créer des maquettes et des prototypes de haute qualité. 
+    En outre, tu apprendras à collaborer avec des développeurs pour transformer tes conceptions en produits réels.`
+  },
+  Bureautique: {
+    titre: 'Bureautique',
+    summury: `Maîtrise Word, Excel, PowerPoint, Outlook et OneNote. Crée des documents impeccables et analyse des données complexes avec nos cours interactifs.`,
+    description: `Ce parcours complet vous guide du débutant à l'expert pour maîtriser Word, Excel, PowerPoint, Outlook, et OneNote. Grâce à des cours interactifs et des exercices pratiques, vous développerez les compétences pour créer des documents, analyser des données, et gérer votre boîte mail. A la fin de ce cours, vous serez prêt à relever les défis professionnels.`
+  },
+  Marketing: {
+    titre: 'Marketing',
+    summury: `Apprends les outils et techniques du marketing digital. Crée des stratégies de contenu, optimise ton site et gère les réseaux sociaux efficacement.`,
+    description: `Ce parcours intensif en marketing digital vous forme aux stratégies de contenu, SEO, gestion des réseaux sociaux, et mesure de performance. Maîtrisez les outils pour développer un business en ligne ou diriger le marketing d'une entreprise, en optimisant la communication et les relations publiques.`
+  },
+  Communication: {
+    titre: 'Communication',
+    summury: `Maîtrise les techniques de communication pour des messages clairs et percutants. Crée des présentations, gérez les relations publiques et médias sociaux.`,
+    description: `Ce parcours intensif en marketing digital vous forme aux stratégies de contenu, SEO, gestion des réseaux sociaux, et mesure de performance. Maîtrisez les outils pour développer un business en ligne ou diriger le marketing d'une entreprise, en optimisant la communication et les relations publiques..`
+  },
+  artificielle: {
+    titre: 'Intelligence Artificielle',
+    summury: `Explore l'IA, imitant les fonctions humaines. Apprends l'IA générative pour créer des contenus (texte, images, sons, vidéos) à travers des applications interactives.`,
+    description: `
+Ce cours explore l'IA générative, un domaine en pleine expansion où les ordinateurs créent du contenu original, comme des textes, images, sons ou vidéos. Apprenez à maîtriser ces technologies via des applications interactives. !`
+  },
+
+  amazon: {
+    titre: 'Amazon web service',
+    summury: `Ce cours est conçu pour montrer aux participants comment optimiser l'utilisation du cloud AWS grâce à la compréhension de ces nombreux services et de leur intégration dans la création de solutions basées sur le cloud.`,
+    description: `Ce cours AWS explore les bonnes pratiques cloud, avec des études de cas clients. Il vous apprend à concevoir des infrastructures optimisées et variées en utilisant les services AWS, vous rendant capable de construire des solutions informatiques robustes.`
+  }
+};
+
+export function getDescriptionByCategory(categoryTitle: string | null): string {
+  if (!categoryTitle) return '.';
+
+  const lowerCategoryName = categoryTitle.toLowerCase();
+
+  if (lowerCategoryName.includes('marketing')) {
+    return courseDescriptions.Marketing.description;
+  } else if (lowerCategoryName.includes('communication')) {
+    return courseDescriptions.Communication.description;
+  } else if (lowerCategoryName.includes('artificielle')) {
+    return courseDescriptions.artificielle.description;
+  } else if (lowerCategoryName.includes('développement')) {
+    return courseDescriptions.Développement.description;
+  } else if (lowerCategoryName.includes('design')) {
+    return courseDescriptions.Design.description;
+  } else if (lowerCategoryName.includes('bureautique')) {
+    return courseDescriptions.Bureautique.description;
+  } else {
+    return '.';
+  }
 }
 
 // Make the `request` function generic
@@ -182,23 +280,6 @@ export function getUsernameExists(username: string): Promise<boolean> {
   return get(`/api/users/exists?username=${username}`);
 }
 
-// interface MoodleCourse {
-//   id: number;
-//   shortname: string;
-//   categoryid: number;
-//   categorysortorder: number;
-//   fullname: string;
-//   displayname: string;
-//   summary: string;
-// }
-
-// interface MoodleCourse {
-//   userId: number;
-//   id: number;
-//   title: string;
-//   body: string;
-// }
-
 export async function getExternalResource<T>(urlEndPoint: string) {
   let response: T | null;
   try {
@@ -221,6 +302,54 @@ export async function getExternalResource<T>(urlEndPoint: string) {
   }
   return response;
 }
+
+//add for moddlecourse fetch test
+
+export const getMoodleCourseCategory = async () => {
+  const moodleCourseCategories = await getExternalResource<
+    MoodleCourseCategory[]
+  >(
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_categories&moodlewsrestformat=json`
+  );
+
+  if (moodleCourseCategories) {
+    const moodleCategorie = moodleCourseCategories?.filter(
+      category => category.coursecount > 0
+    );
+    return moodleCategorie;
+  }
+};
+
+//get so courses by categories
+
+export const getMoodleCourses = async () => {
+  const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
+  );
+
+  const splitCourses: MoodleCoursesCatalogue | null | undefined =
+    moodleCatalogue != null
+      ? splitArray<MoodleCourse>(
+          moodleCatalogue.filter(moodleCourse => {
+            return moodleCourse.visible == 1 && moodleCourse.format != 'site';
+          }),
+          4
+        )
+      : null;
+
+  //Order courses by their publication date
+  const sortedCourses = sortCourses(splitCourses);
+
+  if (moodleCatalogue != null) {
+    return sortedCourses;
+  } else {
+    return null;
+  }
+};
+//add for moddlecourse fetch test
+
 interface DataLemlist {
   firstName: string;
 }
@@ -243,6 +372,73 @@ export async function postExternalResource<T>(
   }
   return response;
 }
+
+export interface RavenTokenData {
+  token: string;
+  expiresIn: number;
+  validFrom: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
+
+export function removeRavenTokenFromLocalStorage() {
+  localStorage.removeItem('ravenToken');
+}
+
+export function addRavenTokenToLocalStorage(
+  ravenTokenData: RavenTokenData
+): void {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const ravenTokenExist = localStorage.getItem('ravenToken');
+      if (!ravenTokenExist)
+        localStorage.setItem('ravenToken', JSON.stringify(ravenTokenData));
+      console.log('Le token Raven a été ajouté au stockage local.');
+    } else {
+      console.error("Le stockage local n'est pas pris en charge.");
+    }
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de l'ajout du token Raven au stockage local :",
+      error
+    );
+  }
+}
+
+export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const tokenDataString = localStorage.getItem('ravenToken');
+      if (tokenDataString) {
+        const tokenData = JSON.parse(tokenDataString) as RavenTokenData;
+        return tokenData;
+      } else {
+        console.log('Aucune donnée de token trouvée dans le stockage local.');
+        return null;
+      }
+    } else {
+      console.log("Le stockage local n'est pas pris en charge.");
+      return null;
+    }
+  } catch (error) {
+    console.log(
+      'Une erreur est survenue lors de la récupération des données de token depuis le stockage local :',
+      error
+    );
+    return null;
+  }
+}
+
+export async function generateRavenTokenAcces(): Promise<unknown> {
+  try {
+    const response = await get('/generate-raven-token');
+
+    return response;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error) {
+    return null;
+  }
+}
 export async function getDatabaseResource<T>(urlEndPoint: string) {
   let response: T | null;
   try {
@@ -252,6 +448,217 @@ export async function getDatabaseResource<T>(urlEndPoint: string) {
   }
   return response;
 }
+
+interface RavenFetchCoursesDto {
+  token: string;
+  fromDate: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+  apiKey?: string;
+  currentPage?: number;
+}
+const getRavenToken = async () => {
+  const ravenTokenData = getRavenTokenDataFromLocalStorage();
+
+  if (ravenTokenData === null) {
+    // Si aucun token n'existe en local storage, générer un nouveau token
+    const generateRavenToken = await generateRavenTokenAcces();
+
+    if (generateRavenToken) {
+      addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+      return generateRavenToken; // Retourner le nouveau token
+    } else {
+      return null; // Retourner null si la génération a échoué
+    }
+  } else {
+    // Vérifier si le token existant a expiré d'une heure ou plus
+    const tokenExpirationTime = new Date(ravenTokenData.valid_to);
+    const currentTime = new Date();
+    // 1 heure en millisecondes
+    const oneHourInMillis = 60 * 60 * 1000;
+    // Calculer la différence de temps en millisecondes
+    const timeDifference =
+      tokenExpirationTime.getTime() - currentTime.getTime();
+
+    if (timeDifference <= oneHourInMillis) {
+      // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
+      removeRavenTokenFromLocalStorage();
+      const generateRavenToken = await generateRavenTokenAcces();
+
+      if (generateRavenToken) {
+        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+        return generateRavenToken; // Retourner le nouveau token
+      } else {
+        return null; // Retourner null si la génération a échoué
+      }
+    } else {
+      // Le token est encore valide, retourner le token existant
+      return ravenTokenData;
+    }
+  }
+};
+
+//add for test
+
+const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const ravenLocalToken = getRavenTokenDataFromLocalStorage();
+
+export const getRavenResources = async (currentPage: number) => {
+  await getRavenToken();
+
+  const ravenData: RavenFetchCoursesDto = {
+    apiKey: ravenAwsApiKey,
+    token: ravenLocalToken?.token || '',
+    currentPage: currentPage,
+    fromDate: '01-01-2023',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    valid_to: '06-24-2024'
+  };
+  const getReveanCourses = await getAwsCourses(ravenData);
+
+  return getReveanCourses;
+};
+export const getRavenPathResources = async (currentPage: number) => {
+  await getRavenToken();
+
+  const ravenData: RavenFetchCoursesDto = {
+    apiKey: ravenAwsApiKey,
+    token: ravenLocalToken?.token || '',
+    currentPage: currentPage,
+    fromDate: '01-01-2023',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    valid_to: '06-24-2024'
+  };
+  const getReveanPathCourses = await getAwsPath(ravenData);
+
+  return getReveanPathCourses;
+};
+
+//end getRavenResources
+
+export async function getAwsCourses(data: RavenFetchCoursesDto) {
+  let response: unknown | RavenCourse[];
+
+  try {
+    response = await get(
+      `/get-raven-courses?awstoken=${data.token}&fromdate=${data.fromDate}&todate=${data.valid_to}`
+    );
+  } catch (error) {
+    response = null;
+  }
+
+  return response;
+}
+export async function getAwsPath(data: RavenFetchCoursesDto) {
+  let response: unknown | RavenCourse[];
+
+  try {
+    response = await get(
+      `/get-raven-path?awstoken=${data.token}&fromdate=${data.fromDate}&todate=${data.valid_to}`
+    );
+  } catch (error) {
+    response = null;
+  }
+  // return response;
+  //cette partie permet notamment de filtrer les parcours pour ne retenir que ceux en français où en anglais.
+  if (response) {
+    interface Tag {
+      title: string;
+    }
+
+    interface Category {
+      tags?: Tag[];
+      title: string;
+    }
+
+    interface Course {
+      category?: Category[];
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      skill_level: string;
+      language: string;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const filterCourses = (response: unknown): Course[] => {
+      const courses = response as Course[];
+
+      const coursesFilter = courses
+        .filter(
+          course =>
+            course.category &&
+            course.category.some(
+              cat =>
+                cat.tags &&
+                cat.tags.some(
+                  tag =>
+                    tag.title.includes('English') ||
+                    tag.title.includes('French')
+                )
+            )
+        )
+        .map(course => {
+          // Extraire le skill level
+          const skillLevelCategory = course.category?.find(
+            cat => cat.title === 'Skill Level'
+          );
+          if (skillLevelCategory && skillLevelCategory.tags) {
+            course.skill_level = skillLevelCategory.tags[0]?.title;
+          }
+          return course;
+        });
+
+      return coursesFilter;
+    };
+
+    const filteredCourses = filterCourses(response);
+
+    return filteredCourses;
+  }
+
+  return [];
+}
+
+//fonction permettant la combinaison de tous les cours notamment moodle et raven
+export const getAllRessources = async (
+  currentPage: number
+): Promise<CombinedCourses[]> => {
+  const moodleCourses = await getMoodleCourses();
+  const ravenCourses = await getRavenResources(currentPage);
+  const ravenPathCourses = await getRavenPathResources(currentPage);
+
+  // Combine the results into a single array
+  const allCourses: CombinedCourses[] = [
+    ...(moodleCourses?.result || []),
+    ...([ravenCourses] || []),
+    ...(ravenPathCourses || [])
+  ];
+
+  return allCourses;
+};
+
+interface RavenFetchUserCoursesProgressDto {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  email_id: string;
+  token: string;
+  fromDate: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
+export async function getAwsUserCoursesProgress(
+  data: RavenFetchUserCoursesProgressDto
+) {
+  let response: unknown;
+
+  try {
+    response = await get(
+      `/get-raven-user-progress?awstoken=${data.token}&fromdate=${data.fromDate}&todate=${data.valid_to}&email=${data.email_id}`
+    );
+  } catch (error) {
+    response = null;
+  }
+  return response;
+}
+
+('/get-raven-user-progress');
 
 /** POST **/
 
@@ -594,7 +1001,6 @@ export async function addUserInGRoup(
       body
     );
 
-    console.log('ffg', groupIsAdded);
     return groupIsAdded;
   } catch (error) {
     console.log(error);
@@ -619,7 +1025,6 @@ export async function addUserInRole(
       body
     );
 
-    console.log('ffg', roleIsAdded);
     return roleIsAdded;
   } catch (error) {
     console.log(error);
@@ -648,7 +1053,6 @@ export async function remoevUserInGRoup(
       body
     );
 
-    console.log('ffg', groupIsAdded);
     return groupIsAdded;
   } catch (error) {
     console.log(error);

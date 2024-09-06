@@ -674,25 +674,25 @@ blockquote .small {
 }
 
 .text-responsive {
-  font-size: 1rem !important;
+  font-size: 1rem;
 }
 
 @media (max-width: 769px) {
   .text-responsive {
-    font-size: 0.8rem !important;
+    font-size: 1rem;
   }
 }
 
 .text-normal {
-  font-weight: 400 !important;
+  font-weight: 400;
 }
 
 .fw-semi-bold {
-  font-weight: 600 !important;
+  font-weight: 600;
 }
 
 .fw-bold {
-  font-weight: 700 !important;
+  font-weight: 700;
 }
 
 .d-flex {
@@ -705,7 +705,7 @@ blockquote .small {
 }
 
 .text-gray-90 {
-  color: var(--gray-90) !important;
+  color: var(--gray-90);
 }
 
 .text-danger {
@@ -714,6 +714,8 @@ blockquote .small {
 
 .text-love-light {
   color: var(--love-light);
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }
 
 .btn-light {
@@ -724,9 +726,9 @@ blockquote .small {
 }
 
 .btn-light:hover {
-  color: var(--gray-00) !important;
-  background: rgba(255, 255, 255, 0) !important;
-  border: solid 2px var(--gray-00) !important;
+  color: var(--gray-00);
+  background: rgba(255, 255, 255, 0);
+  border: solid 2px var(--gray-00);
 }
 
 .bg-dark-gray {
@@ -762,33 +764,33 @@ blockquote .small {
 }
 
 .standard-radius-5 {
-  border-radius: 5px !important;
+  border-radius: 5px;
 }
 
 .standard-radius-5-top {
-  border-top-left-radius: 5px !important;
-  border-top-right-radius: 5px !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .standard-radius-5-bottom {
-  border-bottom-left-radius: 5px !important;
-  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .standard-radius-20 {
-  border-radius: 20px !important;
+  border-radius: 20px;
 }
 
 .standard-radius-20-top {
-  border-top-left-radius: 20px !important;
-  border-top-right-radius: 20px !important;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .standard-radius-20-bottom {
-  border-bottom-left-radius: 20px !important;
-  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .padding-bottom-0 {
-  padding-bottom: 0 !important;
+  padding-bottom: 0;
 }

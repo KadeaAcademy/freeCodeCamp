@@ -9,6 +9,9 @@ small {
 .push {
   float: right;
 }
+.push__card {
+  float: right;
+}
 
 img {
   width: 100%;
@@ -21,6 +24,12 @@ img {
 
 .text-love-light {
   color: var(--love-light);
+  font-size: 1rem;
+}
+
+.text-love-light__mobile {
+  color: var(--love-light);
+  font-size: 1rem;
 }
 
 .card-index {

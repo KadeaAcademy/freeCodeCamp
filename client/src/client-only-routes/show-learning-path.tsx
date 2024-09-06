@@ -3,7 +3,17 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Grid } from '@freecodecamp/react-bootstrap';
-import { getExternalResource } from '../utils/ajax';
+import { Link } from 'gatsby';
+import routes from '../utils/routes';
+
+import {
+  addRavenTokenToLocalStorage,
+  generateRavenTokenAcces,
+  getExternalResource,
+  getRavenTokenDataFromLocalStorage,
+  getAwsPath
+} from '../utils/ajax';
+
 import { createFlashMessage } from '../components/Flash/redux';
 import {
   Loader,
@@ -12,8 +22,9 @@ import {
   splitArray
 } from '../components/helpers';
 import LaptopIcon from '../assets/images/laptop.svg';
-import CloudShield from '../assets/images/cloudShield.svg';
 import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
+import awsLogo from '../assets/images/aws-logo.png';
+// import { convertTime } from '../utils/allFunctions';
 
 import {
   signInLoadingSelector,
@@ -26,12 +37,11 @@ import { User } from '../redux/prop-types';
 import envData from '../../../config/env.json';
 import PathCard from '../components/PathCard/path-card';
 
-const { moodleApiBaseUrl, moodleApiToken } = envData;
+const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 
 // TODO: update types for actions
 interface ShowLearningPathProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -52,15 +62,42 @@ type MoodleCoursesCatalogue = {
   result: MoodleCourseCategorie[][];
   size: number;
 };
+interface RavenTokenData {
+  token: string;
+  expiresIn: number;
+  validFrom: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
+type RavenCourse = {
+  learningobjectid: number;
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  launch_url: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  long_description: string;
+  createddate: string;
+  updateddate: string;
+  contenttype: string;
+  duration: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  skill_level: string;
+};
+interface RavenFetchCoursesDto {
+  apiKey: string;
+  token: string;
+  fromDate: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
   })
 );
 
@@ -70,13 +107,21 @@ const mapDispatchToProps = {
 };
 
 export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
-  const { showLoading, isSignedIn } = props;
+  const { showLoading } = props;
   const [moodleCoursesCategories, setMoodleCoursesCategories] =
     useState<MoodleCoursesCatalogue | null>();
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [awsCoursesIsAviable, setAwsCoursesIsAviable] =
+    useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ravenPath, setRavenPath] = useState<RavenCourse[]>([]);
 
+  const getRavenResourcesPath = async (data: RavenFetchCoursesDto) => {
+    const getReveanCourses = await getAwsPath(data);
+    setRavenPath(getReveanCourses as unknown as RavenCourse[]);
+  };
   const getMoodleCoursesCategories = async () => {
     const moodleCategoriesCatalogue = await getExternalResource<
       MoodleCourseCategorie[]
@@ -98,22 +143,37 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
     }
   };
 
-  // const navigateToPage = (forwardOrBackward: boolean) => {
-  //   if (forwardOrBackward) {
-  //     if (
-  //       moodleCoursesCategories &&
-  //       currentPage < moodleCoursesCategories?.size
-  //     ) {
-  //       setCurrentPage(Number(currentPage + 1));
-  //     }
-  //   } else {
-  //     if (currentPage > 1) {
-  //       setCurrentPage(Number(currentPage - 1));
-  //     }
-  //   }
-  //   setIsDataOnLoading(true);
-  // };
+  const getRavenToken = async () => {
+    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
 
+    if (ravenLocalToken === null) {
+      const generateRavenToken = await generateRavenTokenAcces();
+
+      if (generateRavenToken)
+        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+      setAwsCoursesIsAviable(true);
+    } else {
+      setAwsCoursesIsAviable(true);
+    }
+  };
+  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
+  const ravenData: RavenFetchCoursesDto = {
+    apiKey: ravenAwsApiKey,
+    token: ravenLocalToken?.token || '',
+    fromDate: '01-01-2023',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    valid_to: '06-24-2024'
+  };
+  useEffect(() => {
+    void getRavenResourcesPath(ravenData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    void getRavenToken();
+  }, []);
+  useEffect(() => {
+    void getRavenToken();
+  }, []);
   useEffect(() => {
     void getMoodleCoursesCategories();
     const timer = setTimeout(() => {
@@ -143,7 +203,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
               <h1 className='big-subheading'>{`Nos parcours.`}</h1>
               <p className='text-responsive'>
                 {`
-          Nos parcours te permettent d’apprendre par la pratique. Tu gagneras donc un véritable savoir-faire.
+          Nos parcours te permettent d’apprendre par la pratique. Tu gagneras donc un véritable savoir-faire .
           `}
               </p>
             </div>
@@ -151,64 +211,76 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
             <div>
               {!isDataOnLoading ? (
                 <div className='card-course-detail-container'>
-                  <PathCard
-                    icon={LaptopIcon}
-                    alt=''
-                    isAvailable={true}
-                    isSignedIn={isSignedIn}
-                    title={`Développement Web`}
-                    buttonText={`Suivre le parcours  `}
-                    link={`/learning-path/developpement-web`}
-                    cardType='parcours'
-                    description={`
-                Dans ce parcours en ligne, tu apprendras les langages que les développeurs 
-                utilisent pour créer des pages Web : HTML (Hypertext Markup Language) 
-                pour le contenu, et CSS (Cascading Style Sheets) pour la conception. 
-                Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
-                `}
-                  />
-
-                  <PathCard
-                    icon={CloudShield}
-                    alt=''
-                    isAvailable={false}
-                    isSignedIn={isSignedIn}
-                    title={`Parcours AWS`}
-                    buttonText={`Suivre le parcours  `}
-                    link={`/aws-courses`}
-                    cardType='parcours'
-                    description={`Ce parcours est conçu pour montrer aux participants comment 
+                  <Link to={routes.learningPath.fullstack}>
+                    <div className='card-link'>
+                      <PathCard
+                        icon={LaptopIcon}
+                        alt=''
+                        isAvailable={true}
+                        title={`Développement Web`}
+                        buttonText={`Suivre le parcours  `}
+                        link={routes.learningPath.fullstack}
+                        cardType='parcours'
+                        description={`
+                        Dans ce parcours en ligne, tu apprendras les langages que les développeurs 
+                        utilisent pour créer des pages Web : HTML (Hypertext Markup Language) 
+                        pour le contenu, et CSS (Cascading Style Sheets) pour la conception. 
+                        Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
+                     `}
+                      />
+                    </div>
+                  </Link>
+                  <Link to={routes.learningPath.aws}>
+                    <PathCard
+                      icon={awsLogo}
+                      alt=''
+                      isAvailable={awsCoursesIsAviable}
+                      title={`Parcours AWS`}
+                      buttonText={`Suivre le parcours  `}
+                      link={routes.learningPath.aws}
+                      cardType='parcours'
+                      description={`Ce parcours est conçu pour montrer aux participants comment 
                   optimiser l'utilisation du cloud AWS grâce à la compréhension 
                   de ces nombreux services et de leur intégration dans la création 
                   de solutions basées sur le cloud.`}
-                  />
-
+                    />
+                  </Link>
                   {moodleCoursesCategories &&
                     moodleCoursesCategories.result.length >= 0 &&
                     moodleCoursesCategories.result[currentPage - 1].map(
                       (category, index) => {
                         return (
-                          <PathCard
+                          <Link
                             key={index}
-                            icon={PhBookBookmark}
-                            isAvailable={category.visible == 1}
-                            isSignedIn={isSignedIn}
-                            title={category.name.replace(/&amp;/g, 'et')}
-                            buttonText={`Suivre le parcours  `}
-                            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                            link={`/learning-path/${category.name
+                            to={`${routes.learningPath.index}/${category.name
                               .replace(/ /g, '-')
                               .replace(/&amp;/g, 'et')}/${category.id}`}
-                            cardType='parcours'
-                            description={category.description}
-                          />
+                            className='link'
+                          >
+                            <div className='card-link'>
+                              <PathCard
+                                icon={PhBookBookmark}
+                                isAvailable={category.visible == 1}
+                                title={category.name.replace(/&amp;/g, 'et')}
+                                buttonText={`Suivre le parcours`}
+                                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                                link={`${
+                                  routes.learningPath.index
+                                }/${category.name
+                                  .replace(/ /g, '-')
+                                  .replace(/&amp;/g, 'et')}/${category.id}`}
+                                cardType='parcours'
+                                description={category.description}
+                              />
+                            </div>
+                          </Link>
                         );
                       }
                     )}
                 </div>
               ) : (
                 <div className='card-course-detail-container'>
-                  {renderCourseCardSkeletons(3)}
+                  {renderCourseCardSkeletons(6)}
                 </div>
               )}
             </div>

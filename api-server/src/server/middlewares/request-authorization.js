@@ -27,6 +27,11 @@ const updateHooksRE = /^\/hooks\/update-paypal$/;
 // note: this would be replaced by webhooks later
 const donateRE = /^\/donate\/charge-stripe$/;
 const submitCoderoadChallengeRE = /^\/coderoad-challenge-completed$/;
+//Raven360 authorization
+const getRavenTokenRE = /^\/generate-raven-token/;
+const getRavenCourseRE = /^\/get-raven-courses/;
+const getRavenPathRE = /^\/get-raven-path/;
+const getRavenProgressRE = /^\/get-raven-user-progress/;
 
 const _pathsAllowedREs = [
   authRE,
@@ -42,7 +47,11 @@ const _pathsAllowedREs = [
   unsubscribeRE,
   updateHooksRE,
   donateRE,
-  submitCoderoadChallengeRE
+  submitCoderoadChallengeRE,
+  getRavenTokenRE,
+  getRavenCourseRE,
+  getRavenPathRE,
+  getRavenProgressRE
 ];
 
 export function isAllowedPath(path, pathsAllowedREs = _pathsAllowedREs) {

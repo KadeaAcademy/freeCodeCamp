@@ -1,0 +1,428 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+.categories-wrapper {
+  flex-direction: column;
+}
+.chevron {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+  gap: 0.5%;
+}
+
+.chevron .left {
+  margin-right: 1rem;
+}
+
+.category-title:hover {
+  background-color: #f1eced;
+}
+
+.scroll-button {
+  display: flex;
+  background-color: white;
+  border: solid 1px;
+  color: #000000;
+  font-size: 20px;
+  width: 10px;
+  height: auto;
+  padding: 0.25rem 1rem;
+  font-weight: 800;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.scroll-button:hover {
+  background-color: #e5203d;
+}
+.categories-container {
+  display: flex;
+  gap: 1.5%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  white-space: nowrap;
+  max-width: 72vw;
+}
+
+.tendance {
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    max-width: 100%;
+  }
+
+  .categories-wrapper {
+    flex-direction: column;
+  }
+
+  .chevron {
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+    gap: 0.5%;
+  }
+
+  .chevron .left {
+    margin-right: 1rem;
+  }
+
+  .category-title:hover {
+    background-color: #f1eced;
+  }
+
+  .scroll-button {
+    display: flex;
+    background-color: white;
+    border: solid 1px;
+    color: #000000;
+    font-size: 20px;
+    width: 10px;
+    height: auto;
+    padding: 0.25rem 1rem;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .scroll-button:hover {
+    background-color: #e5203d;
+  }
+
+  .categories-container {
+    display: flex;
+    gap: 1.5%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: nowrap;
+    max-width: 72vw;
+  }
+
+  .tendance {
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+
+  .categories-container-banner {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    height: auto;
+    width: 100%;
+    border: 1px solid black;
+  }
+
+  .category-card {
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border-radius: 12px;
+    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+  }
+
+  .selecte__card {
+    background-color: #e5203d;
+  }
+
+  .category-name:hover {
+    background-color: #e5203d;
+    cursor: pointer;
+    border: none;
+  }
+
+  .category-card:active {
+    background-color: red;
+    color: #e5203d;
+  }
+
+  .red-card > * {
+    color: white;
+  }
+
+  .img-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 4%;
+    color: white !important;
+  }
+
+  .category-name {
+    color: white;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+    display: inline;
+    font-weight: bold;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8vw;
+  }
+
+  .path-description {
+    color: black;
+  }
+
+  .ti {
+    color: white;
+    background-color: #e5203d;
+    border-radius: 16px;
+    display: inline-block;
+    width: 11rem;
+    padding: 0.33rem;
+  }
+
+  .path-title {
+    color: black;
+  }
+
+  .link-reset {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .link-reset:hover {
+    background: none;
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .category-name:hover {
+    background-color: #e5203d;
+  }
+
+  .categories-container-banner {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    margin-right: 0;
+    flex-grow: 1; /* Assure que l'enfant prenne toute la place disponible */
+    box-sizing: border-box;
+  }
+
+  .categories-container-banner .ti,
+  .path-title,
+  .iption {
+    cursor: pointer;
+  }
+
+  /* Styles pour les écrans de taille moyenne */
+  @media (max-width: 768px) {
+    .categories-container-banner {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+
+    .category-card {
+      flex: 0 0 auto; /* Permet aux cartes de garder leur taille initiale */
+      padding: 0.5vh 0.8vw;
+      background-color: #000000;
+      justify-content: center;
+      padding: 1rem;
+      color: white;
+      border-radius: 12px;
+      box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+    }
+    .categories-container {
+      max-width: 100vw;
+    }
+    .category-name {
+      font-size: 20px;
+    }
+
+    .img-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  /* Styles pour les petits écrans (mobiles) */
+  @media (max-width: 480px) {
+    .category-name {
+      font-size: 12px;
+    }
+
+    .ti {
+      font-size: 0.5rem;
+      text-align: center;
+    }
+
+    .img-icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.categories-container-banner {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2%;
+  height: auto;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.category-card {
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #000000;
+  color: white;
+  border-radius: 12px;
+  box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+}
+
+.category-card:hover {
+  background-color: #e5203d;
+  cursor: pointer;
+  border: none;
+}
+
+.red-card > * {
+  color: white;
+}
+
+.img-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 4%;
+  color: white !important;
+}
+
+.category-name {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  display: inline;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.path-description {
+  color: black;
+}
+
+.ti {
+  color: white;
+  background-color: #e5203d;
+  border-radius: 16px;
+  display: inline-block;
+  padding: 0.33rem;
+  width: 11rem;
+}
+
+.path-title {
+  color: black;
+}
+
+.link-reset {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-reset:hover {
+  background: none;
+  color: #000000;
+  text-decoration: none;
+}
+
+.category-name:hover {
+  background-color: #e5203d;
+}
+
+.categories-container-banner {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-right: 0;
+  flex-grow: 1; /* Assure que l'enfant prenne toute la place disponible */
+  box-sizing: border-box;
+}
+
+.categories-container-banner .ti,
+.path-title,
+.iption {
+  cursor: pointer;
+}
+/* .parcours-section:hover > * {
+  color: white;
+} */
+
+/* Styles pour les écrans de taille moyenne */
+@media (max-width: 768px) {
+  .categories-container-banner {
+    padding: 0.33rem 1rem;
+  }
+
+  .category-card {
+    flex: 0 0 auto; /* Permet aux cartes de garder leur taille initiale */
+    padding: 0.5vh 0.8vw;
+    background-color: #000000;
+    padding: 1rem;
+    color: white;
+    border-radius: 12px;
+    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+  }
+  .categories-container {
+    max-width: 100vw;
+  }
+  .category-name {
+    font-size: 20px;
+  }
+
+  .img-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480) {
+  .category-name {
+    font-size: 12px;
+  }
+  .categories-container-banner {
+    padding: 0.22rem;
+  }
+  .img-icon {
+    width: 25px;
+    height: 25px;
+  }
+}

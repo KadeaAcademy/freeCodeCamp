@@ -3,6 +3,7 @@ import dedent from 'dedent';
 import { body } from 'express-validator';
 import { pick } from 'lodash';
 import { Observable } from 'rx';
+import Axios from 'axios';
 
 import {
   fixCompletedChallengeItem,
@@ -47,8 +48,235 @@ function bootUser(app) {
   );
 
   api.delete('/user/webhook-token', deleteWebhookToken);
+  api.get('/generate-raven-token', generateRavenToken);
+  api.get('/get-raven-courses', getRavenAwsCatalogue);
+  api.get('/get-raven-path', getRavenAwsPathCatalogue);
+  api.get('/get-raven-user-progress', getRavenAwsUserProgress);
 
   app.use(api);
+}
+
+async function generateRavenToken(req, res) {
+  console.log('ca marche');
+  try {
+    const apiKey = process.env.RAVEN_AWS_API_KEY;
+    const clientId = process.env.RAVEN_AWS_CLIENT_ID;
+    const clientSecret = process.env.RAVEN_AWS_CLIENT_SECRET_ID;
+    const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+
+    console.log(
+      'apikey:',
+      apiKey,
+      'clients',
+      clientId,
+      'clientsecrwt ',
+      clientSecret,
+      'url:',
+      baseUrl
+    );
+
+    const requestBody = JSON.stringify({
+      client_id: clientId,
+      client_secret: clientSecret
+    });
+
+    const response = await Axios.post(`${baseUrl}/gettoken`, requestBody, {
+      headers: {
+        'x-api-key': apiKey,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const tokenData = await response;
+    console.log('les datas', tokenData.data);
+    return res.json(tokenData.data.data);
+  } catch (error) {
+    console.log('Erreur lors de la récupération du token:', error);
+    res.status(500).json(null);
+  }
+}
+
+async function getRavenAwsCatalogue(req, res) {
+  const apiKey = process.env.RAVEN_AWS_API_KEY;
+  const { awstoken, fromdate, toDate } = req.query;
+
+  const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+  const requestBody = JSON.stringify({
+    from_date: '01-01-2023',
+    to_date: '06-24-2024',
+    learningobject_type: 'content',
+    page_index: 1,
+    page_size: 4
+  });
+
+  try {
+    console.log(
+      'les token',
+      awstoken,
+      'les from:',
+      fromdate,
+      'les date to:',
+      toDate,
+      'les params: ',
+      req.query
+    );
+
+    const ravenAwsCours = await Axios.post(
+      `${baseUrl}/administration/catalog/learningobjects`,
+      requestBody,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          Authorization: awstoken
+        }
+      }
+    );
+
+    console.log('les datas', ravenAwsCours.data.data);
+    return res.json(ravenAwsCours.data.data);
+  } catch (error) {
+    console.error(
+      'Erreur lors de la récupération des du catalogue:',
+      error.message
+    );
+    res.status(500).json([]);
+  }
+}
+function getCoursesWithProgress(courses, progressions) {
+  const coursesWithProgress = [];
+  courses.forEach(course => {
+    const matchingProgression = progressions.find(
+      progression => progression.learningobject_id === course.learningobject_id
+    );
+    if (matchingProgression) {
+      const courseWithProgress = {
+        learningobject_id: course.learningobject_id,
+        name: course.name,
+        display_name: course.display_name,
+        progress: matchingProgression.completion_percentage,
+        launch_url: course.launch_url
+      };
+      coursesWithProgress.push(courseWithProgress);
+    }
+  });
+  return coursesWithProgress;
+}
+
+async function getRavenAwsUserProgress(req, res) {
+  const apiKey = process.env.RAVEN_AWS_API_KEY;
+  const { awstoken, fromdate, toDate, email } = req.query;
+
+  const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+  const requestBody = JSON.stringify({
+    from_date: '01-01-2023',
+    to_date: '06-28-2024',
+    email_id: email
+  });
+  const requestBodycourses = JSON.stringify({
+    from_date: '01-01-2023',
+    to_date: '06-24-2024',
+    learningobject_type: 'content',
+    page_index: 1,
+    page_size: 4
+  });
+
+  try {
+    console.log(
+      'les token',
+      awstoken,
+      'les from:',
+      fromdate,
+      'les date to:',
+      toDate,
+      'les params: ',
+      req.query
+    );
+
+    const ravenCourseProgress = await Axios.post(
+      `${baseUrl}/administration/progress/learningobjects`,
+      requestBody,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          Authorization: awstoken
+        }
+      }
+    );
+
+    const ravenAwsCours = await Axios.post(
+      `${baseUrl}/administration/catalog/learningobjects`,
+      requestBodycourses,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          Authorization: awstoken
+        }
+      }
+    );
+    console.log(
+      'les datas progresion:',
+      ravenAwsCours.data.data,
+      'prossion:',
+      ravenCourseProgress.data.data
+    );
+    const ravenCourseWithProgress = getCoursesWithProgress(
+      ravenAwsCours.data.data,
+      ravenCourseProgress.data.data
+    );
+
+    console.log('les datas progresion', ravenCourseWithProgress);
+    return res.json(ravenCourseWithProgress);
+  } catch (error) {
+    console.error(
+      'Erreur lors de la récupération des progression:',
+      error.message
+    );
+    res.status(500).json([]);
+  }
+}
+
+async function getRavenAwsPathCatalogue(req, res) {
+  const apiKey = process.env.RAVEN_AWS_API_KEY;
+  const { awstoken } = req.query;
+
+  const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+  const requestBody = JSON.stringify({
+    from_date: '01-01-2023',
+    to_date: '06-24-2024',
+    page_index: 1,
+    page_size: 0
+  });
+
+  try {
+    const response = await Axios.post(
+      `${baseUrl}/administration/catalog/learningpaths`,
+      requestBody,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          Authorization: awstoken
+        }
+      }
+    );
+
+    const ravenAwsPath = await response;
+    console.log('les datas', ravenAwsPath.data);
+    return res.json(ravenAwsPath.data.data);
+  } catch (error) {
+    console.error(
+      'Erreur lors de la récupération des du catalogue:',
+      error.message
+    );
+    res.status(500).json([]);
+  }
 }
 
 function createPostWebhookToken(app) {

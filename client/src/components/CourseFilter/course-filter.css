@@ -1,12 +1,41 @@
 .filter-container {
-  width: 18%;
+  width: 100%;
   height: 100%;
-  position: sticky;
-  top: 100px;
+  max-height: 80vh; /* Limite la hauteur du conteneur pour permettre le défilement */
+  overflow-y: auto; /* Active le défilement vertical */
+}
+
+.filter-container_hidden-scrol {
+  width: 100%;
+  padding: 1rem;
+  height: 100%;
+  max-height: 80vh; /* Limite la hauteur du conteneur pour permettre le défilement */
+}
+
+.filter__container {
+  width: 9rem;
+}
+
+.filter-items-container {
+  gap: 1rem;
+}
+.hidden-filter-on-Catalogue {
+  display: none;
+  visibility: hidden;
+}
+.language__Label {
+  display: flex;
+  gap: 0.2rem;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+  align-items: baseline;
+  font-weight: 500;
 }
 
 .pagination-container {
-  padding-left: 17%;
+  display: flex;
+  align-items: center;
 }
 
 .main-title-filter-container {
@@ -21,6 +50,7 @@
 
 .card-filter-container {
   display: flex;
+
   gap: 4%;
 }
 
@@ -50,7 +80,13 @@
     transform: var(--details-translate, translateY(-0.5em));
   }
 }
-
+.card-courses-detail-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+  width: 90%;
+}
 details[open] > *:not(summary) {
   animation: details-show 300ms ease-in-out;
 }
@@ -82,6 +118,16 @@ details[open] > *:not(summary) {
   display: none;
 }
 
+@media (max-width: 1024px) {
+  .pagination-container {
+    margin-top: 4rem;
+  }
+  .course__number p,
+  span {
+    font-size: 1.5rem;
+  }
+}
+
 @media (max-width: 993px) {
   .show-filter-button {
     display: flex;
@@ -95,7 +141,10 @@ details[open] > *:not(summary) {
     background: inherit;
     transition: all 300ms;
   }
-
+  .course__number p,
+  span {
+    font-size: 1.5rem;
+  }
   svg {
     transition: all 300ms;
   }
@@ -119,6 +168,9 @@ details[open] > *:not(summary) {
     z-index: 1000;
     color: white;
   }
+  .pagination-container {
+    margin-top: 2rem;
+  }
 
   .main-title-filter-container > svg {
     display: block;
@@ -126,6 +178,27 @@ details[open] > *:not(summary) {
   }
 
   .pagination-container {
-    padding-left: 0%;
+    padding-left: 2%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-courses-detail-container {
+    padding: 2px;
+    gap: 0%;
+  }
+  .card-courses-detail-container {
+    width: 100%;
+  }
+  .course__number p,
+  span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 468px) {
+  .course__number p,
+  span {
+    font-size: 1rem;
   }
 }

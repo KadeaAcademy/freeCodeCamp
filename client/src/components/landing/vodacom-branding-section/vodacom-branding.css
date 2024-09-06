@@ -1,53 +1,40 @@
-.vodacom-section {
-  /* background: url(../../../assets/images/vodacom_background.png); */
-  /* padding: 2rem 0 3rem; */
-  background-color: #991e13;
-}
-
-.vodacom-bg-img {
-  background: url(../../../assets/images/vodacom_logo2.png);
-  background-repeat: no-repeat;
-  background-position: right bottom;
-}
-
-.vodacom-logo {
-  margin-right: 1rem;
-  /* margin-top: 2rem; */
-}
-
-.vodacom-content {
+.vodacom__section {
+  background: url('../../../assets/images/landing/vodacom__kd.jpg') no-repeat
+    center center; /* Center the image */
+  background-size: cover;
+  color: #ffffff;
+  margin: 0 auto;
+  border-radius: 21px;
+  padding: 1rem;
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vodacom__section h2 {
+  color: #e60000;
+  font-size: 1.4rem;
+  font-weight: 700;
+  max-width: 70%;
+}
+
+.vodacom__marque {
+  display: flex;
+  gap: 1rem;
   align-items: center;
-  padding: 2rem 0;
 }
 
-.vodacom-typography {
-  font-family: 'Vodafone Rg', sans-serif !important;
-  font-size: 3rem;
-  font-weight: bold;
-  margin-top: 2rem;
+.vodacom__marque .vodacom-logo {
+  max-width: 80%;
 }
 
-@media only screen and (max-width: 622px) {
-  .vodacom-logo {
-    width: 3rem;
-    height: auto;
-    /* margin-top: 3rem; */
-  }
-
-  .vodacom-typography {
-    font-size: 2rem;
+@media only screen and (min-width: 600px) {
+  .vodacom__marque .vodacom-logo {
+    max-width: 300px;
   }
 }
 
-@media only screen and (max-width: 592px) {
-  .vodacom-logo {
-    margin-top: -3rem;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .vodacom-logo {
-    display: none;
-  }
+.vodacom__section-p {
+  color: #ffffff;
+  font-size: 1rem;
 }

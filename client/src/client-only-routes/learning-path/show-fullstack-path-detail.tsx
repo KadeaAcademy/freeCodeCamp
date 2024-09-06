@@ -5,32 +5,31 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import envData from '../../../config/env.json';
-import { createFlashMessage } from '../components/Flash/redux';
+// import envData from '../../../../config/env.json';
+import { createFlashMessage } from '../../components/Flash/redux';
 import {
   Loader,
   Spacer,
   renderCourseCardSkeletons
-} from '../components/helpers';
-import CourseCard from '../components/CourseCard/course-card';
-import LaptopIcon from '../assets/images/laptop.svg';
-import AlgoIcon from '../assets/images/algorithmIcon.svg';
-import LaediesActIcon from '../assets/images/partners/we-act-logo.png';
+} from '../../components/helpers';
+import CourseCard from '../../components/CourseCard/course-card';
+import LaptopIcon from '../../assets/images/laptop.svg';
+import AlgoIcon from '../../assets/images/algorithmIcon.svg';
+import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 import {
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
   hardGoTo as navigate
-} from '../redux';
+} from '../../redux';
 
-import { User } from '../redux/prop-types';
+import { User } from '../../redux/prop-types';
 
-const { apiLocation } = envData;
+// const { apiLocation } = envData;
 
 // TODO: update types for actions
 interface ShowFccCoursesProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -41,10 +40,9 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
   })
 );
 
@@ -55,7 +53,7 @@ const mapDispatchToProps = {
 
 export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
   // const { t } = useTranslation();
-  const { isSignedIn, navigate, showLoading } = props;
+  const { showLoading } = props;
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -71,11 +69,6 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
   }, []);
 
   if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
-
-  if (!isSignedIn) {
-    navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 
@@ -115,19 +108,23 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
         <Spacer size={1} />
         <Row>
           <Col md={12} sm={12} xs={12}>
-            <h2 className='big-subheading'>{`Cours`}</h2>
+            <div className='course__number'>
+              <h2 className='big-subheading'>{`Parcours d'apprentissage`}</h2>
+              <span>2 cours</span>
+            </div>
             <Spacer size={2} />
           </Col>
           <Col className='' md={12} sm={12} xs={12}>
             {!isDataOnLoading ? (
               <div className='card-course-detail-container'>
                 <CourseCard
+                  language='French'
                   icon={LaptopIcon}
                   sponsorIcon={LaediesActIcon}
                   alt=''
                   isAvailable={true}
-                  isSignedIn={isSignedIn}
                   title={`Responsive Web Design`}
+                  link={`/learn/responsive-web-design`}
                   buttonText={`Suivre le cours  `}
                   description={`
                 Dans ce cours, tu apprendras les langages que les développeurs 
@@ -137,10 +134,10 @@ export function ShowFccCourses(props: ShowFccCoursesProps): JSX.Element {
                 `}
                 />
                 <CourseCard
+                  language='French'
                   icon={AlgoIcon}
                   alt=''
                   isAvailable={true}
-                  isSignedIn={isSignedIn}
                   title={`JavaScript Algorithms and Data Structures`}
                   buttonText={`Suivre le cours  `}
                   link={`/learn/javascript-algorithms-and-data-structures`}

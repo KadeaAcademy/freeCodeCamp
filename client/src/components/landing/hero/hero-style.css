@@ -8,7 +8,7 @@
   border-radius: 20px;
   font-weight: 600;
   font-size: 1.125rem;
-  transition: ease-in-out 0.3s;
+  transition: all ease-in-out 0.3s;
 }
 
 .section-btn:hover {
@@ -27,4 +27,17 @@
   .hide-img-on-mobile {
     display: none;
   }
+}
+
+.hero-button {
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #e60000;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+}
+
+.hero-button span {
+  font-size: inherit;
 }

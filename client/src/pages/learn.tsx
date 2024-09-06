@@ -46,7 +46,7 @@ const mapStateToProps = createSelector(
   userFetchStateSelector,
   isSignedInSelector,
   userSelector,
-  (fetchState: FetchState, isSignedIn: boolean, user: User) => ({
+  (fetchState: FetchState, isSignedIn = true, user: User) => ({
     fetchState,
     isSignedIn,
     user
@@ -58,7 +58,7 @@ interface Slug {
 }
 
 interface LearnPageProps {
-  isSignedIn: boolean;
+  isSignedIn: true;
   fetchState: FetchState;
   state: Record<string, unknown>;
   user: User;
@@ -73,6 +73,8 @@ interface LearnPageProps {
 
 function LearnPage({ isSignedIn }: LearnPageProps) {
   // const { t } = useTranslation();
+
+  console.log(isSignedIn);
 
   return (
     <LearnLayout>

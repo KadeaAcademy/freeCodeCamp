@@ -3,10 +3,13 @@ small {
 }
 
 .pull {
-  float: left;
+  float: right;
 }
 
 .push {
+  float: right;
+}
+.push__card {
   float: right;
 }
 
@@ -19,6 +22,7 @@ img {
 
 .card-outlin-border {
   border: solid 1px #3e3d3d;
+  width: 19rem;
 }
 
 .card-py-5 {

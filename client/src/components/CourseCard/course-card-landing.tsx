@@ -77,7 +77,7 @@ const CourseCardLanding = ({
           </div>
           <div className='card-course-detail-item'>
             <h4
-              className='fw-bold text-love-light'
+              className='fw-bold text-love-light .text-love-light__mobile'
               dangerouslySetInnerHTML={{ __html: title }}
             ></h4>
           </div>

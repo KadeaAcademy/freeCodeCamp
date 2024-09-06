@@ -4,34 +4,35 @@ import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getExternalResource } from '../utils/ajax';
+import {
+  getExternalResource,
+  getDescriptionByCategory
+} from '../../utils/ajax';
 
-import { createFlashMessage } from '../components/Flash/redux';
+import { createFlashMessage } from '../../components/Flash/redux';
 import {
   Loader,
   Spacer,
   renderCourseCardSkeletons
-} from '../components/helpers';
-import CourseCard from '../components/CourseCard/course-card';
-import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
+} from '../../components/helpers';
+import CourseCard from '../../components/CourseCard/course-card';
+import PhBookBookmark from '../../assets/images/ph-book-bookmark-thin.svg';
 
 import {
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
   hardGoTo as navigate
-} from '../redux';
+} from '../../redux';
 
-import { User } from '../redux/prop-types';
-import envData from '../../../config/env.json';
+import { User } from '../../redux/prop-types';
+import envData from '../../../../config/env.json';
 
-const { apiLocation, moodleBaseUrl, moodleApiBaseUrl, moodleApiToken } =
-  envData;
+const { moodleBaseUrl, moodleApiBaseUrl, moodleApiToken } = envData;
 
 // TODO: update types for actions
 interface ShowLearningPathDetailProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -58,10 +59,9 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
   })
 );
 
@@ -73,7 +73,8 @@ const mapDispatchToProps = {
 export function ShowLearningPathDetail(
   props: ShowLearningPathDetailProps
 ): JSX.Element {
-  const { showLoading, isSignedIn, location } = props;
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const { showLoading, location } = props;
   const params: Record<string, undefined> = useParams();
   const [moodleCourses, setMoodleCourses] = useState<MoodleCourse[]>();
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
@@ -101,6 +102,7 @@ export function ShowLearningPathDetail(
 
   useEffect(() => {
     void getMoodleCourses();
+
     const timer = setTimeout(() => {
       if (isDataOnLoading) {
         setIsDataOnLoading(false);
@@ -114,11 +116,6 @@ export function ShowLearningPathDetail(
   }, []);
 
   if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
-
-  if (!isSignedIn) {
-    navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 
@@ -142,14 +139,9 @@ export function ShowLearningPathDetail(
             </Col>
             <Col className='' md={12} sm={12} xs={12}>
               <div className='alert bg-secondary standard-radius-5'>
-                {location && location.state && location.state.description && (
-                  <div
-                    className='text-responsive'
-                    dangerouslySetInnerHTML={{
-                      __html: location.state.description
-                    }}
-                  ></div>
-                )}
+                <p className='parcours-description'>
+                  {getDescriptionByCategory(categoryName || '')}
+                </p>
               </div>
             </Col>
             <Spacer />
@@ -161,7 +153,10 @@ export function ShowLearningPathDetail(
         <Spacer size={1} />
         <Row>
           <Col md={12} sm={12} xs={12}>
-            <h2 className='big-subheading'>{`Cours`}</h2>
+            <div className='course__number'>
+              <h2 className='big-subheading'>{`Parcours d'apprentissage`}</h2>
+              <span>{moodleCourses?.length} cours</span>
+            </div>
             <Spacer size={2} />
           </Col>
           <Col className='' md={12} sm={12} xs={12}>
@@ -172,10 +167,10 @@ export function ShowLearningPathDetail(
                     {moodleCourses.map((course, index) => {
                       return (
                         <CourseCard
+                          language='French'
                           key={index + course.id}
                           icon={PhBookBookmark}
                           isAvailable={course.visible == 1}
-                          isSignedIn={isSignedIn}
                           sameTab={true}
                           external={true}
                           title={`${course.displayname}`}
@@ -198,7 +193,7 @@ export function ShowLearningPathDetail(
               </div>
             ) : (
               <div className='card-course-detail-container'>
-                {renderCourseCardSkeletons(2)}
+                {renderCourseCardSkeletons(6)}
               </div>
             )}
           </Col>

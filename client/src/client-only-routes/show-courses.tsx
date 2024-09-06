@@ -1,22 +1,27 @@
-import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import { Grid } from '@freecodecamp/react-bootstrap';
+import React, { useState, useEffect, useMemo } from 'react';
 import Helmet from 'react-helmet';
-// import { useTranslation } from 'react-i18next';PhBookBookmark
+
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import PathCard from '../components/PathCard/path-card';
 
 import envData from '../../../config/env.json';
 import CourseCard from '../components/CourseCard/course-card';
 import LaptopIcon from '../assets/images/laptop.svg';
 import AlgoIcon from '../assets/images/algorithmIcon.svg';
 import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
+import awsLogo from '../assets/images/aws-logo.png';
 
 import LaediesActIcon from '../assets/images/partners/we-act-logo.png';
+// import NewBadge from '../assets/images/new.png';
 import { createFlashMessage } from '../components/Flash/redux';
 import {
   Loader,
@@ -32,18 +37,48 @@ import {
 } from '../redux';
 
 import { User } from '../redux/prop-types';
-import { getExternalResource } from '../utils/ajax';
+import {
+  addRavenTokenToLocalStorage,
+  generateRavenTokenAcces,
+  getAwsCourses,
+  getExternalResource,
+  getRavenTokenDataFromLocalStorage,
+  removeRavenTokenFromLocalStorage,
+  getAwsPath
+} from '../utils/ajax';
+import {
+  convertTime,
+  convertTimestampToTime,
+  paginate
+} from '../utils/allFunctions';
 
 import '../components/CourseFilter/course-filter.css';
 import CourseFilter from '../components/CourseFilter/course-filter';
 import sortCourses from '../components/helpers/sort-course';
+import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-category-card';
+import {
+  allDataCourses,
+  categoryCours,
+  coursesMoodle,
+  coursesRaven,
+  pathRaven,
+  valueOfCurrentCategory
+  // valueOfLanguage,
+  // valueOfTypeCourse,
+  // valueOfTypeDuration,
+  // valueOfTypeLevel
+} from '../redux/atoms';
+import { UnifiedCourse } from '../redux/types';
+// import { RootState, UnifiedCourse } from '../redux/types';
+// import { fetchRavenCoursesRequest } from '../redux/settings/actions_fetchData';
 
-const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
+const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl, ravenAwsApiKey } =
+  envData;
 
 // TODO: update types for actions
-interface CoursesProps {
+export interface CoursesProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
+  // isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
@@ -85,15 +120,74 @@ export type MoodleCoursesCatalogue = {
   result: MoodleCourse[][];
   size: number;
 };
+export type RavenCourse = {
+  learningobjectid: number;
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  launch_url: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  short_description: string;
+  createddate: string;
+  updateddate: string;
+  contenttype: string;
+  duration: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  long_description: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  category?: Category[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  skill_level: string;
+};
+interface RavenTokenData {
+  token: string;
+  expiresIn: number;
+  validFrom: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
+
+type Tag = {
+  title: string;
+};
+
+type Category = {
+  tags?: Tag[];
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Course = {
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  launch_url: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  short_description: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  long_description?: string;
+  duration: number;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  skill_level: string;
+  category?: Category[];
+};
+
+export interface RavenFetchCoursesDto {
+  apiKey: string;
+  token: string;
+  currentPage: number;
+  fromDate: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  valid_to: string;
+}
+
+type Courses = MoodleCourse | RavenCourse;
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
+    // isSignedIn
   })
 );
 
@@ -102,27 +196,129 @@ const mapDispatchToProps = {
   navigate
 };
 
+export const scrollTo = (top: number) => {
+  if (typeof window !== 'undefined') {
+    window.scrollTo({
+      top: top,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+};
+
 export function Courses(props: CoursesProps): JSX.Element {
-  // const { t } = useTranslation();
   const {
-    isSignedIn,
-    showLoading,
-    user: { name, phone }
+    // isSignedIn,
+    showLoading
+    // user: { name, phone }
   } = props;
-  const [moodleCourses, setMoodleCourses] =
-    useState<MoodleCoursesCatalogue | null>();
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [programmingCategory, setProgrammingCategory] = useState<boolean>(true);
-  const [screenWidth, setScreenWidth] = useState(
+  // const [programmingCategory, setProgrammingCategory] = useState<boolean>(true);
+  const [screenWidth, setScreenWidth] = useState<number>(
     typeof window !== 'undefined' ? window.innerWidth : 900
   );
-  const [courseCategories, setCourseCategories] = useState<
-    MoodleCourseCategory[] | null
-  >();
+  const [courseCategories, setCourseCategories] = useRecoilState<
+    MoodleCourseCategory[] | null | undefined
+  >(categoryCours);
+  const [currentCategory, setCurrentCategory] = useRecoilState(
+    valueOfCurrentCategory
+  );
+  const [dataForAllCourses, setDataForallCourse] =
+    useRecoilState<UnifiedCourse[]>(allDataCourses);
+  const allDataofCourses = useRecoilValue(allDataCourses);
+  const [dataRaven, setDataRaven] = useRecoilState<
+    RavenCourse[] | null | undefined
+  >(coursesRaven);
+  const [dataRavenPath, setDataRavenPath] =
+    useRecoilState<RavenCourse[]>(pathRaven);
+  const [dataMoodle, setDataMoodle] = useRecoilState<
+    MoodleCoursesCatalogue | null | undefined
+  >(coursesMoodle);
+  // const [valueLangue, setValueLangue] = useRecoilState(valueOfLanguage);
+  // const [valueOfCourseType, setValueOfCourseType] =
+  //   useRecoilState(valueOfTypeCourse);
+  // const [valueDuration, setValueDuration] = useRecoilState(valueOfTypeDuration);
+  // const [valueLevel, setValueLevel] = useRecoilState(valueOfTypeLevel);
 
-  const [currentCategory, setCurrentCategory] = useState<number | null>(null);
+  // const [allDataRessourceCourse, setAllDataRessource] =
+  //   useRecoilState(myAllDataCourses);
+
+  // const dispatch = useDispatch();
+  // const mesCoursesRaven = useSelector((state:RootState) => state.mesCouresRaven.courses);
+
+  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
+
+  const getRavenResources = async () => {
+    await getRavenToken();
+
+    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
+    const ravenData: RavenFetchCoursesDto = {
+      apiKey: ravenAwsApiKey,
+      token: ravenLocalToken?.token || '',
+      currentPage: currentPage,
+      fromDate: '01-01-2023',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      valid_to: '06-24-2024'
+    };
+    const getReveanCourses = await getAwsCourses(ravenData);
+    setDataRaven(getReveanCourses as RavenCourse[]);
+  };
+
+  const getRavenResourcesPath = async () => {
+    const ravenData: RavenFetchCoursesDto = {
+      apiKey: ravenAwsApiKey,
+      token: ravenLocalToken?.token || '',
+      currentPage: currentPage,
+      fromDate: '01-01-2023',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      valid_to: '06-24-2024'
+    };
+    const getReveanCourses = await getAwsPath(ravenData);
+    setDataRavenPath(getReveanCourses as unknown as RavenCourse[]);
+  };
+
+  const getRavenToken = async () => {
+    const ravenTokenData = getRavenTokenDataFromLocalStorage();
+
+    if (ravenTokenData === null) {
+      // Si aucun token n'existe en local storage, générer un nouveau token
+      const generateRavenToken = await generateRavenTokenAcces();
+
+      if (generateRavenToken) {
+        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+        return generateRavenToken;
+      } else {
+        return null;
+      }
+    } else {
+      // Vérifier si le token existant a expiré d'une heure ou plus
+      const tokenExpirationTime = new Date(ravenTokenData.valid_to);
+      const currentTime = new Date();
+      // 1 heure en millisecondes
+      const oneHourInMillis = 60 * 60 * 1000;
+      // Calculer la différence de temps en millisecondes
+      const timeDifference =
+        tokenExpirationTime.getTime() - currentTime.getTime();
+
+      if (timeDifference <= oneHourInMillis) {
+        // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
+        removeRavenTokenFromLocalStorage();
+        const generateRavenToken = await generateRavenTokenAcces();
+
+        if (generateRavenToken) {
+          addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+          return generateRavenToken; // Retourner le nouveau token
+        } else {
+          return null; // Retourner null si la génération a échoué
+        }
+      } else {
+        // Le token est encore valide, retourner le token existant
+        return ravenTokenData;
+      }
+    }
+  };
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -159,24 +355,140 @@ export function Courses(props: CoursesProps): JSX.Element {
     const sortedCourses = sortCourses(splitCourses);
 
     if (moodleCatalogue != null) {
-      setMoodleCourses(sortedCourses);
+      setDataMoodle(sortedCourses);
     } else {
-      setMoodleCourses(null);
+      setDataMoodle(null);
     }
   };
 
-  const navigateToPage = (forwardOrBackward: boolean) => {
-    if (forwardOrBackward) {
-      if (moodleCourses && currentPage < moodleCourses?.size) {
-        setCurrentPage(Number(currentPage + 1));
-      }
+  const allCourses: (MoodleCourse | RavenCourse)[] = useMemo(
+    () => [
+      ...(dataRaven || []),
+      ...(dataMoodle?.result ? dataMoodle.result.flat() : []),
+      ...(dataRavenPath ? dataRavenPath : [])
+    ],
+    [dataRaven, dataMoodle, dataRavenPath]
+  );
+
+  const {
+    paginatedData,
+    totalPages,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    currentPage: page
+  } = paginate(allDataofCourses, currentPage);
+
+  const onNavigateForward = () => {
+    if (currentPage < totalPages && currentPage > 0) {
+      setCurrentPage(currentPage + 1);
+      setIsDataOnLoading(!isDataOnLoading);
     } else {
-      if (currentPage > 1) {
-        setCurrentPage(Number(currentPage - 1));
-      }
+      setCurrentPage(currentPage);
     }
-    setIsDataOnLoading(true);
   };
+
+  const onNavigueteBackward = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      setIsDataOnLoading(!isDataOnLoading);
+    } else {
+      setCurrentPage(currentPage);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (currentCategory === -2) {
+  //     if (valueLangue !== 'none') {
+  //       setDataForallCourse(
+  //         allDataofCourses.filter(
+  //           course =>
+  //             'launch_url' in course &&
+  //             course.category?.[0]?.tags?.[0]?.title === valueLangue
+  //         )
+  //       );
+  //     } else {
+  //       setDataForallCourse(allDataofCourses);
+  //     }
+  //   }
+  //   setValueLangue(valueLangue);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [valueLangue, allDataofCourses]);
+
+  // useEffect(() => {
+  //   if (currentCategory === 11||
+  //     currentCategory === 13|| currentCategory === 14
+  //   ) {
+  //     if (valueDuration !== 'none') {
+
+  //       setDataForallCourse(
+  //         allDataofCourses.filter(
+  //           course =>
+  //             'categorieid' in course &&
+  //             course.category?.[0]?.tags?.[0]?.title === valueLangue
+  //         )
+  //       );
+  //     } else {
+  //       setDataForallCourse(allDataofCourses);
+  //     }
+  //   }
+  //   setValueLangue(valueLangue);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [valueLangue, allDataofCourses]);
+
+  // useEffect(() => {
+  //   if (currentCategory === -2) {
+  //     if (valueLevel !== 'none') {
+  //       const filterByLevel = allDataofCourses.filter(
+  //         course => 'launch_url' in course && course.skill_level === valueLevel
+  //       );
+  //       setDataForallCourse(filterByLevel);
+  //     } else {
+  //       setDataForallCourse(allDataofCourses);
+  //     }
+  //   }
+
+  //   setValueLevel(valueLevel);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [valueLevel, allDataofCourses]);
+
+  // useEffect(() => {
+  //   if (currentCategory === -2) {
+  //     if (valueOfCourseType !== 'none') {
+  //       setDataForallCourse(
+  //         allDataofCourses.filter(
+  //           course => 'launch_url' in course && course.long_description
+  //         )
+  //       );
+  //     } else {
+  //       setDataForallCourse(allDataofCourses);
+  //     }
+  //   }
+  //   setValueOfCourseType(valueOfCourseType);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [valueOfCourseType, allDataofCourses]);
+
+  // useEffect(() => {
+  //   setAllDataRessource(allDataRessoucesCourses);
+  // }, [currentCategory, allDataRessoucesCourses]);
+
+  useEffect(() => {
+    void getRavenResourcesPath();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
+
+  useEffect(() => {
+    setDataForallCourse(allCourses);
+  }, [allCourses, dataForAllCourses, setDataForallCourse]);
+
+  useEffect(() => {
+    void getRavenResources();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
+
+  //   useEffect(() => {
+  //   dispatch(fetchRavenCoursesRequest());
+
+  // }, [dispatch]);
 
   useEffect(() => {
     void getMoodleCourses();
@@ -185,14 +497,14 @@ export function Courses(props: CoursesProps): JSX.Element {
       if (isDataOnLoading) {
         setIsDataOnLoading(false);
       }
-    }, 3000);
+    }, 2000);
     return () => {
-      setMoodleCourses(null); // cleanup useEffect to perform a React state update
+      setDataMoodle(null); // cleanup useEffect to perform a React state update
       setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentPage]);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (isDataOnLoading) {
@@ -211,6 +523,12 @@ export function Courses(props: CoursesProps): JSX.Element {
       showFilter && setScreenWidth(window.innerWidth);
     });
   }
+  if (isDataOnLoading) {
+    console.log(isDataOnLoading);
+  }
+  useEffect(() => {
+    setCurrentCategory(null);
+  }, [currentPage, setCurrentCategory]);
 
   useEffect(() => {
     if (screenWidth > 990) setShowFilter(true);
@@ -219,7 +537,13 @@ export function Courses(props: CoursesProps): JSX.Element {
 
   useEffect(() => {
     void getMoodleCourseCategory();
-  }, [courseCategories]);
+
+    dataRaven?.length == 0
+      ? setIsDataOnLoading(false)
+      : setIsDataOnLoading(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (showLoading) {
     return <Loader fullScreen={true} />;
@@ -227,26 +551,17 @@ export function Courses(props: CoursesProps): JSX.Element {
 
   return (
     <>
-      {/* <Helmet title={`${t('buttons.settings')} | Code Learning Plateform`} /> */}
       <Helmet title={`Nos cours | Kadea Online`} />
       <Grid className='bg-light'>
         <main>
           <div className=''>
             <Spacer size={1} />
-            <div>
-              <h2 className='big-subheading'>{`Suis nos cours.`}</h2>
-              <p className='text-responsive'>
-                {`
-          Concentre-toi sur ce qui est nécessaire pour acquérir une compétence spécifique et applicable. 
-          Tu seras mieux outillé pour construire une carrière.
-          `}
-              </p>
-            </div>
+
             <button
               onClick={() => {
                 setShowFilter(e => !e);
               }}
-              className=' show-filter-button '
+              className='show-filter-button'
             >
               <span>Filtrer</span>
               <svg
@@ -259,138 +574,180 @@ export function Courses(props: CoursesProps): JSX.Element {
                   <path fill='none' d='M0 0h24v24H0z' />
                   <path d='M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z' />
                 </g>
-              </svg>{' '}
+              </svg>
             </button>
-            {/* <Spacer /> */}
-            <h2
-              dangerouslySetInnerHTML={{
-                __html: `${
-                  currentCategory == null
-                    ? 'Tous les cours'
-                    : currentCategory == -1
-                    ? 'Programmation'
-                    : (courseCategories?.find(elt => elt.id == currentCategory)
-                        ?.name as string)
-                }`
-              }}
-              className='title-selected-filter'
-            ></h2>
-            <Spacer />
 
             <div className='card-filter-container'>
               {showFilter && (
                 <CourseFilter
+                  setRavenPath={setDataRavenPath}
                   screenWidth={screenWidth}
-                  setMoodleCourses={setMoodleCourses}
+                  setRavenCourses={setDataRaven}
+                  setMoodleCourses={setDataMoodle}
                   setShowFilter={setShowFilter}
                   setIsDataOnLoading={setIsDataOnLoading}
-                  setProgrammingCategory={setProgrammingCategory}
                   courseCategories={courseCategories}
                   currentCategory={currentCategory}
                   setCurrentCategory={setCurrentCategory}
+                  setCurrentPage={setCurrentPage}
                 />
               )}
 
-              {!isDataOnLoading ? (
-                <div className='card-course-detail-container'>
-                  {currentPage == 1 && programmingCategory && (
-                    <>
-                      <CourseCard
-                        icon={LaptopIcon}
-                        sponsorIcon={LaediesActIcon}
-                        alt=''
-                        name={name}
-                        phone={phone}
-                        isAvailable={true}
-                        isSignedIn={isSignedIn}
-                        title={`Responsive Web Design`}
-                        buttonText={`Suivre le cours  `}
-                        link={'/learn/responsive-web-design/'}
-                        description={`
-                Dans ce cours, tu apprendras les langages que les développeurs 
-                utilisent pour créer des pages Web : HTML (Hypertext Markup Language) 
-                pour le contenu, et CSS (Cascading Style Sheets) pour la conception. 
-                Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
-                `}
-                      />
-                      <CourseCard
-                        icon={AlgoIcon}
-                        alt=''
-                        isAvailable={true}
-                        isSignedIn={isSignedIn}
-                        phone={phone}
-                        name={name}
-                        title={`JavaScript Algorithms and Data Structures`}
-                        buttonText={`Suivre le cours  `}
-                        link={`/learn/javascript-algorithms-and-data-structures`}
-                        description={`Alors que HTML et CSS contrôlent le contenu et le style  d'une page, 
-                JavaScript est utilisé pour la rendre interactive. Dans le cadre du 
-                cours JavaScript Algorithm and Data Structures, tu apprendras 
-                les principes fondamentaux de JavaScript, etc.`}
-                      />
-                    </>
-                  )}
-                  {moodleCourses &&
-                    moodleCourses.result &&
-                    moodleCourses.result.length > 0 &&
-                    moodleCourses.result[currentPage - 1]?.map(
-                      (course, index) => {
-                        return (
+              <div className='card-courses-detail-container'>
+                <div>
+                  <h2 className='big-subheading'>Explorer notre catalogue</h2>
+                </div>
+                <Spacer />
+
+                <CoursesCategoryCard
+                  courseCategories={courseCategories}
+                  setRavenPath={setDataRavenPath}
+                  setCurrentCategory={setCurrentCategory}
+                  currentCategory={currentCategory}
+                  screenWidth={setScreenWidth}
+                  setCurrentPage={setCurrentPage}
+                  setIsDataOnLoading={setIsDataOnLoading}
+                  setMoodleCourses={setDataMoodle}
+                  setRavenCourses={setDataRaven}
+                />
+
+                <div className='course__number'>
+                  <p>Parcourir le catalogue complet</p>
+                  <span>
+                    {paginatedData.length > 0 &&
+                      paginatedData.length +
+                        (currentCategory == null || currentCategory == -1
+                          ? 2
+                          : 0)}{' '}
+                    cours
+                  </span>
+                </div>
+
+                {!isDataOnLoading ? (
+                  <div className='card-course-detail-container'>
+                    {currentPage == 1 &&
+                      (currentCategory == null || currentCategory == -1) && (
+                        <>
                           <CourseCard
-                            key={index + course.id}
-                            icon={PhBookBookmark}
-                            phone={phone}
-                            name={name}
-                            isAvailable={course.visible == 1}
-                            isSignedIn={isSignedIn}
-                            sameTab={true}
-                            external={true}
-                            title={`${course.displayname}`}
-                            buttonText={`Suivre le cours  `}
-                            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                            link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
-                            description={course.summary}
+                            language='French'
+                            icon={LaptopIcon}
+                            sponsorIcon={LaediesActIcon}
+                            alt=''
+                            // name={name}
+                            // phone={phone}
+                            isAvailable={true}
+                            // isSignedIn={isSignedIn}
+                            title='Responsive Web Design'
+                            buttonText='Suivre le cours'
+                            link='/learn/responsive-web-design/'
+                            description={`
+                          Dans ce cours, tu apprendras les langages que les développeurs
+                          utilisent pour créer des pages Web : HTML (Hypertext Markup Language)
+                          pour le contenu, et CSS (Cascading Style Sheets) pour la conception.
+                          Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
+                        `}
                           />
-                        );
-                      }
-                    )}
+                          <CourseCard
+                            language='French'
+                            icon={AlgoIcon}
+                            alt=''
+                            isAvailable={true}
+                            // isSignedIn={isSignedIn}
+                            // phone={phone}
+                            // name={name}
+                            title='JavaScript Algorithms and Data Structures'
+                            buttonText='Suivre le cours'
+                            link='/learn/javascript-algorithms-and-data-structures'
+                            description={`Alors que HTML et CSS contrôlent le contenu et le style d'une page,
+                          JavaScript est utilisé pour la rendre interactive. Dans le cadre du
+                          cours JavaScript Algorithm and Data Structures, tu apprendras
+                          les principes fondamentaux de JavaScript, etc.`}
+                          />
+                        </>
+                      )}
+                    {paginatedData.length > 0
+                      ? paginatedData.map((course, index) => {
+                          if ('launch_url' in course) {
+                            const firstCategory = course.category?.[0];
+                            const language =
+                              firstCategory?.tags?.[0]?.title || 'Unknown';
+
+                            if (course.long_description) {
+                              return (
+                                <PathCard
+                                  language={language}
+                                  key={course.name}
+                                  icon={awsLogo}
+                                  isAvailable={true}
+                                  // isSignedIn={isSignedIn}
+                                  title={`${index + 1}. ${course.name}`}
+                                  buttonText='Suivre le cours'
+                                  link={course.launch_url}
+                                  description={course.long_description}
+                                  duration={convertTime(course.duration)}
+                                  level={course.skill_level}
+                                />
+                              );
+                            } else {
+                              return (
+                                <CourseCard
+                                  language={language}
+                                  key={index.toString()}
+                                  icon={awsLogo}
+                                  isAvailable={true}
+                                  // isSignedIn={isSignedIn}
+                                  title={`${index + 1}. ${course.name}`}
+                                  buttonText='Suivre le cours'
+                                  link={course.launch_url}
+                                  description={course.short_description}
+                                  duration={convertTime(course.duration)}
+                                />
+                              );
+                            }
+                          } else {
+                            return (
+                              <CourseCard
+                                language='French'
+                                key={`${index}-${course.id}`}
+                                icon={PhBookBookmark} // Remplacer par le chemin réel de l'image
+                                isAvailable={course.visible === 1}
+                                // isSignedIn={isSignedIn}
+                                title={course.displayname}
+                                buttonText='Suivre le cours'
+                                link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
+                                description={course.summary}
+                                duration={convertTimestampToTime(
+                                  course.timecreated
+                                )}
+                              />
+                            );
+                          }
+                        })
+                      : ''}
+                  </div>
+                ) : (
+                  <div className='card-course-detail-container'>
+                    {renderCourseCardSkeletons(6)}
+                  </div>
+                )}
+
+                <div className='pagination-container'>
+                  <FontAwesomeIcon
+                    icon={faChevronLeft}
+                    className='pagination-chevron'
+                    onClick={() => onNavigueteBackward()}
+                  />
+                  <span className='pagination__number'>
+                    {currentPage}/{totalPages > 0 ? totalPages : 1}
+                  </span>
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    className='pagination-chevron'
+                    onClick={() => onNavigateForward()}
+                  />
                 </div>
-              ) : (
-                <div className='card-course-detail-container'>
-                  {renderCourseCardSkeletons(6)}
-                </div>
-              )}
-            </div>
-            <Spacer size={3} />
-            <div className='pagination-container'>
-              {moodleCourses && moodleCourses.size > 0 && (
-                <Row>
-                  <Col md={12} sm={12} xs={12}>
-                    {currentPage > 1 && (
-                      <FontAwesomeIcon
-                        icon={faChevronLeft}
-                        className='pagination-chevron'
-                        onClick={() => {
-                          navigateToPage(false);
-                        }}
-                      />
-                    )}
-                    &nbsp;
-                    {`  ${currentPage} sur ${moodleCourses?.size}  `}
-                    &nbsp;
-                    {currentPage < moodleCourses?.size && (
-                      <FontAwesomeIcon
-                        icon={faChevronRight}
-                        className='pagination-chevron'
-                        onClick={() => {
-                          navigateToPage(true);
-                        }}
-                      />
-                    )}
-                    <Spacer size={2} />
-                  </Col>
-                </Row>
-              )}
+                <Spacer size={2} />
+              </div>
             </div>
           </div>
         </main>

@@ -2,8 +2,8 @@
 
 .card-course-detail-back-path {
   /* padding:2%; */
-  width: 30%;
-  height: auto;
+  width: 31%;
+  /* height: auto; */
   margin-bottom: 5%;
 }
 
@@ -18,10 +18,21 @@
   gap: 5%;
 }
 
+.row-link-text {
+  font-size: 1rem;
+}
+
+.clock__time {
+  text-align: center;
+}
 @media (max-width: 1024px) {
   .card-course-detail-back-path {
     width: 47%;
     /* margin-bottom: 5%; */
+  }
+
+  .row-link-text {
+    font-size: 1rem;
   }
 }
 
@@ -36,6 +47,10 @@
     width: 100%;
     justify-content: flex-start !important;
     /* gap: 50px; */
+  }
+
+  .row-link-text {
+    font-size: 1rem;
   }
 }
 
@@ -52,5 +67,9 @@
     justify-content: center !important;
     height: fit-content;
     /* gap: 30px; */
+  }
+
+  .row-link-text {
+    font-size: 0.7rem;
   }
 }

@@ -18,6 +18,7 @@ import {
 } from '../templates/Introduction/redux';
 import { reducer as settings, ns as settingsNameSpace } from './settings';
 import { reducer as app, MainApp as appNameSpace } from './';
+// import { ravenCoursesReducer } from './settings/reducers_fetchData';
 
 export default combineReducers({
   [appNameSpace]: app,
@@ -26,4 +27,5 @@ export default combineReducers({
   [flashNameSpace]: flash,
   [searchNameSpace]: search,
   [settingsNameSpace]: settings
+  // mesCouresRaven:ravenCoursesReducer
 });

@@ -3,12 +3,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #202020;
+  background: #ffffff;
 }
 
 .link-logo,
 .link-logo:hover {
-  background: rgba(255, 255, 255, 0);
+  background: rgba(226, 217, 217, 0);
 }
 
 .menu-bar {
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #202020;
+  background: #ffffff;
 }
 
 .container:before,
@@ -25,11 +25,12 @@
 }
 
 .container {
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 10px 1rem;
 }
 .logo img {
   width: 140px;
+  color: #202020;
   /* height: 40px; */
 }
 
@@ -49,6 +50,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  color: #202020;
 }
 
 .nav-bar .nav-list {
@@ -71,7 +73,6 @@
 .nav-list .nav-item a {
   padding: 8px;
   text-decoration: none;
-  color: var(--gray-00);
   font-weight: 600;
   transition: all 0.3s ease;
 }
@@ -80,7 +81,7 @@
 .nav-list .nav-item a:focus,
 .nav-list .nav-item .active {
   color: var(--love-light);
-  background: rgba(255, 255, 255, 0) !important;
+  background: none !important;
 }
 
 .nav-list .nav-item .nav-signin-btn {
@@ -96,9 +97,7 @@
 
 .nav-list .nav-item .nav-signin-btn:hover,
 .nav-list .nav-item .nav-signin-btn:focus {
-  color: var(--gray-00) !important;
-  background: rgba(255, 255, 255, 0) !important;
-  border: solid 2px var(--gray-00);
+  border: 1px solid --love-light;
 }
 
 .nav-list .nav-item .nav-signout-btn {
@@ -218,7 +217,7 @@
     width: 100vw;
     top: 50;
     right: 0;
-    background: #202020;
+    background: #fff;
     transition: all 0.5s ease-in-out;
     margin-top: 10px;
   }

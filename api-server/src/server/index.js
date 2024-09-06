@@ -44,6 +44,7 @@ const createLogOnce = () => {
     if (called) {
       return null;
     }
+
     called = true;
     return log(str);
   };

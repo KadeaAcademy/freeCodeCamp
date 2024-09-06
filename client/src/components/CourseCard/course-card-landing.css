@@ -1,8 +1,11 @@
 .pull {
-  float: left;
+  float: right;
 }
 
 .push {
+  float: right;
+}
+.push__card {
   float: right;
 }
 
@@ -29,8 +32,9 @@ img {
 }
 
 .card-course-detail-footer {
-  padding: 5% 5%;
+  padding: 5%;
   overflow: hidden;
+  margin-top: 2rem;
 }
 
 .card-course-detail-logo {
@@ -71,12 +75,21 @@ img {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.5rem;
 }
 
-.row-link-text {
-  margin-right: 10px;
+.card-link {
+  display: contents; /* evite le style par defaut des composantes link*/
+}
+.card-course-detail-container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
+.parcours-description {
+  font-size: 1.5rem;
+}
 .card-course-detail-unit {
   margin: 0;
   padding: 0;
@@ -150,14 +163,6 @@ img {
   .card-course-detail-unit {
     width: 100%;
   }
-
-  .card-course-detail-container {
-    display: flex;
-    flex-direction: row !important;
-    width: 100%;
-    justify-content: flex-start !important;
-    /* gap: 50px; */
-  }
 }
 
 @media (max-width: 480px) {
@@ -168,16 +173,24 @@ img {
     display: none;
   }
 
+  .row-link {
+    display: block;
+  }
+
+  .card-course-detail-footer {
+    padding: auto;
+    margin: 0.5rem;
+    text-decoration: none;
+  }
+
   .card-course-detail-back {
     width: 95%;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
   }
 
   .card-course-detail-container {
     display: flex;
     flex-direction: column;
-    align-items: center !important;
-    justify-content: center !important;
     height: fit-content;
   }
 

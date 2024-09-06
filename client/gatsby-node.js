@@ -281,6 +281,13 @@ exports.onCreatePage = async ({ page, actions }) => {
     // Update the page.
     createPage(page);
   }
+  if (page.path.match(/^\/catalogue/)) {
+    // page.matchPath is a special key that's used for matching pages
+    // with corresponding routes only on the client.
+    page.matchPath = '/catalogue/*';
+    // Update the page.
+    createPage(page);
+  }
 };
 
 exports.createSchemaCustomization = ({ actions }) => {

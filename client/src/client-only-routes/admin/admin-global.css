@@ -1,5 +1,6 @@
 .pagination-chevron {
   cursor: pointer;
+  padding: 0.3rem;
 }
 
 .action-btn-detail {

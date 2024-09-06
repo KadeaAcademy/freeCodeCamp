@@ -45,13 +45,14 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
   const {
     innerRef,
     fetchState,
-    user: { username }
+    user: { username, role },
+    navigate
   }: NavLinksProps = props;
 
   const { pending } = fetchState;
 
   // ------------IsDropdown Handler------------
-
+  // console.log('userRole', role);
   const handleIsDropdown = () => {
     if (width < 1000) {
       setIsDropdown(isDropdown ? false : true);
@@ -62,6 +63,16 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
       }
     }
   };
+  const stockerUrlCourante = (): void => {
+    if (typeof window !== 'undefined') {
+      const currentUrl = window.location.href;
+
+      // Stocker l'URL dans le localStorage
+      localStorage.setItem('currentUrlForRedirection', currentUrl);
+
+      handleIsDropdown;
+    }
+  };
 
   useEffect(() => {
     if (width > 1000) {
@@ -69,6 +80,16 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
       setIsDropdown(false);
     }
   }, [width]);
+
+  useEffect(() => {
+    const urlredirectionAfterLogin = localStorage.getItem(
+      'currentUrlForRedirection'
+    );
+    if (urlredirectionAfterLogin) {
+      localStorage.removeItem('currentUrlForRedirection');
+      navigate(`${urlredirectionAfterLogin}`);
+    }
+  }, [navigate]);
 
   return pending ? (
     <div className='nav-skeleton' />
@@ -100,11 +121,11 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
             onClick={handleIsDropdown}
             className=''
             key='courses'
-            to='/courses'
+            to='/catalogue'
             ref={innerRef}
             activeClassName='active'
           >
-            {'Cours'}
+            {'Catalogue'}
           </Link>
         </li>
 
@@ -166,10 +187,25 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
           </Fragment>
         )}
 
+        {role == 'Admin' ||
+          (role == 'Super-admin' && (
+            <li className='nav-item'>
+              <a
+                onClick={stockerUrlCourante}
+                className=''
+                href={`/admin/all-members`}
+                key='dashbord'
+                ref={innerRef}
+              >
+                {'Back office'}
+              </a>
+            </li>
+          ))}
+
         {!username && (
           <li className='nav-item'>
             <a
-              onClick={handleIsDropdown}
+              onClick={stockerUrlCourante}
               className='nav-signin-btn'
               href={`${apiLocation}/signin`}
               key='signin'

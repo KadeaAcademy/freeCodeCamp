@@ -1,127 +1,95 @@
 import React from 'react';
-import { Link } from '../../components/helpers';
-import Facebook from '../../assets/images/facebook.png';
-import Instagram from '../../assets/images/instagram.png';
-import Twitter from '../../assets/images/twitter.png';
+import { Link } from '@reach/router';
+import { Grid } from '@freecodecamp/react-bootstrap';
+import { VscTriangleRight } from 'react-icons/vsc';
 // import Whatsapp from '../../assets/images/whatsapp.png';
-import Logo from '../../assets/images/logo/kadea-learn-ligth.svg';
+import logo from '../../assets/icons/logo.png';
 import './style.css';
+import { Image } from '../../../../tools/ui-components/src/image/image';
+
+const linksSections = [
+  {
+    title: 'Formations',
+    links: [
+      {
+        label: 'Bootcamp Carrière',
+        link: 'https://www.kadea.academy/'
+      },
+      {
+        label: 'Boost',
+        link: 'https://www.kadea.academy/boost/'
+      },
+      {
+        label: 'Online',
+        link: 'https://online.kadea.co/'
+      }
+    ]
+  },
+  {
+    title: 'Entreprises',
+    links: [
+      {
+        label: 'Kadea Academy',
+        link: 'https://kadea.academy/'
+      },
+      {
+        label: 'Kadea Software',
+        link: 'https://kadea.co/'
+      }
+    ]
+  },
+  {
+    title: 'Communauté',
+    links: [
+      {
+        label: 'State of Dev',
+        link: 'https://stateofdev.kinshasadigital.academy/'
+      }
+    ]
+  }
+];
 
 function Footer() {
   const date = new Date().getFullYear();
 
   return (
-    <section className='footer-section'>
-      <div className='footer-container'>
-        <div className='footer-container__left-side'>
-          <Link className='link-logo text-center' to='/'>
-            <img className='footer-logo' src={Logo} alt='Logo Kadea Online' />
+    <footer className='footer-section'>
+      <Grid>
+        <section className='flex flex-col gap-md items-center'>
+          <Link to='/'>
+            <Image src={logo} alt='Logo' className='logo' />
           </Link>
-
-          <div className='footer-container__left-side__social'>
-            <ul className='footer-container__left-side__social-icons'>
-              <li>
-                <a
-                  href='https://www.facebook.com/kda243'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  {' '}
-                  <img src={Facebook} alt='facebook' />
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://www.instagram.com/kinshasadigitalacademy/'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <img src={Instagram} alt='instagram' />
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://www.twitter.com/kda243'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <img src={Twitter} alt='twitter' />
-                </a>
-              </li>
-            </ul>
-            <p className='footer-container__left-side__description'>
-              Kadea Online © {date}
-            </p>
+          <div className='w-full grid gap-md grid-cols-2 md-grid-cols-3'>
+            {linksSections.map((section, id) => (
+              <div className='w-full flex flex-col' key={id.valueOf()}>
+                <h4 className='text-white links-section-title'>
+                  {section.title}
+                </h4>
+                <div className='w-full flex flex-col links-section-links'>
+                  {section.links.map((link, i) => (
+                    <a
+                      href={link.link}
+                      target='_blank'
+                      rel='noreferrer'
+                      className='w-full flex items-center links-section-link'
+                      key={i.valueOf()}
+                    >
+                      <span className='text-primary triangle-icon'>
+                        <VscTriangleRight />
+                      </span>
+                      <span className='text-white'>{link.label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-        {/* <div className='footer-container__right-side'>
-          <ul className='footer-container__right-side__menu'>
-            <li>
-              <p>Liens</p>
-              <ul>
-                <li>
-                  <a href=''>A propos</a>
-                </li>
-                <li>
-                  <a href=''>Cours</a>
-                </li>
-                <li>
-                  <a href=''>Catalogue</a>
-                </li>
-                <li>
-                  <a href=''>Coachs</a>
-                </li>
-                <li>
-                  <a href=''>Connexion</a>
-                </li>
-              </ul>
-            </li>
-
-            <li>
-              <p>Ressources</p>
-              <ul>
-                <li>
-                  <a href=''>Programmation</a>
-                </li>
-                <li>
-                  <a href=''>Javascript</a>
-                </li>
-                <li>
-                  <a href=''>PHP</a>
-                </li>
-                <li>
-                  <a href=''>Python</a>
-                </li>
-                <li>
-                  <a href=''>Marketing</a>
-                </li>
-              </ul>
-            </li>
-
-            <li>
-              <p>Support</p>
-              <ul>
-                <li>
-                  <a href=''>Securité</a>
-                </li>
-                <li>
-                  <a href=''>Politique de confidentialité</a>
-                </li>
-                <li>
-                  <a href=''>Centre d'aide</a>
-                </li>
-                <li>
-                  <a href=''>FAQ</a>
-                </li>
-                <li>
-                  <a href='#'>Contacts</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div> */}
-      </div>
-    </section>
+          <small className='text-white'>
+            Kadea Online {date}. Tous droits résérvés
+          </small>
+        </section>
+      </Grid>
+    </footer>
   );
 }
 

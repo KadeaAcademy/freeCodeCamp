@@ -1,0 +1,44 @@
+.form-control {
+  padding: 8px 15px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  outline: none;
+  border: none;
+}
+
+.landing-signup-form .submit-btn {
+  width: fit-content;
+  padding: 8px 16px;
+  background: #fff;
+  color: #e5203d;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.signin-link {
+  font-size: 18px;
+  padding: 8px 16px;
+}
+
+.signin-link:hover {
+  background-color: #e5203d !important;
+}
+
+.signin-link span {
+  font-size: inherit;
+}
+
+.landing-signup-form span {
+  font-size: inherit;
+  font-weight: inherit;
+}

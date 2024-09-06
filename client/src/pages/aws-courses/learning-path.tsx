@@ -8,9 +8,7 @@ import RedirectHome from '../../components/redirect-home';
 function Learningpath(): JSX.Element {
   return (
     <Router>
-      <ShowAwsLearningPath
-        path={withPrefix('/aws-courses/learning-path/:course')}
-      />
+      <ShowAwsLearningPath path={withPrefix('/learning-path/:course')} />
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
       <RedirectHome default={true} />

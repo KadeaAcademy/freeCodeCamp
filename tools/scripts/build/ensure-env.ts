@@ -45,7 +45,11 @@ if (FREECODECAMP_NODE_ENV !== 'development') {
     'moodleApiBaseUrl',
     'moodleApiToken',
     'lemlistToken',
-    'lemlistUrl'
+    'lemlistUrl',
+    'ravenAwsApiKey',
+    'ravenAwsBaseUrl',
+    'ravenAwsClientId',
+    'ravenAwsClientSecretId'
   ];
   const deploymentKeys = [
     'clientLocale',

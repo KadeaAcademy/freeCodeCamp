@@ -24,7 +24,6 @@ function* fetchSessionUser() {
     yield put(
       fetchUserComplete({ user: appUser, username: result, sessionMeta })
     );
-    console.log('user', user);
   } catch (e) {
     yield put(fetchUserError(e));
   }

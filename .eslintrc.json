@@ -6,8 +6,13 @@
     "node": true,
     "jest": true
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "root": true,
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./",
+    "sourceType": "module"
+  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -15,7 +20,9 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
-    "prettier"
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "globals": {
     "Promise": true,
@@ -39,19 +46,6 @@
   "overrides": [
     {
       "files": ["**/*.ts?(x)"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": [
-          "./tsconfig.json",
-          "./config/tsconfig.json",
-          "./tools/ui-components/tsconfig.json"
-        ]
-      },
-      "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
-      ],
-      "plugins": ["@typescript-eslint"],
       "rules": {
         "import/named": 0,
         "@typescript-eslint/naming-convention": [
@@ -62,7 +56,6 @@
             "leadingUnderscore": "allow",
             "trailingUnderscore": "allow"
           },
-
           {
             "selector": "variable",
             "format": ["camelCase", "UPPER_CASE", "PascalCase"],
@@ -94,7 +87,9 @@
             "selector": "enumMember",
             "format": ["PascalCase"]
           }
-        ]
+        ],
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-return": "error"
       }
     },
     {
@@ -113,6 +108,39 @@
       "globals": {
         "cy": true,
         "Cypress": true
+      }
+    },
+    {
+      "files": ["gatsby-node.js"],
+      "parser": "eslint-plugin-babel",
+      "rules": {
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-return": "off"
+      }
+    },
+    {
+      "files": ["gatsby-browser.js"],
+      "parserOptions": {
+        "project": null
+      },
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-implied-eval": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/require-await": "off",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/unbound-method": "off"
       }
     }
   ]

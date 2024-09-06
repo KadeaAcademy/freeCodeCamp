@@ -27,6 +27,11 @@ const {
   SHOW_LOCALE_DROPDOWN_MENU: showLocaleDropdownMenu,
   LEMLIST_URL: lemlistUrl,
   LEMLIST_TOKEN: lemlistToken,
+  RAVEN_AWS_BASE_URL: ravenAwsBaseUrl,
+  RAVEN_AWS_API_KEY: ravenAwsApiKey,
+  RAVEN_AWS_CLIENT_ID: ravenAwsClientId,
+  RAVEN_AWS_CLIENT_SECRET_ID: ravenAwsClientSecretId,
+
   // ALGOLIA_APP_ID: algoliaAppId,
   // ALGOLIA_API_KEY: algoliaAPIKey,
   // STRIPE_PUBLIC_KEY: stripePublicKey,
@@ -51,7 +56,11 @@ const locations = {
     : radioLocation,
   moodleBaseUrl,
   moodleApiBaseUrl,
-  moodleApiToken
+  moodleApiToken,
+  ravenAwsApiKey,
+  ravenAwsBaseUrl,
+  ravenAwsClientId,
+  ravenAwsClientSecretId
 };
 
 module.exports = Object.assign(locations, {
