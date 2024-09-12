@@ -1,5 +1,7 @@
+import { Grid } from '@freecodecamp/react-bootstrap';
 import { graphql } from 'gatsby';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
@@ -9,7 +11,15 @@ import {
 } from '../redux';
 
 import '../components/landing/landing.css';
-import Landing from '../components/landing';
+import { LearnLayout } from '../components/layouts';
+import Hero from '../components/landing/hero/hero';
+import VodacomBranding from '../components/landing/vodacom-branding-section/vodacom-branding';
+import RegistrationToAcademy from '../components/landing/components/registration-to-academy';
+import WhatWillYouLearn from '../components/landing/what-will-you-learn/what-will-you-learn';
+import HowWillYouLearn from '../components/landing/how-will-you-learn/how-will-you-learn';
+import WhatCanYouDo from '../components/landing/whatCanYouDo/what-can-you-do';
+import StartCOding from '../components/landing/start-coding/start-coding';
+import Partners from '../components/landing/partners/partners';
 
 interface FetchState {
   pending: boolean;
@@ -67,18 +77,11 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
             <Hero />
           </Grid>
         </div>
-        {/* <Hero pageName={'landing'} isSignedIn={isSignedIn} /> */}
         <div className=''>
           <Grid>
-            <Vodacom />
+            <VodacomBranding />
           </Grid>
         </div>
-
-        {/* <div className='bg-secondary'>
-          <Grid>
-            <LandingTop pageName={'landing'} isSignedIn={isSignedIn} />
-          </Grid>
-        </div> */}
 
         <div className='as-seen-in'>
           <Grid>
@@ -86,25 +89,14 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
           </Grid>
         </div>
 
-        {/* <Grid>
-          <LandingDetails isSignedIn={isSignedIn} />
-        </Grid> */}
         <div className='dotted-bg'>
           <Grid>
             <WhatWillYouLearn isSignedIn={isSignedIn} />
           </Grid>
         </div>
 
-        {/* <Grid>
-          <LandingLearn />
-        </Grid> */}
         <HowWillYouLearn />
 
-        {/* <div className='bg-light-gray'>
-          <Grid>
-            <WhatCanYouDo />
-          </Grid>
-        </div> */}
         <div className=''>
           <Grid>
             <WhatCanYouDo />
@@ -118,12 +110,6 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
             <Partners />
           </Grid>
         </div>
-
-        {/* <div className='as-seen-in'>
-          <Grid>
-            <YourCareer isSignedIn={isSignedIn} />
-          </Grid>
-        </div> */}
       </main>
     </LearnLayout>
   );
