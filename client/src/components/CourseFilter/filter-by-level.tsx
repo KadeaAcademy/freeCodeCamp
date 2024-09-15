@@ -36,7 +36,7 @@ const FilterByLevel = () => {
 
     setCheckedState({
       Débutant: duration.includes('Débutant'),
-      Intermédiaire: duration.includes('Intermediaire'),
+      Intermédiaire: duration.includes('Intermédiaire'),
       Avancé: duration.includes('Avancé')
     });
 

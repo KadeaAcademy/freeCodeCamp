@@ -23,6 +23,21 @@
   width: 10rem;
 }
 
+.duration-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.duration-filter label {
+  font-weight: 500;
+}
+
+.duration-filter .duration__Label {
+  display: flex;
+  gap: 3px;
+  align-items: baseline;
+}
+
 .filter__container {
   width: 9rem;
 }
