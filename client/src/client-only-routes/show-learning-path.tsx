@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Grid } from '@freecodecamp/react-bootstrap';
 import { Link } from 'gatsby';
-import routes from '../utils/routes';
+import { routes } from '../utils/routes';
 
 import {
   addRavenTokenToLocalStorage,

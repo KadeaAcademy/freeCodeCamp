@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -14,6 +15,7 @@ import {
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
+import { tokenRaven } from '../../../redux/atoms';
 import envData from './../../../../../config/env.json';
 
 type MoodleCoursesFiltered = {
@@ -69,6 +71,8 @@ const CoursesFilterSection = ({
   setCurrentCategory: React.Dispatch<React.SetStateAction<string>>;
   currentCategory: string;
 }): JSX.Element => {
+  const getValueOfAwsToken = useRecoilValue(tokenRaven);
+
   const getMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -216,6 +220,10 @@ const CoursesFilterSection = ({
           onClick={topic.onClick}
           className={`button-list ${
             currentCategory == topic.id ? 'active' : ''
+          } ${
+            topic.title == 'AWS' && getValueOfAwsToken == null
+              ? 'hide__category'
+              : ''
           }`}
           key={i.valueOf()}
         >

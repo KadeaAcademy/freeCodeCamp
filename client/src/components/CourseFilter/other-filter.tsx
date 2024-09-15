@@ -9,7 +9,7 @@ import {
   valueOfCurrentCategory,
   valueOfLanguage
 } from '../../redux/atoms';
-import { AddFilterQueryString } from '../../utils/allFunctions';
+import { allQuery } from '../../utils/routes';
 
 const FilterLanguage = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -31,35 +31,51 @@ const FilterLanguage = () => {
 
   // Charger l'état des cases cochées depuis le localStorage au montage du composant
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const savedState = JSON.parse(
-      localStorage.getItem('filterLanguageState') || '{}'
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    if (savedState && Object.keys(savedState).length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setCheckedState(savedState);
-    }
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const languages = params.get(allQuery.key.language)?.split(',') || [];
+
+    setCheckedState({
+      French: languages.includes(allQuery.value.language.french),
+      English: languages.includes(allQuery.value.language.english)
+    });
+
+    setValueLangue(languages.join(','));
+    setValueChecked(languages.length > 0);
+    setChangeState(false);
+    setValue0fCurrentCategory(currentCategorieValue);
+  }, [
+    currentCategorieValue,
+    setValueLangue,
+    setValueChecked,
+    setChangeState,
+    setValue0fCurrentCategory
+  ]);
 
   // Sauvegarder l'état des cases cochées dans le localStorage à chaque modification
-  useEffect(() => {
-    localStorage.setItem('filterLanguageState', JSON.stringify(checkedState));
-  }, [checkedState]);
-
-  useEffect(() => {
-    AddFilterQueryString('', '');
-  }, []);
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
 
     setCheckedState(prevState => {
       const updatedState = { ...prevState, [value]: checked };
-      setValueLangue(value);
-      AddFilterQueryString('langue', value);
+      const queryParams = new URLSearchParams(window.location.search);
+      let language = queryParams.get(allQuery.key.language)?.split(',') || [];
+
+      if (checked) {
+        if (!language.includes(value)) language.push(value);
+      } else {
+        language = language.filter(langue => langue !== value);
+      }
+
+      if (language.length > 0) {
+        queryParams.set(allQuery.key.language, language.join(','));
+      } else {
+        queryParams.delete(allQuery.key.language);
+      }
+
+      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+      setValueLangue(language.join(''));
+
       setCounterForCategory(
         counterForCategory >= 0 && checked
           ? counterForCategory + 1

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './course-filter.css';
-
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   categoryCounter,
@@ -9,7 +8,7 @@ import {
   valueOfCurrentCategory,
   valueOfTypeCourse
 } from '../../redux/atoms';
-import { AddFilterQueryString } from '../../utils/allFunctions';
+import { allQuery } from '../../utils/routes';
 
 const FilterByType = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -30,38 +29,57 @@ const FilterByType = () => {
     Parcours: false
   });
 
-  // Charger l'état des cases cochées depuis le localStorage au montage du composant
+  // Charger l'état des cases cochées depuis les query strings de l'URL
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const savedState = JSON.parse(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      localStorage.getItem('filterTypeState') || '{}'
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    if (savedState && Object.keys(savedState).length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setCheckedState(savedState);
-    }
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const types = params.get(allQuery.key.type)?.split(',') || [];
 
-  // Sauvegarder l'état des cases cochées dans le localStorage à chaque modification
-  useEffect(() => {
-    localStorage.setItem('filterTypeState', JSON.stringify(checkedState));
-  }, [checkedState]);
+    setCheckedState({
+      Cours: types.includes(allQuery.value.type.cours),
+      Parcours: types.includes(allQuery.value.type.parcours)
+    });
 
-  useEffect(() => {
-    AddFilterQueryString('', '');
-  }, []);
+    // Mettre à jour les états liés
+    setValuype(types.join(','));
+    setValueChecked(types.length > 0);
+    setChangeState(false);
+    setValue0fCurrentCategory(currentCategorieValue);
+  }, [
+    currentCategorieValue,
+    setValuype,
+    setValueChecked,
+    setChangeState,
+    setValue0fCurrentCategory
+  ]);
 
+  // Mettre à jour les query strings lorsque l'utilisateur change l'état des cases
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
 
     setCheckedState(prevState => {
       const updatedState = { ...prevState, [value]: checked };
-      setValuype(value);
-      AddFilterQueryString('type', value);
+      const queryParams = new URLSearchParams(window.location.search);
+      let types = queryParams.get(allQuery.key.type)?.split(',') || [];
+
+      // Ajouter ou supprimer le type de la liste
+      if (checked) {
+        if (!types.includes(value)) types.push(value);
+      } else {
+        types = types.filter(type => type !== value);
+      }
+
+      // Mettre à jour le query string 'type' avec les nouvelles valeurs
+      if (types.length > 0) {
+        queryParams.set(allQuery.key.type, types.join(','));
+      } else {
+        queryParams.delete(allQuery.key.type);
+      }
+
+      // Mettre à jour l'URL sans recharger la page
+      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+
+      // Mises à jour des états pour la gestion des filtres
+      setValuype(types.join(','));
       setCounterForcategory(
         counterForCategory >= 0 && checked
           ? counterForCategory + 1

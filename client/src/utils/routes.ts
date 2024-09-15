@@ -14,4 +14,34 @@ const routes = {
   }
 };
 
-export default routes;
+const allQuery = {
+  key: {
+    level: 'level',
+    duration: 'durée',
+    language: 'langue',
+    type: 'type'
+  },
+
+  value: {
+    level: {
+      debutant: 'Débutant',
+      intermediaire: 'Intermediaire',
+      avancé: 'Avancé'
+    },
+    duration: {
+      lessOneHour: '>1h',
+      overOneHour: '1>5h',
+      overFiveHour: '>5h'
+    },
+    language: {
+      french: 'French',
+      english: 'English'
+    },
+    type: {
+      cours: 'Cours',
+      parcours: 'Parcours'
+    }
+  }
+};
+
+export { routes, allQuery };

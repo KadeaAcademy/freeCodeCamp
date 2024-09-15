@@ -4,15 +4,17 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   categoryCounter,
   changeState,
+  checkedBox,
   valueOfCurrentCategory,
   valueOfTypeDuration
 } from '../../redux/atoms';
-import { AddFilterQueryString } from '../../utils/allFunctions';
+import { allQuery } from '../../utils/routes';
 
 const FilterByDuration = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showSubjectFilter, setShowSubjectFilter] = useState(true);
   const setValueDuration = useSetRecoilState(valueOfTypeDuration);
+  const setValueChecked = useSetRecoilState(checkedBox);
   const [currentCategorieValue, setValue0fCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
@@ -21,50 +23,58 @@ const FilterByDuration = () => {
   const [counterForCategory, setCounterForcategory] =
     useRecoilState(categoryCounter);
 
-  // État local pour gérer les cases cochées
   const [checkedState, setCheckedState] = useState({
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '>1h': false, // eslint-disable-next-line @typescript-eslint/naming-convention
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1>5h': false,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '>5h': false
+    lessOneHour: false,
+    overOneHour: false,
+    overFiveHour: false
   });
 
-  // Charger l'état des cases cochées depuis le localStorage au montage du composant
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const savedState = JSON.parse(
-      localStorage.getItem('filterDurationState') || '{}'
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    if (savedState && Object.keys(savedState).length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setCheckedState(savedState);
-    }
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const duration = params.get(allQuery.key.duration)?.split(',') || [];
 
-  // Sauvegarder l'état des cases cochées dans le localStorage à chaque modification
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    localStorage.setItem('filterDurationState', JSON.stringify(checkedState));
-  }, [checkedState]);
+    setCheckedState({
+      lessOneHour: duration.includes(allQuery.value.duration.lessOneHour),
+      overOneHour: duration.includes(allQuery.value.duration.overOneHour),
+      overFiveHour: duration.includes(allQuery.value.duration.overFiveHour)
+    });
 
-  // Met à jour les états dans Recoil et le localStorage
+    setValueDuration(duration.join(','));
+    setValueChecked(duration.length > 0);
+    setChangeState(false);
+    setValue0fCurrentCategory(currentCategorieValue);
+  }, [
+    currentCategorieValue,
+    setValueDuration,
+    setValueChecked,
+    setChangeState,
+    setValue0fCurrentCategory
+  ]);
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
 
+    //mise à jour de l'état local
     setCheckedState(prevState => {
       const updatedState = { ...prevState, [value]: checked };
+      const queryParams = new URLSearchParams(window.location.search);
+      let duration = queryParams.get(allQuery.key.duration)?.split(',') || [];
 
-      // Mettre à jour les états dans Recoil
-      setValueDuration(value);
-      AddFilterQueryString('durée', value);
+      if (checked) {
+        if (!duration.includes(value)) duration.push(value);
+      } else {
+        duration = duration.filter(dure => dure !== value);
+      }
+
+      if (duration.length > 0) {
+        queryParams.set(allQuery.key.duration, duration.join(','));
+      } else {
+        queryParams.delete(allQuery.key.duration);
+      }
+
+      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+
+      setValueDuration(duration.join(''));
       setCounterForcategory(
         counterForCategory >= 0 && checked
           ? counterForCategory + 1
@@ -73,6 +83,7 @@ const FilterByDuration = () => {
           : counterForCategory
       );
       setChangeState(false);
+      setValueChecked(checked);
       setValue0fCurrentCategory(currentCategorieValue);
       console.log(showFilter);
 
@@ -130,8 +141,8 @@ const FilterByDuration = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='>1h'
-                checked={checkedState['>1h']}
+                value={allQuery.value.duration.lessOneHour}
+                checked={checkedState['lessOneHour']}
                 onChange={handleCheckboxChange}
               />
               Moins d&apos;1 heure
@@ -139,8 +150,8 @@ const FilterByDuration = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='1>5h'
-                checked={checkedState['1>5h']}
+                value={allQuery.value.duration.overOneHour}
+                checked={checkedState['overOneHour']}
                 onChange={handleCheckboxChange}
               />
               1 à 5 heures
@@ -148,8 +159,8 @@ const FilterByDuration = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='>5h'
-                checked={checkedState['>5h']}
+                value={allQuery.value.duration.overFiveHour}
+                checked={checkedState['overFiveHour']}
                 onChange={handleCheckboxChange}
               />
               5+ heures

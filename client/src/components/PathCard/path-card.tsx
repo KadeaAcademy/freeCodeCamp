@@ -7,7 +7,7 @@ import clockIcon from '../../assets/icons/clock.svg';
 import levelIcon from '../../assets/icons/level.svg';
 
 import './path-card.css';
-import routes from '../../utils/routes';
+import { routes } from '../../utils/routes';
 
 // const { apiLocation } = envData;
 

@@ -23,7 +23,7 @@ import {
 } from '../../client-only-routes/show-courses';
 import { splitArray } from '../helpers';
 import sortCourses from '../helpers/sort-course';
-import routes from '../../utils/routes';
+import { routes } from '../../utils/routes';
 import {
   categoryCounter,
   myAllDataCourses,
@@ -411,6 +411,7 @@ const CourseFilter = ({
           </ul>
           <div
             className={
+              location.pathname == '/catalogue/' ||
               location.pathname == '/catalogue'
                 ? 'hidden-filter-on-Catalogue'
                 : ''

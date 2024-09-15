@@ -9,7 +9,6 @@ import {
   valueOfCurrentCategory,
   valueOfTypeLevel
 } from '../../redux/atoms';
-import { AddFilterQueryString } from '../../utils/allFunctions';
 
 const FilterByLevel = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -32,35 +31,52 @@ const FilterByLevel = () => {
 
   // Charger l'état des cases à cocher depuis le localStorage
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const savedState = JSON.parse(
-      localStorage.getItem('filterLevelState') || '{}'
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    if (savedState && Object.keys(savedState).length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setCheckedState(savedState);
-    }
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const duration = params.get('niveau')?.split(',') || [];
+
+    setCheckedState({
+      Débutant: duration.includes('Débutant'),
+      Intermédiaire: duration.includes('Intermediaire'),
+      Avancé: duration.includes('Avancé')
+    });
+
+    setValueLevel(duration.join(','));
+    setValueChecked(duration.length > 0);
+    setChangeState(false);
+    setValue0fCurrentCategory(currentCategorieValue);
+  }, [
+    currentCategorieValue,
+    setValueLevel,
+    setValueChecked,
+    setValue0fCurrentCategory,
+    setChangeState
+  ]);
 
   // Sauvegarder l'état des cases à cocher dans le localStorage lorsqu'il change
-  useEffect(() => {
-    localStorage.setItem('filterLevelState', JSON.stringify(checkedState));
-  }, [checkedState]);
-
-  useEffect(() => {
-    AddFilterQueryString('', '');
-  }, []);
 
   const handleLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
 
     setCheckedState(prevState => {
       const updatedState = { ...prevState, [value]: checked };
+      const queryParams = new URLSearchParams(window.location.search);
+      let level = queryParams.get('niveau')?.split(',') || [];
 
-      setValueLevel(value);
-      AddFilterQueryString('niveau', value);
-      setValueChecked(checked);
+      if (checked) {
+        if (!level.includes(value)) level.push(value);
+      } else {
+        level = level.filter(level => level !== value);
+      }
+
+      if (level.length > 0) {
+        queryParams.set('niveau', level.join(','));
+      } else {
+        queryParams.delete('niveau');
+      }
+
+      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+      setValueLevel(level.join(''));
+
       setCounterForcategory(
         counterForCategory >= 0 && checked
           ? counterForCategory + 1
@@ -69,6 +85,7 @@ const FilterByLevel = () => {
           : counterForCategory
       );
       setChangeState(false);
+      setValueChecked(checked);
       setValue0fCurrentCategory(currentCategorieValue);
       console.log(showFilter);
 

@@ -39,7 +39,7 @@ import {
 } from '../../client-only-routes/show-courses';
 import { splitArray } from '../helpers';
 import sortCourses from '../helpers/sort-course';
-import routes from '../../utils/routes';
+import { routes } from '../../utils/routes';
 import {
   myAllDataCourses,
   titleOfCategorieValue,
@@ -305,7 +305,6 @@ const CoursesCategoryCard = ({
             className={
               valueDeToken == null ? ' hide__category' : 'hide__category'
             }
-            style={{ display: 'none' }}
             onClick={() => {
               setCurrent(-2);
               setValueOfButton('Amazon Web Service');
