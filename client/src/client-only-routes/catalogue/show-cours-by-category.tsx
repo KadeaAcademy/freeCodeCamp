@@ -171,7 +171,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
-              const courseLanguage = course as ProgramationCourses;
+              const courseLanguage = course;
               return (
                 (filterByEnglish && courseLanguage.language === 'Français') ||
                 (filterByFrench && courseLanguage.language === 'Anglais')
@@ -186,7 +186,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
-              const coursData = course as ProgramationCourses;
+              const coursData = course;
               return (
                 (filterByParcours && coursData.type === 'Parcours') ||
                 (filterByCours && coursData.type === 'Cours')
@@ -202,7 +202,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
-              const coursData = course as ProgramationCourses;
+              const coursData = course;
               return (
                 (filterByDebutant && coursData.level === 'Débutant') ||
                 (filterByIntermediaire &&
@@ -221,7 +221,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
-              const courseData = course as ProgramationCourses;
+              const courseData = course;
               const courseHours = convertTimeForFilter(courseData.duration);
               return (
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -442,8 +442,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       console.error('Error fetching courses:', error);
     }
   };
-
-  console.log(currentUrl);
 
   useEffect(() => {
     void fetchCourses();

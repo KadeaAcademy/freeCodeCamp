@@ -86,7 +86,12 @@ const FilterByDuration = () => {
       }
 
       // Mettre à jour l'URL sans recharger la page
-      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+      const newQueryString = queryParams.toString();
+      if (newQueryString) {
+        window.history.replaceState(null, '', `?${newQueryString}`);
+      } else {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
 
       setValueDuration(duration.join(','));
       setCounterForcategory(

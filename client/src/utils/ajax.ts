@@ -114,7 +114,7 @@ export interface ProgramationCourses {
   type: string;
 }
 
-export const dataForprogramation: programationCourses[] = [
+export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'Responsive Web Design',
     level: 'Débutant',

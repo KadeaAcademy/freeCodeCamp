@@ -76,7 +76,12 @@ const FilterByType = () => {
       }
 
       // Mettre à jour l'URL sans recharger la page
-      window.history.replaceState(null, '', `?${queryParams.toString()}`);
+      const newQueryString = queryParams.toString();
+      if (newQueryString) {
+        window.history.replaceState(null, '', `?${newQueryString}`);
+      } else {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
 
       // Mises à jour des états pour la gestion des filtres
       setValuype(types.join(','));
