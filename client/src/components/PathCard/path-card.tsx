@@ -92,7 +92,7 @@ const PathCard = ({
                         alt='icone clock duration'
                         className='clock'
                       />
-                      <p> {level}</p>
+                      <p> {level == 'debutant' ? 'Débutant' : level}</p>
                     </>
                   ) : (
                     ''

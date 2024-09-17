@@ -329,6 +329,14 @@ img {
     line-height: normal !important;
   }
 
+  .level-card-parcours {
+    padding: 2rem 0rem 0rem 0.8rem;
+  }
+
+  .course__language p {
+    padding: 0rem 0rem 0rem 0.8rem;
+  }
+
   .row-link {
     width: 11rem;
     justify-content: flex-end;

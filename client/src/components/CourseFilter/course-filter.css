@@ -262,6 +262,11 @@ details[open] > *:not(summary) {
     top: 1px;
   }
 
+  .pagination-container {
+    padding-top: 0rem;
+    margin-bottom: 3rem;
+  }
+
   .main-title-filter-container {
     display: flex;
     justify-content: center;
