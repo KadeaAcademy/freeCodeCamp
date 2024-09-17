@@ -148,7 +148,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         .flatMap(course => (Array.isArray(course) ? course : [course]))
         .filter(course => 'launch_url' in course) as RavenCourse[];
-      setCentraleRavenData(centralRaveData);
+      setCentraleRavenData(ravenCourses);
 
       const moodleCourses = courses
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -156,7 +156,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         .filter(course => !('launch_url' in course)) as MoodleCourse[];
 
-      let filteredRavenCourses = centralRaveData;
+      let filteredRavenCourses = ravenCourses;
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       let filteredMoodleCourses = moodleCourses;
@@ -305,6 +305,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filteredRavenCourses = filteredRavenCourses.filter(course => {
             const courseLanguage = course.category?.[0]?.tags?.[0]?.title;
+
             if (filterByEnglish || filterByFrench) {
               return (
                 (filterByEnglish &&
