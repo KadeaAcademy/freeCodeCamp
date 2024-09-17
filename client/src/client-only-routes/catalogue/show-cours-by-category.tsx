@@ -148,7 +148,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         .flatMap(course => (Array.isArray(course) ? course : [course]))
         .filter(course => 'launch_url' in course) as RavenCourse[];
-      setCentraleRavenData(ravenCourses);
+      setCentraleRavenData(centralRaveData);
 
       const moodleCourses = courses
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -280,7 +280,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         // Initialisation des flags de filtres
         const isLanguageFilterActive =
           currentUrl.includes(allQuery.value.language.english) ||
-          currentUrl.includes(allQuery.value.language.english);
+          currentUrl.includes(allQuery.value.language.french);
         const isTypeFilterActive =
           currentUrl.includes(allQuery.value.type.parcours) ||
           currentUrl.includes(allQuery.value.type.cours);
@@ -298,16 +298,17 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
             allQuery.value.language.english
           );
           const filterByFrench = currentUrl.includes(
-            allQuery.value.language.english
+            allQuery.value.language.french
           );
 
           filteredRavenCourses = filteredRavenCourses.filter(course => {
             const courseLanguage = course.category?.[0]?.tags?.[0]?.title;
+
             return (
               (filterByEnglish &&
-                courseLanguage === allQuery.value.language.english) ||
+                courseLanguage == allQuery.value.language.english) ||
               (filterByFrench &&
-                courseLanguage === allQuery.value.language.english)
+                courseLanguage == allQuery.value.language.french)
             );
           });
         }
