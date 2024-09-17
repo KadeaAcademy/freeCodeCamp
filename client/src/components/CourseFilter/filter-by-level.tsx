@@ -9,6 +9,7 @@ import {
   valueOfCurrentCategory,
   valueOfTypeLevel
 } from '../../redux/atoms';
+import { allQuery } from '../../utils/routes';
 
 const FilterByLevel = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -25,19 +26,19 @@ const FilterByLevel = () => {
 
   const [checkedState, setCheckedState] = useState({
     Débutant: false,
-    Intermédiaire: false,
-    Avancé: false
+    Intermediate: false,
+    avance: false
   });
 
   // Charger l'état des cases à cocher depuis le localStorage
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const duration = params.get('niveau')?.split(',') || [];
+    const duration = params.get(allQuery.key.level)?.split(',') || [];
 
     setCheckedState({
-      Débutant: duration.includes('Débutant'),
-      Intermédiaire: duration.includes('Intermédiaire'),
-      Avancé: duration.includes('Avancé')
+      Débutant: duration.includes(allQuery.value.level.debutant),
+      Intermediate: duration.includes(allQuery.value.level.intermediaire),
+      avance: duration.includes(allQuery.value.level.avance)
     });
 
     setValueLevel(duration.join(','));
@@ -60,7 +61,7 @@ const FilterByLevel = () => {
     setCheckedState(prevState => {
       const updatedState = { ...prevState, [value]: checked };
       const queryParams = new URLSearchParams(window.location.search);
-      let level = queryParams.get('niveau')?.split(',') || [];
+      let level = queryParams.get(allQuery.key.level)?.split(',') || [];
 
       if (checked) {
         if (!level.includes(value)) level.push(value);
@@ -69,9 +70,9 @@ const FilterByLevel = () => {
       }
 
       if (level.length > 0) {
-        queryParams.set('niveau', level.join(','));
+        queryParams.set(allQuery.key.level, level.join(','));
       } else {
-        queryParams.delete('niveau');
+        queryParams.delete(allQuery.key.level);
       }
 
       const newQueryString = queryParams.toString();
@@ -149,7 +150,7 @@ const FilterByLevel = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Débutant'
+                value={allQuery.value.level.debutant}
                 checked={checkedState.Débutant}
                 onChange={handleLevelChange}
               />
@@ -158,8 +159,8 @@ const FilterByLevel = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Intermédiaire'
-                checked={checkedState.Intermédiaire}
+                value={allQuery.value.level.intermediaire}
+                checked={checkedState.Intermediate}
                 onChange={handleLevelChange}
               />
               Intermédiaire
@@ -167,8 +168,8 @@ const FilterByLevel = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Avancé'
-                checked={checkedState.Avancé}
+                value={allQuery.value.level.avance}
+                checked={checkedState.avance}
                 onChange={handleLevelChange}
               />
               Avancé

@@ -36,9 +36,9 @@ const FilterByDuration = () => {
 
     // Convertir les valeurs affichées en clés internes
     const checkedState = {
-      lessOneHour: duration.includes('<1h'),
-      overOneHour: duration.includes('>1h'),
-      overFiveHour: duration.includes('>5h')
+      lessOneHour: duration.includes(allQuery.value.duration.lessOneHour),
+      overOneHour: duration.includes(allQuery.value.duration.overOneHour),
+      overFiveHour: duration.includes(allQuery.value.duration.overFiveHour)
     };
 
     setCheckedState(checkedState);
@@ -66,9 +66,9 @@ const FilterByDuration = () => {
       // Convertir les clés internes en valeurs affichées
       const displayValue =
         {
-          lessOneHour: '<1h',
-          overOneHour: '>1h',
-          overFiveHour: '>5h'
+          lessOneHour: allQuery.value.duration.lessOneHour,
+          overOneHour: allQuery.value.duration.overOneHour,
+          overFiveHour: allQuery.value.duration.overFiveHour
         }[value] || '';
 
       // Ajouter ou supprimer la valeur de la liste

@@ -29,9 +29,9 @@ export function convertTime(timeInput: string | number): string {
   const remainingMinutes = totalMinutes % 60;
 
   if (remainingMinutes === 0) {
-    return `${hours} h${hours > 1 ? 's' : ''}`;
+    return `${hours} heure${hours > 1 ? 's' : ''}`;
   } else {
-    return `${hours} h${hours > 1 ? 's' : ''} ${remainingMinutes} minutes`;
+    return `${hours} heure${hours > 1 ? 's' : ''} ${remainingMinutes} minutes`;
   }
 }
 

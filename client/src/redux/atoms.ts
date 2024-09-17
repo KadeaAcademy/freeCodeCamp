@@ -151,6 +151,13 @@ export const pathRaven = atom<RavenCourse[]>({
   effects_UNSTABLE: [localStorageEffect('pathRaven')]
 });
 
+export const centraliseRavenData = atom<RavenCourse[]>({
+  key: 'centraliseRavenData',
+  default: [],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: [localStorageEffect('centraliseRavenData')]
+});
+
 export const categoryCours = atom<MoodleCourseCategory[] | null | undefined>({
   key: 'categoryCours',
   default: [],
