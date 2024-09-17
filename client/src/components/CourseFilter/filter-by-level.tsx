@@ -25,7 +25,7 @@ const FilterByLevel = () => {
     useRecoilState(categoryCounter);
 
   const [checkedState, setCheckedState] = useState({
-    Débutant: false,
+    debutant: false,
     Intermediate: false,
     avance: false
   });
@@ -36,7 +36,7 @@ const FilterByLevel = () => {
     const duration = params.get(allQuery.key.level)?.split(',') || [];
 
     setCheckedState({
-      Débutant: duration.includes(allQuery.value.level.debutant),
+      debutant: duration.includes(allQuery.value.level.debutant),
       Intermediate: duration.includes(allQuery.value.level.intermediaire),
       avance: duration.includes(allQuery.value.level.avance)
     });
@@ -151,7 +151,7 @@ const FilterByLevel = () => {
               <input
                 type='checkbox'
                 value={allQuery.value.level.debutant}
-                checked={checkedState.Débutant}
+                checked={checkedState.debutant}
                 onChange={handleLevelChange}
               />
               Débutant

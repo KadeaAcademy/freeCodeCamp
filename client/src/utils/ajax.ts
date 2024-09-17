@@ -117,7 +117,7 @@ export interface ProgramationCourses {
 export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'Responsive Web Design',
-    level: 'Débutant',
+    level: 'debutant',
     language: 'Français',
     sponsorIcon: 'LaediesActIcon',
     alt: 'Icone ladies Act des cours Responsive design',
@@ -130,7 +130,7 @@ export const dataForprogramation: ProgramationCourses[] = [
   },
   {
     title: 'JavaScript Algorithms and Data Structures',
-    level: 'Débutant',
+    level: 'debutant',
     language: 'Anglais',
     sponsorIcon: 'AlgoIcon',
     alt: 'Icone cours algorithm et structure de données',
@@ -406,7 +406,7 @@ export const getMoodleCourses = async () => {
     let additionalProperties = {
       level: 'debutant',
       duration: 0,
-      type: 'cours',
+      type: 'Cours',
       langue: 'French'
     };
 

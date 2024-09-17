@@ -162,21 +162,19 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       let filteredMoodleCourses = moodleCourses;
       let filterProgramationCourses = dataForprogramation;
 
-      if (valueOfCurrentCategorie === -1) {
-        const isLanguageFilterActive =
-          currentUrl.includes(allQuery.value.language.english) ||
-          currentUrl.includes(allQuery.value.language.french);
-        const isTypeFilterActive =
-          currentUrl.includes(allQuery.value.type.parcours) ||
-          currentUrl.includes(allQuery.value.type.cours);
-        const isLevelFilterActive =
-          currentUrl.includes(allQuery.value.level.debutant) ||
-          currentUrl.includes(allQuery.value.level.intermediaire) ||
-          currentUrl.includes(allQuery.value.level.avance);
-        const isDurationFilterActive = currentUrl.includes(
-          allQuery.key.duration
-        );
+      const isLanguageFilterActive =
+        currentUrl.includes(allQuery.value.language.english) ||
+        currentUrl.includes(allQuery.value.language.french);
+      const isTypeFilterActive =
+        currentUrl.includes(allQuery.value.type.parcours) ||
+        currentUrl.includes(allQuery.value.type.cours);
+      const isLevelFilterActive =
+        currentUrl.includes(allQuery.value.level.debutant) ||
+        currentUrl.includes(allQuery.value.level.intermediaire) ||
+        currentUrl.includes(allQuery.value.level.avance);
+      const isDurationFilterActive = currentUrl.includes(allQuery.key.duration);
 
+      if (valueOfCurrentCategorie === -1) {
         if (isLanguageFilterActive) {
           const filterByEnglish = currentUrl.includes(
             allQuery.value.language.english
@@ -188,10 +186,12 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
               const courseLanguage = course;
-              return (
-                (filterByEnglish && courseLanguage.language === 'Français') ||
-                (filterByFrench && courseLanguage.language === 'Anglais')
-              );
+              if (filterByEnglish || filterByFrench) {
+                return (
+                  (filterByEnglish && courseLanguage.language === 'Français') ||
+                  (filterByFrench && courseLanguage.language === 'Anglais')
+                );
+              }
             }
           );
         }
@@ -205,11 +205,15 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
               const coursData = course;
-              return (
-                (filterByParcours &&
-                  coursData.type === allQuery.value.type.parcours) ||
-                (filterByCours && coursData.type === allQuery.value.type.cours)
-              );
+
+              if (filterByParcours || filterByCours) {
+                return (
+                  (filterByParcours &&
+                    coursData.type === allQuery.value.type.parcours) ||
+                  (filterByCours &&
+                    coursData.type === allQuery.value.type.cours)
+                );
+              }
             }
           );
         }
@@ -227,14 +231,18 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
               const coursData = course;
-              return (
-                (filterByDebutant &&
-                  coursData.level === allQuery.value.level.debutant) ||
-                (filterByIntermediaire &&
-                  coursData.level === allQuery.value.level.intermediaire) ||
-                (filterByAvance &&
-                  coursData.level === allQuery.value.level.avance)
-              );
+              console.log(coursData.level);
+
+              if (filterByDebutant || filterByIntermediaire || filterByAvance) {
+                return (
+                  (filterByDebutant &&
+                    coursData.level === allQuery.value.level.debutant) ||
+                  (filterByIntermediaire &&
+                    coursData.level === allQuery.value.level.intermediaire) ||
+                  (filterByAvance &&
+                    coursData.level === allQuery.value.level.avance)
+                );
+              }
             }
           );
         }
@@ -247,16 +255,23 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           filterProgramationCourses = filterProgramationCourses.filter(
             course => {
               const courseData = course;
-              const courseHours = convertTimeForFilter(courseData.duration);
-              return (
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                (filterLessThan1Hour && courseHours < 60) ||
-                (filterBetween1And5Hours &&
-                  courseHours >= 60 &&
-                  courseHours <= 300) ||
-                (filterUpTo5Hours && courseHours <= 300) ||
-                (filterMoreThan5Hours && courseHours > 300)
-              );
+              const courseHours = courseData.duration as number;
+
+              if (
+                filterLessThan1Hour ||
+                filterBetween1And5Hours ||
+                filterUpTo5Hours
+              ) {
+                return (
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                  (filterLessThan1Hour && courseHours < 60) ||
+                  (filterBetween1And5Hours &&
+                    courseHours >= 60 &&
+                    courseHours <= 300) ||
+                  (filterUpTo5Hours && courseHours <= 300) ||
+                  (filterMoreThan5Hours && courseHours > 300)
+                );
+              }
             }
           );
         }
@@ -278,19 +293,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       if (valueOfCurrentCategorie === -2) {
         // **Conditions pour RavenCourses**
         // Initialisation des flags de filtres
-        const isLanguageFilterActive =
-          currentUrl.includes(allQuery.value.language.english) ||
-          currentUrl.includes(allQuery.value.language.french);
-        const isTypeFilterActive =
-          currentUrl.includes(allQuery.value.type.parcours) ||
-          currentUrl.includes(allQuery.value.type.cours);
-        const isLevelFilterActive =
-          currentUrl.includes(allQuery.value.level.debutant) ||
-          currentUrl.includes(allQuery.value.level.intermediaire) ||
-          currentUrl.includes(allQuery.value.level.avance);
-        const isDurationFilterActive = currentUrl.includes(
-          allQuery.key.duration
-        );
 
         // Appliquer les filtres seulement s'ils sont activés
         if (isLanguageFilterActive) {
@@ -303,13 +305,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filteredRavenCourses = filteredRavenCourses.filter(course => {
             const courseLanguage = course.category?.[0]?.tags?.[0]?.title;
-
-            return (
-              (filterByEnglish &&
-                courseLanguage == allQuery.value.language.english) ||
-              (filterByFrench &&
-                courseLanguage == allQuery.value.language.french)
-            );
+            if (filterByEnglish || filterByFrench) {
+              return (
+                (filterByEnglish &&
+                  courseLanguage == allQuery.value.language.english) ||
+                (filterByFrench &&
+                  courseLanguage == allQuery.value.language.french)
+              );
+            }
           });
         }
 
@@ -320,10 +323,12 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           const filterByCours = currentUrl.includes(allQuery.value.type.cours);
 
           filteredRavenCourses = filteredRavenCourses.filter(course => {
-            return (
-              (filterByParcours && course.long_description) ||
-              (filterByCours && course.short_description)
-            );
+            if (filterByParcours || filterByCours) {
+              return (
+                (filterByParcours && course.long_description) ||
+                (filterByCours && !course.long_description)
+              );
+            }
           });
         }
 
@@ -339,12 +344,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           );
 
           filteredRavenCourses = filteredRavenCourses.filter(course => {
-            return (
-              (filterByDebutant && course.skill_level === 'Fundamental') ||
-              (filterByIntermediaire &&
-                course.skill_level === allQuery.value.level.intermediaire) ||
-              (filterByAvance && course.skill_level === 'Advanced')
-            );
+            if (filterByDebutant || filterByIntermediaire || filterByAvance) {
+              return (
+                (filterByDebutant && course.skill_level === 'Fundamental') ||
+                (filterByIntermediaire &&
+                  course.skill_level === allQuery.value.level.intermediaire) ||
+                (filterByAvance && course.skill_level === 'Advanced')
+              );
+            }
           });
         }
 
@@ -357,14 +364,20 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           filteredRavenCourses = filteredRavenCourses.filter(course => {
             const courseHours = convertTimeForFilter(parseInt(course.duration));
 
-            return (
-              (filterLessThan1Hour && courseHours < 60) ||
-              (filterBetween1And5Hours &&
-                courseHours >= 60 &&
-                courseHours <= 300) ||
-              (filterUpTo5Hours && courseHours <= 300) ||
-              (filterMoreThan5Hours && courseHours > 300)
-            );
+            if (
+              filterLessThan1Hour ||
+              filterBetween1And5Hours ||
+              filterUpTo5Hours
+            ) {
+              return (
+                (filterLessThan1Hour && courseHours < 60) ||
+                (filterBetween1And5Hours &&
+                  courseHours >= 60 &&
+                  courseHours <= 300) ||
+                (filterUpTo5Hours && courseHours <= 300) ||
+                (filterMoreThan5Hours && courseHours > 300)
+              );
+            }
           });
         }
 
@@ -387,20 +400,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         valueOfCurrentCategorie === 13 ||
         valueOfCurrentCategorie === 14
       ) {
-        const isLanguageFilterActive =
-          currentUrl.includes(allQuery.value.language.english) ||
-          currentUrl.includes(allQuery.value.language.english);
-        const isTypeFilterActive =
-          currentUrl.includes(allQuery.value.type.parcours) ||
-          currentUrl.includes(allQuery.value.type.cours);
-        const isLevelFilterActive =
-          currentUrl.includes(allQuery.value.level.debutant) ||
-          currentUrl.includes(allQuery.value.level.intermediaire) ||
-          currentUrl.includes(allQuery.value.level.avance);
-        const isDurationFilterActive = currentUrl.includes(
-          allQuery.key.duration
-        );
-
         // **Ajoutez ce filtre pour vérifier la catégorie**
         filteredMoodleCourses = moodleCourses.filter(
           course => course.categoryid === valueOfCurrentCategorie
@@ -412,17 +411,20 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
             allQuery.value.language.english
           );
           const filterByFrench = currentUrl.includes(
-            allQuery.value.language.english
+            allQuery.value.language.french
           );
 
           filteredMoodleCourses = filteredMoodleCourses.filter(course => {
             const courseLanguage = course.langue;
-            return (
-              (filterByEnglish &&
-                courseLanguage === allQuery.value.language.english) ||
-              (filterByFrench &&
-                courseLanguage === allQuery.value.language.english)
-            );
+
+            if (filterByEnglish || filterByFrench) {
+              return (
+                (filterByEnglish &&
+                  courseLanguage === allQuery.value.language.english) ||
+                (filterByFrench &&
+                  courseLanguage === allQuery.value.language.french)
+              );
+            }
           });
         }
 
@@ -434,14 +436,17 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filteredMoodleCourses = filteredMoodleCourses.filter(course => {
             const category = course.categoryid;
-            return (
-              (filterByParcours &&
-                category &&
-                course.type === allQuery.value.type.parcours) ||
-              (filterByCours &&
-                category &&
-                course.type === allQuery.value.type.cours)
-            );
+
+            if (filterByParcours || filterByCours) {
+              return (
+                (filterByParcours &&
+                  category &&
+                  course.type === allQuery.value.type.parcours) ||
+                (filterByCours &&
+                  category &&
+                  course.type === allQuery.value.type.cours)
+              );
+            }
           });
         }
 
@@ -457,12 +462,15 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           );
 
           filteredMoodleCourses = filteredMoodleCourses.filter(course => {
-            return (
-              (filterByDebutant && course.level === 'debutant') ||
-              (filterByIntermediaire &&
-                course.level === allQuery.value.level.intermediaire) ||
-              (filterByAvance && course.level === 'Advanced')
-            );
+            if (filterByDebutant || filterByIntermediaire || filterByAvance) {
+              return (
+                (filterByDebutant &&
+                  course.level == allQuery.value.level.debutant) ||
+                (filterByIntermediaire &&
+                  course.level === allQuery.value.level.intermediaire) ||
+                (filterByAvance && course.level === 'Advanced')
+              );
+            }
           });
         }
 
@@ -474,14 +482,22 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
           filteredMoodleCourses = filteredMoodleCourses.filter(course => {
             const courseHours = convertTimeForFilter(course.duration);
-            return (
-              (filterLessThan1Hour && courseHours < 60) ||
-              (filterBetween1And5Hours &&
-                courseHours >= 60 &&
-                courseHours <= 300) ||
-              (filterUpTo5Hours && courseHours <= 300) ||
-              (filterMoreThan5Hours && courseHours > 300)
-            );
+            console.log(courseHours);
+
+            if (
+              filterLessThan1Hour ||
+              filterBetween1And5Hours ||
+              filterUpTo5Hours
+            ) {
+              return (
+                (filterLessThan1Hour && courseHours < 60) ||
+                (filterBetween1And5Hours &&
+                  courseHours >= 60 &&
+                  courseHours <= 300) ||
+                (filterUpTo5Hours && courseHours <= 300) ||
+                (filterMoreThan5Hours && courseHours > 300)
+              );
+            }
           });
         }
 

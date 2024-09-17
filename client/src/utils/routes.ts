@@ -25,7 +25,7 @@ const allQuery = Object.freeze({
   },
   value: Object.freeze({
     level: Object.freeze({
-      debutant: 'Débutant',
+      debutant: 'debutant',
       intermediaire: 'Intermediate',
       avance: 'avance'
     }),
