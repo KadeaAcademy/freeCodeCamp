@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -9,6 +9,7 @@ import {
 import {
   addRavenTokenToLocalStorage,
   generateRavenTokenAcces,
+  getAllRessources,
   getAwsCourses,
   getExternalResource,
   getRavenPathResources,
@@ -17,7 +18,7 @@ import {
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
-import { tokenRaven } from '../../../redux/atoms';
+import { myDataMoodle, myDataRaven, tokenRaven } from '../../../redux/atoms';
 import envData from './../../../../../config/env.json';
 
 type MoodleCoursesFiltered = {
@@ -62,6 +63,8 @@ const CoursesFilterSection = ({
   currentCategory: string;
 }): JSX.Element => {
   const getValueOfAwsToken = useRecoilValue(tokenRaven);
+  const setDataCoursesMoodle = useSetRecoilState(myDataMoodle);
+  const setDataCoursesRaven = useSetRecoilState(myDataRaven);
 
   const getMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
@@ -206,6 +209,28 @@ const CoursesFilterSection = ({
   useEffect(() => {
     void getRavenPathResources(1);
     void getRavenResources();
+    const fetchData = async () => {
+      try {
+        const currentPage = 1;
+        const res = await getAllRessources(currentPage);
+
+        // Séparer les cours Raven et Moodle
+        const ravenCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : [course]))
+          .filter(course => 'launch_url' in course) as RavenCourse[];
+        setDataCoursesRaven(ravenCourses);
+
+        const moodleCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : []))
+          .filter(course => !('launch_url' in course)) as MoodleCourse[];
+        setDataCoursesMoodle(moodleCourses);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
