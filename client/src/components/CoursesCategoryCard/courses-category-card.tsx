@@ -290,7 +290,7 @@ const CoursesCategoryCard = ({
             onClick={() => {
               setCurrent(-1);
               setValueOfButton(' Programmation');
-              void navigate(routes.catalogue.aws);
+              void navigate(routes.catalogue.programmation);
               //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
             }}
           >

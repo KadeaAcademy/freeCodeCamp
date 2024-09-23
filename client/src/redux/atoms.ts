@@ -1,5 +1,6 @@
 import { atom, AtomEffect, DefaultValue, selector } from 'recoil';
 import {
+  MoodleCourse,
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
   RavenCourse
@@ -144,11 +145,25 @@ export const coursesMoodle = atom<MoodleCoursesCatalogue | null | undefined>({
   effects_UNSTABLE: [localStorageEffect('coursesMoodle')]
 });
 
+export const myDataMoodle = atom<MoodleCourse[] | undefined>({
+  key: 'myDataMoodle',
+  default: [],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: [localStorageEffect('myDataMoodle')]
+});
+
 export const pathRaven = atom<RavenCourse[]>({
   key: 'pathRaven',
   default: [],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   effects_UNSTABLE: [localStorageEffect('pathRaven')]
+});
+
+export const myDataRaven = atom<RavenCourse[] | undefined>({
+  key: 'myDataRaven',
+  default: [],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: [localStorageEffect('myDataRaven')]
 });
 
 export const centraliseRavenData = atom<RavenCourse[]>({

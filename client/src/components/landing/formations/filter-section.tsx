@@ -1,15 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
-  MoodleCoursesCatalogue
+  MoodleCoursesCatalogue,
+  RavenCourse
 } from '../../../client-only-routes/show-courses';
 import {
   addRavenTokenToLocalStorage,
   generateRavenTokenAcces,
   getAwsCourses,
   getExternalResource,
+  getRavenPathResources,
   getRavenTokenDataFromLocalStorage,
   removeRavenTokenFromLocalStorage
 } from '../../../utils/ajax';
@@ -23,18 +25,6 @@ type MoodleCoursesFiltered = {
   warnings: [];
 };
 
-type RavenCourse = {
-  learningobjectid: number;
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  createddate: string;
-  updateddate: string;
-  contenttype: string;
-  duration: string;
-};
 interface RavenTokenData {
   token: string;
   expiresIn: number;
@@ -212,6 +202,12 @@ const CoursesFilterSection = ({
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setCurrentCategory, courseCategories]);
+
+  useEffect(() => {
+    void getRavenPathResources(1);
+    void getRavenResources();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='formation__button_list'>

@@ -193,10 +193,10 @@ const CourseFilterList = ({
               onClick={e => {
                 handleButtonClick(e);
                 setMoodleCourses(null);
-                // setRavenCourses(null);
                 void getRavenResources();
                 void getMoodleCourses();
               }}
+              disabled={currentCategory === 'Populaires'}
             >
               {'Populaires'}
             </button>
@@ -211,6 +211,7 @@ const CourseFilterList = ({
                 setMoodleCourses(null);
                 void getRavenResources();
               }}
+              disabled={currentCategory === 'AWS'}
             >
               {'AWS'}
             </button>
@@ -231,6 +232,11 @@ const CourseFilterList = ({
                     void filterByCategory(element?.id);
                   }}
                   key={index}
+                  disabled={
+                    currentCategory == element?.name ||
+                    (element?.name.includes('&amp') &&
+                      currentCategory == 'Marketing & Communication')
+                  }
                 >
                   {element?.name.includes('&amp')
                     ? 'Marketing & Communication'

@@ -118,7 +118,7 @@ export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'Responsive Web Design',
     level: 'debutant',
-    language: 'Français',
+    language: 'French',
     sponsorIcon: 'LaediesActIcon',
     alt: 'Icone ladies Act des cours Responsive design',
     isAvailable: true,
@@ -131,7 +131,7 @@ export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'JavaScript Algorithms and Data Structures',
     level: 'debutant',
-    language: 'Anglais',
+    language: 'French',
     sponsorIcon: 'AlgoIcon',
     alt: 'Icone cours algorithm et structure de données',
     isAvailable: true,

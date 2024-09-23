@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './formation.css';
 import { FaAngleDown } from 'react-icons/fa';
+import { useSetRecoilState } from 'recoil';
 import LaptopIcon from '../../../assets/images/laptop.svg';
 import AlgoIcon from '../../../assets/images/algorithmIcon.svg';
 import clockIcon from '../../../assets/icons/iconeHorloge.svg';
@@ -10,11 +11,13 @@ import { convertTime } from '../../../utils/allFunctions';
 import {
   MoodleCourse,
   MoodleCourseCategory,
-  MoodleCoursesCatalogue
+  MoodleCoursesCatalogue,
+  RavenCourse
 } from '../../../client-only-routes/show-courses';
-import { getExternalResource } from '../../../utils/ajax';
+import { getAllRessources, getExternalResource } from '../../../utils/ajax';
 import { Link, splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
+import { myDataMoodle, myDataRaven } from '../../../redux/atoms';
 import CoursesFilterSection from './filter-section';
 import envData from './../../../../../config/env.json';
 
@@ -32,18 +35,6 @@ const popularCourses = [
 ];
 
 const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
-type RavenCourse = {
-  learningobjectid: number;
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  createddate: string;
-  updateddate: string;
-  contenttype: string;
-  duration: string;
-};
 
 function Formations() {
   const [courseCategories, setCourseCategories] = useState<
@@ -56,6 +47,8 @@ function Formations() {
     RavenCourse[] | null | undefined
   >([]);
   const [currentCategory, setCurrentCategory] = useState<string>('popular');
+  const setMyAllRavenCourse = useSetRecoilState(myDataRaven);
+  const setMyAllMoodleCourse = useSetRecoilState(myDataMoodle);
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -119,6 +112,31 @@ function Formations() {
       setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentPage = 1;
+        const res = await getAllRessources(currentPage);
+
+        // Séparer les cours Raven et Moodle
+        const ravenAllCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : [course]))
+          .filter(course => 'launch_url' in course) as RavenCourse[];
+        setMyAllRavenCourse(ravenAllCourses);
+
+        const moodleCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : []))
+          .filter(course => !('launch_url' in course)) as MoodleCourse[];
+        setMyAllMoodleCourse(moodleCourses);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

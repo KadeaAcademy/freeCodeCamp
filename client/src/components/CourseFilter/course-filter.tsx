@@ -276,12 +276,7 @@ const CourseFilter = ({
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <rect width='24' height='24' fill='white' />
-                <path
-                  d='M17 9.5L12 14.5L7 9.5'
-                  stroke='#000000'
-                  // stroke-linecap='round'
-                  // stroke-linejoin='round'
-                />
+                <path d='M17 9.5L12 14.5L7 9.5' stroke='#000000' />
               </svg>
             )}
           </summary>
@@ -305,12 +300,11 @@ const CourseFilter = ({
                     setCurrentPage(1);
                     setCurrentCategory(null);
                     setCurrentCurrent(null);
-
-                    // setProgrammingCategory(true);
                     scrollTo(130);
                     if (screenWidth < 990) setShowFilter(e => !e);
                   })();
                 }}
+                disabled={currentCurrent == null}
               >
                 Tous
               </button>
@@ -334,6 +328,7 @@ const CourseFilter = ({
                     if (screenWidth < 990) setShowFilter(e => !e);
                   })();
                 }}
+                disabled={currentCurrent == -1}
               >
                 Programmation
               </button>
@@ -352,8 +347,6 @@ const CourseFilter = ({
                     setValueOfButton('Amazon Web Service');
                     setValueOfAllDataRessoures([]);
                     void navigate(routes.catalogue.aws);
-                    // setCurrentPage(1);
-                    // setProgrammingCategory(true);
                     setMoodleCourses(null);
                     await getRavenCourses();
                     await getRavenResourcesPath();
@@ -361,6 +354,7 @@ const CourseFilter = ({
                     if (screenWidth < 990) setShowFilter(e => !e);
                   })();
                 }}
+                disabled={currentCurrent == -2}
               >
                 Amazon Web Service
               </button>
@@ -378,7 +372,6 @@ const CourseFilter = ({
                       setValueOfAllDataRessoures([]);
                       await filterByCategory(course?.id ? course?.id : 0);
                       setRavenCourses(null);
-
                       setRavenPath(null);
                       setCurrentCategory(course?.id);
                       setCurrentCurrent(course?.id);
@@ -397,10 +390,10 @@ const CourseFilter = ({
                         )
                       );
                       scrollTo(130);
-                      // setProgrammingCategory(false);
                       if (screenWidth < 990) setShowFilter(e => !e);
                     })();
                   }}
+                  disabled={currentCurrent == course?.id}
                 >
                   {course?.name.includes('Marketing')
                     ? 'Marketing'

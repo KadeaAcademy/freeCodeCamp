@@ -45,7 +45,8 @@ import {
   getRavenTokenDataFromLocalStorage,
   removeRavenTokenFromLocalStorage,
   getAwsPath,
-  RavenTokenData
+  RavenTokenData,
+  getAllRessources
 } from '../utils/ajax';
 import {
   convertTime,
@@ -60,9 +61,11 @@ import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-categ
 import {
   allDataCourses,
   categoryCours,
-  centraliseRavenData,
   coursesMoodle,
   coursesRaven,
+  myAllDataCourses,
+  myDataMoodle,
+  myDataRaven,
   pathRaven,
   tokenRaven,
   valueOfCurrentCategory
@@ -228,6 +231,8 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataForAllCourses, setDataForallCourse] =
     useRecoilState<UnifiedCourse[]>(allDataCourses);
   const allDataofCourses = useRecoilValue(allDataCourses);
+  const setMyAllRavenCourse = useSetRecoilState(myDataRaven);
+  const setMyAllMoodleCourse = useSetRecoilState(myDataMoodle);
   const [dataRaven, setDataRaven] = useRecoilState<
     RavenCourse[] | null | undefined
   >(coursesRaven);
@@ -237,7 +242,8 @@ export function Courses(props: CoursesProps): JSX.Element {
     MoodleCoursesCatalogue | null | undefined
   >(coursesMoodle);
   const setTakeTokenValue = useSetRecoilState(tokenRaven);
-  const setCentraleRavenData = useSetRecoilState(centraliseRavenData);
+  const setAllaDataCoursProject = useSetRecoilState(myAllDataCourses);
+
   // const [valueLangue, setValueLangue] = useRecoilState(valueOfLanguage);
   // const [valueOfCourseType, setValueOfCourseType] =
   //   useRecoilState(valueOfTypeCourse);
@@ -266,7 +272,7 @@ export function Courses(props: CoursesProps): JSX.Element {
     };
     const getReveanCourses = await getAwsCourses(ravenData);
     setDataRaven(getReveanCourses as RavenCourse[]);
-    setCentraleRavenData(getReveanCourses as RavenCourse[]);
+    setAllaDataCoursProject(getReveanCourses as RavenCourse[]);
   };
 
   const getRavenResourcesPath = async () => {
@@ -280,7 +286,7 @@ export function Courses(props: CoursesProps): JSX.Element {
     };
     const getReveanCourses = await getAwsPath(ravenData);
     setDataRavenPath(getReveanCourses as unknown as RavenCourse[]);
-    setCentraleRavenData(getReveanCourses as unknown as RavenCourse[]);
+    setAllaDataCoursProject(getReveanCourses as unknown as RavenCourse[]);
   };
 
   const getRavenToken = async () => {
@@ -408,17 +414,38 @@ export function Courses(props: CoursesProps): JSX.Element {
     void getRavenResourcesPath();
     void getRavenResources();
 
+    const fetchData = async () => {
+      try {
+        const currentPage = 1;
+        const res = await getAllRessources(currentPage);
+
+        // Séparer les cours Raven et Moodle
+        const ravenCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : [course]))
+          .filter(course => 'launch_url' in course) as RavenCourse[];
+        setMyAllRavenCourse(ravenCourses);
+
+        const moodleCourses = res
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          .flatMap(course => (Array.isArray(course) ? course : []))
+          .filter(course => !('launch_url' in course)) as MoodleCourse[];
+        setMyAllMoodleCourse(moodleCourses);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    void fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   useEffect(() => {
     setDataForallCourse(allCourses);
   }, [allCourses, dataForAllCourses, setDataForallCourse]);
-
-  //   useEffect(() => {
-  //   dispatch(fetchRavenCoursesRequest());
-
-  // }, [dispatch]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     void getMoodleCourses();
