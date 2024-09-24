@@ -214,11 +214,11 @@ export function convertTimeForFilter(timeInput: string | number): number {
 // }
 
 export function formatDescription(inputText: string) {
-  const cleanedText = inputText.replace('<p>&nbsp;</p>', '');
-  if (cleanedText.length > 130) {
+  const cleanedText =
+    inputText != undefined ? inputText.replace('<p>&nbsp;</p>', '') : '';
+  if (inputText != undefined && cleanedText.length > 130) {
     return cleanedText.slice(0, 130) + '...';
   }
-  console.log(cleanedText);
 
   return cleanedText;
 }

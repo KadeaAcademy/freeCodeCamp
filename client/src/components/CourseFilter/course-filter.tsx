@@ -186,10 +186,7 @@ const CourseFilter = ({
                   }}
                   style={{
                     display:
-                      (category.categoryId == -2 &&
-                        valueOfTokenRaven == null) ||
-                      (location.pathname == '/catalogue' &&
-                        category.categoryId == -1)
+                      category.categoryId == -2 && valueOfTokenRaven == null
                         ? 'none'
                         : 'block'
                   }}

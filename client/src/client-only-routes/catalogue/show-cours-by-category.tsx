@@ -19,7 +19,9 @@ import awsLogo from '../../assets/images/aws-logo.png';
 import {
   getAllRessources,
   dataForprogramation,
-  ProgramationCourses
+  ProgramationCourses,
+  getAwsPath,
+  getRavenResources
 } from '../../utils/ajax';
 import {
   Loader,
@@ -89,7 +91,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const [valueOfCurrentCategorie, SetValueOfCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
-  const [ressourcesData, setRessourceDatas] = useRecoilState(myAllDataCourses);
+  const setRessourceDatas = useSetRecoilState(myAllDataCourses);
   // const allDataofCourses = useRecoilValue(allDataCourses);
   const setDataMoodle = useSetRecoilState(coursesMoodle);
   const setDataRaven = useSetRecoilState(coursesRaven);
@@ -99,6 +101,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const [dataCoursesMoodle, setDataCoursesMoodle] =
     useRecoilState(myDataMoodle);
   const [dataCoursesRaven, setDataCoursesRaven] = useRecoilState(myDataRaven);
+  const [coursesData, setCoursesData] = useState<unknown[]>([]);
 
   const currentUrl = window.location.href;
   const location = useLocation();
@@ -108,7 +111,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   const fetchCourses = () => {
     try {
-      setRessourceDatas([]);
       setIsDataOnLoading(true);
 
       const filteredRavenCourses = dataCoursesRaven;
@@ -123,10 +125,10 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         let courses: CourseType[] | undefined;
         let category: 'programation' | 'aws' | 'moodle';
 
-        if (valueOfCurrentCategorie === -1) {
+        if (valueOfUrl == 'programmation') {
           courses = filterProgramationCourses;
           category = 'programation';
-        } else if (valueOfCurrentCategorie === -2) {
+        } else if (valueOfUrl == 'amazon-web-service') {
           courses = filteredRavenCourses;
           category = 'aws';
         } else {
@@ -140,6 +142,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
         switch (category) {
           case 'programation':
+            setRessourceDatas([]);
             return courses.filter(
               course =>
                 filterLogics.programation.language(
@@ -186,6 +189,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         }
       };
       const filteredCourses = manyCategoryFilter();
+      setCoursesData(filteredCourses);
       setRessourceDatas(filteredCourses);
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
@@ -193,6 +197,25 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       setIsDataOnLoading(false);
     }
   };
+
+  async function fetchAllCours() {
+    const courses = await getAwsPath(currentPage);
+    const ravenCours: unknown = await getRavenResources(currentPage);
+    // Séparer les cours Raven et Moodle
+
+    if (Array.isArray(ravenCours)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      setRessourceDatas([...courses, ...ravenCours]);
+    } else {
+      setRessourceDatas([...courses]);
+    }
+  }
+
+  useEffect(() => {
+    void fetchAllCours();
+    setIsDataOnLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     void fetchCourses();
@@ -228,14 +251,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   useEffect(() => {
     setCurrentpage(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueOfCurrentCategorie, currentUrl]);
+  }, [valueOfCurrentCategorie, currentUrl, valueOfUrl]);
 
   const {
     paginatedData,
     totalPages,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     currentPage: page
-  } = paginate(ressourcesData, currentPage);
+  } = paginate(coursesData, currentPage);
 
   useEffect(() => {
     if (screenWidth > 990) setShowFilter(true);
@@ -366,42 +389,46 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                         {paginatedData.map((course, index) => {
                           // Vérifie les conditions pour valueOfCurrentCategorie
                           if (
-                            valueOfCurrentCategorie === -1 || // Ajout de valueOfCurrentCategorie === -1
-                            valueOfCurrentCategorie === -2 ||
-                            valueOfCurrentCategorie === 11 ||
-                            valueOfCurrentCategorie === 13 ||
-                            valueOfCurrentCategorie === 14
+                            valueOfUrl == 'programmation' ||
+                            valueOfUrl == 'amazon-web-service' ||
+                            valueOfUrl == 'Intelligence%20-%20artificielle' ||
+                            valueOfUrl == 'Marketing-Communication' ||
+                            valueOfUrl == 'Bureautique'
                           ) {
                             // Affichage des cours pour valueOfCurrentCategorie === -1
-                            if (valueOfCurrentCategorie === -1) {
+                            if (valueOfUrl == 'programmation') {
                               const courseList = course as ProgramationCourses;
-                              return (
-                                <CourseCard
-                                  level={courseList.level}
-                                  language={courseList.language}
-                                  icon={
-                                    courseList.sponsorIcon === 'AlgoIcon'
-                                      ? AlgoIcon
-                                      : LaediesActIcon
-                                  }
-                                  alt={courseList.alt}
-                                  isAvailable={courseList.isAvailable}
-                                  title={courseList.title}
-                                  buttonText='Suivre le cours'
-                                  link={courseList.link}
-                                  description={courseList.description}
-                                />
-                              );
+                              if (courseList.title) {
+                                return (
+                                  <CourseCard
+                                    level={courseList.level}
+                                    language={courseList.language}
+                                    icon={
+                                      courseList.sponsorIcon === 'AlgoIcon'
+                                        ? AlgoIcon
+                                        : LaediesActIcon
+                                    }
+                                    alt={courseList.alt}
+                                    isAvailable={courseList.isAvailable}
+                                    title={courseList.title}
+                                    buttonText='Suivre le cours'
+                                    link={courseList.link}
+                                    description={courseList.description}
+                                  />
+                                );
+                              } else {
+                                return renderCourseCardSkeletons(6);
+                              }
                             }
 
                             // Vérification si le cours est de type Raven
-                            if (valueOfCurrentCategorie === -2) {
+                            if (valueOfUrl == 'amazon-web-service') {
                               const courseTyped = course as RavenCourse;
                               const firstCategory = courseTyped.category?.[0];
                               const language =
                                 firstCategory?.tags?.[0]?.title || 'Unknown';
 
-                              if (valueOfCurrentCategorie === -2) {
+                              if (valueOfUrl == 'amazon-web-service') {
                                 if (courseTyped.long_description) {
                                   return (
                                     <PathCard
@@ -459,10 +486,16 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                             } else {
                               // Vérification si le cours est de type Moodle
                               const courseTyped = course as MoodleCourse;
-                              if (
-                                courseTyped.categoryid ===
-                                valueOfCurrentCategorie
-                              ) {
+                              const nowCategorie =
+                                valueOfUrl == 'Bureautique'
+                                  ? 11
+                                  : valueOfUrl == 'Marketing-Communication'
+                                  ? 13
+                                  : valueOfUrl ==
+                                    'Intelligence%20-%20artificielle'
+                                  ? 14
+                                  : valueOfCurrentCategorie;
+                              if (courseTyped.categoryid == nowCategorie) {
                                 return (
                                   <CourseCard
                                     language={courseTyped.langue}

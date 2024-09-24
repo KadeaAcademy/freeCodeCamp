@@ -46,8 +46,6 @@ import {
   tokenRaven,
   valueOfCurrentCategory
 } from '../../redux/atoms';
-// import routes from '../../utils/routes';
-// import { navigate } from 'gatsby';
 
 interface CourseFilterProps {
   screenWidth: number;
@@ -67,7 +65,7 @@ interface CourseFilterProps {
   getRavenResourcesPath: RavenFetchCoursesDto;
 }
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 const CoursesCategoryCard = ({
   setRavenCourses,
@@ -127,17 +125,8 @@ const CoursesCategoryCard = ({
   const getRavenCourses = async () => {
     await getRavenToken();
 
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
     setIsDataOnLoading(true);
-    const courses = (await getAwsCourses(ravenData)) as RavenCourse[];
+    const courses = (await getAwsCourses(1)) as RavenCourse[];
     if (courses && courses.length !== 0) {
       setRavenCourses(courses);
       setIsDataOnLoading(false);
@@ -147,17 +136,8 @@ const CoursesCategoryCard = ({
   const getRavenResourcesPath = async () => {
     await getRavenToken();
 
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
     setIsDataOnLoading(true);
-    const courses = (await getAwsPath(ravenData)) as unknown as RavenCourse[];
+    const courses = (await getAwsPath(1)) as unknown as RavenCourse[];
     if (courses && courses.length !== 0) {
       setRavenPath(courses);
       setIsDataOnLoading(false);
@@ -209,13 +189,6 @@ const CoursesCategoryCard = ({
     }
   };
 
-  // const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const target = e.target as HTMLButtonElement;
-  //   if (target !== null) {
-  //     setValueOfButton(target.textContent || '');
-  //   }
-  // };
-
   //selectionne une catégorie par rapport à la catégorie passée en simulant le clic sur le clavier
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -237,22 +210,6 @@ const CoursesCategoryCard = ({
       return devIcon;
     }
   };
-
-  // const handleButtonClick = async (
-  //   categoryId: number,
-  //   e: React.MouseEvent<HTMLButtonElement>
-  // ) => {
-  //   handleClickButton(e);
-
-  //   const url =
-  //     categoryId === -1
-  //       ? routes.catalogue.programmation
-  //       : categoryId === -2
-  //       ? routes.catalogue.aws
-  //       : '';
-  //   await handleCategoryClick(categoryId);
-  //   await navigate(url);
-  // };
 
   const handleButtonClickMoodle = async (
     categoryId: number,

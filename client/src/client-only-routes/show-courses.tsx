@@ -78,8 +78,7 @@ import { UnifiedCourse } from '../redux/types';
 // import { RootState, UnifiedCourse } from '../redux/types';
 // import { fetchRavenCoursesRequest } from '../redux/settings/actions_fetchData';
 
-const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl, ravenAwsApiKey } =
-  envData;
+const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
 
 // TODO: update types for actions
 export interface CoursesProps {
@@ -256,35 +255,16 @@ export function Courses(props: CoursesProps): JSX.Element {
   // const dispatch = useDispatch();
   // const mesCoursesRaven = useSelector((state:RootState) => state.mesCouresRaven.courses);
 
-  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
   const getRavenResources = async () => {
     await getRavenToken();
 
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: currentPage,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsCourses(ravenData);
+    const getReveanCourses = await getAwsCourses(currentPage);
     setDataRaven(getReveanCourses as RavenCourse[]);
     setAllaDataCoursProject(getReveanCourses as RavenCourse[]);
   };
 
   const getRavenResourcesPath = async () => {
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: currentPage,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsPath(ravenData);
+    const getReveanCourses = await getAwsPath(currentPage);
     setDataRavenPath(getReveanCourses as unknown as RavenCourse[]);
     setAllaDataCoursProject(getReveanCourses as unknown as RavenCourse[]);
   };
@@ -425,7 +405,6 @@ export function Courses(props: CoursesProps): JSX.Element {
           .flatMap(course => (Array.isArray(course) ? course : [course]))
           .filter(course => 'launch_url' in course) as RavenCourse[];
         setMyAllRavenCourse(ravenCourses);
-
         const moodleCourses = res
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           .flatMap(course => (Array.isArray(course) ? course : []))
