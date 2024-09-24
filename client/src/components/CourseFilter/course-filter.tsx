@@ -2,28 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './course-filter.css';
 
 import { navigate } from 'gatsby';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useLocation } from '@reach/router';
 import {
   addRavenTokenToLocalStorage,
   generateRavenTokenAcces,
-  getAwsCourses,
-  getExternalResource,
   getRavenTokenDataFromLocalStorage,
-  getAwsPath,
   RavenTokenData
 } from '../../utils/ajax';
-import envData from '../../../../config/env.json';
 
 import {
-  MoodleCourse,
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
   scrollTo
 } from '../../client-only-routes/show-courses';
-import { splitArray } from '../helpers';
-import sortCourses from '../helpers/sort-course';
-import { routes } from '../../utils/routes';
+import { arrayOfCategory } from '../../utils/routes';
 import {
   categoryCounter,
   myAllDataCourses,
@@ -36,10 +29,6 @@ import FilterByType from './filter-by-type';
 import FilterByLevel from './filter-by-level';
 import FilterByDuration from './filter-by-duration';
 
-type MoodleCoursesFiltered = {
-  courses: MoodleCourse[] | null;
-  warnings: [];
-};
 type RavenCourse = {
   learningobjectid: number;
   name: string;
@@ -52,27 +41,10 @@ type RavenCourse = {
   contenttype: string;
   duration: string;
 };
-interface RavenFetchCoursesDto {
-  apiKey: string;
-  token: string;
-  currentPage: number;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
-
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 
 const CourseFilter = ({
-  setRavenCourses,
-  setRavenPath,
-  setMoodleCourses,
-  setIsDataOnLoading,
   setShowFilter,
-  screenWidth,
-  courseCategories,
-  setCurrentCategory,
-  setCurrentPage
+  screenWidth
 }: {
   setMoodleCourses: React.Dispatch<
     React.SetStateAction<MoodleCoursesCatalogue | null | undefined>
@@ -98,7 +70,7 @@ const CourseFilter = ({
   const [currentCurrent, setCurrentCurrent] = useRecoilState(
     valueOfCurrentCategory
   );
-  const valueOfTokenRaven = useRecoilValue(tokenRaven);
+  const [valueOfTokenRaven, setValueOfTokenRave] = useRecoilState(tokenRaven);
 
   const location = useLocation();
 
@@ -108,99 +80,6 @@ const CourseFilter = ({
   const [valueOfcounterFilter, setValueOfcounterFilter] =
     useRecoilState(categoryCounter);
 
-  const filterByCategory = async (categoryId: number) => {
-    setIsDataOnLoading(true);
-    const moodleCourseFiltered: MoodleCoursesFiltered | null =
-      await getExternalResource<MoodleCoursesFiltered>(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses_by_field&field=category&value=${categoryId}&moodlewsrestformat=json`
-      );
-    setIsDataOnLoading(false);
-
-    const splitCourses: MoodleCoursesCatalogue | null | undefined =
-      moodleCourseFiltered?.courses != null
-        ? splitArray<MoodleCourse>(
-            moodleCourseFiltered.courses.filter(
-              moodleCourse => moodleCourse.visible == 1
-            ),
-            4
-          )
-        : null;
-    //Order courses by their publication date
-    const sortedCourses = sortCourses(splitCourses);
-
-    setMoodleCourses(sortedCourses);
-  };
-
-  const getMoodleCourses = async () => {
-    setIsDataOnLoading(true);
-    const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
-    );
-
-    const splitCourses: MoodleCoursesCatalogue | null =
-      moodleCatalogue != null
-        ? splitArray<MoodleCourse>(
-            moodleCatalogue.filter(moodleCourse => {
-              return moodleCourse.visible == 1 && moodleCourse.format != 'site';
-            }),
-            4
-          )
-        : null;
-    setIsDataOnLoading(false);
-
-    //Order courses by their publication date
-    const sortedCourses = sortCourses(splitCourses);
-
-    if (moodleCatalogue != null) {
-      setMoodleCourses(sortedCourses);
-    } else {
-      setMoodleCourses(null);
-    }
-  };
-  const getRavenResourcesPath = async () => {
-    await getRavenToken();
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsPath(ravenData);
-    setRavenPath(getReveanCourses as unknown as RavenCourse[]);
-
-    if (getRavenCourses === undefined || getRavenCourses.length < 0) {
-      setIsDataOnLoading(false);
-    }
-  };
-
-  const getRavenCourses = async () => {
-    await getRavenToken();
-
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    setIsDataOnLoading(true);
-    const courses = (await getAwsCourses(ravenData)) as RavenCourse[];
-
-    if (courses && courses.length !== 0) {
-      setRavenCourses(courses);
-      setIsDataOnLoading(false);
-    } else if (courses === undefined || courses.length < 0) {
-      setIsDataOnLoading(false);
-    }
-  };
-
   const getRavenToken = async () => {
     const ravenLocalToken = getRavenTokenDataFromLocalStorage();
 
@@ -209,6 +88,7 @@ const CourseFilter = ({
 
       if (generateRavenToken) {
         addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
+        setValueOfTokenRave(generateRavenToken as RavenTokenData);
       }
     }
   };
@@ -221,6 +101,11 @@ const CourseFilter = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUrl]);
+
+  useEffect(() => {
+    void getRavenToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='filter__layoute'>
@@ -281,126 +166,36 @@ const CourseFilter = ({
             )}
           </summary>
           <ul className=' filter-items-container '>
-            {courseCategories && (
-              <button
-                className={`filter-button ${
-                  currentCurrent == null ? 'selected-category' : ''
-                }`}
-                onClick={() => {
-                  void (async () => {
-                    if (location.pathname === '/catalogue') {
-                      window.location.reload();
-                    } else {
-                      void navigate('/catalogue');
-                    }
-                    setValueOfAllDataRessoures([]);
-                    await getMoodleCourses();
-                    await getRavenCourses();
-                    await getRavenResourcesPath();
-                    setCurrentPage(1);
-                    setCurrentCategory(null);
-                    setCurrentCurrent(null);
-                    scrollTo(130);
-                    if (screenWidth < 990) setShowFilter(e => !e);
-                  })();
-                }}
-                disabled={currentCurrent == null}
-              >
-                Tous
-              </button>
-            )}
-
-            {courseCategories && (
-              <button
-                className={`filter-button ${
-                  currentCurrent == -1 ? 'selected-category' : ''
-                }`}
-                onClick={() => {
-                  void (() => {
-                    setCurrentCurrent(-1);
-                    setValueOfButton('Programmation');
-                    setValueOfAllDataRessoures([]);
-                    void navigate(routes.catalogue.programmation);
-                    setMoodleCourses(null);
-                    setRavenCourses(null);
-                    setRavenPath(null);
-                    scrollTo(130);
-                    if (screenWidth < 990) setShowFilter(e => !e);
-                  })();
-                }}
-                disabled={currentCurrent == -1}
-              >
-                Programmation
-              </button>
-            )}
-            {courseCategories && (
-              <button
-                className={`filter-button ${
-                  currentCurrent == -2 ? 'selected-category' : ''
-                }`}
-                style={{
-                  display: valueOfTokenRaven == null ? 'none' : 'block'
-                }}
-                onClick={() => {
-                  void (async () => {
-                    setCurrentCurrent(-2);
-                    setValueOfButton('Amazon Web Service');
-                    setValueOfAllDataRessoures([]);
-                    void navigate(routes.catalogue.aws);
-                    setMoodleCourses(null);
-                    await getRavenCourses();
-                    await getRavenResourcesPath();
-                    scrollTo(130);
-                    if (screenWidth < 990) setShowFilter(e => !e);
-                  })();
-                }}
-                disabled={currentCurrent == -2}
-              >
-                Amazon Web Service
-              </button>
-            )}
-
-            {courseCategories?.map((course, index) => {
-              return (
+            {arrayOfCategory.map(category => (
+              <div key={category.categoryId}>
                 <button
-                  key={index}
                   className={`filter-button ${
-                    currentCurrent == course?.id ? 'selected-category' : ''
+                    currentCurrent == category.categoryId
+                      ? 'selected-category'
+                      : ''
                   }`}
                   onClick={() => {
-                    void (async () => {
+                    void (() => {
+                      setCurrentCurrent(category.categoryId);
+                      setValueOfButton(category.categoryName);
                       setValueOfAllDataRessoures([]);
-                      await filterByCategory(course?.id ? course?.id : 0);
-                      setRavenCourses(null);
-                      setRavenPath(null);
-                      setCurrentCategory(course?.id);
-                      setCurrentCurrent(course?.id);
-                      setValueOfButton(
-                        course?.name.includes('Marketing')
-                          ? 'Marketing & Communication'
-                          : course?.name
-                      );
-                      setCurrentPage(1);
-                      void navigate(
-                        routes.catalogue.catalogueTitle.replace(
-                          ':value',
-                          course?.name.includes('Marketing')
-                            ? 'Marketing-Communication'
-                            : course?.name
-                        )
-                      );
+                      void navigate(category.categoryRoute);
                       scrollTo(130);
                       if (screenWidth < 990) setShowFilter(e => !e);
                     })();
                   }}
-                  disabled={currentCurrent == course?.id}
+                  style={{
+                    display:
+                      category.categoryId == -2 && valueOfTokenRaven == null
+                        ? 'none'
+                        : 'block'
+                  }}
+                  disabled={currentCurrent == category.categoryId}
                 >
-                  {course?.name.includes('Marketing')
-                    ? 'Marketing'
-                    : course?.name}
+                  {category.categoryName}
                 </button>
-              );
-            })}
+              </div>
+            ))}
           </ul>
           <div
             className={

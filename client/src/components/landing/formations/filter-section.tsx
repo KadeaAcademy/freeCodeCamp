@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -62,7 +62,7 @@ const CoursesFilterSection = ({
   setCurrentCategory: React.Dispatch<React.SetStateAction<string>>;
   currentCategory: string;
 }): JSX.Element => {
-  const getValueOfAwsToken = useRecoilValue(tokenRaven);
+  const [getValueOfAwsToken, setValueOfToken] = useRecoilState(tokenRaven);
   const setDataCoursesMoodle = useSetRecoilState(myDataMoodle);
   const setDataCoursesRaven = useSetRecoilState(myDataRaven);
 
@@ -231,6 +231,15 @@ const CoursesFilterSection = ({
       }
     };
     void fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const getRaveToken = async () => {
+      const ravenToken = await getRavenToken();
+      setValueOfToken(ravenToken as RavenTokenData);
+    };
+    void getRaveToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
