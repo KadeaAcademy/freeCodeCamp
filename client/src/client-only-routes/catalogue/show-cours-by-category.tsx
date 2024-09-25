@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Grid } from '@freecodecamp/react-bootstrap';
 import {
   faChevronLeft,
@@ -109,11 +109,36 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   const { moodleBaseUrl } = envData;
 
-  const fetchCourses = () => {
+  const fetchedData = useMemo(async () => {
+    try {
+      const res = await getAllRessources(currentPage);
+
+      const ravenCourses = res
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        .flatMap(course => (Array.isArray(course) ? course : [course]))
+        .filter(course => 'launch_url' in course);
+
+      const moodleCourses = res
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        .flatMap(course => (Array.isArray(course) ? course : []))
+        .filter(course => !('launch_url' in course));
+
+      return { ravenCourses, moodleCourses };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return { ravenCourses: [], moodleCourses: [] };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //utilisation de useCallback afin de mémoriser la fonction et éviter de la recréer à chaque rendu mais seulement au changement des dépendances
+  const fetchCourses = useCallback(() => {
     try {
       setIsDataOnLoading(true);
 
       const filteredRavenCourses = dataCoursesRaven;
+      console.log('dans la fonction', dataCoursesRaven);
+
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const filteredMoodleCourses = dataCoursesMoodle;
       const filterProgramationCourses = dataForprogramation;
@@ -196,7 +221,22 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     } finally {
       setIsDataOnLoading(false);
     }
-  };
+  }, [
+    dataCoursesRaven,
+    dataCoursesMoodle,
+    valueOfUrl,
+    currentUrl,
+    valueOfCurrentCategorie,
+    setRessourceDatas
+  ]);
+
+  useEffect(() => {
+    void fetchedData.then(({ ravenCourses, moodleCourses }) => {
+      setDataCoursesRaven(ravenCourses);
+      setDataCoursesMoodle(moodleCourses);
+      setIsDataOnLoading(false);
+    });
+  }, [fetchedData, setDataCoursesRaven, setDataCoursesMoodle]);
 
   async function fetchAllCours() {
     const courses = await getAwsPath(currentPage);
@@ -219,46 +259,30 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   useEffect(() => {
     void fetchCourses();
+  }, [
+    fetchCourses,
+    currentPage,
+    valueOfUrl,
+    currentUrl,
+    valueOfCounter,
+    valueOfCurrentCategorie
+  ]);
+
+  useEffect(() => {
     setCurrentpage(1);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueOfUrl, valueOfCounter, valueOfCurrentCategorie]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getAllRessources(currentPage);
-
-        // Séparer les cours Raven et Moodle
-        const ravenCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : [course]))
-          .filter(course => 'launch_url' in course) as RavenCourse[];
-        setDataCoursesRaven(ravenCourses);
-
-        const moodleCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : []))
-          .filter(course => !('launch_url' in course)) as MoodleCourse[];
-        setDataCoursesMoodle(moodleCourses);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    void fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    setCurrentpage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueOfCurrentCategorie, currentUrl, valueOfUrl]);
 
   const {
     paginatedData,
     totalPages,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     currentPage: page
-  } = paginate(coursesData, currentPage);
+  } = useMemo(
+    () => paginate(coursesData, currentPage),
+    [coursesData, currentPage]
+  );
 
   useEffect(() => {
     if (screenWidth > 990) setShowFilter(true);
