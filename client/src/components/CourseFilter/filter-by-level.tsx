@@ -94,7 +94,7 @@ const FilterByLevel = () => {
       setChangeState(false);
       setValueChecked(checked);
       setValue0fCurrentCategory(currentCategorieValue);
-      console.log(showFilter);
+      setShowFilter(showFilter);
 
       return updatedState;
     });

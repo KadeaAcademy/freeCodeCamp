@@ -104,7 +104,7 @@ const FilterByDuration = () => {
       setValueChecked(duration.length > 0);
       setChangeState(false);
       setValue0fCurrentCategory(currentCategorieValue);
-      console.log(showFilter);
+      setShowFilter(showFilter);
 
       return updatedState;
     });

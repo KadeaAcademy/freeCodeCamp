@@ -137,7 +137,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       setIsDataOnLoading(true);
 
       const filteredRavenCourses = dataCoursesRaven;
-      console.log('dans la fonction', dataCoursesRaven);
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const filteredMoodleCourses = dataCoursesMoodle;
