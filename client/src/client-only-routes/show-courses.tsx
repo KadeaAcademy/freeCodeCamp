@@ -459,9 +459,7 @@ export function Courses(props: CoursesProps): JSX.Element {
       showFilter && setScreenWidth(window.innerWidth);
     });
   }
-  if (isDataOnLoading) {
-    console.log(isDataOnLoading);
-  }
+
   useEffect(() => {
     setCurrentCategory(null);
   }, [currentPage, setCurrentCategory]);

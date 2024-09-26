@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -55,7 +55,8 @@ const CoursesFilterSection = ({
   setCurrentCategory: React.Dispatch<React.SetStateAction<string>>;
   currentCategory: string;
 }): JSX.Element => {
-  const [getValueOfAwsToken, setValueOfToken] = useRecoilState(tokenRaven);
+  const setValueOfToken = useSetRecoilState(tokenRaven);
+  const [tokeFromRaven, setTokenFromRaven] = useState<RavenTokenData>();
   const setDataCoursesMoodle = useSetRecoilState(myDataMoodle);
   const setDataCoursesRaven = useSetRecoilState(myDataRaven);
 
@@ -220,12 +221,22 @@ const CoursesFilterSection = ({
 
   useEffect(() => {
     const getRaveToken = async () => {
-      const ravenToken = await getRavenToken();
-      setValueOfToken(ravenToken as RavenTokenData);
+      try {
+        const ravenToken = await getRavenToken();
+        setTokenFromRaven(ravenToken as RavenTokenData);
+        setValueOfToken(ravenToken as RavenTokenData);
+      } catch (error) {
+        console.error('Failed to get Raven Token', error);
+      }
     };
+
     void getRaveToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // Only run once when the component mounts
+
+  const memorizedToken = useMemo(() => {
+    return tokeFromRaven;
+  }, [tokeFromRaven]);
 
   return (
     <div className='formation__button_list'>
@@ -235,7 +246,7 @@ const CoursesFilterSection = ({
           className={`button-list ${
             currentCategory == topic.id ? 'active' : ''
           } ${
-            topic.title == 'AWS' && getValueOfAwsToken == null
+            topic.title == 'AWS' && memorizedToken == null
               ? 'hide__category'
               : ''
           }`}
