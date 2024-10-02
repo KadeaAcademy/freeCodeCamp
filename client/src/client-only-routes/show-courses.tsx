@@ -26,8 +26,7 @@ import { createFlashMessage } from '../components/Flash/redux';
 import {
   Loader,
   Spacer,
-  renderCourseCardSkeletons,
-  splitArray
+  renderCourseCardSkeletons
 } from '../components/helpers';
 import {
   signInLoadingSelector,
@@ -38,15 +37,10 @@ import {
 
 import { User } from '../redux/prop-types';
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
-  getAwsCourses,
   getExternalResource,
-  getRavenTokenDataFromLocalStorage,
-  removeRavenTokenFromLocalStorage,
-  getAwsPath,
-  RavenTokenData,
-  getAllRessources
+  getMoodleCourses,
+  getRavenResources,
+  getRavenPathResources
 } from '../utils/ajax';
 import {
   convertTime,
@@ -56,7 +50,6 @@ import {
 
 import '../components/CourseFilter/course-filter.css';
 import CourseFilter from '../components/CourseFilter/course-filter';
-import sortCourses from '../components/helpers/sort-course';
 import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-category-card';
 import {
   allDataCourses,
@@ -64,19 +57,10 @@ import {
   coursesMoodle,
   coursesRaven,
   myAllDataCourses,
-  myDataMoodle,
-  myDataRaven,
   pathRaven,
-  tokenRaven,
   valueOfCurrentCategory
-  // valueOfLanguage,
-  // valueOfTypeCourse,
-  // valueOfTypeDuration,
-  // valueOfTypeLevel
 } from '../redux/atoms';
 import { UnifiedCourse } from '../redux/types';
-// import { RootState, UnifiedCourse } from '../redux/types';
-// import { fetchRavenCoursesRequest } from '../redux/settings/actions_fetchData';
 
 const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
 
@@ -157,19 +141,6 @@ type Category = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Course = {
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  long_description?: string;
-  duration: number;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  skill_level: string;
-  category?: Category[];
-};
 
 export interface RavenFetchCoursesDto {
   apiKey: string;
@@ -230,8 +201,6 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataForAllCourses, setDataForallCourse] =
     useRecoilState<UnifiedCourse[]>(allDataCourses);
   const allDataofCourses = useRecoilValue(allDataCourses);
-  const setMyAllRavenCourse = useSetRecoilState(myDataRaven);
-  const setMyAllMoodleCourse = useSetRecoilState(myDataMoodle);
   const [dataRaven, setDataRaven] = useRecoilState<
     RavenCourse[] | null | undefined
   >(coursesRaven);
@@ -240,80 +209,7 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataMoodle, setDataMoodle] = useRecoilState<
     MoodleCoursesCatalogue | null | undefined
   >(coursesMoodle);
-  const setTakeTokenValue = useSetRecoilState(tokenRaven);
   const setAllaDataCoursProject = useSetRecoilState(myAllDataCourses);
-
-  // const [valueLangue, setValueLangue] = useRecoilState(valueOfLanguage);
-  // const [valueOfCourseType, setValueOfCourseType] =
-  //   useRecoilState(valueOfTypeCourse);
-  // const [valueDuration, setValueDuration] = useRecoilState(valueOfTypeDuration);
-  // const [valueLevel, setValueLevel] = useRecoilState(valueOfTypeLevel);
-
-  // const [allDataRessourceCourse, setAllDataRessource] =
-  //   useRecoilState(myAllDataCourses);
-
-  // const dispatch = useDispatch();
-  // const mesCoursesRaven = useSelector((state:RootState) => state.mesCouresRaven.courses);
-
-  const getRavenResources = async () => {
-    await getRavenToken();
-
-    const getReveanCourses = await getAwsCourses(currentPage);
-    setDataRaven(getReveanCourses as RavenCourse[]);
-    setAllaDataCoursProject(getReveanCourses as RavenCourse[]);
-  };
-
-  const getRavenResourcesPath = async () => {
-    const getReveanCourses = await getAwsPath(currentPage);
-    setDataRavenPath(getReveanCourses as unknown as RavenCourse[]);
-    setAllaDataCoursProject(getReveanCourses as unknown as RavenCourse[]);
-  };
-
-  const getRavenToken = async () => {
-    const ravenTokenData = getRavenTokenDataFromLocalStorage();
-
-    if (ravenTokenData === null) {
-      // Si aucun token n'existe en local storage, générer un nouveau token
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (generateRavenToken) {
-        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-        setTakeTokenValue(generateRavenToken as RavenTokenData);
-
-        return generateRavenToken;
-      } else {
-        setTakeTokenValue(null);
-
-        return null;
-      }
-    } else {
-      // Vérifier si le token existant a expiré d'une heure ou plus
-      const tokenExpirationTime = new Date(ravenTokenData.valid_to);
-      const currentTime = new Date();
-      // 1 heure en millisecondes
-      const oneHourInMillis = 60 * 60 * 1000;
-      // Calculer la différence de temps en millisecondes
-      const timeDifference =
-        tokenExpirationTime.getTime() - currentTime.getTime();
-
-      if (timeDifference <= oneHourInMillis) {
-        // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
-        removeRavenTokenFromLocalStorage();
-        const generateRavenToken = await generateRavenTokenAcces();
-
-        if (generateRavenToken) {
-          addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-          return generateRavenToken; // Retourner le nouveau token
-        } else {
-          return null; // Retourner null si la génération a échoué
-        }
-      } else {
-        // Le token est encore valide, retourner le token existant
-        setTakeTokenValue(ravenTokenData);
-        return ravenTokenData;
-      }
-    }
-  };
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -327,32 +223,6 @@ export function Courses(props: CoursesProps): JSX.Element {
       setCourseCategories(
         moodleCourseCategories?.filter(category => category.coursecount > 0)
       );
-    }
-  };
-
-  const getMoodleCourses = async () => {
-    const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
-    );
-
-    const splitCourses: MoodleCoursesCatalogue | null | undefined =
-      moodleCatalogue != null
-        ? splitArray<MoodleCourse>(
-            moodleCatalogue.filter(moodleCourse => {
-              return moodleCourse.visible == 1 && moodleCourse.format != 'site';
-            }),
-            4
-          )
-        : null;
-
-    //Order courses by their publication date
-    const sortedCourses = sortCourses(splitCourses);
-
-    if (moodleCatalogue != null) {
-      setDataMoodle(sortedCourses);
-    } else {
-      setDataMoodle(null);
     }
   };
 
@@ -391,25 +261,17 @@ export function Courses(props: CoursesProps): JSX.Element {
   };
 
   useEffect(() => {
-    void getRavenResourcesPath();
-    void getRavenResources();
-
     const fetchData = async () => {
       try {
         const currentPage = 1;
-        const res = await getAllRessources(currentPage);
-
-        // Séparer les cours Raven et Moodle
-        const ravenCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : [course]))
-          .filter(course => 'launch_url' in course) as RavenCourse[];
-        setMyAllRavenCourse(ravenCourses);
-        const moodleCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : []))
-          .filter(course => !('launch_url' in course)) as MoodleCourse[];
-        setMyAllMoodleCourse(moodleCourses);
+        const getMoodle = await getMoodleCourses();
+        setDataMoodle(getMoodle);
+        const getRaven = await getRavenResources(currentPage);
+        setDataRaven(getRaven as RavenCourse[]);
+        setAllaDataCoursProject(getRaven as RavenCourse[]);
+        const getRavenPath = await getRavenPathResources(currentPage);
+        setDataRavenPath(getRavenPath as unknown as RavenCourse[]);
+        setAllaDataCoursProject(getRavenPath as unknown as RavenCourse[]);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -426,21 +288,6 @@ export function Courses(props: CoursesProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    void getMoodleCourses();
-
-    const timer = setTimeout(() => {
-      if (isDataOnLoading) {
-        setIsDataOnLoading(false);
-      }
-    }, 2000);
-    return () => {
-      setDataMoodle(null); // cleanup useEffect to perform a React state update
-      setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
-      clearTimeout(timer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (isDataOnLoading) {

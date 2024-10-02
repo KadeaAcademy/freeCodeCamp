@@ -20,8 +20,8 @@ import {
   getAllRessources,
   dataForprogramation,
   ProgramationCourses,
-  getAwsPath,
-  getRavenResources
+  getRavenResources,
+  getRavenPathResources
 } from '../../utils/ajax';
 import {
   Loader,
@@ -92,6 +92,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     valueOfCurrentCategory
   );
   const setRessourceDatas = useSetRecoilState(myAllDataCourses);
+
   // const allDataofCourses = useRecoilValue(allDataCourses);
   const setDataMoodle = useSetRecoilState(coursesMoodle);
   const setDataRaven = useSetRecoilState(coursesRaven);
@@ -111,22 +112,18 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   const fetchedData = useMemo(async () => {
     try {
-      const res = await getAllRessources(currentPage);
-
-      const ravenCourses = res
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        .flatMap(course => (Array.isArray(course) ? course : [course]))
-        .filter(course => 'launch_url' in course);
-
-      const moodleCourses = res
+      const res = await getAllRessources();
+      const getMoodle = res
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         .flatMap(course => (Array.isArray(course) ? course : []))
         .filter(course => !('launch_url' in course));
 
-      return { ravenCourses, moodleCourses };
+      const getRaven = await getRavenResources(currentPage);
+      const getRavenPath = await getRavenPathResources(currentPage);
+      return { getMoodle, getRaven, getRavenPath };
     } catch (error) {
       console.error('Error fetching data:', error);
-      return { ravenCourses: [], moodleCourses: [] };
+      return { getMoodle: [], getRaven: [], getRavenPath: [] };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -217,8 +214,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       setRessourceDatas(filteredCourses);
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
-    } finally {
-      setIsDataOnLoading(false);
     }
   }, [
     dataCoursesRaven,
@@ -230,33 +225,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   ]);
 
   useEffect(() => {
-    void fetchedData.then(({ ravenCourses, moodleCourses }) => {
-      setDataCoursesRaven(ravenCourses);
-      setDataCoursesMoodle(moodleCourses);
-      setIsDataOnLoading(false);
-    });
-  }, [fetchedData, setDataCoursesRaven, setDataCoursesMoodle]);
-
-  async function fetchAllCours() {
-    const courses = await getAwsPath(currentPage);
-    const ravenCours: unknown = await getRavenResources(currentPage);
-    // Séparer les cours Raven et Moodle
-
-    if (Array.isArray(ravenCours)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      setRessourceDatas([...courses, ...ravenCours]);
-    } else {
-      setRessourceDatas([...courses]);
-    }
-  }
-
-  useEffect(() => {
-    void fetchAllCours();
     setIsDataOnLoading(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     void fetchCourses();
   }, [
     fetchCourses,
@@ -287,6 +256,22 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     if (screenWidth > 990) setShowFilter(true);
     else setShowFilter(false);
   }, [screenWidth]);
+
+  useEffect(() => {
+    fetchedData // eslint-disable-line @typescript-eslint/no-floating-promises
+      .then(({ getMoodle, getRaven, getRavenPath }) => {
+        const raven = [
+          ...(getRaven as RavenCourse[]),
+          ...(getRavenPath as unknown as RavenCourse[])
+        ];
+        setDataCoursesRaven(raven);
+
+        setDataCoursesMoodle(getMoodle);
+      })
+      .then(() => {
+        setIsDataOnLoading(false);
+      });
+  }, [fetchedData, setDataCoursesRaven, setDataCoursesMoodle, currentUrl]);
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {
@@ -395,159 +380,136 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                   </span>
                 </div>
 
-                {!isDataOnLoading && paginatedData.length < 1 ? (
-                  <div className=''>
-                    <p className='no-cours'>
-                      Aucune correspondance exacte .
-                      <div>
-                        Modifiez ou supprimez certains de vos filtres ou ajustez
-                        votre catégorie de recherche.
-                      </div>
-                    </p>
-                  </div>
-                ) : (
-                  <div className='card-course-detail-container'>
-                    {!isDataOnLoading && paginatedData.length > 0 ? (
-                      <>
-                        {paginatedData.map((course, index) => {
-                          // Vérifie les conditions pour valueOfCurrentCategorie
-                          if (
-                            valueOfUrl == 'programmation' ||
-                            valueOfUrl == 'amazon-web-service' ||
-                            valueOfUrl == 'Intelligence%20-%20artificielle' ||
-                            valueOfUrl == 'Marketing-Communication' ||
-                            valueOfUrl == 'Bureautique'
-                          ) {
-                            // Affichage des cours pour valueOfCurrentCategorie === -1
-                            if (valueOfUrl == 'programmation') {
-                              const courseList = course as ProgramationCourses;
-                              if (courseList.title) {
-                                return (
-                                  <CourseCard
-                                    level={courseList.level}
-                                    language={courseList.language}
-                                    icon={
-                                      courseList.sponsorIcon === 'AlgoIcon'
-                                        ? AlgoIcon
-                                        : LaediesActIcon
-                                    }
-                                    alt={courseList.alt}
-                                    isAvailable={courseList.isAvailable}
-                                    title={courseList.title}
-                                    buttonText='Suivre le cours'
-                                    link={courseList.link}
-                                    description={courseList.description}
-                                  />
-                                );
-                              } else {
-                                return renderCourseCardSkeletons(6);
-                              }
-                            }
-
-                            // Vérification si le cours est de type Raven
-                            if (valueOfUrl == 'amazon-web-service') {
-                              const courseTyped = course as RavenCourse;
-                              const firstCategory = courseTyped.category?.[0];
-                              const language =
-                                firstCategory?.tags?.[0]?.title || 'Unknown';
-
-                              if (valueOfUrl == 'amazon-web-service') {
-                                if (courseTyped.long_description) {
-                                  return (
-                                    <PathCard
-                                      language={language}
-                                      key={courseTyped.name}
-                                      icon={awsLogo}
-                                      isAvailable={true}
-                                      title={`${index + 1}. ${
-                                        courseTyped.name
-                                      }`}
-                                      buttonText='Suivre le parcours'
-                                      link={courseTyped.launch_url}
-                                      description={formatDescription(
-                                        courseTyped.long_description
-                                      )}
-                                      duration={convertTime(
-                                        courseTyped.duration
-                                      )}
-                                      level={
-                                        courseTyped.skill_level ===
-                                        'Fundamental'
-                                          ? allQuery.value.level.debutant
-                                          : ''
-                                      }
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <CourseCard
-                                      level={
-                                        courseTyped.skill_level ===
-                                        'Fundamental'
-                                          ? allQuery.value.level.debutant
-                                          : ''
-                                      }
-                                      language={language}
-                                      key={index.toString()}
-                                      icon={awsLogo}
-                                      isAvailable={true}
-                                      title={`${index + 1}. ${
-                                        courseTyped.name
-                                      }`}
-                                      buttonText='Suivre le cours'
-                                      link={courseTyped.launch_url}
-                                      description={formatDescription(
-                                        courseTyped.short_description
-                                      )}
-                                      duration={convertTime(
-                                        courseTyped.duration
-                                      )}
-                                    />
-                                  );
+                <div className='card-course-detail-container'>
+                  {isDataOnLoading && paginatedData.length === 0 ? (
+                    renderCourseCardSkeletons(6)
+                  ) : paginatedData.length > 0 ? (
+                    paginatedData.map((course, index) => {
+                      if (
+                        valueOfUrl === 'programmation' ||
+                        valueOfUrl === 'amazon-web-service' ||
+                        valueOfUrl === 'Intelligence%20-%20artificielle' ||
+                        valueOfUrl === 'Marketing-Communication' ||
+                        valueOfUrl === 'Bureautique'
+                      ) {
+                        if (valueOfUrl === 'programmation') {
+                          const courseList = course as ProgramationCourses;
+                          if (courseList.title) {
+                            return (
+                              <CourseCard
+                                key={index}
+                                level={courseList.level}
+                                language={courseList.language}
+                                icon={
+                                  courseList.sponsorIcon === 'AlgoIcon'
+                                    ? AlgoIcon
+                                    : LaediesActIcon
                                 }
-                              }
-                            } else {
-                              // Vérification si le cours est de type Moodle
-                              const courseTyped = course as MoodleCourse;
-                              const nowCategorie =
-                                valueOfUrl == 'Bureautique'
-                                  ? 11
-                                  : valueOfUrl == 'Marketing-Communication'
-                                  ? 13
-                                  : valueOfUrl ==
-                                    'Intelligence%20-%20artificielle'
-                                  ? 14
-                                  : valueOfCurrentCategorie;
-                              if (courseTyped.categoryid == nowCategorie) {
-                                return (
-                                  <CourseCard
-                                    language={courseTyped.langue}
-                                    level={courseTyped.level}
-                                    key={`${index}-${courseTyped.id}`}
-                                    icon={PhBookBookmark} // Remplacer par le chemin réel de l'image
-                                    isAvailable={courseTyped.visible === 1}
-                                    title={courseTyped.displayname}
-                                    buttonText='Suivre le cours'
-                                    link={`${moodleBaseUrl}/course/view.php?id=${courseTyped.id}`}
-                                    description={courseTyped.summary}
-                                    duration={convertTimestampToTime(
-                                      courseTyped.duration
-                                    )}
-                                  />
-                                );
-                              }
-                            }
+                                alt={courseList.alt}
+                                isAvailable={courseList.isAvailable}
+                                title={courseList.title}
+                                buttonText='Suivre le cours'
+                                link={courseList.link}
+                                description={courseList.description}
+                              />
+                            );
                           }
+                        }
 
-                          // Si aucune des conditions n'est remplie, ne retourne rien
-                          return null;
-                        })}
-                      </>
-                    ) : (
-                      renderCourseCardSkeletons(6)
-                    )}
-                  </div>
-                )}
+                        if (valueOfUrl === 'amazon-web-service') {
+                          const courseTyped = course as RavenCourse;
+                          const firstCategory = courseTyped.category?.[0];
+                          const language =
+                            firstCategory?.tags?.[0]?.title || 'Unknown';
+
+                          if (courseTyped.long_description) {
+                            return (
+                              <PathCard
+                                key={courseTyped.name}
+                                language={language}
+                                icon={awsLogo}
+                                isAvailable={true}
+                                title={`${index + 1}. ${courseTyped.name}`}
+                                buttonText='Suivre le parcours'
+                                link={courseTyped.launch_url}
+                                description={formatDescription(
+                                  courseTyped.long_description
+                                )}
+                                duration={convertTime(courseTyped.duration)}
+                                level={
+                                  courseTyped.skill_level === 'Fundamental'
+                                    ? allQuery.value.level.debutant
+                                    : ''
+                                }
+                              />
+                            );
+                          } else {
+                            return (
+                              <CourseCard
+                                key={index.toString()}
+                                level={
+                                  courseTyped.skill_level === 'Fundamental'
+                                    ? allQuery.value.level.debutant
+                                    : ''
+                                }
+                                language={language}
+                                icon={awsLogo}
+                                isAvailable={true}
+                                title={`${index + 1}. ${courseTyped.name}`}
+                                buttonText='Suivre le cours'
+                                link={courseTyped.launch_url}
+                                description={formatDescription(
+                                  courseTyped.short_description
+                                )}
+                                duration={convertTime(courseTyped.duration)}
+                              />
+                            );
+                          }
+                        } else {
+                          const courseTyped = course as MoodleCourse;
+                          const nowCategorie =
+                            valueOfUrl === 'Bureautique'
+                              ? 11
+                              : valueOfUrl === 'Marketing-Communication'
+                              ? 13
+                              : valueOfUrl === 'Intelligence%20-%20artificielle'
+                              ? 14
+                              : valueOfCurrentCategorie;
+                          if (courseTyped.categoryid == nowCategorie) {
+                            return (
+                              <CourseCard
+                                key={`${index}-${courseTyped.id}`}
+                                language={courseTyped.langue}
+                                level={courseTyped.level}
+                                icon={PhBookBookmark}
+                                isAvailable={courseTyped.visible === 1}
+                                title={courseTyped.displayname}
+                                buttonText='Suivre le cours'
+                                link={`${moodleBaseUrl}/course/view.php?id=${courseTyped.id}`}
+                                description={courseTyped.summary}
+                                duration={convertTimestampToTime(
+                                  courseTyped.duration
+                                )}
+                              />
+                            );
+                          }
+                        }
+                      }
+                      return null;
+                    })
+                  ) : (
+                    <div className=''>
+                      <p className='no-cours'>
+                        Aucune correspondance exacte .
+                        <div>
+                          Modifiez ou supprimez certains de vos filtres ou
+                          ajustez votre catégorie de recherche.
+                        </div>
+                      </p>
+                    </div>
+                  )}
+                </div>
+
                 <div className='pagination-container'>
                   <FontAwesomeIcon
                     icon={faChevronLeft}

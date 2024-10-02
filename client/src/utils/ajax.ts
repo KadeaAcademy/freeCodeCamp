@@ -554,7 +554,7 @@ interface RavenFetchCoursesDto {
   apiKey?: string;
   currentPage?: number;
 }
-const getRavenToken = async () => {
+export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
   if (ravenTokenData === null) {
@@ -606,8 +606,9 @@ export const getRavenResources = async (currentPage: number) => {
   return getReveanCourses;
 };
 export const getRavenPathResources = async (currentPage: number) => {
-  const getReveanPathCourses = await getAwsPath(currentPage);
+  await getRavenToken();
 
+  const getReveanPathCourses = await getAwsPath(currentPage);
   return getReveanPathCourses;
 };
 
@@ -714,19 +715,10 @@ export async function getAwsPath(currentPage: number) {
 }
 
 //fonction permettant la combinaison de tous les cours notamment moodle et raven
-export const getAllRessources = async (
-  currentPage: number
-): Promise<CombinedCourses[]> => {
+export const getAllRessources = async (): Promise<CombinedCourses[]> => {
   const moodleCourses = await getMoodleCourses();
-  const ravenCourses = await getRavenResources(currentPage);
-  const ravenPathCourses = await getRavenPathResources(currentPage);
-
   // Combine the results into a single array
-  const allCourses: CombinedCourses[] = [
-    ...(moodleCourses?.result || []),
-    ...([ravenCourses] || []),
-    ...(ravenPathCourses || [])
-  ];
+  const allCourses: CombinedCourses[] = [...(moodleCourses?.result || [])];
   return allCourses;
 };
 
