@@ -179,6 +179,8 @@ export const scrollTo = (top: number) => {
   }
 };
 
+const currentUrl = window.location.href;
+
 export function Courses(props: CoursesProps): JSX.Element {
   const {
     // isSignedIn,
@@ -279,7 +281,7 @@ export function Courses(props: CoursesProps): JSX.Element {
     void fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  }, [currentPage, currentUrl]);
 
   useEffect(() => {
     setDataForallCourse(allCourses);
