@@ -179,7 +179,7 @@ export const scrollTo = (top: number) => {
   }
 };
 
-const currentUrl = window.location.href;
+const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
 export function Courses(props: CoursesProps): JSX.Element {
   const {
@@ -286,9 +286,6 @@ export function Courses(props: CoursesProps): JSX.Element {
   useEffect(() => {
     setDataForallCourse(allCourses);
   }, [allCourses, dataForAllCourses, setDataForallCourse]);
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
