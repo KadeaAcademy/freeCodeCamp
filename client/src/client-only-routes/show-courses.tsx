@@ -276,6 +276,8 @@ export function Courses(props: CoursesProps): JSX.Element {
         setAllaDataCoursProject(getRavenPath as unknown as RavenCourse[]);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setIsDataOnLoading(false);
       }
     };
     void fetchData();
@@ -284,21 +286,17 @@ export function Courses(props: CoursesProps): JSX.Element {
   }, []);
 
   useEffect(() => {
-    setDataForallCourse(allCourses);
-  }, [allCourses, dataForAllCourses, setDataForallCourse]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isDataOnLoading) {
+    void getMoodleCourseCategory().then(() => {
+      if (dataRaven?.length === 0) {
         setIsDataOnLoading(false);
       }
-    }, 3000);
-    return () => {
-      setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
-      clearTimeout(timer);
-    };
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  }, []);
+
+  useEffect(() => {
+    setDataForallCourse(allCourses);
+  }, [allCourses, dataForAllCourses, setDataForallCourse]);
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {
