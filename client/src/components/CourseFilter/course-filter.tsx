@@ -18,9 +18,7 @@ import {
 } from '../../client-only-routes/show-courses';
 import { arrayOfCategory } from '../../utils/routes';
 import {
-  categoryCounter,
   myAllDataCourses,
-  titleOfCategorieValue,
   tokenRaven,
   valueOfCurrentCategory
 } from '../../redux/atoms';
@@ -66,7 +64,6 @@ const CourseFilter = ({
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }): JSX.Element => {
   const [showSubjectFilter, setShowSubjectFilter] = useState<boolean>(true);
-  const setValueOfButton = useSetRecoilState(titleOfCategorieValue);
   const [currentCurrent, setCurrentCurrent] = useRecoilState(
     valueOfCurrentCategory
   );
@@ -74,11 +71,19 @@ const CourseFilter = ({
 
   const location = useLocation();
 
-  const currentUrl = window.location.href;
+  //gestion des query string afin de recévoir un tableau composé de toutes les valeurs séléctionnées
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramsArray = Array.from(urlParams.entries());
+
+  const filteredParams = paramsArray.flatMap(([key, value]) => {
+    if (value.includes(',') && key) {
+      return value.split(',');
+    } else {
+      return [value];
+    }
+  });
 
   const setValueOfAllDataRessoures = useSetRecoilState(myAllDataCourses);
-  const [valueOfcounterFilter, setValueOfcounterFilter] =
-    useRecoilState(categoryCounter);
 
   const getRavenToken = async () => {
     const ravenLocalToken = getRavenTokenDataFromLocalStorage();
@@ -92,15 +97,6 @@ const CourseFilter = ({
       }
     }
   };
-
-  useEffect(() => {
-    if (currentUrl.includes('?')) {
-      setValueOfcounterFilter(valueOfcounterFilter);
-    } else {
-      setValueOfcounterFilter(0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl]);
 
   useEffect(() => {
     void getRavenToken();
@@ -120,7 +116,7 @@ const CourseFilter = ({
           <h2 className='main-title-filter'>
             Filtrer par :{' '}
             <div className='filter__counter' style={{ display: 'inline' }}>
-              {valueOfcounterFilter > 0 ? valueOfcounterFilter : ''}
+              {filteredParams.length > 0 ? filteredParams.length : ''}
             </div>
           </h2>
           <svg
@@ -177,7 +173,6 @@ const CourseFilter = ({
                   onClick={() => {
                     void (() => {
                       setCurrentCurrent(category.categoryId);
-                      setValueOfButton(category.categoryName);
                       setValueOfAllDataRessoures([]);
                       void navigate(category.categoryRoute);
                       scrollTo(130);

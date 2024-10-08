@@ -179,8 +179,6 @@ export const scrollTo = (top: number) => {
   }
 };
 
-const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-
 export function Courses(props: CoursesProps): JSX.Element {
   const {
     // isSignedIn,
@@ -272,6 +270,8 @@ export function Courses(props: CoursesProps): JSX.Element {
         setDataRaven(getRaven as RavenCourse[]);
         setAllaDataCoursProject(getRaven as RavenCourse[]);
         const getRavenPath = await getRavenPathResources(currentPage);
+        console.log(getRavenPath);
+
         setDataRavenPath(getRavenPath as unknown as RavenCourse[]);
         setAllaDataCoursProject(getRavenPath as unknown as RavenCourse[]);
       } catch (error) {
@@ -281,7 +281,7 @@ export function Courses(props: CoursesProps): JSX.Element {
     void fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, currentUrl]);
+  }, []);
 
   useEffect(() => {
     setDataForallCourse(allCourses);
