@@ -590,6 +590,7 @@ export const getRavenToken = async () => {
       }
     } else {
       // Le token est encore valide, retourner le token existant
+
       return ravenTokenData;
     }
   }
@@ -598,10 +599,10 @@ export const getRavenToken = async () => {
 //add for test
 
 const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
-const ravenLocalToken = getRavenTokenDataFromLocalStorage();
 
 export const getRavenResources = async (currentPage: number) => {
   const getReveanCourses = await getAwsCourses(currentPage);
+  console.log(getReveanCourses);
 
   return getReveanCourses;
 };
@@ -615,11 +616,12 @@ export const getRavenPathResources = async (currentPage: number) => {
 //end getRavenResources
 
 export async function getAwsCourses(currentPage: number) {
-  await getRavenToken();
+  const token = await getRavenToken();
+  const myRavenToken = token as RavenTokenData;
 
   const ravenData: RavenFetchCoursesDto = {
     apiKey: ravenAwsApiKey,
-    token: ravenLocalToken?.token || '',
+    token: myRavenToken.token,
     currentPage: currentPage,
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -638,16 +640,18 @@ export async function getAwsCourses(currentPage: number) {
   return response;
 }
 export async function getAwsPath(currentPage: number) {
-  await getRavenToken();
+  const token = await getRavenToken();
+  const myRavenToken = token as RavenTokenData;
 
   const ravenData: RavenFetchCoursesDto = {
     apiKey: ravenAwsApiKey,
-    token: ravenLocalToken?.token || '',
+    token: myRavenToken.token,
     currentPage: currentPage,
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     valid_to: '06-24-2024'
   };
+
   let response: unknown | RavenCourse[];
 
   try {

@@ -39,8 +39,8 @@ import { User } from '../redux/prop-types';
 import {
   getExternalResource,
   getMoodleCourses,
-  getRavenResources,
-  getRavenPathResources
+  getRavenPathResources,
+  getAwsCourses
 } from '../utils/ajax';
 import {
   convertTime,
@@ -264,16 +264,22 @@ export function Courses(props: CoursesProps): JSX.Element {
     const fetchData = async () => {
       try {
         const currentPage = 1;
-        const getMoodle = await getMoodleCourses();
-        setDataMoodle(getMoodle);
-        const getRaven = await getRavenResources(currentPage);
-        setDataRaven(getRaven as RavenCourse[]);
-        setAllaDataCoursProject(getRaven as RavenCourse[]);
-        const getRavenPath = await getRavenPathResources(currentPage);
-        console.log(getRavenPath);
+        const [moodleData, ravenData, ravenPathData] = await Promise.all([
+          getMoodleCourses(),
+          getAwsCourses(currentPage),
+          getRavenPathResources(currentPage)
+        ]);
 
-        setDataRavenPath(getRavenPath as unknown as RavenCourse[]);
-        setAllaDataCoursProject(getRavenPath as unknown as RavenCourse[]);
+        if (moodleData) setDataMoodle(moodleData);
+        if (ravenData) setDataRaven(ravenData as RavenCourse[]);
+        if (ravenPathData) {
+          setDataRavenPath(ravenPathData as unknown as RavenCourse[]);
+        }
+
+        setAllaDataCoursProject([
+          ...(ravenData as RavenCourse[]),
+          ...ravenPathData
+        ]);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -281,7 +287,6 @@ export function Courses(props: CoursesProps): JSX.Element {
       }
     };
     void fetchData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
