@@ -368,7 +368,6 @@ export const getMoodleCourseCategory = async () => {
     const moodleCategorie = moodleCourseCategories?.filter(
       category => category.coursecount > 0
     );
-    // console.log(mesCoursMoodle);
 
     return moodleCategorie;
   }
@@ -602,7 +601,6 @@ const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 
 export const getRavenResources = async (currentPage: number) => {
   const getReveanCourses = await getAwsCourses(currentPage);
-  console.log(getReveanCourses);
 
   return getReveanCourses;
 };

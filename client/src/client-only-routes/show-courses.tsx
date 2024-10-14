@@ -15,7 +15,6 @@ import PathCard from '../components/PathCard/path-card';
 
 import envData from '../../../config/env.json';
 import CourseCard from '../components/CourseCard/course-card';
-import LaptopIcon from '../assets/images/laptop.svg';
 import AlgoIcon from '../assets/images/algorithmIcon.svg';
 import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
 import awsLogo from '../assets/images/aws-logo.png';
@@ -40,7 +39,9 @@ import {
   getExternalResource,
   getMoodleCourses,
   getRavenPathResources,
-  getAwsCourses
+  getAwsCourses,
+  dataForprogramation,
+  ProgramationCourses
 } from '../utils/ajax';
 import {
   convertTime,
@@ -210,6 +211,9 @@ export function Courses(props: CoursesProps): JSX.Element {
     MoodleCoursesCatalogue | null | undefined
   >(coursesMoodle);
   const setAllaDataCoursProject = useSetRecoilState(myAllDataCourses);
+  const [dataProgrammation, setDataProgrammation] = useState<
+    ProgramationCourses[]
+  >([]);
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -226,14 +230,17 @@ export function Courses(props: CoursesProps): JSX.Element {
     }
   };
 
-  const allCourses: (MoodleCourse | RavenCourse)[] = useMemo(
-    () => [
-      ...(dataRaven || []),
-      ...(dataMoodle?.result ? dataMoodle.result.flat() : []),
-      ...(dataRavenPath ? dataRavenPath : [])
-    ],
-    [dataRaven, dataMoodle, dataRavenPath]
-  );
+  const allCourses: (MoodleCourse | RavenCourse | ProgramationCourses)[] =
+    useMemo(
+      () => [
+        ...(dataProgrammation ? dataProgrammation : []),
+
+        ...(dataRaven || []),
+        ...(dataMoodle?.result ? dataMoodle.result.flat() : []),
+        ...(dataRavenPath ? dataRavenPath : [])
+      ],
+      [dataRaven, dataMoodle, dataRavenPath, dataProgrammation]
+    );
 
   const {
     paginatedData,
@@ -264,6 +271,8 @@ export function Courses(props: CoursesProps): JSX.Element {
     const fetchData = async () => {
       try {
         const currentPage = 1;
+        const programmationData = dataForprogramation;
+        setDataProgrammation(programmationData);
         const [moodleData, ravenData, ravenPathData] = await Promise.all([
           getMoodleCourses(),
           getAwsCourses(currentPage),
@@ -337,12 +346,12 @@ export function Courses(props: CoursesProps): JSX.Element {
       <Helmet title={`Nos cours | Kadea Online`} />
       <Grid className='bg-light'>
         <main>
-          <div className=''>
+          <div>
             <Spacer size={1} />
 
             <button
               onClick={() => {
-                setShowFilter(e => !e);
+                setShowFilter(prev => !prev);
               }}
               className='show-filter-button'
             >
@@ -379,8 +388,8 @@ export function Courses(props: CoursesProps): JSX.Element {
               <div
                 className={
                   showFilter
-                    ? 'card-courses-detail-container  hide_on_mobile'
-                    : 'card-courses-detail-container  '
+                    ? 'card-courses-detail-container hide_on_mobile'
+                    : 'card-courses-detail-container'
                 }
               >
                 <div>
@@ -393,7 +402,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                   setRavenPath={setDataRavenPath}
                   setCurrentCategory={setCurrentCategory}
                   currentCategory={currentCategory}
-                  screenWidth={setScreenWidth}
+                  screenWidth={screenWidth}
                   setCurrentPage={setCurrentPage}
                   setIsDataOnLoading={setIsDataOnLoading}
                   setMoodleCourses={setDataMoodle}
@@ -403,59 +412,43 @@ export function Courses(props: CoursesProps): JSX.Element {
                 <div className='course__number'>
                   <p>Parcourir le catalogue complet</p>
                   <span>
-                    {paginatedData.length > 0 &&
-                      paginatedData.length +
-                        (currentCategory == null || currentCategory == -1
-                          ? 2
-                          : 0)}{' '}
-                    cours
+                    {paginatedData.length > 0 ? paginatedData.length : ''} cours
                   </span>
                 </div>
 
                 {!isDataOnLoading ? (
                   <div className='card-course-detail-container'>
-                    {currentPage == 1 &&
-                      (currentCategory == null || currentCategory == -1) && (
+                    {currentPage === 1 &&
+                      (currentCategory === null || currentCategory === -1) && (
                         <>
-                          <CourseCard
-                            level='debutant'
-                            language='French'
-                            icon={LaptopIcon}
-                            sponsorIcon={LaediesActIcon}
-                            alt=''
-                            // name={name}
-                            // phone={phone}
-                            isAvailable={true}
-                            // isSignedIn={isSignedIn}
-                            title='Responsive Web Design'
-                            buttonText='Suivre le cours'
-                            link='/learn/responsive-web-design/'
-                            description={`
-                          Dans ce cours, tu apprendras les langages que les développeurs
-                          utilisent pour créer des pages Web : HTML (Hypertext Markup Language)
-                          pour le contenu, et CSS (Cascading Style Sheets) pour la conception.
-                          Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
-                        `}
-                          />
-                          <CourseCard
-                            level='debutant'
-                            language='French'
-                            icon={AlgoIcon}
-                            alt=''
-                            isAvailable={true}
-                            // isSignedIn={isSignedIn}
-                            // phone={phone}
-                            // name={name}
-                            title='JavaScript Algorithms and Data Structures'
-                            buttonText='Suivre le cours'
-                            link='/learn/javascript-algorithms-and-data-structures'
-                            description={`Alors que HTML et CSS contrôlent le contenu et le style d'une page,
-                          JavaScript est utilisé pour la rendre interactive. Dans le cadre du
-                          cours JavaScript Algorithm and Data Structures, tu apprendras
-                          les principes fondamentaux de JavaScript, etc.`}
-                          />
+                          {paginatedData
+                            .filter(course => 'title' in course)
+                            .map((programation, index) => {
+                              const courseProgrammation =
+                                programation as ProgramationCourses;
+                              return (
+                                <CourseCard
+                                  key={index}
+                                  level={courseProgrammation.level}
+                                  language={courseProgrammation.language}
+                                  icon={
+                                    courseProgrammation.sponsorIcon ===
+                                    'AlgoIcon'
+                                      ? AlgoIcon
+                                      : LaediesActIcon
+                                  }
+                                  alt={courseProgrammation.alt}
+                                  isAvailable={courseProgrammation.isAvailable}
+                                  title={courseProgrammation.title}
+                                  buttonText='Suivre le cours'
+                                  link={courseProgrammation.link}
+                                  description={courseProgrammation.description}
+                                />
+                              );
+                            })}
                         </>
                       )}
+
                     {paginatedData.length > 0
                       ? paginatedData.map((course, index) => {
                           if ('launch_url' in course) {
@@ -470,7 +463,6 @@ export function Courses(props: CoursesProps): JSX.Element {
                                   key={course.name}
                                   icon={awsLogo}
                                   isAvailable={true}
-                                  // isSignedIn={isSignedIn}
                                   title={`${index + 1}. ${course.name}`}
                                   buttonText='Suivre le cours'
                                   link={course.launch_url}
@@ -487,7 +479,6 @@ export function Courses(props: CoursesProps): JSX.Element {
                                   key={index.toString()}
                                   icon={awsLogo}
                                   isAvailable={true}
-                                  // isSignedIn={isSignedIn}
                                   title={`${index + 1}. ${course.name}`}
                                   buttonText='Suivre le cours'
                                   link={course.launch_url}
@@ -497,23 +488,28 @@ export function Courses(props: CoursesProps): JSX.Element {
                               );
                             }
                           } else {
-                            return (
-                              <CourseCard
-                                level='debutant'
-                                language='French'
-                                key={`${index}-${course.id}`}
-                                icon={PhBookBookmark} // Remplacer par le chemin réel de l'image
-                                isAvailable={course.visible === 1}
-                                // isSignedIn={isSignedIn}
-                                title={course.displayname}
-                                buttonText='Suivre le cours'
-                                link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
-                                description={course.summary}
-                                duration={convertTimestampToTime(
-                                  course.timecreated
-                                )}
-                              />
+                            const courses = paginatedData.filter(
+                              course => 'timecreated' in course
                             );
+                            return courses.map(course => {
+                              const courseMoodle = course as MoodleCourse;
+                              return (
+                                <CourseCard
+                                  level='debutant'
+                                  language='French'
+                                  key={courseMoodle.id}
+                                  icon={PhBookBookmark}
+                                  isAvailable={courseMoodle.visible === 1}
+                                  title={courseMoodle.displayname}
+                                  buttonText='Suivre le cours'
+                                  link={`${moodleBaseUrl}/course/view.php?id=${courseMoodle.id}`}
+                                  description={courseMoodle.summary}
+                                  duration={convertTimestampToTime(
+                                    courseMoodle.timecreated
+                                  )}
+                                />
+                              );
+                            });
                           }
                         })
                       : ''}

@@ -1,5 +1,6 @@
 import { FlashApp, FlashMessageArg } from '../components/Flash/redux';
 import { MoodleCourse, RavenCourse } from '../client-only-routes/show-courses';
+import { ProgramationCourses } from '../utils/ajax';
 import rootReducer from './rootReducer';
 import { MainApp } from '.';
 
@@ -42,7 +43,7 @@ export interface DefaultDonationFormState {
   success: boolean;
   error: null | string;
 }
-export type UnifiedCourse = MoodleCourse | RavenCourse;
+export type UnifiedCourse = MoodleCourse | RavenCourse | ProgramationCourses;
 
 export const defaultFetchState = {
   pending: true,
