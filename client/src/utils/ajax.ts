@@ -557,17 +557,15 @@ export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
   if (ravenTokenData === null) {
-    // Si aucun token n'existe en local storage, générer un nouveau token
     const generateRavenToken = await generateRavenTokenAcces();
 
     if (generateRavenToken) {
       addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-      return generateRavenToken; // Retourner le nouveau token
+      return generateRavenToken;
     } else {
-      return null; // Retourner null si la génération a échoué
+      return null;
     }
   } else {
-    // Vérifier si le token existant a expiré d'une heure ou plus
     const tokenExpirationTime = new Date(ravenTokenData.valid_to);
     const currentTime = new Date();
     // 1 heure en millisecondes
@@ -588,8 +586,6 @@ export const getRavenToken = async () => {
         return null; // Retourner null si la génération a échoué
       }
     } else {
-      // Le token est encore valide, retourner le token existant
-
       return ravenTokenData;
     }
   }
@@ -601,12 +597,9 @@ const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 
 export const getRavenResources = async (currentPage: number) => {
   const getReveanCourses = await getAwsCourses(currentPage);
-
   return getReveanCourses;
 };
 export const getRavenPathResources = async (currentPage: number) => {
-  await getRavenToken();
-
   const getReveanPathCourses = await getAwsPath(currentPage);
   return getReveanPathCourses;
 };

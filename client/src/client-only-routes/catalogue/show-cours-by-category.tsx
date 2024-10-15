@@ -16,13 +16,7 @@ import PhBookBookmark from '../../assets/images/ph-book-bookmark-thin.svg';
 import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 import awsLogo from '../../assets/images/aws-logo.png';
 
-import {
-  getAllRessources,
-  dataForprogramation,
-  ProgramationCourses,
-  getRavenResources,
-  getRavenPathResources
-} from '../../utils/ajax';
+import { ProgramationCourses } from '../../utils/ajax';
 import {
   Loader,
   renderCourseCardSkeletons,
@@ -51,11 +45,12 @@ import { createFlashMessage } from '../../components/Flash/redux';
 import {
   categoryCounter,
   categoryCours,
+  centraliseProgramationCours,
+  centraliseRavenData,
   coursesMoodle,
   coursesRaven,
   myAllDataCourses,
   myDataMoodle,
-  myDataRaven,
   pathRaven,
   valueOfCurrentCategory
 } from '../../redux/atoms';
@@ -93,16 +88,15 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   );
   const setRessourceDatas = useSetRecoilState(myAllDataCourses);
 
-  // const allDataofCourses = useRecoilValue(allDataCourses);
   const setDataMoodle = useSetRecoilState(coursesMoodle);
   const setDataRaven = useSetRecoilState(coursesRaven);
   const setDataRavenPath = useSetRecoilState(pathRaven);
   const showMoodleCategory = useRecoilValue(categoryCours);
   const valueOfCounter = useRecoilValue(categoryCounter);
-  const [dataCoursesMoodle, setDataCoursesMoodle] =
-    useRecoilState(myDataMoodle);
-  const [dataCoursesRaven, setDataCoursesRaven] = useRecoilState(myDataRaven);
   const [coursesData, setCoursesData] = useState<unknown[]>([]);
+  const ravenState = useRecoilValue(centraliseRavenData);
+  const moodleState = useRecoilValue(myDataMoodle);
+  const programmationState = useRecoilValue(centraliseProgramationCours);
 
   const currentUrl = window.location.href;
   const location = useLocation();
@@ -110,35 +104,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   const { moodleBaseUrl } = envData;
 
-  const fetchedData = useMemo(async () => {
-    try {
-      const res = await getAllRessources();
-      const getMoodle = res
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        .flatMap(course => (Array.isArray(course) ? course : []))
-        .filter(course => !('launch_url' in course));
-
-      const getRaven = await getRavenResources(currentPage);
-      const getRavenPath = await getRavenPathResources(currentPage);
-      return { getMoodle, getRaven, getRavenPath };
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return { getMoodle: [], getRaven: [], getRavenPath: [] };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   //utilisation de useCallback afin de mémoriser la fonction et éviter de la recréer à chaque rendu mais seulement au changement des dépendances
   const fetchCourses = useCallback(() => {
     try {
       setIsDataOnLoading(true);
-
-      const filteredRavenCourses = dataCoursesRaven;
-
+      const filteredRavenCourses = ravenState;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      const filteredMoodleCourses = dataCoursesMoodle;
-      const filterProgramationCourses = dataForprogramation;
-
+      const filteredMoodleCourses = moodleState;
+      const filterProgramationCourses = programmationState;
       // eslint-disable-next-line @typescript-eslint/naming-convention
       type CourseType = RavenCourse | MoodleCourse | ProgramationCourses;
 
@@ -153,9 +126,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           courses = filteredRavenCourses;
           category = 'aws';
         } else {
-          courses = filteredMoodleCourses?.filter(
-            course => course.categoryid === valueOfCurrentCategorie
-          );
+          courses = filteredMoodleCourses?.result
+            .flatMap(
+              /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+              course => course
+            )
+            .filter(
+              course => course.categoryid == valueOfCurrentCategorie
+            ) as unknown as MoodleCourse[];
           category = 'moodle';
         }
 
@@ -212,13 +190,15 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       const filteredCourses = manyCategoryFilter();
       setCoursesData(filteredCourses);
       setRessourceDatas(filteredCourses);
+      setIsDataOnLoading(false);
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
     }
   }, [
-    dataCoursesRaven,
-    dataCoursesMoodle,
     valueOfUrl,
+    ravenState,
+    moodleState,
+    programmationState,
     currentUrl,
     valueOfCurrentCategorie,
     setRessourceDatas
@@ -256,22 +236,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     if (screenWidth > 990) setShowFilter(true);
     else setShowFilter(false);
   }, [screenWidth]);
-
-  useEffect(() => {
-    fetchedData // eslint-disable-line @typescript-eslint/no-floating-promises
-      .then(({ getMoodle, getRaven, getRavenPath }) => {
-        const raven = [
-          ...(getRaven as RavenCourse[]),
-          ...(getRavenPath as unknown as RavenCourse[])
-        ];
-        setDataCoursesRaven(raven);
-
-        setDataCoursesMoodle(getMoodle);
-      })
-      .then(() => {
-        setIsDataOnLoading(false);
-      });
-  }, [fetchedData, setDataCoursesRaven, setDataCoursesMoodle, currentUrl]);
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {

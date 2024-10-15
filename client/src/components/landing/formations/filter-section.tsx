@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -7,16 +7,21 @@ import {
   RavenCourse
 } from '../../../client-only-routes/show-courses';
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
+  dataForprogramation,
   getAwsCourses,
   getExternalResource,
-  getRavenTokenDataFromLocalStorage,
-  removeRavenTokenFromLocalStorage
+  getMoodleCourses,
+  getRavenPathResources,
+  getRavenToken
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
-import { tokenRaven } from '../../../redux/atoms';
+import {
+  centraliseProgramationCours,
+  centraliseRavenData,
+  myDataMoodle,
+  tokenRaven
+} from '../../../redux/atoms';
 import envData from './../../../../../config/env.json';
 
 type MoodleCoursesFiltered = {
@@ -55,8 +60,13 @@ const CoursesFilterSection = ({
 }): JSX.Element => {
   const setValueOfToken = useSetRecoilState(tokenRaven);
   const [tokeFromRaven, setTokenFromRaven] = useState<RavenTokenData>();
+  const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
+  const [getAllMoodleData, setGetAllDataMoodle] = useRecoilState(myDataMoodle);
+  const setGetAllProgrammationCourses = useSetRecoilState(
+    centraliseProgramationCours
+  );
 
-  const getMoodleCourses = async () => {
+  const getAllMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
@@ -112,46 +122,36 @@ const CoursesFilterSection = ({
     setIsDataOnLoading(false);
   };
 
-  const getRavenToken = async () => {
-    const ravenTokenData = getRavenTokenDataFromLocalStorage();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentPage = 1;
+        const programmationData = dataForprogramation;
+        setGetAllProgrammationCourses(programmationData);
+        const [moodleData, ravenData, ravenPathData] = await Promise.all([
+          getMoodleCourses(),
+          getAwsCourses(currentPage),
+          getRavenPathResources(currentPage)
+        ]);
 
-    if (ravenTokenData === null) {
-      // Si aucun token n'existe en local storage, générer un nouveau token
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (generateRavenToken) {
-        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-        return generateRavenToken; // Retourner le nouveau token
-      } else {
-        return null; // Retourner null si la génération a échoué
-      }
-    } else {
-      // Vérifier si le token existant a expiré d'une heure ou plus
-      const tokenExpirationTime = new Date(ravenTokenData.valid_to);
-      const currentTime = new Date();
-      // 1 heure en millisecondes
-      const oneHourInMillis = 60 * 60 * 1000;
-      // Calculer la différence de temps en millisecondes
-      const timeDifference =
-        tokenExpirationTime.getTime() - currentTime.getTime();
-
-      if (timeDifference <= oneHourInMillis) {
-        // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
-        removeRavenTokenFromLocalStorage();
-        const generateRavenToken = await generateRavenTokenAcces();
-
-        if (generateRavenToken) {
-          addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-          return generateRavenToken; // Retourner le nouveau token
-        } else {
-          return null; // Retourner null si la génération a échoué
+        if (getAllMoodleData)
+          setGetAllDataMoodle(moodleData as MoodleCoursesCatalogue);
+        if (ravenData || ravenPathData) {
+          const unifiedRavenData = [
+            ...((ravenData as RavenCourse[]) || []),
+            ...(ravenPathData || [])
+          ];
+          setGetAllRavenData(unifiedRavenData as RavenCourse[]);
         }
-      } else {
-        // Le token est encore valide, retourner le token existant
-        return ravenTokenData;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsDataOnLoading(false);
       }
-    }
-  };
+    };
+    void fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const topics = useMemo(() => {
     return [
@@ -162,7 +162,7 @@ const CoursesFilterSection = ({
           setCurrentCategory('popular');
           setMoodleCourses(null);
           void getRavenResources();
-          void getMoodleCourses();
+          void getAllMoodleCourses();
         }
       },
       {

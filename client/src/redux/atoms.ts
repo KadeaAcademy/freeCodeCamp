@@ -1,11 +1,10 @@
 import { atom, AtomEffect, DefaultValue, selector } from 'recoil';
 import {
-  MoodleCourse,
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
   RavenCourse
 } from '../client-only-routes/show-courses';
-import { RavenTokenData } from '../utils/ajax';
+import { ProgramationCourses, RavenTokenData } from '../utils/ajax';
 import { UnifiedCourse } from './types';
 // import { MoodleCourseCategory, MoodleCoursesCatalogue } from '../client-only-routes/show-courses';
 
@@ -119,14 +118,14 @@ export const allDataCourses = atom<UnifiedCourse[]>({
 // Atom pour les données des cours, avec typage explicite
 export const myAllDataCourses = atom<unknown[]>({
   key: 'myAllDataCourses',
-  default: [], // Par défaut, un tableau vide de type RavenCourse[]
+  default: [],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   effects_UNSTABLE: [localStorageEffect('myAllDataCourses')]
 });
 
 export const valueOfCurrentCategory = atom<number | null>({
   key: 'valueOfCurrentCategory',
-  default: null, // Par défaut, un tableau vide de type RavenCourse[]
+  default: null,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   effects_UNSTABLE: [localStorageEffect('valueOfCurrentCategory')]
 });
@@ -145,9 +144,9 @@ export const coursesMoodle = atom<MoodleCoursesCatalogue | null | undefined>({
   effects_UNSTABLE: [localStorageEffect('coursesMoodle')]
 });
 
-export const myDataMoodle = atom<MoodleCourse[] | undefined>({
+export const myDataMoodle = atom<MoodleCoursesCatalogue | null | undefined>({
   key: 'myDataMoodle',
-  default: [],
+  default: null,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   effects_UNSTABLE: [localStorageEffect('myDataMoodle')]
 });
@@ -170,7 +169,41 @@ export const centraliseRavenData = atom<RavenCourse[]>({
   key: 'centraliseRavenData',
   default: [],
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  effects_UNSTABLE: [localStorageEffect('centraliseRavenData')]
+  effects_UNSTABLE: [
+    ({ setSelf, onSet }) => {
+      const savedValue =
+        typeof window !== 'undefined' && window.localStorage
+          ? localStorage.getItem('centraliseRavenData')
+          : null;
+
+      // Vérifiez si savedValue n'est pas 'undefined' avant de le parser
+      if (savedValue != null && savedValue !== 'undefined') {
+        try {
+          setSelf(JSON.parse(savedValue) as RavenCourse[]);
+        } catch (e) {
+          console.error(
+            'Erreur lors du parsing des données de centraliseRavenData:',
+            e
+          );
+        }
+      }
+
+      onSet((newValue, _, isReset) => {
+        if (newValue instanceof DefaultValue || isReset) {
+          localStorage.removeItem('centraliseRavenData');
+        } else {
+          localStorage.setItem('centraliseRavenData', JSON.stringify(newValue));
+        }
+      });
+    }
+  ]
+});
+
+export const centraliseProgramationCours = atom<ProgramationCourses[]>({
+  key: 'centraliseProgramationCours',
+  default: [],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: [localStorageEffect('centraliseProgramationCours')]
 });
 
 export const categoryCours = atom<MoodleCourseCategory[] | null | undefined>({

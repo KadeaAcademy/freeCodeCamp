@@ -35,14 +35,7 @@ import {
 } from '../redux';
 
 import { User } from '../redux/prop-types';
-import {
-  getExternalResource,
-  getMoodleCourses,
-  getRavenPathResources,
-  getAwsCourses,
-  dataForprogramation,
-  ProgramationCourses
-} from '../utils/ajax';
+import { getExternalResource, ProgramationCourses } from '../utils/ajax';
 import {
   convertTime,
   convertTimestampToTime,
@@ -55,9 +48,11 @@ import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-categ
 import {
   allDataCourses,
   categoryCours,
+  centraliseProgramationCours,
+  centraliseRavenData,
   coursesMoodle,
   coursesRaven,
-  myAllDataCourses,
+  myDataMoodle,
   pathRaven,
   valueOfCurrentCategory
 } from '../redux/atoms';
@@ -196,6 +191,9 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [courseCategories, setCourseCategories] = useRecoilState<
     MoodleCourseCategory[] | null | undefined
   >(categoryCours);
+  const ravenState = useRecoilValue(centraliseRavenData);
+  const moodleSate = useRecoilValue(myDataMoodle);
+  const stateProgrammation = useRecoilValue(centraliseProgramationCours);
   const [currentCategory, setCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
@@ -205,15 +203,10 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataRaven, setDataRaven] = useRecoilState<
     RavenCourse[] | null | undefined
   >(coursesRaven);
-  const [dataRavenPath, setDataRavenPath] =
-    useRecoilState<RavenCourse[]>(pathRaven);
-  const [dataMoodle, setDataMoodle] = useRecoilState<
+  const setDataRavenPath = useSetRecoilState<RavenCourse[]>(pathRaven);
+  const setDataMoodle = useSetRecoilState<
     MoodleCoursesCatalogue | null | undefined
   >(coursesMoodle);
-  const setAllaDataCoursProject = useSetRecoilState(myAllDataCourses);
-  const [dataProgrammation, setDataProgrammation] = useState<
-    ProgramationCourses[]
-  >([]);
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -233,13 +226,12 @@ export function Courses(props: CoursesProps): JSX.Element {
   const allCourses: (MoodleCourse | RavenCourse | ProgramationCourses)[] =
     useMemo(
       () => [
-        ...(dataProgrammation ? dataProgrammation : []),
+        ...(stateProgrammation ? stateProgrammation : []),
 
-        ...(dataRaven || []),
-        ...(dataMoodle?.result ? dataMoodle.result.flat() : []),
-        ...(dataRavenPath ? dataRavenPath : [])
+        ...(ravenState || []),
+        ...(moodleSate?.result ? moodleSate.result.flat() : [])
       ],
-      [dataRaven, dataMoodle, dataRavenPath, dataProgrammation]
+      [ravenState, moodleSate?.result, stateProgrammation]
     );
 
   const {
@@ -266,38 +258,6 @@ export function Courses(props: CoursesProps): JSX.Element {
       setCurrentPage(currentPage);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const currentPage = 1;
-        const programmationData = dataForprogramation;
-        setDataProgrammation(programmationData);
-        const [moodleData, ravenData, ravenPathData] = await Promise.all([
-          getMoodleCourses(),
-          getAwsCourses(currentPage),
-          getRavenPathResources(currentPage)
-        ]);
-
-        if (moodleData) setDataMoodle(moodleData);
-        if (ravenData) setDataRaven(ravenData as RavenCourse[]);
-        if (ravenPathData) {
-          setDataRavenPath(ravenPathData as unknown as RavenCourse[]);
-        }
-
-        setAllaDataCoursProject([
-          ...(ravenData as RavenCourse[]),
-          ...ravenPathData
-        ]);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsDataOnLoading(false);
-      }
-    };
-    void fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     void getMoodleCourseCategory().then(() => {
@@ -487,29 +447,23 @@ export function Courses(props: CoursesProps): JSX.Element {
                                 />
                               );
                             }
-                          } else {
-                            const courses = paginatedData.filter(
-                              course => 'timecreated' in course
+                          } else if ('timecreated' in course) {
+                            return (
+                              <CourseCard
+                                level='debutant'
+                                language='French'
+                                key={course.id}
+                                icon={PhBookBookmark}
+                                isAvailable={course.visible === 1}
+                                title={course.displayname}
+                                buttonText='Suivre le cours'
+                                link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
+                                description={course.summary}
+                                duration={convertTimestampToTime(
+                                  course.timecreated
+                                )}
+                              />
                             );
-                            return courses.map(course => {
-                              const courseMoodle = course as MoodleCourse;
-                              return (
-                                <CourseCard
-                                  level='debutant'
-                                  language='French'
-                                  key={courseMoodle.id}
-                                  icon={PhBookBookmark}
-                                  isAvailable={courseMoodle.visible === 1}
-                                  title={courseMoodle.displayname}
-                                  buttonText='Suivre le cours'
-                                  link={`${moodleBaseUrl}/course/view.php?id=${courseMoodle.id}`}
-                                  description={courseMoodle.summary}
-                                  duration={convertTimestampToTime(
-                                    courseMoodle.timecreated
-                                  )}
-                                />
-                              );
-                            });
                           }
                         })
                       : ''}
