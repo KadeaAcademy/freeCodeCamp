@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
@@ -12,7 +12,8 @@ import {
   getExternalResource,
   getMoodleCourses,
   getRavenPathResources,
-  getRavenToken
+  getRavenToken,
+  ProgramationCourses
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
@@ -61,7 +62,7 @@ const CoursesFilterSection = ({
   const setValueOfToken = useSetRecoilState(tokenRaven);
   const [tokeFromRaven, setTokenFromRaven] = useState<RavenTokenData>();
   const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
-  const [getAllMoodleData, setGetAllDataMoodle] = useRecoilState(myDataMoodle);
+  const setGetAllDataMoodle = useSetRecoilState(myDataMoodle);
   const setGetAllProgrammationCourses = useSetRecoilState(
     centraliseProgramationCours
   );
@@ -126,22 +127,50 @@ const CoursesFilterSection = ({
     const fetchData = async () => {
       try {
         const currentPage = 1;
-        const programmationData = dataForprogramation;
-        setGetAllProgrammationCourses(programmationData);
-        const [moodleData, ravenData, ravenPathData] = await Promise.all([
-          getMoodleCourses(),
-          getAwsCourses(currentPage),
-          getRavenPathResources(currentPage)
-        ]);
 
-        if (getAllMoodleData)
-          setGetAllDataMoodle(moodleData as MoodleCoursesCatalogue);
-        if (ravenData || ravenPathData) {
-          const unifiedRavenData = [
-            ...((ravenData as RavenCourse[]) || []),
-            ...(ravenPathData || [])
-          ];
-          setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+        const storedProgrammationData =
+          localStorage.getItem('programmationData');
+        const storedMoodleData = localStorage.getItem('moodleData');
+        const storedRavenData = localStorage.getItem('ravenData');
+
+        if (storedProgrammationData) {
+          setGetAllProgrammationCourses(
+            JSON.parse(storedProgrammationData) as ProgramationCourses[]
+          );
+        } else {
+          const programmationData = dataForprogramation;
+          setGetAllProgrammationCourses(programmationData);
+          localStorage.setItem(
+            'programmationData',
+            JSON.stringify(programmationData)
+          );
+        }
+
+        if (storedMoodleData && storedRavenData) {
+          setGetAllDataMoodle(
+            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
+          );
+          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
+        } else {
+          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+            getMoodleCourses(),
+            getAwsCourses(currentPage),
+            getRavenPathResources(currentPage)
+          ]);
+
+          if (moodleData) {
+            setGetAllDataMoodle(moodleData);
+            localStorage.setItem('moodleData', JSON.stringify(moodleData));
+          }
+
+          if (ravenData || ravenPathData) {
+            const unifiedRavenData = [
+              ...((ravenData as RavenCourse[]) || []),
+              ...(ravenPathData || [])
+            ];
+            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
+          }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -149,6 +178,7 @@ const CoursesFilterSection = ({
         setIsDataOnLoading(false);
       }
     };
+
     void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

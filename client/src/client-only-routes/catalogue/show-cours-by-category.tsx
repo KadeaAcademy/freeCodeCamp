@@ -16,7 +16,13 @@ import PhBookBookmark from '../../assets/images/ph-book-bookmark-thin.svg';
 import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 import awsLogo from '../../assets/images/aws-logo.png';
 
-import { ProgramationCourses } from '../../utils/ajax';
+import {
+  dataForprogramation,
+  getAwsCourses,
+  getMoodleCourses,
+  getRavenPathResources,
+  ProgramationCourses
+} from '../../utils/ajax';
 import {
   Loader,
   renderCourseCardSkeletons,
@@ -32,7 +38,12 @@ import {
   getCategoryDescription,
   paginate
 } from '../../utils/allFunctions';
-import { CoursesProps, MoodleCourse, RavenCourse } from '../show-courses';
+import {
+  CoursesProps,
+  MoodleCourse,
+  MoodleCoursesCatalogue,
+  RavenCourse
+} from '../show-courses';
 import envData from '../../../../config/env.json';
 import {
   isSignedInSelector,
@@ -94,13 +105,15 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const showMoodleCategory = useRecoilValue(categoryCours);
   const valueOfCounter = useRecoilValue(categoryCounter);
   const [coursesData, setCoursesData] = useState<unknown[]>([]);
-  const ravenState = useRecoilValue(centraliseRavenData);
-  const moodleState = useRecoilValue(myDataMoodle);
-  const programmationState = useRecoilValue(centraliseProgramationCours);
+  const [ravenState, setGetAllRavenData] = useRecoilState(centraliseRavenData);
+  const [moodleState, setGetAllDataMoodle] = useRecoilState(myDataMoodle);
+  const [programmationState, setGetAllProgrammationCourses] = useRecoilState(
+    centraliseProgramationCours
+  );
 
   const currentUrl = window.location.href;
   const location = useLocation();
-  const valueOfUrl = location.pathname.split('/')[2];
+  const valueOfUrl = location.pathname.split('/')[2].replace(/-/g, ' ');
 
   const { moodleBaseUrl } = envData;
 
@@ -122,7 +135,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         if (valueOfUrl == 'programmation') {
           courses = filterProgramationCourses;
           category = 'programation';
-        } else if (valueOfUrl == 'amazon-web-service') {
+        } else if (valueOfUrl == 'amazon web service') {
           courses = filteredRavenCourses;
           category = 'aws';
         } else {
@@ -215,6 +228,66 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     valueOfCounter,
     valueOfCurrentCategorie
   ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentPage = 1;
+
+        const storedProgrammationData =
+          localStorage.getItem('programmationData');
+        const storedMoodleData = localStorage.getItem('moodleData');
+        const storedRavenData = localStorage.getItem('ravenData');
+
+        if (storedProgrammationData) {
+          setGetAllProgrammationCourses(
+            JSON.parse(storedProgrammationData) as ProgramationCourses[]
+          );
+        } else {
+          const programmationData = dataForprogramation;
+          setGetAllProgrammationCourses(programmationData);
+          localStorage.setItem(
+            'programmationData',
+            JSON.stringify(programmationData)
+          );
+        }
+
+        if (storedMoodleData && storedRavenData) {
+          setGetAllDataMoodle(
+            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
+          );
+          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
+        } else {
+          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+            getMoodleCourses(),
+            getAwsCourses(currentPage),
+            getRavenPathResources(currentPage)
+          ]);
+
+          if (moodleData) {
+            setGetAllDataMoodle(moodleData);
+            localStorage.setItem('moodleData', JSON.stringify(moodleData));
+          }
+
+          if (ravenData || ravenPathData) {
+            const unifiedRavenData = [
+              ...((ravenData as RavenCourse[]) || []),
+              ...(ravenPathData || [])
+            ];
+            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsDataOnLoading(false);
+      }
+    };
+
+    void fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setCurrentpage(1);
@@ -321,8 +394,10 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                   <h2 className=' catalog-title'>
                     <span className='catalog'>Catalogue</span> /
                     <span className='catalog-title_space'>
-                      {valueOfUrl.includes('Intelligence%20-%20artificielle')
+                      {valueOfUrl.includes('Intelligence%20 %20artificielle')
                         ? 'Intelligence Artificielle'
+                        : valueOfUrl.includes('Marketing Communication')
+                        ? 'Marketing et Communication'
                         : valueOfUrl}
                     </span>
                   </h2>
@@ -331,8 +406,10 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                 <div className='card__courses__description'>
                   <h3>
                     Decouvrez le parcours{' '}
-                    {valueOfUrl.includes('Intelligence%20-%20artificielle')
+                    {valueOfUrl.includes('Intelligence%20 %20artificielle')
                       ? 'Intelligence Artificielle'
+                      : valueOfUrl.includes('Marketing Communication')
+                      ? 'Marketing et Communication'
                       : valueOfUrl}
                   </h3>
                   <p>{getCategoryDescription(valueOfUrl)}</p>
@@ -351,9 +428,9 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                     paginatedData.map((course, index) => {
                       if (
                         valueOfUrl === 'programmation' ||
-                        valueOfUrl === 'amazon-web-service' ||
-                        valueOfUrl === 'Intelligence%20-%20artificielle' ||
-                        valueOfUrl === 'Marketing-Communication' ||
+                        valueOfUrl === 'amazon web service' ||
+                        valueOfUrl === 'Intelligence%20 %20artificielle' ||
+                        valueOfUrl === 'Marketing Communication' ||
                         valueOfUrl === 'Bureautique'
                       ) {
                         if (valueOfUrl === 'programmation') {
@@ -380,7 +457,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                           }
                         }
 
-                        if (valueOfUrl === 'amazon-web-service') {
+                        if (valueOfUrl === 'amazon web service') {
                           const courseTyped = course as RavenCourse;
                           const firstCategory = courseTyped.category?.[0];
                           const language =
@@ -434,9 +511,9 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                           const nowCategorie =
                             valueOfUrl === 'Bureautique'
                               ? 11
-                              : valueOfUrl === 'Marketing-Communication'
+                              : valueOfUrl === 'Marketing Communication'
                               ? 13
-                              : valueOfUrl === 'Intelligence%20-%20artificielle'
+                              : valueOfUrl === 'Intelligence%20 %20artificielle'
                               ? 14
                               : valueOfCurrentCategorie;
                           if (courseTyped.categoryid == nowCategorie) {
