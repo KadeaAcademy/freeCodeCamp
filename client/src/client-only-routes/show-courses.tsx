@@ -256,8 +256,6 @@ export function Courses(props: CoursesProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const currentPage = 1;
-
         const storedProgrammationData =
           localStorage.getItem('programmationData');
         const storedMoodleData = localStorage.getItem('moodleData');
@@ -284,8 +282,8 @@ export function Courses(props: CoursesProps): JSX.Element {
         } else {
           const [moodleData, ravenData, ravenPathData] = await Promise.all([
             getMoodleCourses(),
-            getAwsCourses(currentPage),
-            getRavenPathResources(currentPage)
+            getAwsCourses(),
+            getRavenPathResources()
           ]);
 
           if (moodleData) {

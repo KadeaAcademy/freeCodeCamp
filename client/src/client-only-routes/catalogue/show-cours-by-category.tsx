@@ -232,8 +232,6 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const currentPage = 1;
-
         const storedProgrammationData =
           localStorage.getItem('programmationData');
         const storedMoodleData = localStorage.getItem('moodleData');
@@ -260,8 +258,8 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         } else {
           const [moodleData, ravenData, ravenPathData] = await Promise.all([
             getMoodleCourses(),
-            getAwsCourses(currentPage),
-            getRavenPathResources(currentPage)
+            getAwsCourses(),
+            getRavenPathResources()
           ]);
 
           if (moodleData) {
@@ -394,9 +392,12 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                   <h2 className=' catalog-title'>
                     <span className='catalog'>Catalogue</span> /
                     <span className='catalog-title_space'>
-                      {valueOfUrl.includes('Intelligence%20 %20artificielle')
+                      {valueOfUrl.includes('intelligence artificielle') ||
+                      valueOfUrl.includes('Intelligence%20 %20artificielle')
                         ? 'Intelligence Artificielle'
-                        : valueOfUrl.includes('Marketing Communication')
+                        : valueOfUrl
+                            .toLocaleLowerCase()
+                            .includes('marketing communication')
                         ? 'Marketing et Communication'
                         : valueOfUrl}
                     </span>
@@ -406,9 +407,12 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                 <div className='card__courses__description'>
                   <h3>
                     Decouvrez le parcours{' '}
-                    {valueOfUrl.includes('Intelligence%20 %20artificielle')
+                    {valueOfUrl.includes('intelligence artificielle') ||
+                    valueOfUrl.includes('Intelligence%20 %20artificielle')
                       ? 'Intelligence Artificielle'
-                      : valueOfUrl.includes('Marketing Communication')
+                      : valueOfUrl
+                          .toLocaleLowerCase()
+                          .includes('marketing communication')
                       ? 'Marketing et Communication'
                       : valueOfUrl}
                   </h3>
@@ -429,8 +433,12 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                       if (
                         valueOfUrl === 'programmation' ||
                         valueOfUrl === 'amazon web service' ||
-                        valueOfUrl === 'Intelligence%20 %20artificielle' ||
-                        valueOfUrl === 'Marketing Communication' ||
+                        valueOfUrl === 'intelligence artificielle' ||
+                        valueOfUrl.includes(
+                          'Intelligence%20 %20artificielle'
+                        ) ||
+                        valueOfUrl.toLocaleLowerCase() ===
+                          'marketing communication' ||
                         valueOfUrl === 'Bureautique'
                       ) {
                         if (valueOfUrl === 'programmation') {
@@ -511,9 +519,13 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                           const nowCategorie =
                             valueOfUrl === 'Bureautique'
                               ? 11
-                              : valueOfUrl === 'Marketing Communication'
+                              : valueOfUrl.toLocaleLowerCase() ===
+                                'marketing communication'
                               ? 13
-                              : valueOfUrl === 'Intelligence%20 %20artificielle'
+                              : valueOfUrl === 'intelligence artificielle' ||
+                                valueOfUrl.includes(
+                                  'Intelligence%20 %20artificielle'
+                                )
                               ? 14
                               : valueOfCurrentCategorie;
                           if (courseTyped.categoryid == nowCategorie) {

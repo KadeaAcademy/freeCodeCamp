@@ -13,7 +13,7 @@ import { Link } from '@reach/router';
 
 import './courses-category-card.css';
 import { navigate } from 'gatsby';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import devIcon from '../../assets/icons/dev-icon.svg';
 import programmationIcon from '../../assets/icons/programation.png';
 import marketingIcone from '../../assets/icons/marketing.png';
@@ -21,24 +21,11 @@ import itelligenceIcone from '../../assets/icons/bureaut.svg';
 import bureautiqueIcone from '../../assets/icons/computer.svg';
 
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
-  getAwsCourses,
-  getAwsPath,
-  getExternalResource,
-  getRavenTokenDataFromLocalStorage,
-  RavenTokenData
-} from '../../utils/ajax';
-import envData from '../../../../config/env.json';
-import {
-  MoodleCourse,
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
   RavenCourse,
   RavenFetchCoursesDto
 } from '../../client-only-routes/show-courses';
-import { splitArray } from '../helpers';
-import sortCourses from '../helpers/sort-course';
 import { routes } from '../../utils/routes';
 import {
   myAllDataCourses,
@@ -65,14 +52,9 @@ interface CourseFilterProps {
   getRavenResourcesPath: RavenFetchCoursesDto;
 }
 
-const { moodleApiBaseUrl, moodleApiToken } = envData;
-
 const CoursesCategoryCard = ({
-  setRavenCourses,
-  setMoodleCourses,
   setIsDataOnLoading,
   courseCategories,
-  setRavenPath,
   setCurrentCategory,
   setCurrentPage
 }: CourseFilterProps): JSX.Element => {
@@ -81,7 +63,7 @@ const CoursesCategoryCard = ({
   const setValueOfButton = useSetRecoilState(titleOfCategorieValue);
   const setCurrent = useSetRecoilState(valueOfCurrentCategory);
   const setValueOfAllRessourcesData = useSetRecoilState(myAllDataCourses);
-  const [valueDeToken, setValueOfToken] = useRecoilState(tokenRaven);
+  const valueDeToken = useRecoilValue(tokenRaven);
 
   const scrollAmount = 320; // Adjust based on card width and gap
   // const categoryDescrTitle = 'développement';
@@ -100,93 +82,13 @@ const CoursesCategoryCard = ({
       containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
-  const filterByCategory = async (categoryId: number) => {
-    setIsDataOnLoading(true);
-    const moodleCourseFiltered: { courses: MoodleCourse[] | null } | null =
-      await getExternalResource<{ courses: MoodleCourse[] | null }>(
-        `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses_by_field&field=category&value=${categoryId}&moodlewsrestformat=json`
-      );
-    setIsDataOnLoading(false);
 
-    const splitCourses: MoodleCoursesCatalogue | null | undefined =
-      moodleCourseFiltered?.courses != null
-        ? splitArray<MoodleCourse>(
-            moodleCourseFiltered.courses.filter(
-              moodleCourse => moodleCourse.visible == 1
-            ),
-            4
-          )
-        : null;
-    const sortedCourses = sortCourses(splitCourses);
-
-    setMoodleCourses(sortedCourses);
-  };
-
-  const getRavenCourses = async () => {
-    await getRavenToken();
-
-    setIsDataOnLoading(true);
-    const courses = (await getAwsCourses(1)) as RavenCourse[];
-    if (courses && courses.length !== 0) {
-      setRavenCourses(courses);
-      setIsDataOnLoading(false);
-    }
-  };
-
-  const getRavenResourcesPath = async () => {
-    await getRavenToken();
-
-    setIsDataOnLoading(true);
-    const courses = (await getAwsPath(1)) as unknown as RavenCourse[];
-    if (courses && courses.length !== 0) {
-      setRavenPath(courses);
-      setIsDataOnLoading(false);
-    }
-  };
-
-  const getRavenToken = async () => {
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
-    if (ravenLocalToken === null) {
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (typeof generateRavenToken && generateRavenToken !== null) {
-        const token = generateRavenToken as RavenTokenData;
-        addRavenTokenToLocalStorage({ token });
-        setValueOfToken(token);
-      }
-    }
-  };
-
-  const handleCategoryClick = async (categoryId: number) => {
+  const handleCategoryClick = (categoryId: number) => {
     setIsSelected(categoryId);
     setCurrentCategory(categoryId);
     setCurrent(categoryId);
     setCurrentPage(1); // Retour à la première page à chaque fois que la catégory change
     setIsDataOnLoading(true);
-
-    try {
-      if (categoryId === -1) {
-        setMoodleCourses(null);
-        setRavenCourses(null);
-        setRavenPath(null);
-        await filterByCategory(categoryId);
-      } else if (categoryId === -2) {
-        setMoodleCourses(null);
-        await getRavenCourses();
-        await getRavenResourcesPath();
-      } else if (categoryId == 11) {
-        await filterByCategory(categoryId); // eslint-disable-line @typescript-eslint/no-floating-promises
-        setRavenCourses(null);
-        setRavenPath(null);
-      } else {
-        await filterByCategory(categoryId);
-        setRavenCourses(null);
-        setRavenPath(null);
-      }
-    } catch (error) {
-      console.log('erreur lors de la recupération de la catégory', error);
-    }
   };
 
   //selectionne une catégorie par rapport à la catégorie passée en simulant le clic sur le clavier

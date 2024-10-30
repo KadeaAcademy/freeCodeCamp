@@ -3,11 +3,7 @@ import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import {
-  getAwsCourses,
-  getRavenTokenDataFromLocalStorage,
-  getAwsPath
-} from '../../utils/ajax';
+import { getAwsCourses, getAwsPath } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
@@ -66,14 +62,6 @@ type RavenCourse = {
   tags?: string;
 };
 
-interface RavenFetchCoursesDto {
-  apiKey: string;
-  token: string;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
-
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
@@ -98,31 +86,28 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
   const [ravenPath, setRavenPath] = useState<RavenCourse[]>([]);
   const [courseNumber, setCourseNumber] = useState<number>(0);
 
-  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
-  const getRavenResources = async (data: RavenFetchCoursesDto) => {
-    const getReveanCourses = await getAwsCourses(data);
-    setRavenCourses(getReveanCourses as RavenCourse[]);
+  const getRavenResources = async () => {
+    const getReveanCourses = await getAwsCourses();
+    if (getReveanCourses) {
+      setRavenCourses(getReveanCourses as RavenCourse[]);
+    }
+    setRavenCourses(ravenCourses);
   };
 
-  const getRavenResourcesPath = async (data: RavenFetchCoursesDto) => {
-    const getReveanCourses = await getAwsPath(data);
-    setRavenPath(getReveanCourses as unknown as RavenCourse[]);
+  const getRavenResourcesPath = async () => {
+    const getReveanCourses = await getAwsPath();
+    if (getReveanCourses) {
+      setRavenPath(getReveanCourses as unknown as RavenCourse[]);
+    }
+    setRavenPath(ravenPath);
   };
 
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: 'gyKJycM8xl1IooROdVQGB59tjL0CpaEk3XwLustN',
-    token: ravenLocalToken?.token || '',
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
   useEffect(() => {
     setCourseNumber(ravenPath.length + ravenCourses.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ravenPath, ravenCourses]);
   useEffect(() => {
-    void getRavenResourcesPath(ravenData);
+    void getRavenResourcesPath();
 
     const timer = setTimeout(() => {
       if (isDataOnLoading) {
@@ -136,7 +121,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
   }, [isDataOnLoading]);
 
   useEffect(() => {
-    void getRavenResources(ravenData);
+    void getRavenResources();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

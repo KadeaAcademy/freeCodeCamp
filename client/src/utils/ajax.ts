@@ -595,25 +595,24 @@ export const getRavenToken = async () => {
 
 const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
 
-export const getRavenResources = async (currentPage: number) => {
-  const getReveanCourses = await getAwsCourses(currentPage);
+export const getRavenResources = async () => {
+  const getReveanCourses = await getAwsCourses();
   return getReveanCourses;
 };
-export const getRavenPathResources = async (currentPage: number) => {
-  const getReveanPathCourses = await getAwsPath(currentPage);
+export const getRavenPathResources = async () => {
+  const getReveanPathCourses = await getAwsPath();
   return getReveanPathCourses;
 };
 
 //end getRavenResources
 
-export async function getAwsCourses(currentPage: number) {
+export async function getAwsCourses() {
   const token = await getRavenToken();
   const myRavenToken = token as RavenTokenData;
 
   const ravenData: RavenFetchCoursesDto = {
     apiKey: ravenAwsApiKey,
     token: myRavenToken.token,
-    currentPage: currentPage,
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     valid_to: '06-24-2024'
@@ -630,14 +629,14 @@ export async function getAwsCourses(currentPage: number) {
 
   return response;
 }
-export async function getAwsPath(currentPage: number) {
+export async function getAwsPath() {
   const token = await getRavenToken();
   const myRavenToken = token as RavenTokenData;
 
   const ravenData: RavenFetchCoursesDto = {
     apiKey: ravenAwsApiKey,
     token: myRavenToken.token,
-    currentPage: currentPage,
+
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     valid_to: '06-24-2024'
@@ -738,6 +737,41 @@ export async function getAwsUserCoursesProgress(
     response = null;
   }
   return response;
+}
+
+//test fetch
+
+export async function saveDataOnDb() {
+  try {
+    const token = (await getRavenToken()) as RavenTokenData;
+    const ravenData: RavenFetchCoursesDto = {
+      apiKey: ravenAwsApiKey,
+      token: token.token,
+
+      fromDate: '01-01-2023',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      valid_to: '06-24-2024'
+    };
+
+    const response = await get(
+      `/save-rave-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}}`
+    );
+
+    if (response) {
+      console.log('Data saved successfully:', response);
+    }
+  } catch (error) {
+    console.error("erreur lors de l'enregistrément des données", error);
+  }
+}
+
+export async function getDataFromDb() {
+  try {
+    const response = await get('/raven-get-course');
+    console.log('Données récupérées avec succès:', response);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données :', error);
+  }
 }
 
 ('/get-raven-user-progress');
