@@ -448,6 +448,8 @@ async function getUserList(req, res) {
 }
 
 async function saveRavenCoursesToDB(app) {
+  console.log('controlleurs pour save les cours');
+
   const { RavenCourse } = app.models;
 
   return async function postSaveRavenCourses(req, res) {
