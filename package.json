@@ -98,6 +98,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "csurf": "^1.11.0",
     "dotenv": "10.0.0",
     "export-to-csv": "^1.2.1",
     "invariant": "2.2.4",
@@ -111,6 +112,7 @@
     "@babel/preset-env": "7.16.11",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
+    "@faker-js/faker": "^9.2.0",
     "@testing-library/cypress": "7.0.7",
     "@testing-library/dom": "8.11.3",
     "@testing-library/jest-dom": "5.16.2",

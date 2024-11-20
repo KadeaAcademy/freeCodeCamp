@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './course-filter.css';
-
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  categoryCounter,
+  changeState,
   checkedBox,
   valueOfCurrentCategory,
   valueOfTypeDuration
 } from '../../redux/atoms';
+import { allQuery } from '../../utils/routes';
 
 const FilterByDuration = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -16,15 +18,96 @@ const FilterByDuration = () => {
   const [currentCategorieValue, setValue0fCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
+  const setChangeState = useSetRecoilState(changeState);
+  const [counterForCategory, setCounterForcategory] =
+    useRecoilState(categoryCounter);
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked;
-    const value = isChecked ? e.target.value : 'none'; // Assigner "none" lorsqu'il est décoché
+  // État local pour gérer les cases cochées
+  const [checkedState, setCheckedState] = useState({
+    lessOneHour: false,
+    overOneHour: false,
+    overFiveHour: false
+  });
 
-    setValueDuration(value);
-    setValueChecked(isChecked);
+  // Charger l'état des cases cochées depuis les query strings de l'URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const duration = params.get(allQuery.key.duration)?.split(',') || [];
+
+    // Convertir les valeurs affichées en clés internes
+    const checkedState = {
+      lessOneHour: duration.includes(allQuery.value.duration.lessOneHour),
+      overOneHour: duration.includes(allQuery.value.duration.overOneHour),
+      overFiveHour: duration.includes(allQuery.value.duration.overFiveHour)
+    };
+
+    setCheckedState(checkedState);
+    setValueDuration(duration.join(','));
+    setValueChecked(duration.length > 0);
+    setChangeState(false);
     setValue0fCurrentCategory(currentCategorieValue);
-    setShowFilter(showFilter);
+  }, [
+    currentCategorieValue,
+    setValueDuration,
+    setValueChecked,
+    setChangeState,
+    setValue0fCurrentCategory
+  ]);
+
+  // Mettre à jour les query strings lorsque l'utilisateur change l'état des cases
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+
+    setCheckedState(prevState => {
+      const updatedState = { ...prevState, [value]: checked };
+      const queryParams = new URLSearchParams(window.location.search);
+      let duration = queryParams.get(allQuery.key.duration)?.split(',') || [];
+
+      // Convertir les clés internes en valeurs affichées
+      const displayValue =
+        {
+          lessOneHour: allQuery.value.duration.lessOneHour,
+          overOneHour: allQuery.value.duration.overOneHour,
+          overFiveHour: allQuery.value.duration.overFiveHour
+        }[value] || '';
+
+      // Ajouter ou supprimer la valeur de la liste
+      if (checked) {
+        if (!duration.includes(displayValue)) duration.push(displayValue);
+      } else {
+        duration = duration.filter(type => type !== displayValue);
+      }
+
+      // Mettre à jour le query string 'duration' avec les nouvelles valeurs
+      if (duration.length > 0) {
+        queryParams.set(allQuery.key.duration, duration.join(','));
+      } else {
+        queryParams.delete(allQuery.key.duration);
+      }
+
+      // Mettre à jour l'URL sans recharger la page
+      const newQueryString = queryParams.toString();
+      if (newQueryString) {
+        window.history.replaceState(null, '', `?${newQueryString}`);
+      } else {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+
+      setValueDuration(duration.join(','));
+      setCounterForcategory(
+        counterForCategory >= 0 && checked
+          ? counterForCategory + 1
+          : counterForCategory > 0 && !checked
+          ? counterForCategory - 1
+          : counterForCategory
+      );
+      setValueChecked(duration.length > 0);
+      setChangeState(false);
+      setValue0fCurrentCategory(currentCategorieValue);
+      setShowFilter(showFilter);
+
+      return updatedState;
+    });
   };
 
   return (
@@ -47,7 +130,7 @@ const FilterByDuration = () => {
           onClick={() => setShowSubjectFilter(e => !e)}
           className='filter-title-container'
         >
-          <p className='filter-title'>Durée</p>
+          <p className='filter-title'>Duration</p>
           {showSubjectFilter ? (
             <svg
               width='30px'
@@ -73,30 +156,33 @@ const FilterByDuration = () => {
           )}
         </summary>
         <ul className='filter-items-container'>
-          <div className='language-filter'>
-            <label className='language__Label'>
+          <div className='duration-filter'>
+            <label className='duration__Label'>
               <input
                 type='checkbox'
-                value='>1h'
-                onChange={handleLanguageChange}
+                value='lessOneHour'
+                checked={checkedState.lessOneHour}
+                onChange={handleCheckboxChange}
               />
-              Moins d&apos;1 heure
+              -1h
             </label>
-            <label className='language__Label'>
+            <label className='duration__Label'>
               <input
                 type='checkbox'
-                value='1>5h'
-                onChange={handleLanguageChange}
+                value='overOneHour'
+                checked={checkedState.overOneHour}
+                onChange={handleCheckboxChange}
               />
-              1 à 5 heures
+              1h - 5h
             </label>
-            <label className='language__Label'>
+            <label className='duration__Label'>
               <input
                 type='checkbox'
-                value='>5h'
-                onChange={handleLanguageChange}
+                value='overFiveHour'
+                checked={checkedState.overFiveHour}
+                onChange={handleCheckboxChange}
               />
-              5+ heures
+              + 5h
             </label>
           </div>
         </ul>

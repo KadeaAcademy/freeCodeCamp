@@ -1,6 +1,7 @@
 import React from 'react';
 import PlayIcon from '../../assets/images/play.svg';
 import clockIcon from '../../assets/icons/clock.svg';
+import levelIcon from '../../assets/icons/level.svg';
 
 import Map from '../Map/index';
 import { Link } from '../helpers';
@@ -30,6 +31,7 @@ interface LandingDetailsProps {
   createAt?: Date | string | number;
   duration?: string;
   language?: string;
+  level?: string;
 }
 
 const CourseCard = ({
@@ -47,7 +49,8 @@ const CourseCard = ({
   cardType,
   badgeIcon,
   createAt,
-  language
+  language,
+  level
 }: LandingDetailsProps): JSX.Element => {
   const isLessThan30DaysOld = (date: string): boolean => {
     const dateObjet = new Date(date);
@@ -109,35 +112,51 @@ const CourseCard = ({
             </div>
 
             <div className='card-course-detail-footer'>
-              <div className='duration__language'>
-                {duration ? (
-                  <>
-                    <img
-                      src={clockIcon}
-                      alt='icone clock duration'
-                      className='clock'
-                    />
-                    <p className='clock__time'>{duration} </p>
-                  </>
-                ) : (
-                  ''
-                )}
-              </div>
-
-              <div className='duration pull'></div>
-
-              <div className='push'>
-                <div>
-                  {language ? (
+              <div className='level__duration'>
+                <div className='level-card-course'>
+                  {level ? (
                     <>
-                      <p className='course__language'>
-                        {language === 'French' ? 'Français' : 'Anglais'}{' '}
-                      </p>
+                      <img
+                        src={levelIcon}
+                        alt='icone clock duration'
+                        className='clock'
+                      />
+                      <p> {level === 'debutant' ? 'Débutant' : level}</p>
                     </>
                   ) : (
                     ''
                   )}
                 </div>
+                <div className='duration__language'>
+                  {duration ? (
+                    <div className='align'>
+                      <img
+                        src={clockIcon}
+                        alt='icone clock duration'
+                        className='clock'
+                      />
+                      <p className='clock__time'>{duration} </p>
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                  <div>
+                    {language ? (
+                      <>
+                        <p className='course__language'>
+                          {language === 'French' ? 'Français' : 'Anglais'}{' '}
+                        </p>
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className='duration pull'></div>
+
+              <div className='push'>
                 {isAvailable ? (
                   <>
                     {link ? (

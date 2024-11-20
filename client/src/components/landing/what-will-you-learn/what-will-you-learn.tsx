@@ -23,19 +23,12 @@ import {
   MoodleCourseCategory,
   MoodleCoursesCatalogue
 } from '../../../client-only-routes/show-courses';
-import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
-  getAwsCourses,
-  getExternalResource,
-  getRavenTokenDataFromLocalStorage
-} from '../../../utils/ajax';
+import { getAwsCourses, getExternalResource } from '../../../utils/ajax';
 import { convertTime } from '../../../utils/allFunctions';
 import sortCourses from '../../helpers/sort-course';
 import CourseFilterList from './filter/course-filter';
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey, moodleBaseUrl } =
-  envData;
+const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
 type RavenCourse = {
   learningobjectid: number;
   name: string;
@@ -48,22 +41,6 @@ type RavenCourse = {
   contenttype: string;
   duration: string;
 };
-interface RavenTokenData {
-  token: string;
-  expiresIn: number;
-  validFrom: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
-
-interface RavenFetchCoursesDto {
-  apiKey: string;
-  token: string;
-  currentPage: number;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
 
 const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
   const [courseCategories, setCourseCategories] = useState<
@@ -78,31 +55,8 @@ const WhatWillYouLearn = ({ isSignedIn }: LandingDetailsProps): JSX.Element => {
   const [currentCategory, setCurrentCategory] = useState<string>('Populaires');
 
   const getRavenResources = async () => {
-    await getRavenToken();
-
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsCourses(ravenData);
+    const getReveanCourses = await getAwsCourses();
     setRavenCourses(getReveanCourses as RavenCourse[]);
-  };
-
-  const getRavenToken = async () => {
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
-    if (ravenLocalToken === null) {
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (generateRavenToken) {
-        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-      }
-    }
   };
 
   const getMoodleCourseCategory = async () => {

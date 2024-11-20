@@ -1,0 +1,40 @@
+.call-to-sing__section {
+  background-color: #e5203d;
+  border-radius: 16px;
+  margin: 0 auto;
+  max-width: 92%;
+}
+
+.sing__section__input {
+  display: block;
+  border-radius: 16px;
+  padding: 1rem;
+  width: 19rem;
+  text-align: center;
+  font-size: 1rem;
+  border: none;
+}
+
+.sing__section__title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+
+.sing__section-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 100%;
+  align-items: center;
+  padding: 1rem;
+}
+
+.sing__section__button {
+  background-color: #ffffff;
+  color: red;
+  border-radius: 16px;
+  font-weight: 700;
+  border: none;
+}

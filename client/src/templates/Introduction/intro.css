@@ -49,9 +49,7 @@ span {
 .block-link:active {
   background-color: var(--primary-background);
 }
-.course__language {
-  font-weight: bold;
-}
+
 a.cert-tag:hover,
 a.cert-tag:focus,
 a.cert-tag:active {
@@ -348,6 +346,13 @@ button.map-title {
   }
   .course__number {
     margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .course__number {
+    margin-bottom: 1rem;
+    padding: 1rem 0rem;
   }
 }
 

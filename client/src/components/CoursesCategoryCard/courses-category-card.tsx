@@ -13,7 +13,7 @@ import { Link } from '@reach/router';
 
 import './courses-category-card.css';
 import { navigate } from 'gatsby';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import devIcon from '../../assets/icons/dev-icon.svg';
 import programmationIcon from '../../assets/icons/programation.png';
 import marketingIcone from '../../assets/icons/marketing.png';
@@ -21,31 +21,18 @@ import itelligenceIcone from '../../assets/icons/bureaut.svg';
 import bureautiqueIcone from '../../assets/icons/computer.svg';
 
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
-  getAwsCourses,
-  getAwsPath,
-  getExternalResource,
-  getRavenTokenDataFromLocalStorage
-} from '../../utils/ajax';
-import envData from '../../../../config/env.json';
-import {
-  MoodleCourse,
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
   RavenCourse,
   RavenFetchCoursesDto
 } from '../../client-only-routes/show-courses';
-import { splitArray } from '../helpers';
-import sortCourses from '../helpers/sort-course';
-import routes from '../../utils/routes';
+import { routes } from '../../utils/routes';
 import {
   myAllDataCourses,
   titleOfCategorieValue,
+  tokenRaven,
   valueOfCurrentCategory
 } from '../../redux/atoms';
-// import routes from '../../utils/routes';
-// import { navigate } from 'gatsby';
 
 interface CourseFilterProps {
   screenWidth: number;
@@ -65,23 +52,9 @@ interface CourseFilterProps {
   getRavenResourcesPath: RavenFetchCoursesDto;
 }
 
-interface RavenTokenData {
-  apiKey: string;
-  token: string;
-  currentPage: 1;
-  fromDate: '01-01-2023';
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: '06-24-2024';
-}
-
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
-
 const CoursesCategoryCard = ({
-  setRavenCourses,
-  setMoodleCourses,
   setIsDataOnLoading,
   courseCategories,
-  setRavenPath,
   setCurrentCategory,
   setCurrentPage
 }: CourseFilterProps): JSX.Element => {
@@ -90,6 +63,7 @@ const CoursesCategoryCard = ({
   const setValueOfButton = useSetRecoilState(titleOfCategorieValue);
   const setCurrent = useSetRecoilState(valueOfCurrentCategory);
   const setValueOfAllRessourcesData = useSetRecoilState(myAllDataCourses);
+  const valueDeToken = useRecoilValue(tokenRaven);
 
   const scrollAmount = 320; // Adjust based on card width and gap
   // const categoryDescrTitle = 'développement';
@@ -108,117 +82,13 @@ const CoursesCategoryCard = ({
       containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
-  const filterByCategory = async (categoryId: number) => {
-    setIsDataOnLoading(true);
-    const moodleCourseFiltered: { courses: MoodleCourse[] | null } | null =
-      await getExternalResource<{ courses: MoodleCourse[] | null }>(
-        `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses_by_field&field=category&value=${categoryId}&moodlewsrestformat=json`
-      );
-    setIsDataOnLoading(false);
 
-    const splitCourses: MoodleCoursesCatalogue | null | undefined =
-      moodleCourseFiltered?.courses != null
-        ? splitArray<MoodleCourse>(
-            moodleCourseFiltered.courses.filter(
-              moodleCourse => moodleCourse.visible == 1
-            ),
-            4
-          )
-        : null;
-    const sortedCourses = sortCourses(splitCourses);
-
-    setMoodleCourses(sortedCourses);
-  };
-
-  const getRavenCourses = async () => {
-    await getRavenToken();
-
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    setIsDataOnLoading(true);
-    const courses = (await getAwsCourses(ravenData)) as RavenCourse[];
-    if (courses && courses.length !== 0) {
-      setRavenCourses(courses);
-      setIsDataOnLoading(false);
-    }
-  };
-
-  const getRavenResourcesPath = async () => {
-    await getRavenToken();
-
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    setIsDataOnLoading(true);
-    const courses = (await getAwsPath(ravenData)) as unknown as RavenCourse[];
-    if (courses && courses.length !== 0) {
-      setRavenPath(courses);
-      setIsDataOnLoading(false);
-    }
-  };
-
-  const getRavenToken = async () => {
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
-    if (ravenLocalToken === null) {
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (typeof generateRavenToken && generateRavenToken !== null) {
-        const token = generateRavenToken as RavenTokenData;
-        addRavenTokenToLocalStorage({ token });
-      }
-    }
-  };
-
-  const handleCategoryClick = async (categoryId: number) => {
+  const handleCategoryClick = (categoryId: number) => {
     setIsSelected(categoryId);
     setCurrentCategory(categoryId);
     setCurrent(categoryId);
     setCurrentPage(1); // Retour à la première page à chaque fois que la catégory change
     setIsDataOnLoading(true);
-
-    try {
-      if (categoryId === -1) {
-        setMoodleCourses(null);
-        setRavenCourses(null);
-        setRavenPath(null);
-        await filterByCategory(categoryId);
-      } else if (categoryId === -2) {
-        setMoodleCourses(null);
-        await getRavenCourses();
-        await getRavenResourcesPath();
-      } else if (categoryId == 11) {
-        await filterByCategory(categoryId); // eslint-disable-line @typescript-eslint/no-floating-promises
-        setRavenCourses(null);
-        setRavenPath(null);
-      } else {
-        await filterByCategory(categoryId);
-        setRavenCourses(null);
-        setRavenPath(null);
-      }
-    } catch (error) {
-      console.log('erreur lors de la recupération de la catégory', error);
-    }
-  };
-
-  const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLButtonElement;
-    if (target !== null) {
-      setValueOfButton(target.textContent || '');
-    }
   };
 
   //selectionne une catégorie par rapport à la catégorie passée en simulant le clic sur le clavier
@@ -243,28 +113,12 @@ const CoursesCategoryCard = ({
     }
   };
 
-  const handleButtonClick = async (
-    categoryId: number,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    handleClickButton(e);
-
-    const url =
-      categoryId === -1
-        ? routes.catalogue.programmation
-        : categoryId === -2
-        ? routes.catalogue.aws
-        : '';
-    await handleCategoryClick(categoryId);
-    await navigate(url);
-  };
-
   const handleButtonClickMoodle = async (
     categoryId: number,
     categoryName: string
   ) => {
     const url = routes.catalogue.moodle.replace(':category', categoryName);
-    await handleCategoryClick(categoryId);
+    // await handleCategoryClick(categoryId);
     setValueOfAllRessourcesData([]);
     setCurrent(categoryId);
     await navigate(url);
@@ -290,81 +144,89 @@ const CoursesCategoryCard = ({
           </button>
         </div>
         <div className='categories-container' ref={containerRef1}>
-          <div className={`category-card `}>
-            <span className='card-title'>Explorer tout</span>
+          <button
+            className={`category-card `}
+            onClick={() => {
+              setCurrent(-1);
+              setValueOfButton(' Programmation');
+              void navigate(routes.catalogue.programmation);
+              //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
+            }}
+          >
+            {/* <span className='card-title'>Explorer tout</span> */}
             <div className='card-content'>
-              <button
-                className='category-name'
-                onClick={e => {
-                  void handleButtonClick(-1, e);
-                  // navigate(routes.catalogue.catalogueTitle.replace(':value', e.target.innerText));
-                }}
-                onKeyPress={e => handleKeyPress(e, -1)}
-                tabIndex={0}
-              >
-                Programmation
-              </button>
+              <p className='category-name'>Programmation</p>
 
               <img src={programmationIcon} className='img-icon' alt='icon' />
             </div>
-          </div>
-          <div className='category-card'>
-            <span className='card-title '>Explorer tout</span>
-            <div className='card-content'>
-              <button
+          </button>
+          <button
+            className={
+              valueDeToken == null ? ' hide__category' : 'category-card '
+            }
+            onClick={() => {
+              setCurrent(-2);
+              setValueOfButton('Amazon Web Service');
+              void navigate(routes.catalogue.aws);
+              //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
+            }}
+            // onKeyPress={event => handleKeyPress(event, -2)}
+            tabIndex={0}
+          >
+            {/* <span className='card-title '>Explorer tout</span> */}
+            <div className='card-content '>
+              <p
                 className='category-name'
-                onClick={() => {
-                  setCurrent(-2);
-                  setValueOfButton('Amazon Web Service');
-                  void navigate(routes.catalogue.aws);
-                  //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
-                }}
-                // onKeyPress={event => handleKeyPress(event, -2)}
-                tabIndex={0} // Makes the element focusable
+                // Makes the element focusable
               >
                 Amazon Web Service
-              </button>
+              </p>
               <img src={devIcon} className='img-icon' alt='icon' />
             </div>
-          </div>
+          </button>
           {courseCategories?.map(categorie => (
-            <div
+            <button
               key={categorie.id}
               className={`category-card ${
                 isSelected === categorie.id ? 'selecte__card category-card' : ''
               }`}
+              onClick={() => {
+                void setValueOfButton(
+                  categorie.name.includes('amp')
+                    ? 'marketing-communication'
+                    : categorie.name.includes('artificielle')
+                    ? 'intelligence-artificielle'
+                    : categorie.name
+                );
+                void handleButtonClickMoodle(
+                  categorie.id,
+                  categorie.name.includes('amp')
+                    ? 'marketing-communication'
+                    : categorie.name.includes('artificielle')
+                    ? 'intelligence-artificielle'
+                    : categorie.name
+                );
+              }}
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return,
+              onKeyPress={event => handleKeyPress(event, categorie.id)}
+              tabIndex={0} // rendre l'élément focusable via le clavier et l'inclure dans la tabulation
             >
-              <span className='card-title'>Explorer tout</span>
+              {/* <span className='card-title'>Explorer tout</span> */}
               <div className='card-content'>
-                <button
-                  className='category-name'
-                  onClick={() => {
-                    void handleButtonClickMoodle(
-                      categorie.id,
-                      categorie.name.includes('amp')
-                        ? 'marketing-communication'
-                        : categorie.name.includes('artificielle')
-                        ? 'intelligence-artificielle'
-                        : categorie.name
-                    );
-                  }}
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-return,
-                  onKeyPress={event => handleKeyPress(event, categorie.id)}
-                  tabIndex={0} // rendre l'élément focusable via le clavier et l'inclure dans la tabulation
-                >
+                <p className='category-name'>
                   {categorie.name.includes('amp')
                     ? 'Marketing & Communication'
                     : categorie.name.includes('artificielle')
                     ? 'Intelligence Artificielle'
                     : categorie.name}
-                </button>
+                </p>
                 <img
                   src={getCourseIcon(categorie.name)}
                   className='img-icon'
                   alt={`${categorie.name} icon`}
                 />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

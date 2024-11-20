@@ -103,10 +103,10 @@
 .nav-list .nav-item .nav-signout-btn {
   padding: 0.5rem 1.875rem;
   text-decoration: none;
-  color: #ffffff;
+  color: var(--gray-00);
   font-weight: 600;
-  background: rgba(255, 255, 255, 0);
-  border: solid 2px #ffffff;
+  background: var(--love-light);
+  border: solid 2px var(--love-light);
   border-radius: 20px;
   transition: all 0.3s ease;
 }

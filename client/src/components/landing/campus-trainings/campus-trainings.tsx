@@ -82,7 +82,7 @@ export default function LandingCampusTrainings() {
         className='w-full campus-image'
       />
       <div className='w-full flex flex-col items-center gap'>
-        <h2 className='text-center'>
+        <h2 className='text-center m-0'>
           Tu recherches une formation sur notre Campus ?
         </h2>
         <p>On a la formation qu&apos;il te faut</p>
@@ -93,7 +93,7 @@ export default function LandingCampusTrainings() {
             rel='noreferrer'
             href={training.link}
             target='_blank'
-            className='w-full relative justify-between training flex flex-col gap p-normal bg-primary rounded-md'
+            className='w-full relative justify-between training flex flex-col gap p-xs bg-primary rounded-md'
             key={i.valueOf()}
           >
             <span className='absolute training-arrow-white-link top-1 right-1'>
@@ -138,7 +138,7 @@ export default function LandingCampusTrainings() {
               </span>
             </a>
           </div>
-          <div className='bootcamp-preview-hero-bg'></div>
+          <div className='bootcamp-preview-hero-bg hide-bg-on-mobile'></div>
         </div>
         <div className='grid grid-cols-1 md-grid-cols-2 gap'>
           {bootcampTrainings.map((training, i) => (
@@ -171,7 +171,7 @@ export default function LandingCampusTrainings() {
           ))}
         </div>
         <div className='rounded-md p-normal bg-black w-full flex flex-col gap join-section'>
-          <div className='join-section-bg'></div>
+          <div className='join-section-bg hide-bg-on-mobile'></div>
           <div className='w-full flex flex-col gap join-section-content'>
             <h2>
               <span>100% des apprenants</span> qui ont terminé la formation

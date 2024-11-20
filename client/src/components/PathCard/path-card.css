@@ -22,6 +22,11 @@
   font-size: 1rem;
 }
 
+.level-card .align {
+  display: flex;
+  align-items: flex-start;
+}
+
 .clock__time {
   text-align: center;
 }
@@ -38,7 +43,7 @@
 
 @media (max-width: 768px) {
   .card-course-detail-back-path {
-    width: 47%;
+    width: 46.5%;
   }
 
   .card-course-detail-container-path {
@@ -57,7 +62,7 @@
 @media (max-width: 480px) {
   .card-course-detail-back-path {
     width: 95%;
-    margin-bottom: 10%;
+    margin-bottom: 4%;
   }
 
   .card-course-detail-container-path {

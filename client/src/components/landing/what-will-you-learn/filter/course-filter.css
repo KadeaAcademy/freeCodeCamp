@@ -32,6 +32,11 @@
   background: none;
 }
 
+.hide__category {
+  display: none;
+  visibility: hidden;
+}
+
 @media (max-width: 768px) {
   .landing-filter-container ul {
     display: flex;

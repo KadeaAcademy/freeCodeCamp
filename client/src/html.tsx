@@ -47,10 +47,10 @@ export default function HTML({
         ></script>
         <script
           dangerouslySetInnerHTML={{
-            __html: `<script> window.dataLayer = window.dataLayer || [];
+            __html: `window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-P9S5KF522M');</script>`
+          gtag('config', 'G-P9S5KF522M');`
           }}
         />
       </head>

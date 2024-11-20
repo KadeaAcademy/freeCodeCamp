@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Grid } from '@freecodecamp/react-bootstrap';
 import { Link } from 'gatsby';
-import routes from '../utils/routes';
+import { routes } from '../utils/routes';
 
 import {
   addRavenTokenToLocalStorage,
@@ -37,7 +37,7 @@ import { User } from '../redux/prop-types';
 import envData from '../../../config/env.json';
 import PathCard from '../components/PathCard/path-card';
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 // TODO: update types for actions
 interface ShowLearningPathProps {
@@ -83,13 +83,6 @@ type RavenCourse = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   skill_level: string;
 };
-interface RavenFetchCoursesDto {
-  apiKey: string;
-  token: string;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
@@ -118,9 +111,12 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ravenPath, setRavenPath] = useState<RavenCourse[]>([]);
 
-  const getRavenResourcesPath = async (data: RavenFetchCoursesDto) => {
-    const getReveanCourses = await getAwsPath(data);
-    setRavenPath(getReveanCourses as unknown as RavenCourse[]);
+  const getRavenResourcesPath = async () => {
+    const getReveanCourses = await getAwsPath();
+    if (getReveanCourses) {
+      setRavenPath(getReveanCourses as unknown as RavenCourse[]);
+    }
+    setRavenPath(ravenPath);
   };
   const getMoodleCoursesCategories = async () => {
     const moodleCategoriesCatalogue = await getExternalResource<
@@ -156,16 +152,11 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
       setAwsCoursesIsAviable(true);
     }
   };
-  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: ravenLocalToken?.token || '',
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
+
   useEffect(() => {
-    void getRavenResourcesPath(ravenData);
+    void getRavenResourcesPath();
+    setCurrentPage(currentPage);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -185,6 +176,7 @@ export function ShowLearningPath(props: ShowLearningPathProps): JSX.Element {
       setMoodleCoursesCategories(null); // cleanup useEffect to perform a React state update
       clearTimeout(timer);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

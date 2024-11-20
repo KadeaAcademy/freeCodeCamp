@@ -1,8 +1,15 @@
 .filter-container {
+  position: sticky; /* Reste fixe par rapport au défilement horizontal */
+  top: 0;
+  z-index: 10; /* Assure que ce conteneur reste au-dessus des autres en cas de chevauchement */
+  background: #fff; /* Assure que le fond ne soit pas affecté par le scroll */
+}
+
+.filter-items-container {
   width: 100%;
   height: 100%;
   max-height: 80vh; /* Limite la hauteur du conteneur pour permettre le défilement */
-  overflow-y: auto; /* Active le défilement vertical */
+  scroll-snap-type: y mandatory;
 }
 
 .filter-container_hidden-scrol {
@@ -10,6 +17,25 @@
   padding: 1rem;
   height: 100%;
   max-height: 80vh; /* Limite la hauteur du conteneur pour permettre le défilement */
+}
+
+.filter__layoute {
+  width: 10rem;
+}
+
+.duration-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.duration-filter label {
+  font-weight: 500;
+}
+
+.duration-filter .duration__Label {
+  display: flex;
+  gap: 3px;
+  align-items: baseline;
 }
 
 .filter__container {
@@ -86,7 +112,9 @@
   justify-content: flex-start;
   gap: 2rem;
   width: 90%;
+  position: relative;
 }
+
 details[open] > *:not(summary) {
   animation: details-show 300ms ease-in-out;
 }
@@ -157,17 +185,38 @@ details[open] > *:not(summary) {
     border: #e60000 2px solid;
   }
   .filter-container {
-    /* display: none; */
-    position: fixed;
+    overflow-y: auto; /* Permet le défilement lorsque c'est nécessaire */
+    position: relative;
     top: 55px;
     left: 0;
-    padding: 20px;
+    padding: 0px;
+    max-height: 80vh;
     width: 100%;
-    height: 100vh;
-    background: rgba(255, 255, 255);
-    z-index: 1000;
-    color: white;
+    background: rgba(255, 255, 255, 0); /* Masquer le fond par défaut */
+    color: rgb(23, 19, 19);
+    transition: 0.3s ease; /* Transition pour le fond */
   }
+
+  /* Styles pour les barres de défilement sur les navigateurs WebKit */
+  .filter-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .filter-container::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  h2 .filter__counter {
+    display: inline;
+    font-weight: 400 !important;
+    padding: 1.2rem !important;
+  }
+
+  .filter-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   .pagination-container {
     margin-top: 2rem;
   }
@@ -185,7 +234,7 @@ details[open] > *:not(summary) {
 @media (max-width: 768px) {
   .card-courses-detail-container {
     padding: 2px;
-    gap: 0%;
+    gap: 0.3%;
   }
   .card-courses-detail-container {
     width: 100%;
@@ -194,11 +243,35 @@ details[open] > *:not(summary) {
   span {
     font-size: 1rem;
   }
+  .main-title-filter-container > svg {
+    display: none;
+  }
 }
 
 @media (max-width: 468px) {
   .course__number p,
   span {
     font-size: 1rem;
+  }
+
+  .main-title-filter-container > svg {
+    display: none;
+  }
+
+  .filter-container {
+    top: 1px;
+  }
+
+  .pagination-container {
+    padding-top: 0rem;
+    margin-bottom: 3rem;
+  }
+
+  .main-title-filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0px;
   }
 }

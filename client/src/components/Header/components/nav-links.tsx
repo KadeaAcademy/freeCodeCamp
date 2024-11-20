@@ -132,19 +132,6 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
         <li className='nav-item'>
           <Link
             onClick={handleIsDropdown}
-            className=''
-            key='learning-path'
-            to='/learning-path'
-            ref={innerRef}
-            activeClassName='active'
-          >
-            {'Parcours'}
-          </Link>
-        </li>
-
-        <li className='nav-item'>
-          <Link
-            onClick={handleIsDropdown}
             external={true}
             className=''
             key='Kadea-academy'

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './course-filter.css';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  categoryCounter,
+  changeState,
   checkedBox,
   valueOfCurrentCategory,
   valueOfTypeLevel
 } from '../../redux/atoms';
+import { allQuery } from '../../utils/routes';
 
 const FilterByLevel = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -17,14 +20,84 @@ const FilterByLevel = () => {
     valueOfCurrentCategory
   );
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked;
-    const value = isChecked ? e.target.value : 'none'; // Assigner "none" lorsqu'il est décoché
+  const setChangeState = useSetRecoilState(changeState);
+  const [counterForCategory, setCounterForcategory] =
+    useRecoilState(categoryCounter);
 
-    setValueLevel(value);
-    setValueChecked(isChecked);
+  const [checkedState, setCheckedState] = useState({
+    debutant: false,
+    Intermediate: false,
+    avance: false
+  });
+
+  // Charger l'état des cases à cocher depuis le localStorage
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const duration = params.get(allQuery.key.level)?.split(',') || [];
+
+    setCheckedState({
+      debutant: duration.includes(allQuery.value.level.debutant),
+      Intermediate: duration.includes(allQuery.value.level.intermediaire),
+      avance: duration.includes(allQuery.value.level.avance)
+    });
+
+    setValueLevel(duration.join(','));
+    setValueChecked(duration.length > 0);
+    setChangeState(false);
     setValue0fCurrentCategory(currentCategorieValue);
-    console.log(showFilter);
+  }, [
+    currentCategorieValue,
+    setValueLevel,
+    setValueChecked,
+    setValue0fCurrentCategory,
+    setChangeState
+  ]);
+
+  // Sauvegarder l'état des cases à cocher dans le localStorage lorsqu'il change
+
+  const handleLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+
+    setCheckedState(prevState => {
+      const updatedState = { ...prevState, [value]: checked };
+      const queryParams = new URLSearchParams(window.location.search);
+      let level = queryParams.get(allQuery.key.level)?.split(',') || [];
+
+      if (checked) {
+        if (!level.includes(value)) level.push(value);
+      } else {
+        level = level.filter(level => level !== value);
+      }
+
+      if (level.length > 0) {
+        queryParams.set(allQuery.key.level, level.join(','));
+      } else {
+        queryParams.delete(allQuery.key.level);
+      }
+
+      const newQueryString = queryParams.toString();
+      if (newQueryString) {
+        window.history.replaceState(null, '', `?${newQueryString}`);
+      } else {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+
+      setValueLevel(level.join(''));
+
+      setCounterForcategory(
+        counterForCategory >= 0 && checked
+          ? counterForCategory + 1
+          : counterForCategory > 0 && !checked
+          ? counterForCategory - 1
+          : counterForCategory
+      );
+      setChangeState(false);
+      setValueChecked(checked);
+      setValue0fCurrentCategory(currentCategorieValue);
+      setShowFilter(showFilter);
+
+      return updatedState;
+    });
   };
 
   return (
@@ -77,24 +150,27 @@ const FilterByLevel = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Débutant'
-                onChange={handleLanguageChange}
+                value={allQuery.value.level.debutant}
+                checked={checkedState.debutant}
+                onChange={handleLevelChange}
               />
               Débutant
             </label>
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Intermédiaire'
-                onChange={handleLanguageChange}
+                value={allQuery.value.level.intermediaire}
+                checked={checkedState.Intermediate}
+                onChange={handleLevelChange}
               />
               Intermédiaire
             </label>
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='Avancé'
-                onChange={handleLanguageChange}
+                value={allQuery.value.level.avance}
+                checked={checkedState.avance}
+                onChange={handleLevelChange}
               />
               Avancé
             </label>

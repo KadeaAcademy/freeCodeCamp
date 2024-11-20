@@ -22,6 +22,8 @@
   margin: 0;
   font-size: 1rem;
   font-weight: bold;
+  overflow-wrap: anywhere;
+  margin-right: 10px;
 }
 
 .training-description {
@@ -207,4 +209,10 @@ a:hover {
   font-size: 18px;
   background-color: #fff;
   border-radius: 50%;
+}
+
+@media only screen and (max-width: 500px) {
+  .hide-bg-on-mobile {
+    background: none;
+  }
 }

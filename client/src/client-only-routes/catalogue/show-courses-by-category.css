@@ -10,6 +10,17 @@
   padding: 1rem;
 }
 
+.no-cours {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.no-cours div {
+  font-weight: 400;
+  font-size: 1.5rem;
+  padding: 1rem 0rem;
+}
+
 .catalog {
   font-size: 1.5rem;
   color: red;
@@ -21,7 +32,120 @@
   font-size: 1.5rem;
 }
 
+/* Sélection de l'élément avec la classe filter__liste */
+.filter__liste {
+  position: fixed;
+  z-index: 0;
+  top: 7rem;
+  overflow-y: scroll;
+  max-height: 80vh;
+}
+
+.fixed {
+  position: fixed;
+  top: 0; /* Ajustez selon vos besoins */
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Pour s'assurer que l'élément reste au-dessus des autres */
+}
+
+/* Style de la barre de défilement de .filter__liste */
+.all-filter-type::-webkit-scrollbar {
+  width: 5px; /* Largeur de la scrollbar */
+  color: #fff;
+  background-color: #f1f1f1;
+}
+
+.all-filter-type::-webkit-scrollbar:hover {
+  width: 10px; /* Largeur de la scrollbar */
+  color: #928686;
+}
+
+/* Style de la piste de la scrollbar de .all-filter-type */
+.all-filter-type::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Couleur de fond */
+  border-radius: 10px; /* Bords arrondis */
+}
+
+/* Style du bouton de défilement (thumb) de .all-filter-type */
+.all-filter-type::-webkit-scrollbar-thumb {
+  background-color: #fff; /* Couleur du bouton de défilement */
+  border-radius: 10px; /* Bords arrondis */
+}
+
+/* Effet hover sur le bouton de défilement de .all-filter-type */
+.all-filter-type::-webkit-scrollbar-thumb:hover {
+  background-color: #9a9090; /* Couleur du bouton au survol */
+}
+
+.hidden_all_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-title_space {
+  padding: 0.2rem;
+}
+
 .language-filter {
   display: flex;
   flex-direction: column;
+}
+/* style pour la page des filtres introuvables */
+.no-courses {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+.no-courses img {
+  max-width: 100px;
+  margin-bottom: 20px;
+  border: 1px #333;
+}
+
+.no-courses p {
+  color: #333;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.no-courses button {
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.no-courses button:hover {
+  background-color: #b71c1c;
+}
+
+.hide_on_mobile {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 468px) {
+  .catalog-title {
+    padding-top: 0.4rem;
+  }
+}
+
+@media (max-width: 468px) {
+  .hidden_all_container {
+    display: none;
+  }
+
+  .hide_on_mobile {
+    display: none;
+  }
 }

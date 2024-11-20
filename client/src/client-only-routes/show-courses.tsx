@@ -10,12 +10,11 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import PathCard from '../components/PathCard/path-card';
 
 import envData from '../../../config/env.json';
 import CourseCard from '../components/CourseCard/course-card';
-import LaptopIcon from '../assets/images/laptop.svg';
 import AlgoIcon from '../assets/images/algorithmIcon.svg';
 import PhBookBookmark from '../assets/images/ph-book-bookmark-thin.svg';
 import awsLogo from '../assets/images/aws-logo.png';
@@ -26,8 +25,7 @@ import { createFlashMessage } from '../components/Flash/redux';
 import {
   Loader,
   Spacer,
-  renderCourseCardSkeletons,
-  splitArray
+  renderCourseCardSkeletons
 } from '../components/helpers';
 import {
   signInLoadingSelector,
@@ -38,13 +36,12 @@ import {
 
 import { User } from '../redux/prop-types';
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
+  dataForprogramation,
   getAwsCourses,
   getExternalResource,
-  getRavenTokenDataFromLocalStorage,
-  removeRavenTokenFromLocalStorage,
-  getAwsPath
+  getMoodleCourses,
+  getRavenPathResources,
+  ProgramationCourses
 } from '../utils/ajax';
 import {
   convertTime,
@@ -54,26 +51,21 @@ import {
 
 import '../components/CourseFilter/course-filter.css';
 import CourseFilter from '../components/CourseFilter/course-filter';
-import sortCourses from '../components/helpers/sort-course';
 import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-category-card';
 import {
   allDataCourses,
   categoryCours,
+  centraliseProgramationCours,
+  centraliseRavenData,
   coursesMoodle,
   coursesRaven,
+  myDataMoodle,
   pathRaven,
   valueOfCurrentCategory
-  // valueOfLanguage,
-  // valueOfTypeCourse,
-  // valueOfTypeDuration,
-  // valueOfTypeLevel
 } from '../redux/atoms';
 import { UnifiedCourse } from '../redux/types';
-// import { RootState, UnifiedCourse } from '../redux/types';
-// import { fetchRavenCoursesRequest } from '../redux/settings/actions_fetchData';
 
-const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl, ravenAwsApiKey } =
-  envData;
+const { moodleApiBaseUrl, moodleApiToken, moodleBaseUrl } = envData;
 
 // TODO: update types for actions
 export interface CoursesProps {
@@ -114,6 +106,10 @@ export type MoodleCourse = {
   format: string;
   timecreated: number;
   timemodified: number;
+  langue: string;
+  duration: number;
+  level: string;
+  type: string;
 };
 
 export type MoodleCoursesCatalogue = {
@@ -138,13 +134,6 @@ export type RavenCourse = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   skill_level: string;
 };
-interface RavenTokenData {
-  token: string;
-  expiresIn: number;
-  validFrom: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
 
 type Tag = {
   title: string;
@@ -155,19 +144,6 @@ type Category = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Course = {
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  long_description?: string;
-  duration: number;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  skill_level: string;
-  category?: Category[];
-};
 
 export interface RavenFetchCoursesDto {
   apiKey: string;
@@ -222,6 +198,9 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [courseCategories, setCourseCategories] = useRecoilState<
     MoodleCourseCategory[] | null | undefined
   >(categoryCours);
+  const ravenState = useRecoilValue(centraliseRavenData);
+  const moodleSate = useRecoilValue(myDataMoodle);
+  const stateProgrammation = useRecoilValue(centraliseProgramationCours);
   const [currentCategory, setCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
@@ -231,94 +210,15 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataRaven, setDataRaven] = useRecoilState<
     RavenCourse[] | null | undefined
   >(coursesRaven);
-  const [dataRavenPath, setDataRavenPath] =
-    useRecoilState<RavenCourse[]>(pathRaven);
-  const [dataMoodle, setDataMoodle] = useRecoilState<
+  const setDataRavenPath = useSetRecoilState<RavenCourse[]>(pathRaven);
+  const setDataMoodle = useSetRecoilState<
     MoodleCoursesCatalogue | null | undefined
   >(coursesMoodle);
-  // const [valueLangue, setValueLangue] = useRecoilState(valueOfLanguage);
-  // const [valueOfCourseType, setValueOfCourseType] =
-  //   useRecoilState(valueOfTypeCourse);
-  // const [valueDuration, setValueDuration] = useRecoilState(valueOfTypeDuration);
-  // const [valueLevel, setValueLevel] = useRecoilState(valueOfTypeLevel);
-
-  // const [allDataRessourceCourse, setAllDataRessource] =
-  //   useRecoilState(myAllDataCourses);
-
-  // const dispatch = useDispatch();
-  // const mesCoursesRaven = useSelector((state:RootState) => state.mesCouresRaven.courses);
-
-  const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-
-  const getRavenResources = async () => {
-    await getRavenToken();
-
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: currentPage,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsCourses(ravenData);
-    setDataRaven(getReveanCourses as RavenCourse[]);
-  };
-
-  const getRavenResourcesPath = async () => {
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: currentPage,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsPath(ravenData);
-    setDataRavenPath(getReveanCourses as unknown as RavenCourse[]);
-  };
-
-  const getRavenToken = async () => {
-    const ravenTokenData = getRavenTokenDataFromLocalStorage();
-
-    if (ravenTokenData === null) {
-      // Si aucun token n'existe en local storage, générer un nouveau token
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (generateRavenToken) {
-        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-        return generateRavenToken;
-      } else {
-        return null;
-      }
-    } else {
-      // Vérifier si le token existant a expiré d'une heure ou plus
-      const tokenExpirationTime = new Date(ravenTokenData.valid_to);
-      const currentTime = new Date();
-      // 1 heure en millisecondes
-      const oneHourInMillis = 60 * 60 * 1000;
-      // Calculer la différence de temps en millisecondes
-      const timeDifference =
-        tokenExpirationTime.getTime() - currentTime.getTime();
-
-      if (timeDifference <= oneHourInMillis) {
-        // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
-        removeRavenTokenFromLocalStorage();
-        const generateRavenToken = await generateRavenTokenAcces();
-
-        if (generateRavenToken) {
-          addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-          return generateRavenToken; // Retourner le nouveau token
-        } else {
-          return null; // Retourner null si la génération a échoué
-        }
-      } else {
-        // Le token est encore valide, retourner le token existant
-        return ravenTokenData;
-      }
-    }
-  };
+  const setGetAllProgrammationCourses = useSetRecoilState(
+    centraliseProgramationCours
+  );
+  const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
+  const setGetAllDataMoodle = useSetRecoilState(myDataMoodle);
 
   const getMoodleCourseCategory = async () => {
     const moodleCourseCategories = await getExternalResource<
@@ -335,40 +235,16 @@ export function Courses(props: CoursesProps): JSX.Element {
     }
   };
 
-  const getMoodleCourses = async () => {
-    const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
+  const allCourses: (MoodleCourse | RavenCourse | ProgramationCourses)[] =
+    useMemo(
+      () => [
+        ...(stateProgrammation ? stateProgrammation : []),
+
+        ...(ravenState || []),
+        ...(moodleSate?.result ? moodleSate.result.flat() : [])
+      ],
+      [ravenState, moodleSate?.result, stateProgrammation]
     );
-
-    const splitCourses: MoodleCoursesCatalogue | null | undefined =
-      moodleCatalogue != null
-        ? splitArray<MoodleCourse>(
-            moodleCatalogue.filter(moodleCourse => {
-              return moodleCourse.visible == 1 && moodleCourse.format != 'site';
-            }),
-            4
-          )
-        : null;
-
-    //Order courses by their publication date
-    const sortedCourses = sortCourses(splitCourses);
-
-    if (moodleCatalogue != null) {
-      setDataMoodle(sortedCourses);
-    } else {
-      setDataMoodle(null);
-    }
-  };
-
-  const allCourses: (MoodleCourse | RavenCourse)[] = useMemo(
-    () => [
-      ...(dataRaven || []),
-      ...(dataMoodle?.result ? dataMoodle.result.flat() : []),
-      ...(dataRavenPath ? dataRavenPath : [])
-    ],
-    [dataRaven, dataMoodle, dataRavenPath]
-  );
 
   const {
     paginatedData,
@@ -376,6 +252,64 @@ export function Courses(props: CoursesProps): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     currentPage: page
   } = paginate(allDataofCourses, currentPage);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedProgrammationData =
+          localStorage.getItem('programmationData');
+        const storedMoodleData = localStorage.getItem('moodleData');
+        const storedRavenData = localStorage.getItem('ravenData');
+
+        if (storedProgrammationData) {
+          setGetAllProgrammationCourses(
+            JSON.parse(storedProgrammationData) as ProgramationCourses[]
+          );
+        } else {
+          const programmationData = dataForprogramation;
+          setGetAllProgrammationCourses(programmationData);
+          localStorage.setItem(
+            'programmationData',
+            JSON.stringify(programmationData)
+          );
+        }
+
+        if (storedMoodleData && storedRavenData) {
+          setGetAllDataMoodle(
+            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
+          );
+          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
+        } else {
+          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+            getMoodleCourses(),
+            getAwsCourses(),
+            getRavenPathResources()
+          ]);
+
+          if (moodleData) {
+            setGetAllDataMoodle(moodleData);
+            localStorage.setItem('moodleData', JSON.stringify(moodleData));
+          }
+
+          if (ravenData || ravenPathData) {
+            const unifiedRavenData = [
+              ...((ravenData as RavenCourse[]) || []),
+              ...(ravenPathData || [])
+            ];
+            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsDataOnLoading(false);
+      }
+    };
+
+    void fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onNavigateForward = () => {
     if (currentPage < totalPages && currentPage > 0) {
@@ -395,137 +329,25 @@ export function Courses(props: CoursesProps): JSX.Element {
     }
   };
 
-  // useEffect(() => {
-  //   if (currentCategory === -2) {
-  //     if (valueLangue !== 'none') {
-  //       setDataForallCourse(
-  //         allDataofCourses.filter(
-  //           course =>
-  //             'launch_url' in course &&
-  //             course.category?.[0]?.tags?.[0]?.title === valueLangue
-  //         )
-  //       );
-  //     } else {
-  //       setDataForallCourse(allDataofCourses);
-  //     }
-  //   }
-  //   setValueLangue(valueLangue);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [valueLangue, allDataofCourses]);
-
-  // useEffect(() => {
-  //   if (currentCategory === 11||
-  //     currentCategory === 13|| currentCategory === 14
-  //   ) {
-  //     if (valueDuration !== 'none') {
-
-  //       setDataForallCourse(
-  //         allDataofCourses.filter(
-  //           course =>
-  //             'categorieid' in course &&
-  //             course.category?.[0]?.tags?.[0]?.title === valueLangue
-  //         )
-  //       );
-  //     } else {
-  //       setDataForallCourse(allDataofCourses);
-  //     }
-  //   }
-  //   setValueLangue(valueLangue);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [valueLangue, allDataofCourses]);
-
-  // useEffect(() => {
-  //   if (currentCategory === -2) {
-  //     if (valueLevel !== 'none') {
-  //       const filterByLevel = allDataofCourses.filter(
-  //         course => 'launch_url' in course && course.skill_level === valueLevel
-  //       );
-  //       setDataForallCourse(filterByLevel);
-  //     } else {
-  //       setDataForallCourse(allDataofCourses);
-  //     }
-  //   }
-
-  //   setValueLevel(valueLevel);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [valueLevel, allDataofCourses]);
-
-  // useEffect(() => {
-  //   if (currentCategory === -2) {
-  //     if (valueOfCourseType !== 'none') {
-  //       setDataForallCourse(
-  //         allDataofCourses.filter(
-  //           course => 'launch_url' in course && course.long_description
-  //         )
-  //       );
-  //     } else {
-  //       setDataForallCourse(allDataofCourses);
-  //     }
-  //   }
-  //   setValueOfCourseType(valueOfCourseType);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [valueOfCourseType, allDataofCourses]);
-
-  // useEffect(() => {
-  //   setAllDataRessource(allDataRessoucesCourses);
-  // }, [currentCategory, allDataRessoucesCourses]);
-
   useEffect(() => {
-    void getRavenResourcesPath();
-
+    void getMoodleCourseCategory().then(() => {
+      if (dataRaven?.length === 0) {
+        setIsDataOnLoading(false);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  }, []);
 
   useEffect(() => {
     setDataForallCourse(allCourses);
   }, [allCourses, dataForAllCourses, setDataForallCourse]);
-
-  useEffect(() => {
-    void getRavenResources();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
-
-  //   useEffect(() => {
-  //   dispatch(fetchRavenCoursesRequest());
-
-  // }, [dispatch]);
-
-  useEffect(() => {
-    void getMoodleCourses();
-
-    const timer = setTimeout(() => {
-      if (isDataOnLoading) {
-        setIsDataOnLoading(false);
-      }
-    }, 2000);
-    return () => {
-      setDataMoodle(null); // cleanup useEffect to perform a React state update
-      setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
-      clearTimeout(timer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isDataOnLoading) {
-        setIsDataOnLoading(false);
-      }
-    }, 3000);
-    return () => {
-      setIsDataOnLoading(true); // cleanup useEffect to perform a React state update
-      clearTimeout(timer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {
       showFilter && setScreenWidth(window.innerWidth);
     });
   }
-  if (isDataOnLoading) {
-    console.log(isDataOnLoading);
-  }
+
   useEffect(() => {
     setCurrentCategory(null);
   }, [currentPage, setCurrentCategory]);
@@ -554,12 +376,12 @@ export function Courses(props: CoursesProps): JSX.Element {
       <Helmet title={`Nos cours | Kadea Online`} />
       <Grid className='bg-light'>
         <main>
-          <div className=''>
+          <div>
             <Spacer size={1} />
 
             <button
               onClick={() => {
-                setShowFilter(e => !e);
+                setShowFilter(prev => !prev);
               }}
               className='show-filter-button'
             >
@@ -593,7 +415,13 @@ export function Courses(props: CoursesProps): JSX.Element {
                 />
               )}
 
-              <div className='card-courses-detail-container'>
+              <div
+                className={
+                  showFilter
+                    ? 'card-courses-detail-container hide_on_mobile'
+                    : 'card-courses-detail-container'
+                }
+              >
                 <div>
                   <h2 className='big-subheading'>Explorer notre catalogue</h2>
                 </div>
@@ -604,7 +432,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                   setRavenPath={setDataRavenPath}
                   setCurrentCategory={setCurrentCategory}
                   currentCategory={currentCategory}
-                  screenWidth={setScreenWidth}
+                  screenWidth={screenWidth}
                   setCurrentPage={setCurrentPage}
                   setIsDataOnLoading={setIsDataOnLoading}
                   setMoodleCourses={setDataMoodle}
@@ -614,57 +442,43 @@ export function Courses(props: CoursesProps): JSX.Element {
                 <div className='course__number'>
                   <p>Parcourir le catalogue complet</p>
                   <span>
-                    {paginatedData.length > 0 &&
-                      paginatedData.length +
-                        (currentCategory == null || currentCategory == -1
-                          ? 2
-                          : 0)}{' '}
-                    cours
+                    {paginatedData.length > 0 ? paginatedData.length : ''} cours
                   </span>
                 </div>
 
                 {!isDataOnLoading ? (
                   <div className='card-course-detail-container'>
-                    {currentPage == 1 &&
-                      (currentCategory == null || currentCategory == -1) && (
+                    {currentPage === 1 &&
+                      (currentCategory === null || currentCategory === -1) && (
                         <>
-                          <CourseCard
-                            language='French'
-                            icon={LaptopIcon}
-                            sponsorIcon={LaediesActIcon}
-                            alt=''
-                            // name={name}
-                            // phone={phone}
-                            isAvailable={true}
-                            // isSignedIn={isSignedIn}
-                            title='Responsive Web Design'
-                            buttonText='Suivre le cours'
-                            link='/learn/responsive-web-design/'
-                            description={`
-                          Dans ce cours, tu apprendras les langages que les développeurs
-                          utilisent pour créer des pages Web : HTML (Hypertext Markup Language)
-                          pour le contenu, et CSS (Cascading Style Sheets) pour la conception.
-                          Enfin, tu apprendras à créer des pages Web adaptées à différentes tailles d'écran.
-                        `}
-                          />
-                          <CourseCard
-                            language='French'
-                            icon={AlgoIcon}
-                            alt=''
-                            isAvailable={true}
-                            // isSignedIn={isSignedIn}
-                            // phone={phone}
-                            // name={name}
-                            title='JavaScript Algorithms and Data Structures'
-                            buttonText='Suivre le cours'
-                            link='/learn/javascript-algorithms-and-data-structures'
-                            description={`Alors que HTML et CSS contrôlent le contenu et le style d'une page,
-                          JavaScript est utilisé pour la rendre interactive. Dans le cadre du
-                          cours JavaScript Algorithm and Data Structures, tu apprendras
-                          les principes fondamentaux de JavaScript, etc.`}
-                          />
+                          {paginatedData
+                            .filter(course => 'title' in course)
+                            .map((programation, index) => {
+                              const courseProgrammation =
+                                programation as ProgramationCourses;
+                              return (
+                                <CourseCard
+                                  key={index}
+                                  level={courseProgrammation.level}
+                                  language={courseProgrammation.language}
+                                  icon={
+                                    courseProgrammation.sponsorIcon ===
+                                    'AlgoIcon'
+                                      ? AlgoIcon
+                                      : LaediesActIcon
+                                  }
+                                  alt={courseProgrammation.alt}
+                                  isAvailable={courseProgrammation.isAvailable}
+                                  title={courseProgrammation.title}
+                                  buttonText='Suivre le cours'
+                                  link={courseProgrammation.link}
+                                  description={courseProgrammation.description}
+                                />
+                              );
+                            })}
                         </>
                       )}
+
                     {paginatedData.length > 0
                       ? paginatedData.map((course, index) => {
                           if ('launch_url' in course) {
@@ -679,7 +493,6 @@ export function Courses(props: CoursesProps): JSX.Element {
                                   key={course.name}
                                   icon={awsLogo}
                                   isAvailable={true}
-                                  // isSignedIn={isSignedIn}
                                   title={`${index + 1}. ${course.name}`}
                                   buttonText='Suivre le cours'
                                   link={course.launch_url}
@@ -691,11 +504,11 @@ export function Courses(props: CoursesProps): JSX.Element {
                             } else {
                               return (
                                 <CourseCard
+                                  level={course.skill_level}
                                   language={language}
                                   key={index.toString()}
                                   icon={awsLogo}
                                   isAvailable={true}
-                                  // isSignedIn={isSignedIn}
                                   title={`${index + 1}. ${course.name}`}
                                   buttonText='Suivre le cours'
                                   link={course.launch_url}
@@ -704,14 +517,14 @@ export function Courses(props: CoursesProps): JSX.Element {
                                 />
                               );
                             }
-                          } else {
+                          } else if ('timecreated' in course) {
                             return (
                               <CourseCard
+                                level='debutant'
                                 language='French'
-                                key={`${index}-${course.id}`}
-                                icon={PhBookBookmark} // Remplacer par le chemin réel de l'image
+                                key={course.id}
+                                icon={PhBookBookmark}
                                 isAvailable={course.visible === 1}
-                                // isSignedIn={isSignedIn}
                                 title={course.displayname}
                                 buttonText='Suivre le cours'
                                 link={`${moodleBaseUrl}/course/view.php?id=${course.id}`}

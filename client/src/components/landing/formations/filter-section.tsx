@@ -1,19 +1,28 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   MoodleCourse,
   MoodleCourseCategory,
-  MoodleCoursesCatalogue
+  MoodleCoursesCatalogue,
+  RavenCourse
 } from '../../../client-only-routes/show-courses';
 import {
-  addRavenTokenToLocalStorage,
-  generateRavenTokenAcces,
+  dataForprogramation,
   getAwsCourses,
   getExternalResource,
-  getRavenTokenDataFromLocalStorage,
-  removeRavenTokenFromLocalStorage
+  getMoodleCourses,
+  getRavenPathResources,
+  getRavenToken,
+  ProgramationCourses
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
+import {
+  centraliseProgramationCours,
+  centraliseRavenData,
+  myDataMoodle,
+  tokenRaven
+} from '../../../redux/atoms';
 import envData from './../../../../../config/env.json';
 
 type MoodleCoursesFiltered = {
@@ -21,18 +30,6 @@ type MoodleCoursesFiltered = {
   warnings: [];
 };
 
-type RavenCourse = {
-  learningobjectid: number;
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  createddate: string;
-  updateddate: string;
-  contenttype: string;
-  duration: string;
-};
 interface RavenTokenData {
   token: string;
   expiresIn: number;
@@ -40,15 +37,8 @@ interface RavenTokenData {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   valid_to: string;
 }
-interface RavenFetchCoursesDto {
-  apiKey: string;
-  token: string;
-  currentPage: number;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-}
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 const CoursesFilterSection = ({
   courseCategories,
@@ -69,7 +59,15 @@ const CoursesFilterSection = ({
   setCurrentCategory: React.Dispatch<React.SetStateAction<string>>;
   currentCategory: string;
 }): JSX.Element => {
-  const getMoodleCourses = async () => {
+  const setValueOfToken = useSetRecoilState(tokenRaven);
+  const [tokeFromRaven, setTokenFromRaven] = useRecoilState(tokenRaven);
+  const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
+  const setGetAllDataMoodle = useSetRecoilState(myDataMoodle);
+  const setGetAllProgrammationCourses = useSetRecoilState(
+    centraliseProgramationCours
+  );
+
+  const getAllMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
@@ -120,60 +118,68 @@ const CoursesFilterSection = ({
     setIsDataOnLoading(true);
     await getRavenToken();
 
-    const ravenLocalToken = getRavenTokenDataFromLocalStorage();
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: ravenLocalToken?.token || '',
-      currentPage: Math.floor(Math.random() * 4) + 1,
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
-    const getReveanCourses = await getAwsCourses(ravenData);
+    const getReveanCourses = await getAwsCourses();
     setRavenCourses(getReveanCourses as RavenCourse[]);
     setIsDataOnLoading(false);
   };
 
-  const getRavenToken = async () => {
-    const ravenTokenData = getRavenTokenDataFromLocalStorage();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedProgrammationData =
+          localStorage.getItem('programmationData');
+        const storedMoodleData = localStorage.getItem('moodleData');
+        const storedRavenData = localStorage.getItem('ravenData');
 
-    if (ravenTokenData === null) {
-      // Si aucun token n'existe en local storage, générer un nouveau token
-      const generateRavenToken = await generateRavenTokenAcces();
-
-      if (generateRavenToken) {
-        addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-        return generateRavenToken; // Retourner le nouveau token
-      } else {
-        return null; // Retourner null si la génération a échoué
-      }
-    } else {
-      // Vérifier si le token existant a expiré d'une heure ou plus
-      const tokenExpirationTime = new Date(ravenTokenData.valid_to);
-      const currentTime = new Date();
-      // 1 heure en millisecondes
-      const oneHourInMillis = 60 * 60 * 1000;
-      // Calculer la différence de temps en millisecondes
-      const timeDifference =
-        tokenExpirationTime.getTime() - currentTime.getTime();
-
-      if (timeDifference <= oneHourInMillis) {
-        // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
-        removeRavenTokenFromLocalStorage();
-        const generateRavenToken = await generateRavenTokenAcces();
-
-        if (generateRavenToken) {
-          addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-          return generateRavenToken; // Retourner le nouveau token
+        if (storedProgrammationData) {
+          setGetAllProgrammationCourses(
+            JSON.parse(storedProgrammationData) as ProgramationCourses[]
+          );
         } else {
-          return null; // Retourner null si la génération a échoué
+          const programmationData = dataForprogramation;
+          setGetAllProgrammationCourses(programmationData);
+          localStorage.setItem(
+            'programmationData',
+            JSON.stringify(programmationData)
+          );
         }
-      } else {
-        // Le token est encore valide, retourner le token existant
-        return ravenTokenData;
+
+        if (storedMoodleData && storedRavenData) {
+          setGetAllDataMoodle(
+            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
+          );
+          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
+        } else {
+          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+            getMoodleCourses(),
+            getAwsCourses(),
+            getRavenPathResources()
+          ]);
+
+          if (moodleData) {
+            setGetAllDataMoodle(moodleData);
+            localStorage.setItem('moodleData', JSON.stringify(moodleData));
+          }
+
+          if (ravenData || ravenPathData) {
+            const unifiedRavenData = [
+              ...((ravenData as RavenCourse[]) || []),
+              ...(ravenPathData || [])
+            ];
+            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsDataOnLoading(false);
       }
-    }
-  };
+    };
+
+    void fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const topics = useMemo(() => {
     return [
@@ -184,7 +190,7 @@ const CoursesFilterSection = ({
           setCurrentCategory('popular');
           setMoodleCourses(null);
           void getRavenResources();
-          void getMoodleCourses();
+          void getAllMoodleCourses();
         }
       },
       {
@@ -209,6 +215,27 @@ const CoursesFilterSection = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setCurrentCategory, courseCategories]);
 
+  useEffect(() => {
+    const getRaveToken = async () => {
+      try {
+        const ravenToken = await getRavenToken();
+        console.log(ravenToken);
+
+        setTokenFromRaven(ravenToken as RavenTokenData);
+        setValueOfToken(ravenToken as RavenTokenData);
+      } catch (error) {
+        console.error('Failed to get Raven Token', error);
+      }
+    };
+
+    void getRaveToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once when the component mounts
+
+  const memorizedToken = useMemo(() => {
+    return tokeFromRaven;
+  }, [tokeFromRaven]);
+
   return (
     <div className='formation__button_list'>
       {topics.map((topic, i) => (
@@ -216,6 +243,10 @@ const CoursesFilterSection = ({
           onClick={topic.onClick}
           className={`button-list ${
             currentCategory == topic.id ? 'active' : ''
+          } ${
+            topic.title == 'AWS' && memorizedToken == null
+              ? 'hide__category'
+              : ''
           }`}
           key={i.valueOf()}
         >

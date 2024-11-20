@@ -1,39 +1,107 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './course-filter.css';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  categoryCounter,
+  changeState,
   checkedBox,
   valueOfCurrentCategory,
   valueOfLanguage
 } from '../../redux/atoms';
+import { allQuery } from '../../utils/routes';
 
-const OtherFilter = () => {
+const FilterLanguage = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showSubjectFilter, setShowSubjectFilter] = useState(true);
-  const setValueLanguage = useSetRecoilState(valueOfLanguage);
+  const setValueLangue = useSetRecoilState(valueOfLanguage);
   const setValueChecked = useSetRecoilState(checkedBox);
   const [currentCategorieValue, setValue0fCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
+  const setChangeState = useSetRecoilState(changeState);
+  const [counterForCategory, setCounterForCategory] =
+    useRecoilState(categoryCounter);
+
+  // État local pour gérer les cases cochées
+  const [checkedState, setCheckedState] = useState({
+    French: false,
+    English: false
+  });
+
+  // Charger l'état des cases cochées depuis le localStorage au montage du composant
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const languages = params.get(allQuery.key.language)?.split(',') || [];
+
+    setCheckedState({
+      French: languages.includes(allQuery.value.language.french),
+      English: languages.includes(allQuery.value.language.english)
+    });
+
+    setValueLangue(languages.join(','));
+    setValueChecked(languages.length > 0);
+    setChangeState(false);
+    setValue0fCurrentCategory(currentCategorieValue);
+  }, [
+    currentCategorieValue,
+    setValueLangue,
+    setValueChecked,
+    setChangeState,
+    setValue0fCurrentCategory
+  ]);
+
+  // Sauvegarder l'état des cases cochées dans le localStorage à chaque modification
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked;
-    const value = isChecked ? e.target.value : 'none'; // Assigner "none" lorsqu'il est décoché
+    const { value, checked } = e.target;
 
-    setValueLanguage(value);
-    setValueChecked(isChecked);
-    setValue0fCurrentCategory(currentCategorieValue);
-    console.log(showFilter);
+    setCheckedState(prevState => {
+      const updatedState = { ...prevState, [value]: checked };
+      const queryParams = new URLSearchParams(window.location.search);
+      let language = queryParams.get(allQuery.key.language)?.split(',') || [];
+
+      if (checked) {
+        if (!language.includes(value)) language.push(value);
+      } else {
+        language = language.filter(langue => langue !== value);
+      }
+
+      if (language.length > 0) {
+        queryParams.set(allQuery.key.language, language.join(','));
+      } else {
+        queryParams.delete(allQuery.key.language);
+      }
+
+      const newQueryString = queryParams.toString();
+      if (newQueryString) {
+        window.history.replaceState(null, '', `?${newQueryString}`);
+      } else {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+      setValueLangue(language.join(''));
+
+      setCounterForCategory(
+        counterForCategory >= 0 && checked
+          ? counterForCategory + 1
+          : counterForCategory > 0 && !checked
+          ? counterForCategory - 1
+          : counterForCategory
+      );
+      setChangeState(false);
+      setValueChecked(checked);
+      setValue0fCurrentCategory(currentCategorieValue);
+      setShowFilter(showFilter);
+
+      return updatedState;
+    });
   };
 
   return (
     <div className='filter-container'>
       <div className='main-title-filter-container'>
         <svg
-          onClick={() => {
-            setShowFilter(e => !e);
-          }}
+          onClick={() => setShowFilter(e => !e)}
           width='30px'
           height='30px'
           xmlns='http://www.w3.org/2000/svg'
@@ -47,7 +115,7 @@ const OtherFilter = () => {
           onClick={() => setShowSubjectFilter(e => !e)}
           className='filter-title-container'
         >
-          <p className='filter-title'>Langues</p>
+          <p className='filter-title'>Langue</p>
           {showSubjectFilter ? (
             <svg
               width='30px'
@@ -77,18 +145,20 @@ const OtherFilter = () => {
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='English'
+                value='French'
+                checked={checkedState.French}
                 onChange={handleLanguageChange}
               />
-              Anglais
+              Français
             </label>
             <label className='language__Label'>
               <input
                 type='checkbox'
-                value='French'
+                value='English'
+                checked={checkedState.English}
                 onChange={handleLanguageChange}
               />
-              Français
+              Anglais
             </label>
           </div>
         </ul>
@@ -97,5 +167,5 @@ const OtherFilter = () => {
   );
 };
 
-OtherFilter.displayName = 'OtherFilter';
-export default OtherFilter;
+FilterLanguage.displayName = 'FilterLanguage';
+export default FilterLanguage;

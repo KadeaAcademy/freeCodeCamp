@@ -2,7 +2,11 @@
   "db": {
     "name": "db",
     "connector": "mongodb",
-    "allowExtendedOperators": true
+    "url": "mongodb+srv://judah:RnGDvjW3DWuKflIQ@cluster0.wj3rj.mongodb.net/jdaFreecodeCamp?retryWrites=true&w=majority",
+    "allowExtendedOperators": true,
+    "useUnifiedTopology": true,
+    "ssl": true,
+    "connectTimeoutMS": 10000
   },
   "mail": {
     "name": "mail",

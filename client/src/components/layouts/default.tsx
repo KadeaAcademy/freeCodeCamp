@@ -5,6 +5,7 @@ import { TFunction, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
+import { RecoilRoot } from 'recoil';
 import { isBrowser } from '../../../utils';
 import {
   fetchUser,
@@ -153,23 +154,25 @@ class DefaultLayout extends Component<DefaultLayoutProps> {
           <style>{fontawesome.dom.css()}</style>
         </Helmet>
         <Header fetchState={fetchState} user={user} />
-        <div className={`default-layout`}>
-          {/* <Spacer /> */}
-          <OfflineWarning
-            isOnline={isOnline}
-            isServerOnline={isServerOnline}
-            isSignedIn={isSignedIn}
-          />
-          {hasMessage && flashMessage ? (
-            <>
-              <Flash
-                flashMessage={flashMessage}
-                removeFlashMessage={removeFlashMessage}
-              />
-            </>
-          ) : null}
-          {children}
-        </div>
+        <RecoilRoot>
+          <div className={`default-layout`}>
+            {/* <Spacer /> */}
+            <OfflineWarning
+              isOnline={isOnline}
+              isServerOnline={isServerOnline}
+              isSignedIn={isSignedIn}
+            />
+            {hasMessage && flashMessage ? (
+              <>
+                <Flash
+                  flashMessage={flashMessage}
+                  removeFlashMessage={removeFlashMessage}
+                />
+              </>
+            ) : null}
+            {children}
+          </div>
+        </RecoilRoot>
         {showFooter && <Footer />}
       </div>
     );

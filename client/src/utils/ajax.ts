@@ -92,11 +92,62 @@ export interface CourseDetails {
   description: string;
 }
 
+//data structure for programation cours
+
+export interface ProgramationCourses {
+  isAvailable: boolean;
+  sameTab?: boolean;
+  external?: boolean;
+  description?: string;
+  title: string;
+  icon?: string;
+  sponsorIcon?: string;
+  badgeIcon?: string;
+  alt?: string;
+  buttonText?: string;
+  link?: string;
+  cardType?: string;
+  createAt?: Date | string | number;
+  duration: string | number;
+  language?: string;
+  level?: string;
+  type: string;
+}
+
+export const dataForprogramation: ProgramationCourses[] = [
+  {
+    title: 'Responsive Web Design',
+    level: 'debutant',
+    language: 'French',
+    sponsorIcon: 'LaediesActIcon',
+    alt: 'Icone ladies Act des cours Responsive design',
+    isAvailable: true,
+    link: '/learn/responsive-web-design/',
+    description:
+      "Ce cours t'apprend les langages HTML pour le contenu et CSS pour la conception, ainsi que la création de pages Web adaptatives pour différentes tailles d'écran.",
+    duration: 120,
+    type: 'Cours'
+  },
+  {
+    title: 'JavaScript Algorithms and Data Structures',
+    level: 'debutant',
+    language: 'French',
+    sponsorIcon: 'AlgoIcon',
+    alt: 'Icone cours algorithm et structure de données',
+    isAvailable: true,
+    link: '/learn/javascript-algorithms-and-data-structures',
+    description:
+      "Ce cours t'enseigne les bases de JavaScript pour rendre les pages interactives, ainsi que les algorithmes et structures de données en JavaScript, etc.",
+    duration: 120,
+    type: 'Cours'
+  }
+];
+
 export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
   Développement: {
     titre: 'Développement Web',
     summury: `Dans ce parcours, tu apprendras à créer des pages Web avec HTML pour le contenu, CSS pour la conception, et JavaScript pour rendre les sites interactifs. Tu découvriras également les algorithmes, les structures de données, et les bases du langage JavaScript.`,
-    description: `Ce parcours te forme aux bases du développement web : HTML pour le contenu, CSS pour la conception, et JavaScript pour l'interactivité. Tu apprendras aussi à adapter tes pages à différentes tailles d'écran, ainsi que les algorithmes, les structures de données, et les principes du JavaScript.`
+    description: `La programmation est une compétence essentielle qui permet de créer des logiciels, des applications web et mobiles. Nos cours couvrent divers langages comme Python, JavaScript et Java, adaptés à tous les niveaux. Que vous souhaitiez développer des sites web, des jeux ou des outils d’automatisation, ces parcours vous aideront à maîtriser les bases et à progresser vers des projets plus avancés.`
   },
   Design: {
     titre: 'Design',
@@ -108,12 +159,12 @@ export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
   Bureautique: {
     titre: 'Bureautique',
     summury: `Maîtrise Word, Excel, PowerPoint, Outlook et OneNote. Crée des documents impeccables et analyse des données complexes avec nos cours interactifs.`,
-    description: `Ce parcours complet vous guide du débutant à l'expert pour maîtriser Word, Excel, PowerPoint, Outlook, et OneNote. Grâce à des cours interactifs et des exercices pratiques, vous développerez les compétences pour créer des documents, analyser des données, et gérer votre boîte mail. A la fin de ce cours, vous serez prêt à relever les défis professionnels.`
+    description: `Les compétences en bureautique sont indispensables pour une gestion efficace des tâches professionnelles et personnelles. Nos cours couvrent des outils comme Microsoft Office, Google Workspace et autres logiciels de productivité. Apprenez à créer des documents, des feuilles de calcul, et des présentations professionnelles. Que vous soyez débutant ou avancé, développez vos compétences pour travailler plus efficacement.`
   },
   Marketing: {
     titre: 'Marketing',
     summury: `Apprends les outils et techniques du marketing digital. Crée des stratégies de contenu, optimise ton site et gère les réseaux sociaux efficacement.`,
-    description: `Ce parcours intensif en marketing digital vous forme aux stratégies de contenu, SEO, gestion des réseaux sociaux, et mesure de performance. Maîtrisez les outils pour développer un business en ligne ou diriger le marketing d'une entreprise, en optimisant la communication et les relations publiques.`
+    description: `Le marketing et la communication sont essentiels pour créer et promouvoir une marque efficace. Nos cours vous apprennent à élaborer des stratégies, à maîtriser les réseaux sociaux, le SEO, et la création de contenu. Que vous soyez débutant ou professionnel, vous apprendrez à capter l’attention de votre audience et à optimiser votre impact avec des techniques modernes et des outils numériques.`
   },
   Communication: {
     titre: 'Communication',
@@ -124,13 +175,13 @@ export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
     titre: 'Intelligence Artificielle',
     summury: `Explore l'IA, imitant les fonctions humaines. Apprends l'IA générative pour créer des contenus (texte, images, sons, vidéos) à travers des applications interactives.`,
     description: `
-Ce cours explore l'IA générative, un domaine en pleine expansion où les ordinateurs créent du contenu original, comme des textes, images, sons ou vidéos. Apprenez à maîtriser ces technologies via des applications interactives. !`
+L’intelligence artificielle transforme la façon dont nous travaillons, avec des outils comme GPT qui boostent la productivité. Nos cours vous guident dans la compréhension et l’application de l’IA, de l'automatisation des tâches à la génération de contenu. Que vous soyez débutant ou expert, apprenez à intégrer l'IA dans vos workflows pour gagner du temps et améliorer vos résultats.`
   },
 
   amazon: {
     titre: 'Amazon web service',
     summury: `Ce cours est conçu pour montrer aux participants comment optimiser l'utilisation du cloud AWS grâce à la compréhension de ces nombreux services et de leur intégration dans la création de solutions basées sur le cloud.`,
-    description: `Ce cours AWS explore les bonnes pratiques cloud, avec des études de cas clients. Il vous apprend à concevoir des infrastructures optimisées et variées en utilisant les services AWS, vous rendant capable de construire des solutions informatiques robustes.`
+    description: `Amazon Web Services (AWS) est une plateforme de cloud computing qui permet de stocker, gérer et déployer des applications en ligne. AWS offre des services tels que le calcul, le stockage et l’intelligence artificielle, utilisés par des entreprises de toutes tailles. Si vous voulez apprendre à maîtriser l’infrastructure cloud et à développer des solutions évolutives, AWS est fait pour vous !`
   }
 };
 
@@ -317,6 +368,7 @@ export const getMoodleCourseCategory = async () => {
     const moodleCategorie = moodleCourseCategories?.filter(
       category => category.coursecount > 0
     );
+
     return moodleCategorie;
   }
 };
@@ -325,29 +377,71 @@ export const getMoodleCourseCategory = async () => {
 
 export const getMoodleCourses = async () => {
   const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     `${moodleApiBaseUrl}?wstoken=${moodleApiToken}&wsfunction=core_course_get_courses&moodlewsrestformat=json`
   );
 
-  const splitCourses: MoodleCoursesCatalogue | null | undefined =
-    moodleCatalogue != null
-      ? splitArray<MoodleCourse>(
-          moodleCatalogue.filter(moodleCourse => {
-            return moodleCourse.visible == 1 && moodleCourse.format != 'site';
-          }),
-          4
-        )
-      : null;
+  // Filtrer les cours visibles et non formatés comme "site"
+  const filteredCourses =
+    moodleCatalogue?.filter(
+      moodleCourse =>
+        moodleCourse.visible === 1 && moodleCourse.format !== 'site'
+    ) || [];
 
-  //Order courses by their publication date
+  // Ajouter des propriétés spécifiques selon le categoryId
+  const coursesWithAdditionalProperties = filteredCourses.map(course => {
+    // Définir des valeurs par défaut
+    let additionalProperties = {
+      level: 'debutant',
+      duration: 0,
+      type: 'Cours',
+      langue: 'French'
+    };
+
+    // Appliquer des valeurs spécifiques selon le categoryId
+    switch (course.categoryid) {
+      case 11:
+        additionalProperties = {
+          ...additionalProperties,
+          duration: 21000
+        };
+        break;
+      case 13:
+        additionalProperties = {
+          ...additionalProperties,
+
+          duration: 28800
+        };
+        break;
+      case 14:
+        additionalProperties = {
+          ...additionalProperties,
+          duration: 7200
+        };
+        break;
+      default:
+        break;
+    }
+
+    // Retourner le cours enrichi avec les propriétés supplémentaires
+    return {
+      ...course,
+      ...additionalProperties
+    };
+  });
+
+  // Diviser les cours en groupes de 4
+  const splitCourses: MoodleCoursesCatalogue | null = splitArray<MoodleCourse>(
+    coursesWithAdditionalProperties,
+    4
+  );
+
+  // Trier les cours par date de publication
   const sortedCourses = sortCourses(splitCourses);
 
-  if (moodleCatalogue != null) {
-    return sortedCourses;
-  } else {
-    return null;
-  }
+  // Retourner les cours triés ou null s'il n'y a pas de catalogue Moodle
+  return moodleCatalogue ? sortedCourses : null;
 };
+
 //add for moddlecourse fetch test
 
 interface DataLemlist {
@@ -382,7 +476,9 @@ export interface RavenTokenData {
 }
 
 export function removeRavenTokenFromLocalStorage() {
-  localStorage.removeItem('ravenToken');
+  if (typeof window != 'undefined' && window.localStorage) {
+    localStorage.removeItem('ravenToken');
+  }
 }
 
 export function addRavenTokenToLocalStorage(
@@ -432,6 +528,7 @@ export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
 export async function generateRavenTokenAcces(): Promise<unknown> {
   try {
     const response = await get('/generate-raven-token');
+    console.log(response);
 
     return response;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -457,21 +554,19 @@ interface RavenFetchCoursesDto {
   apiKey?: string;
   currentPage?: number;
 }
-const getRavenToken = async () => {
+export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
   if (ravenTokenData === null) {
-    // Si aucun token n'existe en local storage, générer un nouveau token
     const generateRavenToken = await generateRavenTokenAcces();
 
     if (generateRavenToken) {
       addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
-      return generateRavenToken; // Retourner le nouveau token
+      return generateRavenToken;
     } else {
-      return null; // Retourner null si la génération a échoué
+      return null;
     }
   } else {
-    // Vérifier si le token existant a expiré d'une heure ou plus
     const tokenExpirationTime = new Date(ravenTokenData.valid_to);
     const currentTime = new Date();
     // 1 heure en millisecondes
@@ -492,7 +587,6 @@ const getRavenToken = async () => {
         return null; // Retourner null si la génération a échoué
       }
     } else {
-      // Le token est encore valide, retourner le token existant
       return ravenTokenData;
     }
   }
@@ -501,47 +595,34 @@ const getRavenToken = async () => {
 //add for test
 
 const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
-const ravenLocalToken = getRavenTokenDataFromLocalStorage();
 
-export const getRavenResources = async (currentPage: number) => {
-  await getRavenToken();
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: ravenLocalToken?.token || '',
-    currentPage: currentPage,
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
-  const getReveanCourses = await getAwsCourses(ravenData);
-
+export const getRavenResources = async () => {
+  const getReveanCourses = await getAwsCourses();
   return getReveanCourses;
 };
-export const getRavenPathResources = async (currentPage: number) => {
-  await getRavenToken();
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: ravenLocalToken?.token || '',
-    currentPage: currentPage,
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
-  const getReveanPathCourses = await getAwsPath(ravenData);
-
+export const getRavenPathResources = async () => {
+  const getReveanPathCourses = await getAwsPath();
   return getReveanPathCourses;
 };
 
 //end getRavenResources
 
-export async function getAwsCourses(data: RavenFetchCoursesDto) {
+export async function getAwsCourses() {
+  const token = await getRavenToken();
+  const myRavenToken = token as RavenTokenData;
+
+  const ravenData: RavenFetchCoursesDto = {
+    apiKey: ravenAwsApiKey,
+    token: myRavenToken.token,
+    fromDate: '01-01-2023',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    valid_to: '11-11-2024'
+  };
   let response: unknown | RavenCourse[];
 
   try {
     response = await get(
-      `/get-raven-courses?awstoken=${data.token}&fromdate=${data.fromDate}&todate=${data.valid_to}`
+      `/get-raven-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
     );
   } catch (error) {
     response = null;
@@ -549,12 +630,24 @@ export async function getAwsCourses(data: RavenFetchCoursesDto) {
 
   return response;
 }
-export async function getAwsPath(data: RavenFetchCoursesDto) {
+export async function getAwsPath() {
+  const token = await getRavenToken();
+  const myRavenToken = token as RavenTokenData;
+
+  const ravenData: RavenFetchCoursesDto = {
+    apiKey: ravenAwsApiKey,
+    token: myRavenToken.token,
+
+    fromDate: '01-01-2023',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    valid_to: '11-11-2024'
+  };
+
   let response: unknown | RavenCourse[];
 
   try {
     response = await get(
-      `/get-raven-path?awstoken=${data.token}&fromdate=${data.fromDate}&todate=${data.valid_to}`
+      `/get-raven-path?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
     );
   } catch (error) {
     response = null;
@@ -610,7 +703,6 @@ export async function getAwsPath(data: RavenFetchCoursesDto) {
     };
 
     const filteredCourses = filterCourses(response);
-
     return filteredCourses;
   }
 
@@ -618,20 +710,10 @@ export async function getAwsPath(data: RavenFetchCoursesDto) {
 }
 
 //fonction permettant la combinaison de tous les cours notamment moodle et raven
-export const getAllRessources = async (
-  currentPage: number
-): Promise<CombinedCourses[]> => {
+export const getAllRessources = async (): Promise<CombinedCourses[]> => {
   const moodleCourses = await getMoodleCourses();
-  const ravenCourses = await getRavenResources(currentPage);
-  const ravenPathCourses = await getRavenPathResources(currentPage);
-
   // Combine the results into a single array
-  const allCourses: CombinedCourses[] = [
-    ...(moodleCourses?.result || []),
-    ...([ravenCourses] || []),
-    ...(ravenPathCourses || [])
-  ];
-
+  const allCourses: CombinedCourses[] = [...(moodleCourses?.result || [])];
   return allCourses;
 };
 
@@ -656,6 +738,99 @@ export async function getAwsUserCoursesProgress(
     response = null;
   }
   return response;
+}
+
+//test fetch
+
+// Fonction pour obtenir un cookie par son nom
+function getCookie(name: string): string | undefined {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+
+  if (parts.length === 2) {
+    let token = parts.pop()?.split(';').shift() ?? undefined;
+    if (token) {
+      // Nettoyer le token en retirant 's%3A' si présent
+      token = token.replace('s%3A', '');
+      // Prendre seulement les trois premières parties du JWT
+      const tokenParts = token.split('.');
+      token = tokenParts.slice(0, 3).join('.');
+    }
+    return token;
+  }
+
+  return undefined;
+}
+
+interface CsrfResponse {
+  csrfToken: string;
+}
+
+export async function saveDataOnDb() {
+  try {
+    // Première étape : récupérer le token CSRF
+    const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
+      credentials: 'include' // Important pour les cookies
+    });
+    const csrfData = (await csrfResponse.json()) as CsrfResponse;
+
+    const { csrfToken } = csrfData;
+
+    const token = (await getRavenToken()) as RavenTokenData;
+    const fromDate = '01-01-2023';
+    const toDate = '11-11-2024';
+
+    const jwtToken = getCookie('jwt_access_token');
+    if (!jwtToken) {
+      console.error("Le JWT n'est pas disponible dans les cookies");
+      return;
+    }
+
+    const response = await fetch(
+      `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
+      {
+        method: 'POST',
+        credentials: 'include', // Important pour les cookies
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Content-Type': 'application/json',
+          Authorization: jwtToken,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'CSRF-Token': csrfToken, // Ajouter le token CSRF
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'X-CSRF-Token': csrfToken // Certaines implémentations utilisent cet en-tête
+        },
+        body: JSON.stringify({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          from_date: fromDate,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          to_date: toDate,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          _csrf: csrfToken // Inclure aussi dans le body
+        })
+      }
+    );
+
+    if (response.ok) {
+      console.log('Data saved successfully:', response.json());
+    } else {
+      console.error(
+        "Erreur lors de l'enregistrement des données :",
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'enregistrement des données", error);
+  }
+}
+
+export async function getDataFromDb() {
+  // try {
+  //   const response = await get('/raven-get-course');
+  //   console.log(response);
+  // } catch (Error) {
+  //   console.error('Erreur lors de la récupération des données :', Error);
+  // }
 }
 
 ('/get-raven-user-progress');

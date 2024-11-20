@@ -1,34 +1,25 @@
 import { Grid } from '@freecodecamp/react-bootstrap';
 import { graphql } from 'gatsby';
 import React from 'react';
-import Helmet from 'react-helmet';
-// import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import LearnLayout from '../components/layouts/learn';
-
 import {
   userFetchStateSelector,
   isSignedInSelector,
   userSelector
 } from '../redux';
 
-// import AsSeenIn from './components/as-seen-in';
-import RegistrationToAcademy from '../components/landing/components/registration-to-academy';
-// import LandingTop from './components/landing-top';
-// import LandingDetails from '../components/landing/components/landing-details';
-// import LandingLearn from './components/landing-learn';
-// import LandingGoals from './components/landing-goals';
-import WhatCanYouDo from '../components/landing/whatCanYouDo/what-can-you-do';
-// import YourCareer from './yourCareer/your-career';
+import '../components/landing/landing.css';
+import { LearnLayout } from '../components/layouts';
 import Hero from '../components/landing/hero/hero';
-import StartCOding from '../components/landing/start-coding/start-coding';
+import VodacomBranding from '../components/landing/vodacom-branding-section/vodacom-branding';
+import RegistrationToAcademy from '../components/landing/components/registration-to-academy';
 import WhatWillYouLearn from '../components/landing/what-will-you-learn/what-will-you-learn';
 import HowWillYouLearn from '../components/landing/how-will-you-learn/how-will-you-learn';
-import Vodacom from '../components/landing/vodacom-branding-section/vodacom-branding';
+import WhatCanYouDo from '../components/landing/whatCanYouDo/what-can-you-do';
+import StartCOding from '../components/landing/start-coding/start-coding';
 import Partners from '../components/landing/partners/partners';
-
-import '../components/landing/landing.css';
 
 interface FetchState {
   pending: boolean;
@@ -83,17 +74,14 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
       <main className='landing-page bg-light'>
         <div className='hero-main-bg'>
           <Grid>
-            <Hero pageName={'landing'} isSignedIn={isSignedIn} />
+            <Hero />
           </Grid>
         </div>
-        {/* <Hero pageName={'landing'} isSignedIn={isSignedIn} /> */}
-        <Vodacom />
-
-        {/* <div className='bg-secondary'>
+        <div className=''>
           <Grid>
-            <LandingTop pageName={'landing'} isSignedIn={isSignedIn} />
+            <VodacomBranding />
           </Grid>
-        </div> */}
+        </div>
 
         <div className='as-seen-in'>
           <Grid>
@@ -101,25 +89,14 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
           </Grid>
         </div>
 
-        {/* <Grid>
-          <LandingDetails isSignedIn={isSignedIn} />
-        </Grid> */}
         <div className='dotted-bg'>
           <Grid>
             <WhatWillYouLearn isSignedIn={isSignedIn} />
           </Grid>
         </div>
 
-        {/* <Grid>
-          <LandingLearn />
-        </Grid> */}
         <HowWillYouLearn />
 
-        {/* <div className='bg-light-gray'>
-          <Grid>
-            <WhatCanYouDo />
-          </Grid>
-        </div> */}
         <div className=''>
           <Grid>
             <WhatCanYouDo />
@@ -133,12 +110,6 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
             <Partners />
           </Grid>
         </div>
-
-        {/* <div className='as-seen-in'>
-          <Grid>
-            <YourCareer isSignedIn={isSignedIn} />
-          </Grid>
-        </div> */}
       </main>
     </LearnLayout>
   );

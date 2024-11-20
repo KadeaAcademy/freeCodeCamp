@@ -2,12 +2,12 @@
   float: right;
 }
 
-.push {
+/* .push {
   float: right;
-}
-.push__card {
+} */
+/* .push__card {
   float: right;
-}
+} */
 
 img {
   width: 100%;
@@ -76,6 +76,7 @@ img {
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5rem;
 }
 
 .card-link {
@@ -161,6 +162,10 @@ img {
   }
 
   .card-course-detail-unit {
+    width: 100%;
+  }
+
+  .card-course-detail-container-on-card {
     width: 100%;
   }
 }
