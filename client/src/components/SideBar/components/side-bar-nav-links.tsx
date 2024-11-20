@@ -16,6 +16,7 @@ import { hardGoTo as navigate } from '../../../redux';
 import { Link } from '../../helpers';
 
 import './universal-nav-side-bar.css';
+import { saveDataOnDb } from '../../../utils/ajax';
 
 export interface SideBarNavLinksProps {
   fetchState?: { pending: boolean };
@@ -30,6 +31,19 @@ const mapDispatchToProps = {
 };
 
 export const SideBarNavLinks = (): JSX.Element => {
+  const hundleUpdatedCourses = async () => {
+    try {
+      await saveDataOnDb();
+    } catch (error) {
+      console.error(
+        'erreur lors de la sauvegarde des données dans la bd:',
+        error.message,
+        error.name,
+        error.status
+      );
+    }
+  };
+
   return (
     <div className=''>
       <ul className='side-bar-nav-list'>
@@ -88,6 +102,11 @@ export const SideBarNavLinks = (): JSX.Element => {
           >
             {'Kadea online app'}
           </Link>
+        </li>
+        <li>
+          <button onClick={() => void hundleUpdatedCourses()}>
+            Update Courses
+          </button>
         </li>
       </ul>
     </div>

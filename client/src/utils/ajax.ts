@@ -528,6 +528,7 @@ export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
 export async function generateRavenTokenAcces(): Promise<unknown> {
   try {
     const response = await get('/generate-raven-token');
+    console.log(response);
 
     return response;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -615,7 +616,7 @@ export async function getAwsCourses() {
     token: myRavenToken.token,
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
+    valid_to: '11-11-2024'
   };
   let response: unknown | RavenCourse[];
 
@@ -639,7 +640,7 @@ export async function getAwsPath() {
 
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
+    valid_to: '11-11-2024'
   };
 
   let response: unknown | RavenCourse[];
@@ -741,37 +742,95 @@ export async function getAwsUserCoursesProgress(
 
 //test fetch
 
+// Fonction pour obtenir un cookie par son nom
+function getCookie(name: string): string | undefined {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+
+  if (parts.length === 2) {
+    let token = parts.pop()?.split(';').shift() ?? undefined;
+    if (token) {
+      // Nettoyer le token en retirant 's%3A' si présent
+      token = token.replace('s%3A', '');
+      // Prendre seulement les trois premières parties du JWT
+      const tokenParts = token.split('.');
+      token = tokenParts.slice(0, 3).join('.');
+    }
+    return token;
+  }
+
+  return undefined;
+}
+
+interface CsrfResponse {
+  csrfToken: string;
+}
+
 export async function saveDataOnDb() {
   try {
+    // Première étape : récupérer le token CSRF
+    const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
+      credentials: 'include' // Important pour les cookies
+    });
+    const csrfData = (await csrfResponse.json()) as CsrfResponse;
+
+    const { csrfToken } = csrfData;
+
     const token = (await getRavenToken()) as RavenTokenData;
-    const ravenData: RavenFetchCoursesDto = {
-      apiKey: ravenAwsApiKey,
-      token: token.token,
+    const fromDate = '01-01-2023';
+    const toDate = '11-11-2024';
 
-      fromDate: '01-01-2023',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      valid_to: '06-24-2024'
-    };
+    const jwtToken = getCookie('jwt_access_token');
+    if (!jwtToken) {
+      console.error("Le JWT n'est pas disponible dans les cookies");
+      return;
+    }
 
-    const response = await get(
-      `/save-rave-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}}`
+    const response = await fetch(
+      `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
+      {
+        method: 'POST',
+        credentials: 'include', // Important pour les cookies
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Content-Type': 'application/json',
+          Authorization: jwtToken,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'CSRF-Token': csrfToken, // Ajouter le token CSRF
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'X-CSRF-Token': csrfToken // Certaines implémentations utilisent cet en-tête
+        },
+        body: JSON.stringify({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          from_date: fromDate,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          to_date: toDate,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          _csrf: csrfToken // Inclure aussi dans le body
+        })
+      }
     );
 
-    if (response) {
-      console.log('Data saved successfully:', response);
+    if (response.ok) {
+      console.log('Data saved successfully:', response.json());
+    } else {
+      console.error(
+        "Erreur lors de l'enregistrement des données :",
+        response.statusText
+      );
     }
   } catch (error) {
-    console.error("erreur lors de l'enregistrément des données", error);
+    console.error("Erreur lors de l'enregistrement des données", error);
   }
 }
 
 export async function getDataFromDb() {
-  try {
-    const response = await get('/raven-get-course');
-    console.log('Données récupérées avec succès:', response);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des données :', error);
-  }
+  // try {
+  //   const response = await get('/raven-get-course');
+  //   console.log(response);
+  // } catch (Error) {
+  //   console.error('Erreur lors de la récupération des données :', Error);
+  // }
 }
 
 ('/get-raven-user-progress');

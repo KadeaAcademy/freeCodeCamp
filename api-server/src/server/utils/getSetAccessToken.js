@@ -29,19 +29,30 @@ export function setAccessTokenToResponse(
 }
 
 export function getAccessTokenFromRequest(req, jwtSecret = _jwtSecret) {
-  const maybeToken =
+  let maybeToken =
     (req.headers && req.headers[authHeaderNS]) ||
     (req.signedCookies && req.signedCookies[jwtCookieNS]) ||
-    (req.cookie && req.cookie[jwtCookieNS]);
+    (req.cookie && req.cookie[jwtCookieNS]) ||
+    (req.headers && req.headers.authorization) ||
+    null;
+
   if (!maybeToken) {
     return {
       accessToken: null,
       error: errorTypes.noTokenFound
     };
   }
+  // Si le token vient des headers d'autorisation, il est déjà nettoyé
+  if (typeof maybeToken === 'string' && maybeToken.startsWith('s%3A')) {
+    maybeToken = maybeToken.replace('s%3A', '');
+    const tokenParts = maybeToken.split('.');
+    maybeToken = tokenParts.slice(0, 3).join('.');
+  }
+
   let token;
   try {
     token = jwt.verify(maybeToken, jwtSecret);
+    console.log('après verification', token);
   } catch (err) {
     return { accessToken: null, error: errorTypes.invalidToken };
   }
@@ -57,7 +68,6 @@ export function getAccessTokenFromRequest(req, jwtSecret = _jwtSecret) {
   }
   return { accessToken, error: '', jwt: maybeToken };
 }
-
 export function removeCookies(req, res) {
   const config = createCookieConfig(req);
   res.clearCookie(jwtCookieNS, config);
