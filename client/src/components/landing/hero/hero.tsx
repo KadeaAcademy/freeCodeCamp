@@ -20,7 +20,7 @@ function Hero(): JSX.Element {
       <div className='h-full'>
         <section className='flex h-full flex-col gap items-start justify-between'>
           <h1 className='hero__section__title'>
-            Forme toi <strong className=''>Gratuitement</strong> En lingne
+            Forme-toi <strong className=''>Gratuitement</strong> En lingne
           </h1>
           <p className='hero__main__section-p'>
             Découvre les métiers du numérique avec nos formations gratuites.
