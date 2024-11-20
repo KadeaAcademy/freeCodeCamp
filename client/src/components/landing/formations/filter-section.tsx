@@ -9,13 +9,11 @@ import {
 import {
   dataForprogramation,
   getAwsCourses,
-  getDataFromDb,
   getExternalResource,
   getMoodleCourses,
   getRavenPathResources,
   getRavenToken,
-  ProgramationCourses,
-  saveDataOnDb
+  ProgramationCourses
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
@@ -178,8 +176,6 @@ const CoursesFilterSection = ({
         setIsDataOnLoading(false);
       }
     };
-    void saveDataOnDb();
-    void getDataFromDb();
 
     void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
