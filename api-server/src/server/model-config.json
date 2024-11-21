@@ -70,5 +70,13 @@
   "userRole": {
     "dataSource": "db",
     "public": true
+  },
+  "RavenCourse": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ravenDataCourse": {
+    "dataSource": "db",
+    "public": true
   }
 }

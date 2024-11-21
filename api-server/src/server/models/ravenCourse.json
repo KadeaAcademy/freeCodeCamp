@@ -1,0 +1,59 @@
+{
+  "name": "RavenCourse",
+  "plural": "RavenCourses",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "learningobjectid": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "launch_url": {
+      "type": "string"
+    },
+    "short_description": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "createddate": {
+      "type": "string"
+    },
+    "updateddate": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "last_modified_date": {
+      "type": "string"
+    },
+    "long_description": {
+      "type": "string"
+    },
+    "skill_level": {
+      "type": "string"
+    },
+    "category": {
+      "type": ["Category"]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

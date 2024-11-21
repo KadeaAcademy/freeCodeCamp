@@ -766,6 +766,12 @@ interface CsrfResponse {
   csrfToken: string;
 }
 
+interface ResponseRaven {
+  success: boolean;
+  message: string;
+  coursesCount: number;
+  coourses?: RavenCourse[];
+}
 export async function saveDataOnDb() {
   try {
     // Première étape : récupérer le token CSRF
@@ -773,8 +779,13 @@ export async function saveDataOnDb() {
       credentials: 'include' // Important pour les cookies
     });
     const csrfData = (await csrfResponse.json()) as CsrfResponse;
-
     const { csrfToken } = csrfData;
+
+    // Vérifier si le token CSRF est valide
+    if (!csrfToken) {
+      console.error('Token CSRF introuvable');
+      return;
+    }
 
     const token = (await getRavenToken()) as RavenTokenData;
     const fromDate = '01-01-2023';
@@ -794,30 +805,32 @@ export async function saveDataOnDb() {
         headers: {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           'Content-Type': 'application/json',
-          Authorization: jwtToken,
+          Authorization: `Bearer ${jwtToken}`,
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          'CSRF-Token': csrfToken, // Ajouter le token CSRF
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'X-CSRF-Token': csrfToken // Certaines implémentations utilisent cet en-tête
+          'CSRF-Token': csrfToken // Ajouter le token CSRF
         },
         body: JSON.stringify({
           // eslint-disable-next-line @typescript-eslint/naming-convention
           from_date: fromDate,
           // eslint-disable-next-line @typescript-eslint/naming-convention
           to_date: toDate,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           _csrf: csrfToken // Inclure aussi dans le body
         })
       }
     );
 
     if (response.ok) {
-      console.log('Data saved successfully:', response.json());
+      const data = (await response.json()) as ResponseRaven;
+      if (data.success) {
+        console.log('Data saved successfully:', data);
+      } else {
+        console.error(
+          "Erreur lors de l'enregistrement des données",
+          data.message
+        );
+      }
     } else {
-      console.error(
-        "Erreur lors de l'enregistrement des données :",
-        response.statusText
-      );
+      console.error("Erreur lors de l'enregistrement des données");
     }
   } catch (error) {
     console.error("Erreur lors de l'enregistrement des données", error);
