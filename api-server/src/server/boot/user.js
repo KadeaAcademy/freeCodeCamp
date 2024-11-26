@@ -434,13 +434,12 @@ async function getUserList(req, res) {
   }
 }
 
-// export async function saveRavenCoursesToDB(app) {
-//   console.log('save data on bdd');
-//   const RavenCourse = app.models.RavenCourse;
-
+// export function saveRavenCoursesToDB(app) {
 //   return async function postSaveRavenCourses(req, res) {
+//     console.log('save data on bdd');
+//     const RavenCourse = app.models.RavenCourse;
+
 //     const apiKey = process.env.RAVEN_AWS_API_KEY;
-//     const { awstoken } = req.query;
 //     const baseUrl = process.env.RAVEN_AWS_BASE_URL;
 
 //     const requestBody = JSON.stringify({
@@ -452,13 +451,17 @@ async function getUserList(req, res) {
 //     });
 
 //     try {
-//       // Requête vers l'API Raven
+//       const { awstoken } = req.query;
+
+//       // Vérifier si un token est fourni
 //       if (!awstoken) {
 //         return res.json({
 //           success: false,
 //           message: 'No token found'
 //         });
 //       }
+
+//       // Requête vers l'API Raven
 //       const ravenResponse = await Axios.post(
 //         `${baseUrl}/administration/catalog/learningobjects`,
 //         requestBody,
@@ -472,7 +475,7 @@ async function getUserList(req, res) {
 //         }
 //       );
 
-//       // Vérification de la présence de données dans la réponse
+//       // Extraction des cours depuis la réponse de l'API
 //       const courses = ravenResponse.data?.data || [];
 //       if (courses.length === 0) {
 //         console.log('Aucun cours trouvé');
@@ -482,10 +485,10 @@ async function getUserList(req, res) {
 //         });
 //       }
 
-//       // Suppression des données existantes avant d'ajouter les nouvelles
+//       // Suppression des données existantes avant d'insérer les nouvelles
 //       await RavenCourse.destroyAll();
 
-//       // Insertion des nouveaux cours
+//       // Sauvegarde des cours dans la base de données
 //       const savedCourses = await Promise.all(
 //         courses.map(async course => {
 //           const courseData = {
@@ -511,7 +514,7 @@ async function getUserList(req, res) {
 
 //       console.log(`${savedCourses.length} cours sauvegardés avec succès`);
 
-//       // Conversion des données sauvegardées en JSON
+//       // Réponse avec les données sauvegardées
 //       const data = savedCourses.map(course => course.toJSON());
 //       return res.json({
 //         success: true,

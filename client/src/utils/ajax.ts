@@ -616,7 +616,7 @@ export async function getAwsCourses() {
     token: myRavenToken.token,
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
+    valid_to: '06-24-2024'
   };
   let response: unknown | RavenCourse[];
 
@@ -640,7 +640,7 @@ export async function getAwsPath() {
 
     fromDate: '01-01-2023',
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
+    valid_to: '06-24-2024'
   };
 
   let response: unknown | RavenCourse[];
@@ -743,99 +743,108 @@ export async function getAwsUserCoursesProgress(
 //test fetch
 
 // Fonction pour obtenir un cookie par son nom
-function getCookie(name: string): string | undefined {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
+// function getCookie(name: string): string | undefined {
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
 
-  if (parts.length === 2) {
-    let token = parts.pop()?.split(';').shift() ?? undefined;
-    if (token) {
-      // Nettoyer le token en retirant 's%3A' si présent
-      token = token.replace('s%3A', '');
-      // Prendre seulement les trois premières parties du JWT
-      const tokenParts = token.split('.');
-      token = tokenParts.slice(0, 3).join('.');
-    }
-    return token;
-  }
+//   if (parts.length === 2) {
+//     let token = parts.pop()?.split(';').shift() ?? undefined;
+//     if (token) {
+//       // Nettoyer le token en retirant 's%3A' si présent
+//       token = token.replace('s%3A', '');
+//       // Prendre seulement les trois premières parties du JWT
+//       const tokenParts = token.split('.');
+//       token = tokenParts.slice(0, 3).join('.');
+//     }
+//     return token;
+//   }
 
-  return undefined;
-}
+//   return undefined;
+// }
 
-interface CsrfResponse {
-  csrfToken: string;
-}
+// je met en commentaire pour éviter les erreurs de compilation, mais ce code est fonctionnel est bien testé
+// interface CsrfResponse {
+//   csrfToken: string;
+// }
 
-interface ResponseRaven {
-  success: boolean;
-  message: string;
-  coursesCount: number;
-  coourses?: RavenCourse[];
-}
-export async function saveDataOnDb() {
-  try {
-    // Première étape : récupérer le token CSRF
-    const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
-      credentials: 'include' // Important pour les cookies
-    });
-    const csrfData = (await csrfResponse.json()) as CsrfResponse;
-    const { csrfToken } = csrfData;
+// interface ResponseRaven {
+//   success: boolean;
+//   message: string;
+//   coursesCount: number;
+//   coourses?: RavenCourse[];
+// }
 
-    // Vérifier si le token CSRF est valide
-    if (!csrfToken) {
-      console.error('Token CSRF introuvable');
-      return;
-    }
+// export async function saveDataOnDb() {
+//   const jwtToken = getCookie('jwt_access_token');
+//   if (!jwtToken) {
+//     console.error("Le JWT n'est pas disponible dans les cookies");
+//     return;
+//   }
+//   try {
+//     const token = (await getRavenToken()) as RavenTokenData;
+//     const fromDate = '01-01-2023';
+//     const toDate = '06-24-2024';
 
-    const token = (await getRavenToken()) as RavenTokenData;
-    const fromDate = '01-01-2023';
-    const toDate = '11-11-2024';
+//     if (token.token && jwtToken) {
+//       // Première étape : récupérer le token CSRF
+//       const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
+//         credentials: 'include' // Important pour les cookies
+//       });
+//       const csrfData = (await csrfResponse.json()) as CsrfResponse;
+//       const { csrfToken } = csrfData;
 
-    const jwtToken = getCookie('jwt_access_token');
-    if (!jwtToken) {
-      console.error("Le JWT n'est pas disponible dans les cookies");
-      return;
-    }
+//       // Vérifier si le token CSRF est valide
+//       if (!csrfToken) {
+//         console.error('Token CSRF introuvable');
+//         return;
+//       }
 
-    const response = await fetch(
-      `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
-      {
-        method: 'POST',
-        credentials: 'include', // Important pour les cookies
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwtToken}`,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'CSRF-Token': csrfToken // Ajouter le token CSRF
-        },
-        body: JSON.stringify({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          from_date: fromDate,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          to_date: toDate,
-          _csrf: csrfToken // Inclure aussi dans le body
-        })
-      }
-    );
+//       const jwtToken = getCookie('jwt_access_token');
+//       if (!jwtToken) {
+//         console.error("Le JWT n'est pas disponible dans les cookies");
+//         return;
+//       }
 
-    if (response.ok) {
-      const data = (await response.json()) as ResponseRaven;
-      if (data.success) {
-        console.log('Data saved successfully:', data);
-      } else {
-        console.error(
-          "Erreur lors de l'enregistrement des données",
-          data.message
-        );
-      }
-    } else {
-      console.error("Erreur lors de l'enregistrement des données");
-    }
-  } catch (error) {
-    console.error("Erreur lors de l'enregistrement des données", error);
-  }
-}
+//       const response = await fetch(
+//         `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
+//         {
+//           method: 'POST',
+//           credentials: 'include', // Important pour les cookies
+//           headers: {
+//             // eslint-disable-next-line @typescript-eslint/naming-convention
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${jwtToken}`,
+//             // eslint-disable-next-line @typescript-eslint/naming-convention
+//             'CSRF-Token': csrfToken // Ajouter le token CSRF
+//           },
+//           body: JSON.stringify({
+//             // eslint-disable-next-line @typescript-eslint/naming-convention
+//             from_date: fromDate,
+//             // eslint-disable-next-line @typescript-eslint/naming-convention
+//             to_date: toDate,
+//             _csrf: csrfToken // Inclure aussi dans le body
+//           })
+//         }
+//       );
+
+//       if (response.ok) {
+//         const data = (await response.json()) as ResponseRaven;
+//         if (data.success) {
+//           console.log('Data saved successfully:', data);
+//         } else {
+//           console.error(
+//             "Erreur lors de l'enregistrement des données",
+//             data.message
+//           );
+//         }
+//       } else {
+//         console.error("Erreur lors de l'enregistrement des données");
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Erreur lors de l'enregistrement des données", error);
+//   }
+// }
 
 export async function getDataFromDb() {
   // try {
