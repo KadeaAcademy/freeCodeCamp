@@ -528,8 +528,6 @@ export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
 export async function generateRavenTokenAcces(): Promise<unknown> {
   try {
     const response = await get('/generate-raven-token');
-    console.log(response);
-
     return response;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
@@ -546,14 +544,14 @@ export async function getDatabaseResource<T>(urlEndPoint: string) {
   return response;
 }
 
-interface RavenFetchCoursesDto {
-  token: string;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-  apiKey?: string;
-  currentPage?: number;
-}
+// interface RavenFetchCoursesDto {
+//   token: string;
+//   fromDate: string;
+//   // eslint-disable-next-line @typescript-eslint/naming-convention
+//   valid_to: string;
+//   apiKey?: string;
+//   currentPage?: number;
+// }
 export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
@@ -594,7 +592,7 @@ export const getRavenToken = async () => {
 
 //add for test
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 export const getRavenResources = async () => {
   const getReveanCourses = await getAwsCourses();
@@ -608,47 +606,20 @@ export const getRavenPathResources = async () => {
 //end getRavenResources
 
 export async function getAwsCourses() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
-  let response: unknown | RavenCourse[];
-
   try {
-    response = await get(
-      `/get-raven-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    const response = await get(`/get-raven-courses`);
+    console.log(response);
   } catch (error) {
-    response = null;
+    return [];
   }
 
-  return response;
+  return [];
 }
 export async function getAwsPath() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '06-24-2024'
-  };
-
   let response: unknown | RavenCourse[];
 
   try {
-    response = await get(
-      `/get-raven-path?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    response = await get(`/get-raven-path`);
   } catch (error) {
     response = null;
   }
@@ -740,9 +711,10 @@ export async function getAwsUserCoursesProgress(
   return response;
 }
 
-//test fetch
+//cette partie permet de récupérer les cours de l'utilisateur,
+//il y'a encore les érreurs qui reviennes, du coup il m'est judicieux de
+// mettre en commentaire pour eviter des erreur en production
 
-// Fonction pour obtenir un cookie par son nom
 // function getCookie(name: string): string | undefined {
 //   const value = `; ${document.cookie}`;
 //   const parts = value.split(`; ${name}=`);
@@ -762,7 +734,6 @@ export async function getAwsUserCoursesProgress(
 //   return undefined;
 // }
 
-// je met en commentaire pour éviter les erreurs de compilation, mais ce code est fonctionnel est bien testé
 // interface CsrfResponse {
 //   csrfToken: string;
 // }
@@ -783,7 +754,7 @@ export async function getAwsUserCoursesProgress(
 //   try {
 //     const token = (await getRavenToken()) as RavenTokenData;
 //     const fromDate = '01-01-2023';
-//     const toDate = '06-24-2024';
+//     const toDate = '11-11-2024';
 
 //     if (token.token && jwtToken) {
 //       // Première étape : récupérer le token CSRF
@@ -846,14 +817,50 @@ export async function getAwsUserCoursesProgress(
 //   }
 // }
 
-export async function getDataFromDb() {
-  // try {
-  //   const response = await get('/raven-get-course');
-  //   console.log(response);
-  // } catch (Error) {
-  //   console.error('Erreur lors de la récupération des données :', Error);
-  // }
-}
+// export async function getDataFromDb() {
+//   try {
+//     const jwtToken = getCookie('jwt_access_token');
+//     if (!jwtToken) {
+//       console.error("Le JWT n'est pas disponible dans les cookies");
+//       return;
+//     }
+
+//     const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
+//       credentials: 'include' // Important pour les cookies
+//     });
+//     const csrfData = (await csrfResponse.json()) as CsrfResponse;
+//     const { csrfToken } = csrfData;
+
+//     // Vérifier si le token CSRF est valide
+//     if (!csrfToken) {
+//       console.error('Token CSRF introuvable');
+//       return;
+//     }
+
+//     const response = await fetch('/get-kinshasa-digital-raven-courses', {
+//       method: 'GET',
+//       credentials: 'include', // Important pour les cookies
+//       headers: {
+//         // eslint-disable-next-line @typescript-eslint/naming-convention
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${jwtToken}`,
+//         // eslint-disable-next-line @typescript-eslint/naming-convention
+//         'CSRF-Token': csrfToken // Ajouter le token CSRF
+//       }
+//     });
+//     if (!response.ok) {
+//       console.error('Erreur lors de la récupération des données');
+//       return;
+//     }
+//     const courses = await response.json();
+//     console.log('response', courses);
+//     return courses;
+//   } catch (error) {
+//     console.error('Erreur lors de la récupération des données', error);
+//   }
+// }
+
+//Elle finit ici
 
 ('/get-raven-user-progress');
 

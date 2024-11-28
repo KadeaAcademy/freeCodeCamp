@@ -20,6 +20,8 @@ import {
 import { getRedirectParams } from '../utils/redirection';
 import { trimTags } from '../utils/validators';
 import { getAllUsers, countUserDocuments } from '../utils/user-stats';
+const fs = require('fs');
+const path = require('path');
 
 const log = debugFactory('fcc:boot:user');
 const sendNonUserToHome = ifNoUserRedirectHome();
@@ -32,7 +34,8 @@ function bootUser(app) {
   const postDeleteAccount = createPostDeleteAccount(app);
   const postWebhookToken = createPostWebhookToken(app);
   const deleteWebhookToken = createDeleteWebhookToken(app);
-  // const saveDataOnBdd = saveRavenCoursesToDB(app);
+  const saveDataOnBdd = saveRavenCoursesToDB(app);
+  const getAllRavenCourses = getDataFromKadeaApi(app);
 
   const csrfProtection = csurf({
     cookie: {
@@ -73,7 +76,8 @@ function bootUser(app) {
   api.get('/get-raven-courses', getRavenAwsCatalogue);
   api.get('/get-raven-path', getRavenAwsPathCatalogue);
   api.get('/get-raven-user-progress', getRavenAwsUserProgress);
-  // api.post('/save-rave-courses', saveDataOnBdd);
+  api.post('/save-rave-courses', saveDataOnBdd);
+  api.get('/get-kinshasa-digital-raven-courses', getAllRavenCourses);
 
   app.use(api);
 }
@@ -108,34 +112,9 @@ async function generateRavenToken(req, res) {
 }
 
 async function getRavenAwsCatalogue(req, res) {
-  const apiKey = process.env.RAVEN_AWS_API_KEY;
-  const { awstoken } = req.query;
-
-  const baseUrl = process.env.RAVEN_AWS_BASE_URL;
-  const requestBody = JSON.stringify({
-    from_date: '01-01-2023',
-    to_date: '11-11-2024',
-    learningobject_type: 'content',
-    page_index: 1,
-    page_size: 4
-  });
-
   try {
-    const ravenAwsCours = await Axios.post(
-      `${baseUrl}/administration/catalog/learningobjects`,
-      requestBody,
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          Authorization: awstoken
-        }
-      }
-    );
-
-    console.log('les datas', ravenAwsCours.data.data);
-    return res.json(ravenAwsCours.data.data);
+    const ravenAwsCours = [];
+    return ravenAwsCours;
   } catch (error) {
     console.error(
       'Erreur lors de la récupération des du catalogue:',
@@ -231,40 +210,34 @@ async function getRavenAwsUserProgress(req, res) {
 }
 
 async function getRavenAwsPathCatalogue(req, res) {
-  const apiKey = process.env.RAVEN_AWS_API_KEY;
-  const { awstoken } = req.query;
-
-  const baseUrl = process.env.RAVEN_AWS_BASE_URL;
-  const requestBody = JSON.stringify({
-    from_date: '01-01-2023',
-    to_date: '06-24-2024',
-    page_index: 1,
-    page_size: 0
-  });
+  const filePath = path.join(
+    __dirname,
+    'client',
+    'src',
+    'utils',
+    'saveRavenCourseInJson.json'
+  );
 
   try {
-    const response = await Axios.post(
-      `${baseUrl}/administration/catalog/learningpaths`,
-      requestBody,
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          Authorization: awstoken
-        }
-      }
-    );
+    // Vérifie si le fichier JSON existe
+    if (!fs.existsSync(filePath)) {
+      console.error("Le fichier JSON n'existe pas.");
+      return res
+        .status(404)
+        .json({ message: 'Fichier de données introuvable.' });
+    }
 
-    const ravenAwsPath = response;
-    console.log('les datas', ravenAwsPath.data);
-    return res.json(ravenAwsPath.data.data);
+    // Lecture du fichier JSON
+    const data = fs.readFileSync(filePath, 'utf8');
+    const courses = JSON.parse(data);
+
+    // Retourne les données lues dans la réponse
+    return res.json(courses);
   } catch (error) {
-    console.error(
-      'Erreur lors de la récupération des du catalogue:',
-      error.message
-    );
-    res.status(500).json([]);
+    console.error('Erreur lors de la lecture du fichier JSON:', error.message);
+    return res
+      .status(500)
+      .json({ message: 'Erreur serveur lors de la récupération des cours.' });
   }
 }
 
@@ -433,105 +406,165 @@ async function getUserList(req, res) {
     });
   }
 }
+//cette fonction n'est à utiliser que pour les cas où le client a des difficultés de faire les fetchs de données de la base de données kadéa
+// async function saveCoursesToJSON(courses) {
+//   // Définit le chemin du répertoire où le fichier JSON doit être sauvegardé
+//   const dirPath = path.join(
+//     __dirname, // Utilise __dirname pour obtenir le répertoire courant
+//     'client',
+//     'src',
+//     'utils' // Le chemin relatif à partir du répertoire courant
+//   );
 
-// export function saveRavenCoursesToDB(app) {
-//   return async function postSaveRavenCourses(req, res) {
-//     console.log('save data on bdd');
-//     const RavenCourse = app.models.RavenCourse;
+//   // Définit le chemin complet du fichier JSON
+//   const filePath = path.join(dirPath, 'saveRavenCourseInJson.json');
 
-//     const apiKey = process.env.RAVEN_AWS_API_KEY;
-//     const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+//   // Vérifie si le répertoire existe. Si ce n'est pas le cas, le crée.
+//   if (!fs.existsSync(dirPath)) {
+//     console.log('Répertoire introuvable. Création du répertoire...');
+//     fs.mkdirSync(dirPath, { recursive: true }); // Crée tous les répertoires nécessaires
+//     console.log('Répertoire créé avec succès.');
+//   }
 
-//     const requestBody = JSON.stringify({
-//       from_date: '01-01-2023',
-//       to_date: '06-24-2024',
-//       learningobject_type: 'content',
-//       page_index: 1,
-//       page_size: 4
-//     });
+//   // Vérifie si le fichier existe, sinon le crée avec un tableau vide
+//   if (!fs.existsSync(filePath)) {
+//     console.log("Fichier JSON introuvable. Création d'un nouveau fichier...");
+//     fs.writeFileSync(filePath, JSON.stringify([], null, 2), 'utf8'); // Crée un fichier JSON avec un tableau vide
+//     console.log('Fichier JSON créé avec succès.');
+//   }
 
-//     try {
-//       const { awstoken } = req.query;
-
-//       // Vérifier si un token est fourni
-//       if (!awstoken) {
-//         return res.json({
-//           success: false,
-//           message: 'No token found'
-//         });
-//       }
-
-//       // Requête vers l'API Raven
-//       const ravenResponse = await Axios.post(
-//         `${baseUrl}/administration/catalog/learningobjects`,
-//         requestBody,
-//         {
-//           headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//             'x-api-key': apiKey,
-//             Authorization: `Bearer ${awstoken}`
-//           }
-//         }
-//       );
-
-//       // Extraction des cours depuis la réponse de l'API
-//       const courses = ravenResponse.data?.data || [];
-//       if (courses.length === 0) {
-//         console.log('Aucun cours trouvé');
-//         return res.json({
-//           success: false,
-//           message: 'No courses found in the API response'
-//         });
-//       }
-
-//       // Suppression des données existantes avant d'insérer les nouvelles
-//       await RavenCourse.destroyAll();
-
-//       // Sauvegarde des cours dans la base de données
-//       const savedCourses = await Promise.all(
-//         courses.map(async course => {
-//           const courseData = {
-//             learningobjectid: course.learningobject_id,
-//             name: course.name,
-//             display_name: course.display_name,
-//             description: course.description,
-//             launch_url: course.launch_url,
-//             short_description: course.short_description,
-//             duration: course.duration,
-//             createddate: course.created_date,
-//             last_modified_date: course.last_modified_date,
-//             updateddate: course.updated_date,
-//             content_type: course.content_type,
-//             long_description: course.long_description,
-//             skill_level: course.skill_level,
-//             category: course.category
-//           };
-
-//           return RavenCourse.create(courseData);
-//         })
-//       );
-
-//       console.log(`${savedCourses.length} cours sauvegardés avec succès`);
-
-//       // Réponse avec les données sauvegardées
-//       const data = savedCourses.map(course => course.toJSON());
-//       return res.json({
-//         success: true,
-//         message: 'Courses saved successfully',
-//         coursesCount: savedCourses.length,
-//         courses: data
-//       });
-//     } catch (error) {
-//       console.error('Error saving Raven courses to DB:', error.message);
-//       return res.status(500).json({
-//         success: false,
-//         message: 'Error saving courses to database',
-//         error: error.message
-//       });
-//     }
-//   };
+//   // Sauvegarde les données des cours dans le fichier JSON
+//   fs.writeFileSync(filePath, JSON.stringify(courses, null, 2), 'utf8');
+//   console.log('Données des cours sauvegardées dans le fichier JSON.');
 // }
+
+export function saveRavenCoursesToDB(app) {
+  return async function postSaveRavenCourses(req, res) {
+    console.log('save data on bdd');
+    const RavenCourse = app.models.RavenCourse;
+
+    const apiKey = process.env.RAVEN_AWS_API_KEY;
+    const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+    const { awstoken } = req.query;
+
+    const requestBody = JSON.stringify({
+      from_date: '01-01-2023',
+      to_date: '06-24-2024',
+      learningobject_type: 'content',
+      page_index: 1,
+      page_size: 0
+    });
+
+    // Vérifier si un token est fourni
+    if (!awstoken) {
+      return res.json({
+        success: false,
+        message: 'No token found'
+      });
+    }
+
+    try {
+      console.log('les datas');
+
+      // Requête vers l'API Raven
+      const ravenResponse = await Axios.post(
+        `${baseUrl}/administration/catalog/learningobjects`,
+        requestBody,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            Authorization: awstoken
+          }
+        }
+      );
+
+      // Extraction des cours depuis la réponse de l'API
+      const courses = ravenResponse.data?.data || [];
+      if (courses.length === 0) {
+        console.log('Aucun cours trouvé');
+        return res.json({
+          success: false,
+          message: 'No courses found in the API response'
+        });
+      }
+
+      //cette fonction n'est à utiliser que pour les cas où le client a des difficultés de faire les fetchs de données de la base de données kadéa
+      // Sauvegarde des cours dans un fichier JSON
+      // await saveCoursesToJSON(courses);
+
+      // Suppression des données existantes avant d'insérer les nouvelles
+      await RavenCourse.destroyAll();
+
+      // Sauvegarde des cours dans la base de données
+      const savedCourses = await Promise.all(
+        courses.map(async course => {
+          const courseData = {
+            learningobjectid: course.learningobject_id,
+            name: course.name,
+            display_name: course.display_name,
+            launch_url: course.launch_url,
+            short_description: course.short_description,
+            duration: course.duration,
+            createddate: course.created_date,
+            updateddate: course.updated_date,
+            content_type: course.content_type,
+            category: course.category
+          };
+
+          const allCourses = await RavenCourse.create(courseData);
+          return allCourses;
+        })
+      );
+
+      // Réponse avec les données sauvegardées
+      const data = savedCourses.map(course => course.toJSON());
+      return res.json({
+        success: true,
+        message: 'Courses saved successfully',
+        coursesCount: data.length,
+        courses: data
+      });
+    } catch (error) {
+      console.error('Error saving Raven courses to DB:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error saving courses to database',
+        error: error.message
+      });
+    }
+  };
+}
+
+export function getDataFromKadeaApi(app) {
+  console.log('get data from kadea api');
+
+  return async function getKadeaApiData(req, res) {
+    const RavenCourse = app.models.RavenCourse;
+    console.log('get data from kadea api');
+
+    try {
+      const response = await RavenCourse.find();
+      if (response && response.length > 0) {
+        console.log('les datas', JSON.stringify(response));
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.json(response);
+      } else {
+        console.error('Error getting Raven courses from DB:', response);
+        return res
+          .status(404)
+          .json({ message: 'Error getting Raven courses from DB' });
+      }
+    } catch (error) {
+      console.error('Error getting Raven courses from DB:', error);
+      res
+        .status(500)
+        .json({ message: 'Error getting Raven courses from DB' }, error);
+    }
+  };
+}
 
 function getUnlinkSocial(req, res, next) {
   const { user } = req;

@@ -162,7 +162,7 @@ const CoursesCategoryCard = ({
           </button>
           <button
             className={
-              valueDeToken == null ? ' hide__category' : 'category-card '
+              valueDeToken == null ? 'category-card' : 'category-card '
             }
             onClick={() => {
               setCurrent(-2);

@@ -17,8 +17,7 @@ import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 import awsLogo from '../../assets/images/aws-logo.png';
 
 import {
-  dataForprogramation,
-  getAwsCourses,
+  getAwsPath,
   getMoodleCourses,
   getRavenPathResources,
   ProgramationCourses
@@ -38,12 +37,7 @@ import {
   getCategoryDescription,
   paginate
 } from '../../utils/allFunctions';
-import {
-  CoursesProps,
-  MoodleCourse,
-  MoodleCoursesCatalogue,
-  RavenCourse
-} from '../show-courses';
+import { CoursesProps, MoodleCourse, RavenCourse } from '../show-courses';
 import envData from '../../../../config/env.json';
 import {
   isSignedInSelector,
@@ -107,9 +101,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const [coursesData, setCoursesData] = useState<unknown[]>([]);
   const [ravenState, setGetAllRavenData] = useRecoilState(centraliseRavenData);
   const [moodleState, setGetAllDataMoodle] = useRecoilState(myDataMoodle);
-  const [programmationState, setGetAllProgrammationCourses] = useRecoilState(
-    centraliseProgramationCours
-  );
+  const programmationState = useRecoilValue(centraliseProgramationCours);
 
   const currentUrl = window.location.href;
   const location = useLocation();
@@ -232,49 +224,22 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const storedProgrammationData =
-          localStorage.getItem('programmationData');
-        const storedMoodleData = localStorage.getItem('moodleData');
-        const storedRavenData = localStorage.getItem('ravenData');
+        const [moodleData, ravenData, ravenPathData] = await Promise.all([
+          getMoodleCourses(),
+          getAwsPath(),
+          getRavenPathResources()
+        ]);
 
-        if (storedProgrammationData) {
-          setGetAllProgrammationCourses(
-            JSON.parse(storedProgrammationData) as ProgramationCourses[]
-          );
-        } else {
-          const programmationData = dataForprogramation;
-          setGetAllProgrammationCourses(programmationData);
-          localStorage.setItem(
-            'programmationData',
-            JSON.stringify(programmationData)
-          );
+        if (moodleData) {
+          setGetAllDataMoodle(moodleData);
         }
 
-        if (storedMoodleData && storedRavenData) {
-          setGetAllDataMoodle(
-            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
-          );
-          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
-        } else {
-          const [moodleData, ravenData, ravenPathData] = await Promise.all([
-            getMoodleCourses(),
-            getAwsCourses(),
-            getRavenPathResources()
-          ]);
-
-          if (moodleData) {
-            setGetAllDataMoodle(moodleData);
-            localStorage.setItem('moodleData', JSON.stringify(moodleData));
-          }
-
-          if (ravenData || ravenPathData) {
-            const unifiedRavenData = [
-              ...((ravenData as RavenCourse[]) || []),
-              ...(ravenPathData || [])
-            ];
-            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
-            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
-          }
+        if (ravenData || ravenPathData) {
+          const unifiedRavenData = [
+            ...((ravenData as unknown as RavenCourse[]) || []),
+            ...(ravenPathData || [])
+          ];
+          setGetAllRavenData(unifiedRavenData as RavenCourse[]);
         }
       } catch (error) {
         console.error('Error fetching data:', error);

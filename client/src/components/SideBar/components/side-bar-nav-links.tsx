@@ -104,7 +104,8 @@ export const SideBarNavLinks = (): JSX.Element => {
           </Link>
         </li>
         <li>
-          <button onClick={void hundleUpdatedCourses}>Update Courses</button>
+          {/* eslint-disable @typescript-eslint/no-misused-promises */}
+          <button onClick={hundleUpdatedCourses}>Update Courses</button>
         </li>
       </ul>
     </div>
