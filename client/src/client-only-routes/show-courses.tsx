@@ -36,6 +36,7 @@ import {
 
 import { User } from '../redux/prop-types';
 import {
+  dataForprogramation,
   getAwsPath,
   getExternalResource,
   getMoodleCourses,
@@ -54,7 +55,6 @@ import CoursesCategoryCard from '../components/CoursesCategoryCard/courses-categ
 import {
   allDataCourses,
   categoryCours,
-  centraliseProgramationCours,
   centraliseRavenData,
   coursesMoodle,
   coursesRaven,
@@ -199,7 +199,9 @@ export function Courses(props: CoursesProps): JSX.Element {
   >(categoryCours);
   const ravenState = useRecoilValue(centraliseRavenData);
   const moodleSate = useRecoilValue(myDataMoodle);
-  const stateProgrammation = useRecoilValue(centraliseProgramationCours);
+  const [stateProgrammation, setProgramamationState] = useState<
+    ProgramationCourses[] | null
+  >(null);
   const [currentCategory, setCurrentCategory] = useRecoilState(
     valueOfCurrentCategory
   );
@@ -259,6 +261,8 @@ export function Courses(props: CoursesProps): JSX.Element {
           getAwsPath(),
           getRavenPathResources()
         ]);
+
+        setProgramamationState(dataForprogramation);
 
         if (moodleData) {
           setGetAllDataMoodle(moodleData);

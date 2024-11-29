@@ -17,9 +17,9 @@ import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
 import awsLogo from '../../assets/images/aws-logo.png';
 
 import {
+  dataForprogramation,
   getAwsPath,
   getMoodleCourses,
-  getRavenPathResources,
   ProgramationCourses
 } from '../../utils/ajax';
 import {
@@ -50,7 +50,6 @@ import { createFlashMessage } from '../../components/Flash/redux';
 import {
   categoryCounter,
   categoryCours,
-  centraliseProgramationCours,
   centraliseRavenData,
   coursesMoodle,
   coursesRaven,
@@ -101,7 +100,9 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const [coursesData, setCoursesData] = useState<unknown[]>([]);
   const [ravenState, setGetAllRavenData] = useRecoilState(centraliseRavenData);
   const [moodleState, setGetAllDataMoodle] = useRecoilState(myDataMoodle);
-  const programmationState = useRecoilValue(centraliseProgramationCours);
+  const [programmationState, setProgrammationState] = useState<
+    ProgramationCourses[]
+  >([]);
 
   const currentUrl = window.location.href;
   const location = useLocation();
@@ -116,6 +117,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       const filteredRavenCourses = ravenState;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const filteredMoodleCourses = moodleState;
+      setProgrammationState(dataForprogramation);
       const filterProgramationCourses = programmationState;
       // eslint-disable-next-line @typescript-eslint/naming-convention
       type CourseType = RavenCourse | MoodleCourse | ProgramationCourses;
@@ -224,22 +226,20 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [moodleData, ravenData, ravenPathData] = await Promise.all([
+        const [moodleData, ravenData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath(),
-          getRavenPathResources()
+          getAwsPath()
         ]);
 
         if (moodleData) {
           setGetAllDataMoodle(moodleData);
         }
 
-        if (ravenData || ravenPathData) {
+        if (ravenData) {
           const unifiedRavenData = [
-            ...((ravenData as unknown as RavenCourse[]) || []),
-            ...(ravenPathData || [])
+            ...((ravenData as unknown as RavenCourse[]) || [])
           ];
-          setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+          setGetAllRavenData(unifiedRavenData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);

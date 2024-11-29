@@ -14,7 +14,7 @@ import {
   MoodleCoursesCatalogue,
   RavenCourse
 } from '../../../client-only-routes/show-courses';
-import { getAllRessources, getExternalResource } from '../../../utils/ajax';
+import { getAwsPath, getExternalResource } from '../../../utils/ajax';
 import { Link, splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
 import { myDataMoodle, myDataRaven } from '../../../redux/atoms';
@@ -84,13 +84,14 @@ function Formations() {
     const sortedCourses = sortCourses(splitCourses);
     if (moodleCatalogue != null) {
       setMoodleCourses(sortedCourses);
+      return sortedCourses;
     } else {
       setMoodleCourses(null);
     }
   };
 
   const allCourses = [
-    ...(ravenCourses || []),
+    ...(ravenCourses?.splice(0, 5) || []),
     ...(moodleCourses?.result ? moodleCourses.result.flat() : [])
   ];
 
@@ -115,22 +116,14 @@ function Formations() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       try {
-        const currentPage = 1;
-        const res = await getAllRessources(currentPage);
-
         // Séparer les cours Raven et Moodle
-        const ravenAllCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : [course]))
-          .filter(course => 'launch_url' in course) as RavenCourse[];
+        const ravenAllCourses = getAwsPath() as unknown as RavenCourse[];
         setMyAllRavenCourse(ravenAllCourses);
 
-        const moodleCourses = res
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          .flatMap(course => (Array.isArray(course) ? course : []))
-          .filter(course => !('launch_url' in course)) as MoodleCourse[];
+        const moodleCourses =
+          getMoodleCourseCategory as unknown as MoodleCoursesCatalogue;
         setMyAllMoodleCourse(moodleCourses);
       } catch (error) {
         console.error('Error fetching data:', error);

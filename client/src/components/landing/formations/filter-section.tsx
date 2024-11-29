@@ -10,7 +10,6 @@ import {
   getAwsPath,
   getExternalResource,
   getMoodleCourses,
-  getRavenPathResources,
   getRavenToken
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
@@ -122,8 +121,7 @@ const CoursesFilterSection = ({
       try {
         const [moodleData, ravenData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath(),
-          getRavenPathResources()
+          getAwsPath()
         ]);
 
         if (moodleData) {
