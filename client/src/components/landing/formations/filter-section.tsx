@@ -10,6 +10,7 @@ import {
   getAwsPath,
   getExternalResource,
   getMoodleCourses,
+  getRavenPathResources,
   getRavenToken
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
@@ -110,7 +111,6 @@ const CoursesFilterSection = ({
   };
   const getRavenResources = async () => {
     setIsDataOnLoading(true);
-
     const getReveanCourses = await getAwsPath();
     setRavenCourses(getReveanCourses as unknown as RavenCourse[]);
     setIsDataOnLoading(false);
@@ -121,7 +121,8 @@ const CoursesFilterSection = ({
       try {
         const [moodleData, ravenData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath()
+          getAwsPath(),
+          getRavenPathResources()
         ]);
 
         if (moodleData) {
@@ -164,7 +165,7 @@ const CoursesFilterSection = ({
         onClick: () => {
           setCurrentCategory('aws');
           setMoodleCourses(null);
-          void getAwsPath();
+          void getRavenResources();
         }
       },
       ...(courseCategories ?? []).map(course => ({
