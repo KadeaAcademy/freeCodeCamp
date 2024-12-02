@@ -142,10 +142,12 @@
   box-shadow: 16px 11px 37px -27px rgba(143, 137, 143, 1);
   transition: all linear 200ms;
   border: 0.3px solid #f1f1f1;
+  text-decoration: none;
 }
 
 .training-title {
   font-size: 1rem;
+  text-decoration: none;
 }
 
 .load {
