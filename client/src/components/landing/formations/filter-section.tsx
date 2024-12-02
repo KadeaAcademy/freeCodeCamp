@@ -154,7 +154,6 @@ const CoursesFilterSection = ({
         id: 'popular',
         onClick: () => {
           setCurrentCategory('popular');
-          setMoodleCourses(null);
           void getRavenResources();
           void getAllMoodleCourses();
         }

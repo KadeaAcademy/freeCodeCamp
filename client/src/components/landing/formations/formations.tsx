@@ -95,6 +95,17 @@ function Formations() {
     ...(moodleCourses?.result ? moodleCourses.result.flat() : [])
   ];
 
+  const AllPopularCourses = [
+    ...popularCourses,
+    ...(ravenCourses?.splice(Math.floor(Math.random() * (1 - 300) + 1), 2) ||
+      []), // Prend les deux premiers RavenCourse
+    ...(moodleCourses?.result
+      ? moodleCourses.result
+          .flat()
+          .splice(Math.floor(Math.random() * (0 - 6) + 5), 2)
+      : [])
+  ];
+
   useEffect(() => {
     void getMoodleCourseCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,23 +170,65 @@ function Formations() {
               </div>
             ))
           : currentCategory == 'popular'
-          ? popularCourses.map((course, i) => (
-              <Link
-                to={course.link}
-                className='training-card'
-                key={i.valueOf()}
-              >
-                <div className='training-img'>
-                  <Image
-                    src={course.asset}
-                    alt={`${course.title} cover image`}
-                  />
-                </div>
-                <div className='training-details'>
-                  <h3 className='training-title'>{course.title}</h3>
-                </div>
-              </Link>
-            ))
+          ? AllPopularCourses.map((course, i) => {
+              if ('asset' in course) {
+                return (
+                  <Link
+                    to={course.link}
+                    className='training-card'
+                    key={i.valueOf()}
+                  >
+                    <div className='training-img'>
+                      <Image
+                        src={course.asset}
+                        alt={`${course.title} cover image`}
+                      />
+                    </div>
+                    <div className='training-details'>
+                      <h3 className='training-title'>{course.title}</h3>
+                    </div>
+                  </Link>
+                );
+              } else if ('launch_url' in course) {
+                return (
+                  <Link
+                    to={course.launch_url}
+                    className='training-card'
+                    key={i.valueOf()}
+                  >
+                    <div className='training-img'>
+                      <Image src={awsLogo} alt={`course cover image`} />
+                    </div>
+                    <div className='training-details'>
+                      <h3 className='training-title'>{`${i + 1}. ${
+                        course.name
+                      }`}</h3>
+                      <div className='training-stats'>
+                        <div className='stat'>
+                          <Image src={clockIcon} alt='Clock icon' />
+                          <span>{convertTime(course.duration)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              } else {
+                return (
+                  <Link
+                    to={`${moodleBaseUrl}/course/view.php?id=${course.id}`}
+                    className='training-card'
+                    key={i.valueOf()}
+                  >
+                    <div className='training-img'>
+                      <Image src={AlgoIcon} alt={`course cover image`} />
+                    </div>
+                    <div className='training-details'>
+                      <h3 className='training-title'>{`${course.displayname}`}</h3>
+                    </div>
+                  </Link>
+                );
+              }
+            })
           : allCourses.map((course, i) => {
               if ('launch_url' in course) {
                 // Vérifie si le cours est un cours Raven
