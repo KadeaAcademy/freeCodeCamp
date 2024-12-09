@@ -180,6 +180,7 @@
 
 .training-img img {
   border-radius: inherit;
+  width: 100%;
 }
 
 .training-stats {
