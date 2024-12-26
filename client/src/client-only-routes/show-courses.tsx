@@ -38,9 +38,9 @@ import { User } from '../redux/prop-types';
 import {
   dataForprogramation,
   getAwsPath,
+  getDataFromDb,
   getExternalResource,
   getMoodleCourses,
-  getRavenPathResources,
   ProgramationCourses
 } from '../utils/ajax';
 import {
@@ -57,7 +57,6 @@ import {
   categoryCours,
   centraliseRavenData,
   coursesMoodle,
-  coursesRaven,
   myDataMoodle,
   pathRaven,
   valueOfCurrentCategory
@@ -208,9 +207,7 @@ export function Courses(props: CoursesProps): JSX.Element {
   const [dataForAllCourses, setDataForallCourse] =
     useRecoilState<UnifiedCourse[]>(allDataCourses);
   const allDataofCourses = useRecoilValue(allDataCourses);
-  const [dataRaven, setDataRaven] = useRecoilState<
-    RavenCourse[] | null | undefined
-  >(coursesRaven);
+  const setDataRaven = useSetRecoilState<RavenCourse[]>(centraliseRavenData);
   const setDataRavenPath = useSetRecoilState<RavenCourse[]>(pathRaven);
   const setDataMoodle = useSetRecoilState<
     MoodleCoursesCatalogue | null | undefined
@@ -255,11 +252,20 @@ export function Courses(props: CoursesProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const pathRavenCourses =
+          (await getDataFromDb()) as unknown as RavenCourse[];
+        const ravenDataWhenEmptyDb =
+          (await getAwsPath()) as unknown as RavenCourse[];
+        if (pathRavenCourses.length > 0) {
+          setGetAllRavenData(pathRavenCourses);
+        } else {
+          setGetAllRavenData(ravenDataWhenEmptyDb);
+        }
         // Si pas de données stockées, on fait les appels API pour récupérer les données
         const [moodleData, ravenData, ravenPathData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath(),
-          getRavenPathResources()
+          getDataFromDb(),
+          getAwsPath()
         ]);
 
         setProgramamationState(dataForprogramation);
@@ -271,9 +277,9 @@ export function Courses(props: CoursesProps): JSX.Element {
         if (ravenData || ravenPathData) {
           const unifiedRavenData = [
             ...((ravenData as unknown as RavenCourse[]) || []),
-            ...(ravenPathData || [])
+            ...((ravenPathData as unknown as RavenCourse[]) || [])
           ];
-          setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+          setGetAllRavenData(unifiedRavenData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -305,15 +311,6 @@ export function Courses(props: CoursesProps): JSX.Element {
   };
 
   useEffect(() => {
-    void getMoodleCourseCategory().then(() => {
-      if (dataRaven?.length === 0) {
-        setIsDataOnLoading(false);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     setDataForallCourse(allCourses);
   }, [allCourses, dataForAllCourses, setDataForallCourse]);
 
@@ -334,11 +331,6 @@ export function Courses(props: CoursesProps): JSX.Element {
 
   useEffect(() => {
     void getMoodleCourseCategory();
-
-    dataRaven?.length == 0
-      ? setIsDataOnLoading(false)
-      : setIsDataOnLoading(false);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -417,7 +409,10 @@ export function Courses(props: CoursesProps): JSX.Element {
                 <div className='course__number'>
                   <p>Parcourir le catalogue complet</p>
                   <span>
-                    {paginatedData.length > 0 ? paginatedData.length : ''} cours
+                    {paginatedData.length > 0 || !isDataOnLoading
+                      ? paginatedData.length
+                      : '...'}{' '}
+                    cours
                   </span>
                 </div>
 

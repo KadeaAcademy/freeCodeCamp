@@ -35,7 +35,7 @@ function bootUser(app) {
   const postWebhookToken = createPostWebhookToken(app);
   const deleteWebhookToken = createDeleteWebhookToken(app);
   const saveDataOnBdd = saveRavenCoursesToDB(app);
-  const getAllRavenCourses = getDataFromKadeaApi(app);
+  const getAllRavenCourses = getRavenCoursesFromDB(app);
 
   const csrfProtection = csurf({
     cookie: {
@@ -102,7 +102,7 @@ async function generateRavenToken(req, res) {
       }
     });
 
-    const tokenData = await response;
+    const tokenData = response;
     console.log('les datas', tokenData.data);
     return res.json(tokenData.data.data);
   } catch (error) {
@@ -537,31 +537,33 @@ export function saveRavenCoursesToDB(app) {
   };
 }
 
-export function getDataFromKadeaApi(app) {
-  console.log('get data from kadea api');
-
-  return async function getKadeaApiData(req, res) {
+export function getRavenCoursesFromDB(app) {
+  return async function getRavenCourses(req, res) {
     const RavenCourse = app.models.RavenCourse;
-    console.log('get data from kadea api');
-
     try {
-      const response = await RavenCourse.find();
-      if (response && response.length > 0) {
-        console.log('les datas', JSON.stringify(response));
+      // Set proper headers
+      res.setHeader('Content-Type', 'application/json');
+      const courses = await RavenCourse.find();
 
-        res.setHeader('Content-Type', 'application/json');
-        return res.json(response);
-      } else {
-        console.error('Error getting Raven courses from DB:', response);
-        return res
-          .status(404)
-          .json({ message: 'Error getting Raven courses from DB' });
+      if (!courses || courses.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'No courses found'
+        });
       }
+
+      return res.json({
+        success: true,
+        data: courses.map(course => course.toJSON())
+      });
     } catch (error) {
-      console.error('Error getting Raven courses from DB:', error);
-      res
-        .status(500)
-        .json({ message: 'Error getting Raven courses from DB' }, error);
+      console.error('[DB Error]', error);
+      // Ensure error response is JSON
+      return res.status(500).json({
+        success: false,
+        message: 'Database error',
+        error: error.message
+      });
     }
   };
 }

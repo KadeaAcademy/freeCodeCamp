@@ -83,3 +83,19 @@ export const errorTypes = {
   invalidToken: 'Invalid token',
   expiredToken: 'Token timed out'
 };
+
+export function generateAccessToken(req, res) {
+  const payload = {
+    role: 'guest',
+    permissions: ['read']
+  };
+
+  const cookieConfig = {
+    ...createCookieConfig(req),
+    maxAge: accessToken.ttl || 77760000000
+  };
+
+  const accessToken = jwt.sign({ payload }, _jwtSecret);
+  res.cookie(jwtCookieNS, accessToken, cookieConfig);
+  return { accessToken };
+}

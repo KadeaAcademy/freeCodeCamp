@@ -3,7 +3,7 @@ import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getAwsCourses, getAwsPath } from '../../utils/ajax';
+import { getAwsPath, getDataFromDb } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
@@ -87,15 +87,15 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
   const [courseNumber, setCourseNumber] = useState<number>(0);
 
   const getRavenResources = async () => {
-    const getReveanCourses = await getAwsCourses();
+    const getReveanCourses = (await getAwsPath()) as unknown as RavenCourse[];
     if (getReveanCourses) {
-      setRavenCourses(getReveanCourses as RavenCourse[]);
+      setRavenCourses(getReveanCourses);
     }
     setRavenCourses(ravenCourses);
   };
 
   const getRavenResourcesPath = async () => {
-    const getReveanCourses = await getAwsPath();
+    const getReveanCourses = await getDataFromDb();
     if (getReveanCourses) {
       setRavenPath(getReveanCourses as unknown as RavenCourse[]);
     }

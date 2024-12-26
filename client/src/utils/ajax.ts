@@ -599,7 +599,7 @@ export const getRavenResources = async () => {
   return getReveanCourses;
 };
 export const getRavenPathResources = async () => {
-  const getReveanPathCourses = await getAwsPath();
+  const getReveanPathCourses = await getDataFromDb();
   return getReveanPathCourses;
 };
 
@@ -715,150 +715,151 @@ export async function getAwsUserCoursesProgress(
 //il y'a encore les érreurs qui reviennes, du coup il m'est judicieux de
 // mettre en commentaire pour eviter des erreur en production
 
-// function getCookie(name: string): string | undefined {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
+function getCookie(name: string): string | undefined {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
 
-//   if (parts.length === 2) {
-//     let token = parts.pop()?.split(';').shift() ?? undefined;
-//     if (token) {
-//       // Nettoyer le token en retirant 's%3A' si présent
-//       token = token.replace('s%3A', '');
-//       // Prendre seulement les trois premières parties du JWT
-//       const tokenParts = token.split('.');
-//       token = tokenParts.slice(0, 3).join('.');
-//     }
-//     return token;
-//   }
+  if (parts.length === 2) {
+    let token = parts.pop()?.split(';').shift() ?? undefined;
+    if (token) {
+      // Nettoyer le token en retirant 's%3A' si présent
+      token = token.replace('s%3A', '');
+      // Prendre seulement les trois premières parties du JWT
+      const tokenParts = token.split('.');
+      token = tokenParts.slice(0, 3).join('.');
+    }
+    return token;
+  }
 
-//   return undefined;
-// }
+  return undefined;
+}
 
-// interface CsrfResponse {
-//   csrfToken: string;
-// }
+interface CsrfResponse {
+  csrfToken: string;
+}
 
-// interface ResponseRaven {
-//   success: boolean;
-//   message: string;
-//   coursesCount: number;
-//   coourses?: RavenCourse[];
-// }
+interface ResponseRaven {
+  success: boolean;
+  message: string;
+  coursesCount: number;
+  coourses?: RavenCourse[];
+}
 
-// export async function saveDataOnDb() {
-//   const jwtToken = getCookie('jwt_access_token');
-//   if (!jwtToken) {
-//     console.error("Le JWT n'est pas disponible dans les cookies");
-//     return;
-//   }
-//   try {
-//     const token = (await getRavenToken()) as RavenTokenData;
-//     const fromDate = '01-01-2023';
-//     const toDate = '11-11-2024';
+export async function saveDataOnDb() {
+  const jwtToken = getCookie('jwt_access_token');
+  if (!jwtToken) {
+    console.error("Le JWT n'est pas disponible dans les cookies");
+    return;
+  }
+  try {
+    const token = (await getRavenToken()) as RavenTokenData;
+    const fromDate = '01-01-2023';
+    const toDate = '11-11-2024';
 
-//     if (token.token && jwtToken) {
-//       // Première étape : récupérer le token CSRF
-//       const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
-//         credentials: 'include' // Important pour les cookies
-//       });
-//       const csrfData = (await csrfResponse.json()) as CsrfResponse;
-//       const { csrfToken } = csrfData;
+    if (token.token && jwtToken) {
+      // Première étape : récupérer le token CSRF
+      const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
+        credentials: 'include' // Important pour les cookies
+      });
+      const csrfData = (await csrfResponse.json()) as CsrfResponse;
+      const { csrfToken } = csrfData;
 
-//       // Vérifier si le token CSRF est valide
-//       if (!csrfToken) {
-//         console.error('Token CSRF introuvable');
-//         return;
-//       }
+      // Vérifier si le token CSRF est valide
+      if (!csrfToken) {
+        console.error('Token CSRF introuvable');
+        return;
+      }
 
-//       const jwtToken = getCookie('jwt_access_token');
-//       if (!jwtToken) {
-//         console.error("Le JWT n'est pas disponible dans les cookies");
-//         return;
-//       }
+      const jwtToken = getCookie('jwt_access_token');
+      if (!jwtToken) {
+        console.error("Le JWT n'est pas disponible dans les cookies");
+        return;
+      }
 
-//       const response = await fetch(
-//         `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
-//         {
-//           method: 'POST',
-//           credentials: 'include', // Important pour les cookies
-//           headers: {
-//             // eslint-disable-next-line @typescript-eslint/naming-convention
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${jwtToken}`,
-//             // eslint-disable-next-line @typescript-eslint/naming-convention
-//             'CSRF-Token': csrfToken // Ajouter le token CSRF
-//           },
-//           body: JSON.stringify({
-//             // eslint-disable-next-line @typescript-eslint/naming-convention
-//             from_date: fromDate,
-//             // eslint-disable-next-line @typescript-eslint/naming-convention
-//             to_date: toDate,
-//             _csrf: csrfToken // Inclure aussi dans le body
-//           })
-//         }
-//       );
+      const response = await fetch(
+        `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
+        {
+          method: 'POST',
+          credentials: 'include', // Important pour les cookies
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwtToken}`,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            'CSRF-Token': csrfToken // Ajouter le token CSRF
+          },
+          body: JSON.stringify({
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            from_date: fromDate,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            to_date: toDate,
+            _csrf: csrfToken // Inclure aussi dans le body
+          })
+        }
+      );
 
-//       if (response.ok) {
-//         const data = (await response.json()) as ResponseRaven;
-//         if (data.success) {
-//           console.log('Data saved successfully:', data);
-//         } else {
-//           console.error(
-//             "Erreur lors de l'enregistrement des données",
-//             data.message
-//           );
-//         }
-//       } else {
-//         console.error("Erreur lors de l'enregistrement des données");
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Erreur lors de l'enregistrement des données", error);
-//   }
-// }
+      if (response.ok) {
+        const data = (await response.json()) as ResponseRaven;
+        if (data.success) {
+          console.log('Data saved successfully:', data);
+        } else {
+          console.error(
+            "Erreur lors de l'enregistrement des données",
+            data.message
+          );
+        }
+      } else {
+        console.error("Erreur lors de l'enregistrement des données");
+      }
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'enregistrement des données", error);
+  }
+}
+interface ResponseRaven {
+  success: boolean;
+  data: [];
+  error: string;
+}
 
-// export async function getDataFromDb() {
-//   try {
-//     const jwtToken = getCookie('jwt_access_token');
-//     if (!jwtToken) {
-//       console.error("Le JWT n'est pas disponible dans les cookies");
-//       return;
-//     }
+export async function getDataFromDb() {
+  try {
+    const response = await get<ResponseRaven>(
+      '/get-kinshasa-digital-raven-courses'
+    );
 
-//     const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
-//       credentials: 'include' // Important pour les cookies
-//     });
-//     const csrfData = (await csrfResponse.json()) as CsrfResponse;
-//     const { csrfToken } = csrfData;
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+    }
+    const courses = response.data as RavenCourse[];
 
-//     // Vérifier si le token CSRF est valide
-//     if (!csrfToken) {
-//       console.error('Token CSRF introuvable');
-//       return;
-//     }
+    const coursesFilterByLanguage = courses
+      .filter(course => {
+        return course.category?.some(cat =>
+          cat.tags?.some(
+            tag => tag.title.match(/English/) || tag.title.match(/French/)
+          )
+        );
+      })
+      .map(course => {
+        // Extraire le skill level
+        const skillLevelCategory = course.category?.find(cat =>
+          cat.tags?.find(tag => tag.title === 'Skill Level')
+        );
 
-//     const response = await fetch('/get-kinshasa-digital-raven-courses', {
-//       method: 'GET',
-//       credentials: 'include', // Important pour les cookies
-//       headers: {
-//         // eslint-disable-next-line @typescript-eslint/naming-convention
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${jwtToken}`,
-//         // eslint-disable-next-line @typescript-eslint/naming-convention
-//         'CSRF-Token': csrfToken // Ajouter le token CSRF
-//       }
-//     });
-//     if (!response.ok) {
-//       console.error('Erreur lors de la récupération des données');
-//       return;
-//     }
-//     const courses = await response.json();
-//     console.log('response', courses);
-//     return courses;
-//   } catch (error) {
-//     console.error('Erreur lors de la récupération des données', error);
-//   }
-// }
+        if (skillLevelCategory && skillLevelCategory.tags?.[0].title) {
+          course.skill_level = skillLevelCategory.tags[0].title;
+        }
+
+        return course;
+      });
+
+    return coursesFilterByLanguage;
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
 
 //Elle finit ici
 
