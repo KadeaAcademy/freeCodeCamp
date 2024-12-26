@@ -830,7 +830,9 @@ export async function getDataFromDb() {
 
     if (!response.success) {
       console.log('Error fetching courses:', response.error);
+      throw new Error(response.error);
     }
+
     const courses = response.data as RavenCourse[];
 
     const coursesFilterByLanguage = courses
@@ -842,18 +844,15 @@ export async function getDataFromDb() {
         );
       })
       .map(course => {
-        // Extraire le skill level
+        const enhancedCourse = { ...course };
         const skillLevelCategory = course.category?.find(cat =>
-          cat.tags?.find(tag => tag.title === 'Skill Level')
+          cat.tags?.some(tag => tag.title === 'Skill Level')
         );
+        enhancedCourse.skill_level =
+          skillLevelCategory?.tags?.[0]?.title || 'Fundamental';
 
-        if (skillLevelCategory && skillLevelCategory.tags?.[0].title) {
-          course.skill_level = skillLevelCategory.tags[0].title;
-        }
-
-        return course;
+        return enhancedCourse;
       });
-
     return coursesFilterByLanguage;
   } catch (error) {
     console.error('Error fetching courses:', error);
