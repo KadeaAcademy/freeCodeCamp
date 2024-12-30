@@ -158,6 +158,18 @@ export const pathRaven = atom<RavenCourse[]>({
   effects_UNSTABLE: []
 });
 
+export const filterbyIa = atom<
+  | RavenCourse[]
+  | MoodleCourseCategory[]
+  | MoodleCoursesCatalogue
+  | ProgramationCourses[]
+>({
+  key: 'filterbyIa',
+  default: [],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: []
+});
+
 export const myDataRaven = atom<RavenCourse[] | undefined>({
   key: 'myDataRaven',
   default: [],

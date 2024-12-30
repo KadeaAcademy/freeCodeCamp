@@ -17,6 +17,7 @@ import {
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
 import {
+  allDataCourses,
   centraliseRavenData,
   myDataMoodle,
   tokenRaven
@@ -61,6 +62,7 @@ const CoursesFilterSection = ({
   const [tokeFromRaven, setTokenFromRaven] = useRecoilState(tokenRaven);
   const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
   const setGetAllDataMoodle = useSetRecoilState(myDataMoodle);
+  const setAllDataOfCourses = useSetRecoilState(allDataCourses);
 
   const getAllMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
@@ -142,6 +144,7 @@ const CoursesFilterSection = ({
 
         if (moodleData) {
           setGetAllDataMoodle(moodleData);
+          setAllDataOfCourses(moodleData);
         }
 
         if (ravenData) {
@@ -150,6 +153,7 @@ const CoursesFilterSection = ({
           ];
 
           setGetAllRavenData(unifiedRavenData);
+          setAllDataOfCourses(unifiedRavenData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);

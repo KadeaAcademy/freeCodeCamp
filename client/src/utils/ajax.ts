@@ -112,6 +112,7 @@ export interface ProgramationCourses {
   language?: string;
   level?: string;
   type: string;
+  specification?: string;
 }
 
 export const dataForprogramation: ProgramationCourses[] = [
@@ -126,7 +127,8 @@ export const dataForprogramation: ProgramationCourses[] = [
     description:
       "Ce cours t'apprend les langages HTML pour le contenu et CSS pour la conception, ainsi que la création de pages Web adaptatives pour différentes tailles d'écran.",
     duration: 120,
-    type: 'Cours'
+    type: 'Cours',
+    specification: 'Responsive Web Design'
   },
   {
     title: 'JavaScript Algorithms and Data Structures',
@@ -139,7 +141,8 @@ export const dataForprogramation: ProgramationCourses[] = [
     description:
       "Ce cours t'enseigne les bases de JavaScript pour rendre les pages interactives, ainsi que les algorithmes et structures de données en JavaScript, etc.",
     duration: 120,
-    type: 'Cours'
+    type: 'Cours',
+    specification: 'JavaScript Algorithms and Data Structures'
   }
 ];
 
@@ -851,8 +854,12 @@ export async function getDataFromDb() {
         enhancedCourse.skill_level =
           skillLevelCategory?.tags?.[0]?.title || 'Fundamental';
 
+        const domain = course.category?.[1]?.tags?.[0]?.title || '';
+        enhancedCourse.roles = domain;
+
         return enhancedCourse;
       });
+
     return coursesFilterByLanguage;
   } catch (error) {
     console.error('Error fetching courses:', error);

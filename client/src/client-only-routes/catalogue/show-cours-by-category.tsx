@@ -1,20 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Grid } from '@freecodecamp/react-bootstrap';
-import {
-  faChevronLeft,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
 import { Helmet } from 'react-helmet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 // import LaptopIcon from '../../assets/images/laptop.svg';
 import { useLocation } from '@reach/router';
-import AlgoIcon from '../../assets/images/algorithmIcon.svg';
-import PhBookBookmark from '../../assets/images/ph-book-bookmark-thin.svg';
-import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
-import awsLogo from '../../assets/images/aws-logo.png';
 
 import {
   dataForprogramation,
@@ -29,17 +20,8 @@ import {
   Spacer
 } from '../../components/helpers';
 import CourseFilter from '../../components/CourseFilter/course-filter';
-import CourseCard from '../../components/CourseCard/course-card';
-import PathCard from '../../components/PathCard/path-card';
-import {
-  convertTime,
-  convertTimestampToTime,
-  formatDescription,
-  getCategoryDescription,
-  paginate
-} from '../../utils/allFunctions';
+import { getCategoryDescription, paginate } from '../../utils/allFunctions';
 import { CoursesProps, MoodleCourse, RavenCourse } from '../show-courses';
-import envData from '../../../../config/env.json';
 import {
   isSignedInSelector,
   signInLoadingSelector,
@@ -49,6 +31,7 @@ import {
 import { User } from '../../redux/prop-types';
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
+  allDataCourses,
   categoryCounter,
   categoryCours,
   centraliseRavenData,
@@ -61,7 +44,9 @@ import {
 } from '../../redux/atoms';
 
 import '../catalogue/show-courses-by-category.css';
-import { allQuery, filterLogics } from '../../utils/routes';
+import AllCourseByType from './all-course-by-type';
+import PaginationControls from './pagination';
+import { manyCategoryFilter } from './useCategoryFilter';
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
@@ -78,6 +63,8 @@ const mapDispatchToProps = {
   createFlashMessage,
   navigate
 };
+
+type Course = RavenCourse | MoodleCourse | ProgramationCourses;
 
 function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const { showLoading } = props;
@@ -104,12 +91,11 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const [programmationState, setProgrammationState] = useState<
     ProgramationCourses[]
   >([]);
+  const setAllDataOfCourses = useSetRecoilState(allDataCourses);
 
   const currentUrl = window.location.href;
   const location = useLocation();
   const valueOfUrl = location.pathname.split('/')[2].replace(/-/g, ' ');
-
-  const { moodleBaseUrl } = envData;
 
   //utilisation de useCallback afin de mémoriser la fonction et éviter de la recréer à chaque rendu mais seulement au changement des dépendances
   const fetchCourses = useCallback(() => {
@@ -122,82 +108,18 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
       const filteredMoodleCourses = moodleState;
       setProgrammationState(dataForprogramation);
       const filterProgramationCourses = programmationState;
+      setAllDataOfCourses(filterProgramationCourses);
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      type CourseType = RavenCourse | MoodleCourse | ProgramationCourses;
 
-      const manyCategoryFilter = () => {
-        let courses: CourseType[] | undefined;
-        let category: 'programation' | 'aws' | 'moodle';
+      const filteredCourses = manyCategoryFilter(
+        valueOfUrl,
+        filteredRavenCourses,
+        filteredMoodleCourses,
+        filterProgramationCourses,
+        currentUrl,
+        valueOfCurrentCategorie
+      );
 
-        if (valueOfUrl == 'programmation') {
-          courses = filterProgramationCourses;
-          category = 'programation';
-        } else if (valueOfUrl == 'amazon web service') {
-          courses = filteredRavenCourses;
-          category = 'aws';
-        } else {
-          courses = filteredMoodleCourses?.result
-            .flatMap(
-              /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-              course => course
-            )
-            .filter(
-              course => course.categoryid == valueOfCurrentCategorie
-            ) as unknown as MoodleCourse[];
-          category = 'moodle';
-        }
-
-        if (!courses) return [];
-
-        switch (category) {
-          case 'programation':
-            setRessourceDatas([]);
-            return courses.filter(
-              course =>
-                filterLogics.programation.language(
-                  course as ProgramationCourses,
-                  currentUrl
-                ) &&
-                filterLogics.programation.type(
-                  course as ProgramationCourses,
-                  currentUrl
-                ) &&
-                filterLogics.programation.level(
-                  course as ProgramationCourses,
-                  currentUrl
-                ) &&
-                filterLogics.programation.duration(
-                  course as ProgramationCourses,
-                  currentUrl
-                )
-            );
-
-          case 'aws':
-            return courses.filter(
-              course =>
-                filterLogics.aws.language(course as RavenCourse, currentUrl) &&
-                filterLogics.aws.type(course as RavenCourse, currentUrl) &&
-                filterLogics.aws.level(course as RavenCourse, currentUrl) &&
-                filterLogics.aws.duration(course as RavenCourse, currentUrl)
-            );
-
-          case 'moodle':
-            return courses.filter(
-              course =>
-                filterLogics.moodle.language(
-                  course as MoodleCourse,
-                  currentUrl
-                ) &&
-                filterLogics.moodle.type(course as MoodleCourse, currentUrl) &&
-                filterLogics.moodle.level(course as MoodleCourse, currentUrl) &&
-                filterLogics.moodle.duration(course as MoodleCourse, currentUrl)
-            );
-
-          default:
-            return [];
-        }
-      };
-      const filteredCourses = manyCategoryFilter();
       setCoursesData(filteredCourses);
       setRessourceDatas(filteredCourses);
     } catch (error) {
@@ -210,7 +132,8 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     programmationState,
     currentUrl,
     valueOfCurrentCategorie,
-    setRessourceDatas
+    setRessourceDatas,
+    setAllDataOfCourses
   ]);
 
   useEffect(() => {
@@ -245,6 +168,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
         if (moodleData) {
           setGetAllDataMoodle(moodleData);
+          setAllDataOfCourses(moodleData as unknown as Course[]);
         }
 
         if (ravenData) {
@@ -252,6 +176,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
             ...((ravenData as unknown as RavenCourse[]) || [])
           ];
           setGetAllRavenData(unifiedRavenData);
+          setAllDataOfCourses(unifiedRavenData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -406,131 +331,14 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                   {isDataOnLoading && paginatedData.length === 0 ? (
                     renderCourseCardSkeletons(6)
                   ) : paginatedData.length > 0 ? (
-                    paginatedData.map((course, index) => {
-                      if (
-                        valueOfUrl === 'programmation' ||
-                        valueOfUrl === 'amazon web service' ||
-                        valueOfUrl === 'intelligence artificielle' ||
-                        valueOfUrl.includes(
-                          'Intelligence%20 %20artificielle'
-                        ) ||
-                        valueOfUrl.toLocaleLowerCase() ===
-                          'marketing communication' ||
-                        valueOfUrl === 'Bureautique'
-                      ) {
-                        if (valueOfUrl === 'programmation') {
-                          const courseList = course as ProgramationCourses;
-                          if (courseList.title) {
-                            return (
-                              <CourseCard
-                                key={index}
-                                level={courseList.level}
-                                language={courseList.language}
-                                icon={
-                                  courseList.sponsorIcon === 'AlgoIcon'
-                                    ? AlgoIcon
-                                    : LaediesActIcon
-                                }
-                                alt={courseList.alt}
-                                isAvailable={courseList.isAvailable}
-                                title={courseList.title}
-                                buttonText='Suivre le cours'
-                                link={courseList.link}
-                                description={courseList.description}
-                              />
-                            );
-                          }
-                        }
-
-                        if (valueOfUrl === 'amazon web service') {
-                          const courseTyped = course as RavenCourse;
-                          const firstCategory = courseTyped.category?.[0];
-                          const language =
-                            firstCategory?.tags?.[0]?.title || 'Unknown';
-
-                          if (courseTyped.long_description) {
-                            return (
-                              <PathCard
-                                key={courseTyped.name}
-                                language={language}
-                                icon={awsLogo}
-                                isAvailable={true}
-                                title={`${index + 1}. ${courseTyped.name}`}
-                                buttonText='Suivre le parcours'
-                                link={courseTyped.launch_url}
-                                description={formatDescription(
-                                  courseTyped.long_description
-                                )}
-                                duration={convertTime(courseTyped.duration)}
-                                level={
-                                  courseTyped.skill_level === 'Fundamental'
-                                    ? allQuery.value.level.debutant
-                                    : ''
-                                }
-                              />
-                            );
-                          } else {
-                            return (
-                              <CourseCard
-                                key={index.toString()}
-                                level={
-                                  courseTyped.skill_level === 'Fundamental'
-                                    ? allQuery.value.level.debutant
-                                    : ''
-                                }
-                                language={language}
-                                icon={awsLogo}
-                                isAvailable={true}
-                                title={`${index + 1}. ${courseTyped.name}`}
-                                buttonText='Suivre le cours'
-                                link={courseTyped.launch_url}
-                                description={formatDescription(
-                                  courseTyped.short_description
-                                )}
-                                duration={convertTime(courseTyped.duration)}
-                              />
-                            );
-                          }
-                        } else {
-                          const courseTyped = course as MoodleCourse;
-                          const nowCategorie =
-                            valueOfUrl === 'Bureautique'
-                              ? 11
-                              : valueOfUrl.toLocaleLowerCase() ===
-                                'marketing communication'
-                              ? 13
-                              : valueOfUrl === 'intelligence artificielle' ||
-                                valueOfUrl.includes(
-                                  'Intelligence%20 %20artificielle'
-                                )
-                              ? 14
-                              : valueOfCurrentCategorie;
-                          if (courseTyped.categoryid == nowCategorie) {
-                            return (
-                              <CourseCard
-                                key={`${index}-${courseTyped.id}`}
-                                language={courseTyped.langue}
-                                level={courseTyped.level}
-                                icon={PhBookBookmark}
-                                isAvailable={courseTyped.visible === 1}
-                                title={courseTyped.displayname}
-                                buttonText='Suivre le cours'
-                                link={`${moodleBaseUrl}/course/view.php?id=${courseTyped.id}`}
-                                description={courseTyped.summary}
-                                duration={convertTimestampToTime(
-                                  courseTyped.duration
-                                )}
-                              />
-                            );
-                          }
-                        }
-                      }
-                      return null;
-                    })
+                    <AllCourseByType
+                      courses={paginatedData as Course[]}
+                      valueOfUrl={valueOfUrl}
+                    />
                   ) : (
                     <div className=''>
                       <p className='no-cours'>
-                        Aucune correspondance exacte .
+                        Aucune correspondance exacte.
                         <div>
                           Modifiez ou supprimez certains de vos filtres ou
                           ajustez votre catégorie de recherche.
@@ -541,18 +349,11 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                 </div>
 
                 <div className='pagination-container'>
-                  <FontAwesomeIcon
-                    icon={faChevronLeft}
-                    className='pagination-chevron'
-                    onClick={() => onNavigueteBackward()}
-                  />
-                  <span className='pagination__number'>
-                    {currentPage}/{totalPages > 0 ? totalPages : 1}
-                  </span>
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='pagination-chevron'
-                    onClick={() => onNavigateForward()}
+                  <PaginationControls
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onNavigateForward={onNavigateForward}
+                    onNavigueteBackward={onNavigueteBackward}
                   />
                 </div>
                 <Spacer size={2} />

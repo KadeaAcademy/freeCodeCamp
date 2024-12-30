@@ -1,5 +1,6 @@
 //Notons l'utilisation de object.freeze() afin de
 
+import { domainKeywords } from '../client-only-routes/catalogue/keyword-for-courses-category';
 import { MoodleCourse, RavenCourse } from '../client-only-routes/show-courses';
 import { ProgramationCourses } from './ajax';
 import { convertTimeForFilter } from './allFunctions';
@@ -246,6 +247,24 @@ const filterLogics = {
         );
       }
       return true;
+    },
+    domain: (course: RavenCourse, currentUrl: string) => {
+      // Parcours de l'objet des domaines et de leurs mots-clés
+      for (const [domain, keywords] of Object.entries(domainKeywords)) {
+        // Vérifie si l'URL contient une référence au domaine
+        const filterForDomain =
+          currentUrl.includes(domain) ||
+          currentUrl.includes(domain.replace(' ', '%20'));
+
+        if (filterForDomain) {
+          const filterByDomain = keywords.some(keyword =>
+            course.roles?.toLowerCase().includes(keyword.toLowerCase())
+          );
+
+          return filterByDomain;
+        }
+      }
+      return true;
     }
   },
   moodle: {
@@ -330,7 +349,5 @@ const filterLogics = {
     }
   }
 };
-
-// Faites de même pour les autres types de cours (aws, moodle)
 
 export { routes, allQuery, arrayOfCategory, filterLogics };
