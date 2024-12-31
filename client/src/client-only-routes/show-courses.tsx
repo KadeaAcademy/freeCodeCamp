@@ -27,6 +27,7 @@ import { User } from '../redux/prop-types';
 import {
   dataForprogramation,
   getAwsPath,
+  getDataFromDb,
   getExternalResource,
   getMoodleCourses,
   ProgramationCourses
@@ -233,7 +234,7 @@ export function Courses(props: CoursesProps): JSX.Element {
     const fetchData = async () => {
       try {
         const pathRavenCourses =
-          (await getAwsPath()) as unknown as RavenCourse[];
+          (await getDataFromDb()) as unknown as RavenCourse[];
         const ravenDataWhenEmptyDb =
           (await getAwsPath()) as unknown as RavenCourse[];
         if (pathRavenCourses.length > 0) {
@@ -244,7 +245,7 @@ export function Courses(props: CoursesProps): JSX.Element {
         // Si pas de données stockées, on fait les appels API pour récupérer les données
         const [moodleData, ravenData, ravenPathData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath(),
+          getDataFromDb(),
           getAwsPath()
         ]);
 

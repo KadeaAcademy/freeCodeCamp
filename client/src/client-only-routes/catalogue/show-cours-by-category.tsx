@@ -10,6 +10,7 @@ import { useLocation } from '@reach/router';
 import {
   dataForprogramation,
   getAwsPath,
+  getDataFromDb,
   getMoodleCourses,
   ProgramationCourses
 } from '../../utils/ajax';
@@ -151,7 +152,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
     const fetchData = async () => {
       try {
         const pathRavenCourses =
-          (await getAwsPath()) as unknown as RavenCourse[];
+          (await getDataFromDb()) as unknown as RavenCourse[];
 
         const ravenDataWhenEmptyDb =
           (await getAwsPath()) as unknown as RavenCourse[];
@@ -162,7 +163,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         }
         const [moodleData, ravenData] = await Promise.all([
           getMoodleCourses(),
-          getAwsPath()
+          getDataFromDb()
         ]);
 
         if (moodleData) {

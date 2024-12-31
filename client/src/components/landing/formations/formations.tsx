@@ -14,7 +14,11 @@ import {
   MoodleCoursesCatalogue,
   RavenCourse
 } from '../../../client-only-routes/show-courses';
-import { getAwsPath, getExternalResource } from '../../../utils/ajax';
+import {
+  getAwsPath,
+  getDataFromDb,
+  getExternalResource
+} from '../../../utils/ajax';
 import { Link, splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
 import { myDataMoodle, myDataRaven } from '../../../redux/atoms';
@@ -130,7 +134,7 @@ function Formations() {
     const fetchData = () => {
       try {
         // Séparer les cours Raven et Moodle
-        const ravenAllCourses = getAwsPath() as unknown as RavenCourse[];
+        const ravenAllCourses = getDataFromDb() as unknown as RavenCourse[];
 
         const ravenDataWhenEmptyDb = getAwsPath() as unknown as RavenCourse[];
         if (ravenAllCourses.length > 0) {
