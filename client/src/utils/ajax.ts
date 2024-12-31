@@ -718,29 +718,6 @@ export async function getAwsUserCoursesProgress(
 //il y'a encore les érreurs qui reviennes, du coup il m'est judicieux de
 // mettre en commentaire pour eviter des erreur en production
 
-function getCookie(name: string): string | undefined {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-
-  if (parts.length === 2) {
-    let token = parts.pop()?.split(';').shift() ?? undefined;
-    if (token) {
-      // Nettoyer le token en retirant 's%3A' si présent
-      token = token.replace('s%3A', '');
-      // Prendre seulement les trois premières parties du JWT
-      const tokenParts = token.split('.');
-      token = tokenParts.slice(0, 3).join('.');
-    }
-    return token;
-  }
-
-  return undefined;
-}
-
-interface CsrfResponse {
-  csrfToken: string;
-}
-
 interface ResponseRaven {
   success: boolean;
   message: string;
@@ -749,70 +726,30 @@ interface ResponseRaven {
 }
 
 export async function saveDataOnDb() {
-  const jwtToken = getCookie('jwt_access_token');
-  if (!jwtToken) {
-    console.error("Le JWT n'est pas disponible dans les cookies");
-    return;
-  }
   try {
     const token = (await getRavenToken()) as RavenTokenData;
     const fromDate = '01-01-2023';
     const toDate = '11-11-2024';
 
-    if (token.token && jwtToken) {
-      // Première étape : récupérer le token CSRF
-      const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
-        credentials: 'include' // Important pour les cookies
+    if (token.token) {
+      // Construction de l'URL avec les paramètres de requête
+      const queryParams = new URLSearchParams({
+        awstoken: token.token,
+        fromdate: fromDate,
+        todate: toDate
       });
-      const csrfData = (await csrfResponse.json()) as CsrfResponse;
-      const { csrfToken } = csrfData;
 
-      // Vérifier si le token CSRF est valide
-      if (!csrfToken) {
-        console.error('Token CSRF introuvable');
-        return;
-      }
-
-      const jwtToken = getCookie('jwt_access_token');
-      if (!jwtToken) {
-        console.error("Le JWT n'est pas disponible dans les cookies");
-        return;
-      }
-
-      const response = await fetch(
-        `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
-        {
-          method: 'POST',
-          credentials: 'include', // Important pour les cookies
-          headers: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwtToken}`,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            'CSRF-Token': csrfToken // Ajouter le token CSRF
-          },
-          body: JSON.stringify({
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            from_date: fromDate,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            to_date: toDate,
-            _csrf: csrfToken // Inclure aussi dans le body
-          })
-        }
+      const response = await get<ResponseRaven>(
+        `/save-rave-courses?${queryParams.toString()}`
       );
 
-      if (response.ok) {
-        const data = (await response.json()) as ResponseRaven;
-        if (data.success) {
-          console.log('Data saved successfully:', data);
-        } else {
-          console.error(
-            "Erreur lors de l'enregistrement des données",
-            data.message
-          );
-        }
+      if (response.success) {
+        console.log('Data saved successfully:', response);
       } else {
-        console.error("Erreur lors de l'enregistrement des données");
+        console.error(
+          "Erreur lors de l'enregistrement des données",
+          response.message
+        );
       }
     }
   } catch (error) {

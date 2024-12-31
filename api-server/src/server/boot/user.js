@@ -76,7 +76,7 @@ function bootUser(app) {
   api.get('/get-raven-courses', getRavenAwsCatalogue);
   api.get('/get-raven-path', getRavenAwsPathCatalogue);
   api.get('/get-raven-user-progress', getRavenAwsUserProgress);
-  api.post('/save-rave-courses', saveDataOnBdd);
+  api.get('/save-rave-courses', saveDataOnBdd);
   api.get('/get-kinshasa-digital-raven-courses', getAllRavenCourses);
 
   app.use(api);
