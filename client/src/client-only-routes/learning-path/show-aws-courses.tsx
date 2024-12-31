@@ -3,7 +3,7 @@ import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getAwsPath, getDataFromDb } from '../../utils/ajax';
+import { getAwsPath } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
@@ -95,7 +95,7 @@ export function ShowAwsCourses(props: ShowAwsCoursesProps): JSX.Element {
   };
 
   const getRavenResourcesPath = async () => {
-    const getReveanCourses = await getDataFromDb();
+    const getReveanCourses = await getAwsPath();
     if (getReveanCourses) {
       setRavenPath(getReveanCourses as unknown as RavenCourse[]);
     }

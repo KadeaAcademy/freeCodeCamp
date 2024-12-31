@@ -8,7 +8,6 @@ import {
 } from '../../../client-only-routes/show-courses';
 import {
   getAwsPath,
-  getDataFromDb,
   getExternalResource,
   getMoodleCourses,
   getRavenPathResources,
@@ -114,7 +113,7 @@ const CoursesFilterSection = ({
   };
   const getRavenResources = async () => {
     setIsDataOnLoading(true);
-    const getReveanCourses = await getDataFromDb();
+    const getReveanCourses = await getAwsPath();
     const ravenDataWhenEmptyDb = await getAwsPath();
     setRavenCourses(
       getReveanCourses.length > 0
@@ -128,7 +127,7 @@ const CoursesFilterSection = ({
     const fetchData = async () => {
       try {
         const pathRavenCourses =
-          (await getDataFromDb()) as unknown as RavenCourse[];
+          (await getAwsPath()) as unknown as RavenCourse[];
         const ravenDataWhenEmptyDb =
           (await getAwsPath()) as unknown as RavenCourse[];
         if (pathRavenCourses.length > 0) {
@@ -138,7 +137,7 @@ const CoursesFilterSection = ({
         }
         const [moodleData, ravenData] = await Promise.all([
           getMoodleCourses(),
-          getDataFromDb(),
+          getAwsPath(),
           getRavenPathResources()
         ]);
 
@@ -161,7 +160,7 @@ const CoursesFilterSection = ({
         setIsDataOnLoading(false);
       }
     };
-    void getDataFromDb();
+    void getAwsPath();
 
     void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

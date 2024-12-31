@@ -2,8 +2,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   RavenTokenData,
-  getRavenTokenDataFromLocalStorage,
-  getDataFromDb
+  getAwsPath,
+  getRavenTokenDataFromLocalStorage
 } from '../../utils/ajax';
 import {
   RavenCourse,
@@ -34,7 +34,7 @@ function* fetchRavenCoursesSaga() {
       valid_to: '06-24-2024'
     };
     /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-    const courses: RavenCourse[] = yield call(getDataFromDb, ravenData);
+    const courses: RavenCourse[] = yield call(getAwsPath, ravenData);
     yield put(fetchRavenCoursesSuccess(courses));
   } catch (error) {
     yield put(fetchRavenCoursesFailure(error));
