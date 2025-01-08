@@ -139,6 +139,7 @@ img {
   align-items: center;
 
   height: auto;
+  padding: 0.5rem;
 }
 
 .card-course-detail-footer {
@@ -401,6 +402,7 @@ p {
   flex-grow: 1;
 
   height: 20%;
+  padding: 0.5rem;
 }
 
 @media (max-width: 376px) {
