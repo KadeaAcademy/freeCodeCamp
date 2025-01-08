@@ -64,6 +64,21 @@
   align-items: center;
 }
 
+.pagination__number {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination__number.active {
+  font-weight: bold;
+  color: red;
+}
+
+.pagination-chevron {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .main-title-filter-container {
   display: flex;
   justify-content: space-between;

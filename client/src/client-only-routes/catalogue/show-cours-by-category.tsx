@@ -47,6 +47,7 @@ import '../catalogue/show-courses-by-category.css';
 import AllCourseByType from './all-course-by-type';
 import PaginationControls from './pagination';
 import { manyCategoryFilter } from './useCategoryFilter';
+import usePaginationHandlers from './paginationHandlers';
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
@@ -70,7 +71,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   const { showLoading } = props;
   const [isDataOnLoading, setIsDataOnLoading] = useState<boolean>(true);
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [currentPage, setCurrentpage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [screenWidth, setScreenWidth] = useState<number>(
     typeof window !== 'undefined' ? window.innerWidth : 900
   );
@@ -190,7 +191,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   }, []);
 
   useEffect(() => {
-    setCurrentpage(1);
+    setCurrentPage(1);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueOfUrl, valueOfCounter, valueOfCurrentCategorie]);
@@ -217,23 +218,13 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
   }
 
   //gestion de la pagination pour l'affichage des cours
-  const onNavigateForward = () => {
-    if (currentPage < totalPages && currentPage > 0) {
-      setCurrentpage(currentPage + 1);
-      setIsDataOnLoading(!isDataOnLoading);
-    } else {
-      setCurrentpage(currentPage);
-    }
-  };
-
-  const onNavigueteBackward = () => {
-    if (currentPage > 1) {
-      setCurrentpage(currentPage - 1);
-      setIsDataOnLoading(!isDataOnLoading);
-    } else {
-      setCurrentpage(currentPage);
-    }
-  };
+  const { onNavigateForward, onNavigueteBackward, onNavigateToPage } =
+    usePaginationHandlers({
+      currentPage,
+      totalPages,
+      setCurrentPage,
+      setIsDataOnLoading
+    });
   if (showLoading) {
     return <Loader fullScreen={true} />;
   }
@@ -280,7 +271,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                     courseCategories={showMoodleCategory}
                     currentCategory={valueOfCurrentCategorie}
                     setCurrentCategory={SetValueOfCurrentCategory}
-                    setCurrentPage={setCurrentpage}
+                    setCurrentPage={setCurrentPage}
                   />
                 </div>
               )}
@@ -354,6 +345,7 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                     totalPages={totalPages}
                     onNavigateForward={onNavigateForward}
                     onNavigueteBackward={onNavigueteBackward}
+                    onNavigateToPage={onNavigateToPage}
                   />
                 </div>
                 <Spacer size={2} />

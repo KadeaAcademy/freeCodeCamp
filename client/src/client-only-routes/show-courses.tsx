@@ -49,6 +49,7 @@ import PaginationControls from './catalogue/pagination';
 import ShowProgrammationCourses from './catalogue/show-programmation-courses';
 import ShowOnlyMoodleCourses from './catalogue/show-only-moodle-courses';
 import ShowOnlyRavenCouses from './catalogue/show-only-raven-courses';
+import usePaginationHandlers from './catalogue/paginationHandlers';
 
 const { moodleApiBaseUrl, moodleApiToken } = envData;
 
@@ -280,21 +281,13 @@ export function Courses(props: CoursesProps): JSX.Element {
     setAllDataOfCourses(allCourses);
   }, [allCourses, allDataofCourses, setAllDataOfCourses]);
 
-  const onNavigateForward = () => {
-    if (currentPage < totalPages && currentPage > 0) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      setCurrentPage(currentPage);
-    }
-  };
-
-  const onNavigueteBackward = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    } else {
-      setCurrentPage(currentPage);
-    }
-  };
+  const { onNavigateForward, onNavigueteBackward, onNavigateToPage } =
+    usePaginationHandlers({
+      currentPage,
+      totalPages,
+      setCurrentPage,
+      setIsDataOnLoading
+    });
 
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {
@@ -419,6 +412,7 @@ export function Courses(props: CoursesProps): JSX.Element {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onNavigateForward={onNavigateForward}
+                    onNavigateToPage={onNavigateToPage}
                     onNavigueteBackward={onNavigueteBackward}
                   />
                 </div>
