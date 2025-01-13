@@ -877,6 +877,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                           {member.createAt
                             ? dateFormat(`${member.createAt}`)
                             : ''}
+                          {console.log(member)}
                         </td>
                         {member.groups ? (
                           <td style={{ verticalAlign: 'middle' }}>
