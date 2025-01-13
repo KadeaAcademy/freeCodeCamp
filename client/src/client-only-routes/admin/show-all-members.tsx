@@ -874,10 +874,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                           )}
                         </td>
                         <td style={{ verticalAlign: 'middle' }}>
-                          {new Date(member.createAt) <
-                          new Date(new Date().getTime() - 120000)
+                          {member.createAt
                             ? dateFormat(`${member.createAt}`)
-                            : 'Pas de date'}
+                            : ''}
                         </td>
                         {member.groups ? (
                           <td style={{ verticalAlign: 'middle' }}>
