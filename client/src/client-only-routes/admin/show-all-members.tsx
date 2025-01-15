@@ -315,22 +315,25 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
         </Row>
         <Spacer size={1} />
         {!selectedMember ? (
-          <TableMembers
-            members={members?.reverse()}
-            groups={groups}
-            countUsers={countUsers}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            navigateToPage={navigateToPage}
-            showMemberDetails={showMemberDetails}
-            handleChangeGroup={handleChangeGroupMembers}
-            searchMember={searchMember}
-            addUsers={addUser}
-            removeUsers={removeUser}
-            currentGroupMembers={groupMembers}
-            updatingMembersGroup={updating}
-            isLoadingMemberState={isLoadingMember}
-          />
+          (console.log(members?.reverse()),
+          (
+            <TableMembers
+              members={members?.reverse()}
+              groups={groups}
+              countUsers={countUsers}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              navigateToPage={navigateToPage}
+              showMemberDetails={showMemberDetails}
+              handleChangeGroup={handleChangeGroupMembers}
+              searchMember={searchMember}
+              addUsers={addUser}
+              removeUsers={removeUser}
+              currentGroupMembers={groupMembers}
+              updatingMembersGroup={updating}
+              isLoadingMemberState={isLoadingMember}
+            />
+          ))
         ) : (
           <DetailMember member={selectedMember} returnToTable={returnToTable} />
         )}
@@ -785,7 +788,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   </tr>
                 </thead>
                 <tbody>
-                  {members.reverse().map((member, index) => {
+                  {members.map((member, index) => {
                     const responsiveWebDesignBlock =
                       member.currentsSuperBlock.find(superBlock => {
                         return (
