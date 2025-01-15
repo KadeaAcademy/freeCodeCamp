@@ -20,7 +20,9 @@ import {
   faChevronRight,
   faUsers,
   faSearch,
-  faXmark
+  faXmark,
+  faAngleDoubleRight,
+  faAngleDoubleLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import validator from 'validator';
@@ -171,15 +173,13 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     setSelectedMember(null);
   };
 
-  const navigateToPage = (forwardOrBackward: boolean) => {
-    if (forwardOrBackward) {
-      if (currentPage < totalPages) {
-        setCurrentPage(Number(currentPage + 1));
-      }
-    } else {
-      if (currentPage > 1) {
-        setCurrentPage(Number(currentPage - 1));
-      }
+  const navigateToPage = (page: number | boolean) => {
+    if (typeof page === 'number') {
+      // Si un numéro de page spécifique est fourni
+      setCurrentPage(page);
+    } else if (typeof page === 'boolean') {
+      // Si un booléen est utilisé pour avancer ou reculer
+      setCurrentPage(prev => (page ? prev + 1 : prev - 1));
     }
   };
 
@@ -350,7 +350,7 @@ interface TableMembersProps {
   totalPages: number;
   currentGroupMembers: string;
   showMemberDetails: (member: Member) => void;
-  navigateToPage: (forwardOrBackward: boolean) => void;
+  navigateToPage: (forwardOrBackward: boolean | number) => void;
   handleChangeGroup: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
   searchMember: (memberName: string) => void;
@@ -456,6 +456,8 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       `/all-users?limit=100000`
     );
     if (memberList != null && !('error' in memberList)) {
+      console.log(memberList.userList);
+
       setMembersForExpot(memberList.userList);
     } else {
       setMembersForExpot([]);
@@ -948,26 +950,50 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           </div>
         </Col>
         <Col md={12} sm={12} xs={12}>
+          {/* Aller à la première page */}
+          {currentPage > 1 && (
+            <>
+              <FontAwesomeIcon
+                icon={faAngleDoubleLeft}
+                className='pagination-chevron'
+                onClick={() => navigateToPage(1)} // Naviguer vers la première page
+              />
+              &nbsp;
+            </>
+          )}
+          {/* Page précédente */}
           {currentPage > 1 && (
             <FontAwesomeIcon
               icon={faChevronLeft}
               className='pagination-chevron'
               onClick={() => {
-                navigateToPage(false);
+                navigateToPage(currentPage - 1); // Aller à la page précédente
               }}
             />
           )}
           &nbsp;
           {`  ${currentPage} sur ${totalPages}  `}
           &nbsp;
+          {/* Page suivante */}
           {currentPage < totalPages && (
             <FontAwesomeIcon
               icon={faChevronRight}
               className='pagination-chevron'
               onClick={() => {
-                navigateToPage(true);
+                navigateToPage(currentPage + 1); // Aller à la page suivante
               }}
             />
+          )}
+          &nbsp;
+          {/* Aller à la dernière page */}
+          {currentPage < totalPages && (
+            <>
+              <FontAwesomeIcon
+                icon={faAngleDoubleRight}
+                className='pagination-chevron'
+                onClick={() => navigateToPage(totalPages)} // Naviguer vers la dernière page
+              />
+            </>
           )}
         </Col>
       </Row>
