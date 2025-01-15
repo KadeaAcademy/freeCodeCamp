@@ -316,7 +316,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
         <Spacer size={1} />
         {!selectedMember ? (
           <TableMembers
-            members={members}
+            members={members?.reverse()}
             groups={groups}
             countUsers={countUsers}
             currentPage={currentPage}
