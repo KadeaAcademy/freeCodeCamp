@@ -133,6 +133,8 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     );
     if (memberList != null && !('error' in memberList)) {
       setMembers(memberList.userList);
+      console.log(memberList.userList.reverse());
+
       setCountUsers(memberList.countUsers);
       setIsLoadingMember(false);
 
@@ -315,25 +317,22 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
         </Row>
         <Spacer size={1} />
         {!selectedMember ? (
-          (console.log(members?.reverse()),
-          (
-            <TableMembers
-              members={members?.reverse()}
-              groups={groups}
-              countUsers={countUsers}
-              currentPage={currentPage}
-              totalPages={totalPages}
-              navigateToPage={navigateToPage}
-              showMemberDetails={showMemberDetails}
-              handleChangeGroup={handleChangeGroupMembers}
-              searchMember={searchMember}
-              addUsers={addUser}
-              removeUsers={removeUser}
-              currentGroupMembers={groupMembers}
-              updatingMembersGroup={updating}
-              isLoadingMemberState={isLoadingMember}
-            />
-          ))
+          <TableMembers
+            members={members?.reverse()}
+            groups={groups}
+            countUsers={countUsers}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            navigateToPage={navigateToPage}
+            showMemberDetails={showMemberDetails}
+            handleChangeGroup={handleChangeGroupMembers}
+            searchMember={searchMember}
+            addUsers={addUser}
+            removeUsers={removeUser}
+            currentGroupMembers={groupMembers}
+            updatingMembersGroup={updating}
+            isLoadingMemberState={isLoadingMember}
+          />
         ) : (
           <DetailMember member={selectedMember} returnToTable={returnToTable} />
         )}
