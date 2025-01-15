@@ -785,7 +785,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   </tr>
                 </thead>
                 <tbody>
-                  {members.map((member, index) => {
+                  {members.reverse().map((member, index) => {
                     const responsiveWebDesignBlock =
                       member.currentsSuperBlock.find(superBlock => {
                         return (
