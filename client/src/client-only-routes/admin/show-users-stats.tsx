@@ -8,15 +8,22 @@ import {
   FormControl
   // InputGroup
 } from '@freecodecamp/react-bootstrap';
+import { CurrentSuperBlock } from '../../redux/prop-types';
 
 // Types
-interface Member {
-  id: number;
+type Member = {
+  id: string;
+  email: string;
   name: string;
-  role: string;
   gender: string;
+  currentsSuperBlock: CurrentSuperBlock[];
+  groups: string[];
   createAt: string;
-}
+  phone: string;
+  whatsapp: string;
+  location: string;
+  role: string;
+};
 
 interface EnrollmentStat {
   period: string;
@@ -28,10 +35,7 @@ interface Props {
 }
 
 export function AllUserStates({ members }: Props) {
-  const [sortBy, setSortBy] = useState<string>('name');
   const [enrollmentStats, setEnrollmentStats] = useState<EnrollmentStat[]>([]);
-  const [bestPeriod, setBestPeriod] = useState<EnrollmentStat | null>(null);
-  const [worstPeriod, setWorstPeriod] = useState<EnrollmentStat | null>(null);
   const [dateRange, setDateRange] = useState<number>(3); // Plage de dates en mois
 
   // Fonction pour calculer les statistiques d'inscription par période de date
@@ -44,45 +48,21 @@ export function AllUserStates({ members }: Props) {
     members?.forEach(member => {
       const createDate = new Date(member.createAt);
       if (createDate >= rangeStart) {
-        const period = `${createDate.getFullYear()}-${createDate.getMonth()}`;
+        const period = `${createDate.getFullYear()}-${
+          createDate.getMonth() + 1
+        }`; // Mois humain (1-12)
         stats[period] = (stats[period] || 0) + 1;
       }
     });
 
-    // Convertir en tableau pour le tri
-    const statsArray: EnrollmentStat[] = Object.entries(stats).map(
-      ([period, count]) => ({
-        period,
-        count
-      })
-    );
+    // Convertir en tableau trié par date
+    const statsArray: EnrollmentStat[] = Object.entries(stats)
+      .map(([period, count]) => ({ period, count }))
+      .sort(
+        (a, b) => new Date(a.period).getTime() - new Date(b.period).getTime()
+      );
 
-    // Trier par nombre d'inscriptions
-    statsArray.sort((a, b) => b.count - a.count);
-
-    setBestPeriod(statsArray[0]);
-    setWorstPeriod(statsArray[statsArray.length - 1]);
     setEnrollmentStats(statsArray);
-  };
-
-  // Fonction de tri des membres
-  const sortMembers = (members: Member[]) => {
-    return [...members].sort((a, b) => {
-      switch (sortBy) {
-        case 'name':
-          return a.name.localeCompare(b.name);
-        case 'role':
-          return a.role.localeCompare(b.role);
-        case 'gender':
-          return a.gender.localeCompare(b.gender);
-        case 'date':
-          return (
-            new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
-          );
-        default:
-          return 0;
-      }
-    });
   };
 
   useEffect(() => {
@@ -90,61 +70,10 @@ export function AllUserStates({ members }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [members, dateRange]);
 
-  // Ajout des statistiques d'inscription en haut du composant
-  const renderEnrollmentStats = () => (
-    <Row className='mb-4'>
-      <Col md={4}>
-        <div className='p-3 rounded shadow-sm bg-white'>
-          <h5>Statistiques inscription</h5>
-          {bestPeriod && (
-            <div className='p-2 rounded bg-success text-white mb-2'>
-              Meilleure période:{' '}
-              {new Date(bestPeriod.period).toLocaleDateString('fr-FR', {
-                year: 'numeric',
-                month: 'long'
-              })}
-              <br />({bestPeriod.count} inscriptions)
-            </div>
-          )}
-          {worstPeriod && (
-            <div className='p-2 rounded bg-danger text-white'>
-              Période la plus faible:{' '}
-              {new Date(worstPeriod.period).toLocaleDateString('fr-FR', {
-                year: 'numeric',
-                month: 'long'
-              })}
-              <br />({worstPeriod.count} inscriptions)
-            </div>
-          )}
-        </div>
-      </Col>
-    </Row>
-  );
-
-  // Ajout des options de tri
-  const renderSortingOptions = () => (
-    <FormGroup className='mb-3'>
-      <ControlLabel>Trier par</ControlLabel>
-      <FormControl
-        componentClass='select'
-        value={sortBy}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-          setSortBy(e.target.value)
-        }
-        className='standard-radius-5'
-      >
-        <option value='name'>Nom</option>
-        <option value='role'>Rôle</option>
-        <option value='gender'>Genre</option>
-        <option value='date'>Date inscription</option>
-      </FormControl>
-    </FormGroup>
-  );
-
-  // Ajout des options de plage de dates
+  // Options de plage de dates
   const renderDateRangeOptions = () => (
     <FormGroup className='mb-3'>
-      <ControlLabel>Plage inscriptions</ControlLabel>
+      <ControlLabel>{`Plage d'inscriptions`}</ControlLabel>
       <FormControl
         componentClass='select'
         value={dateRange}
@@ -161,19 +90,10 @@ export function AllUserStates({ members }: Props) {
     </FormGroup>
   );
 
-  // Calcul de la couleur selon le nombre d'inscriptions
-  const getEnrollmentColor = (count: number) => {
-    if (count === 0) return 'bg-danger text-white';
-    if (count <= 5) return 'bg-warning text-dark';
-    return 'bg-success text-white';
-  };
-
   return (
     <>
-      {renderEnrollmentStats()}
       <Row>
         <Col md={6} sm={12} xs={12}>
-          {renderSortingOptions()}
           {renderDateRangeOptions()}
         </Col>
       </Row>
@@ -182,58 +102,20 @@ export function AllUserStates({ members }: Props) {
           <Table responsive hover>
             <thead>
               <tr>
-                <th>Nom</th>
-                <th>Rôle</th>
-                <th>Genre</th>
-                <th>Date inscription</th>
-                <th>Statut</th> {/* Nouvelle colonne pour la statistique */}
+                <th>Date</th>
+                <th>{`Nombre d'inscriptions`}</th>
               </tr>
             </thead>
             <tbody>
-              {sortMembers(members ? members : []).map(member => (
-                <tr key={member.id}>
-                  <td>{member.name}</td>
-                  <td>{member.role}</td>
-                  <td>{member.gender}</td>
+              {enrollmentStats.map(stat => (
+                <tr key={stat.period}>
                   <td>
-                    {new Date(member.createAt).toLocaleDateString('fr-FR')}
+                    {new Date(stat.period).toLocaleDateString('fr-FR', {
+                      year: 'numeric',
+                      month: 'long'
+                    })}
                   </td>
-                  <td>
-                    {enrollmentStats.some(
-                      stat =>
-                        stat.period ===
-                        `${new Date(member.createAt).getFullYear()}-${new Date(
-                          member.createAt
-                        ).getMonth()}`
-                    ) ? (
-                      <span
-                        className={`badge ${getEnrollmentColor(
-                          enrollmentStats.find(
-                            stat =>
-                              stat.period ===
-                              `${new Date(
-                                member.createAt
-                              ).getFullYear()}-${new Date(
-                                member.createAt
-                              ).getMonth()}`
-                          )?.count || 0
-                        )}`}
-                      >
-                        {enrollmentStats.find(
-                          stat =>
-                            stat.period ===
-                            `${new Date(
-                              member.createAt
-                            ).getFullYear()}-${new Date(
-                              member.createAt
-                            ).getMonth()}`
-                        )?.count || 0}{' '}
-                        inscriptions
-                      </span>
-                    ) : (
-                      <span className='badge bg-secondary'>Aucune donnée</span>
-                    )}
-                  </td>
+                  <td>{stat.count}</td>
                 </tr>
               ))}
             </tbody>
