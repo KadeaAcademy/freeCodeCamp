@@ -916,6 +916,12 @@ export async function createUserRole(
 
 /** PUT **/
 
+export async function getAOfUsersData() {
+  const response = await get('/get-all-users-data');
+
+  return response;
+}
+
 interface MyAbout {
   name: string;
   location: string;

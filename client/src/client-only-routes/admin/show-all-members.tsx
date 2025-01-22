@@ -29,6 +29,7 @@ import validator from 'validator';
 import {
   addUserInGRoup,
   addUserInRole,
+  getAOfUsersData,
   getDatabaseResource,
   getExternalResource,
   remoevUserInGRoup
@@ -274,6 +275,11 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
 
   useEffect(() => {
     void getAllGroups();
+    const dataUsers = getAOfUsersData();
+    /* eslint-disable @typescript-eslint/no-misused-promises */
+    if (dataUsers) {
+      console.log(dataUsers);
+    }
 
     void getMembers();
     return () => {
@@ -319,7 +325,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
         <Spacer size={1} />
         {!selectedMember ? (
           <TableMembers
-            members={members?.reverse()}
+            members={members}
             groups={groups}
             countUsers={countUsers}
             currentPage={currentPage}

@@ -198,6 +198,18 @@ export function getAllUsers(
   });
 }
 
+export function getAllOfUsers(User = loopback.getModelByType('User')) {
+  return new Promise((resolve, reject) => {
+    console.log('reception des données');
+    User.find((err, instance) => {
+      if (err || isEmpty(instance)) {
+        return reject(err || 'No users found');
+      }
+
+      return resolve(instance);
+    });
+  });
+}
 export function countUserDocuments(
   filter,
   User = loopback.getModelByType('User')

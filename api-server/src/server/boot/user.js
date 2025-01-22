@@ -19,7 +19,11 @@ import {
 } from '../utils/publicUserProps';
 import { getRedirectParams } from '../utils/redirection';
 import { trimTags } from '../utils/validators';
-import { getAllUsers, countUserDocuments } from '../utils/user-stats';
+import {
+  getAllUsers,
+  countUserDocuments,
+  getAllOfUsers
+} from '../utils/user-stats';
 const fs = require('fs');
 const path = require('path');
 
@@ -78,6 +82,7 @@ function bootUser(app) {
   api.get('/get-raven-user-progress', getRavenAwsUserProgress);
   api.get('/save-rave-courses', saveDataOnBdd);
   api.get('/get-kinshasa-digital-raven-courses', getAllRavenCourses);
+  api.get('/get-all-users-data', getAllOfUsersData);
 
   app.use(api);
 }
@@ -406,6 +411,18 @@ async function getUserList(req, res) {
     });
   }
 }
+
+export async function getAllOfUsersData(req, res) {
+  try {
+    const allUsers = await getAllOfUsers();
+    return res.json(allUsers);
+  } catch (error) {
+    return res.json({
+      error: error
+    });
+  }
+}
+
 //cette fonction n'est à utiliser que pour les cas où le client a des difficultés de faire les fetchs de données de la base de données kadéa
 // async function saveCoursesToJSON(courses) {
 //   // Définit le chemin du répertoire où le fichier JSON doit être sauvegardé
