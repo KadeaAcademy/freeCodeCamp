@@ -200,16 +200,22 @@ export function AllUserStates({ members }: Props) {
       </Row>
 
       {/* Tableau pour le mois avec le moins et le plus d'inscriptions */}
-      <Row>
+      <Row className='mt-4'>
+        {/* Mois avec le moins d'inscriptions */}
         <Col md={6}>
           <Panel
-            header="Mois avec le moins d'inscriptions"
-            className='custom-panel'
+            header="Mois avec le moins d'inscriptions de la période"
+            className='custom-panel custom-panel-min'
           >
             {minMonth ? (
               <Table responsive>
                 <tbody>
-                  <tr>
+                  <tr className='highlight-row'>
+                    <td colSpan={2} className='text-center p-4'>
+                      <strong>{`Mois avec le moins d'inscriptions de la plage`}</strong>
+                    </td>
+                  </tr>
+                  <tr className='highlight-row'>
                     <td>
                       {new Date(minMonth.period).toLocaleDateString('fr-FR', {
                         year: 'numeric',
@@ -226,15 +232,21 @@ export function AllUserStates({ members }: Props) {
           </Panel>
         </Col>
 
+        {/* Mois avec le plus d'inscriptions */}
         <Col md={6}>
           <Panel
             header="Mois avec le plus d'inscriptions"
-            className='custom-panel'
+            className='custom-panel custom-panel-max'
           >
             {maxMonth ? (
               <Table responsive>
                 <tbody>
-                  <tr>
+                  <tr className='highlight-row'>
+                    <td colSpan={2} className='text-center p-4'>
+                      <strong>{`Mois avec le plus d'inscriptions`}</strong>
+                    </td>
+                  </tr>
+                  <tr className='highlight-row'>
                     <td>
                       {new Date(maxMonth.period).toLocaleDateString('fr-FR', {
                         year: 'numeric',
