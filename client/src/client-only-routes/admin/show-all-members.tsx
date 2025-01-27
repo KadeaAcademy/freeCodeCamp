@@ -29,7 +29,6 @@ import validator from 'validator';
 import {
   addUserInGRoup,
   addUserInRole,
-  getAOfUsersData,
   getDatabaseResource,
   getExternalResource,
   remoevUserInGRoup
@@ -275,11 +274,6 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
 
   useEffect(() => {
     void getAllGroups();
-    const dataUsers = getAOfUsersData();
-    /* eslint-disable @typescript-eslint/no-misused-promises */
-    if (dataUsers) {
-      console.log(dataUsers);
-    }
 
     void getMembers();
     return () => {
@@ -473,6 +467,11 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       setMembersForExpot([]);
     }
   };
+
+  const getUsersAll = async () => {
+    const users = await getDatabaseResource<UserList>('/get-all-users-data');
+    console.log(users);
+  };
   const dateFormat = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString();
@@ -509,6 +508,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   useEffect(() => {
     void getAllMembersForExport();
+    void getUsersAll();
   }, []);
 
   useEffect(() => {
@@ -895,7 +895,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                           {member.createAt
                             ? dateFormat(`${member.createAt}`)
                             : ''}
-                          {console.log(member)}
                         </td>
                         {member.groups ? (
                           <td style={{ verticalAlign: 'middle' }}>
