@@ -376,7 +376,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   const {
     members,
     countUsers,
-    allListMembers,
     groups,
     navigateToPage,
     currentPage,
@@ -405,6 +404,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   };
 
   const [membersForExpot, setMembersForExpot] = useState<Member[]>();
+  const [allUsersData, setAllUsersData] = useState<Member[]>();
 
   const handleClearSearchMemberInput = () => {
     setMemberName('');
@@ -468,9 +468,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     }
   };
 
-  const getUsersAll = async () => {
-    const users = await getDatabaseResource<UserList>('/get-all-users-data');
-    console.log(users);
+  const getAllUsersData = async () => {
+    const users = await getDatabaseResource<Member>('/get-all-users-data');
+    setAllUsersData(users as unknown as Member[]);
   };
   const dateFormat = (dateString: string) => {
     const date = new Date(dateString);
@@ -508,7 +508,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   useEffect(() => {
     void getAllMembersForExport();
-    void getUsersAll();
+    void getAllUsersData();
   }, []);
 
   useEffect(() => {
@@ -523,7 +523,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   return (
     <>
       <>
-        <AllUserStates members={allListMembers} />
+        <AllUserStates members={allUsersData} />
       </>
       <Row>
         <Col md={4} sm={12} xs={12}>
