@@ -201,13 +201,21 @@ export function getAllUsers(
 export function getAllOfUsers(User = loopback.getModelByType('User')) {
   return new Promise((resolve, reject) => {
     console.log('reception des données');
-    User.find((err, instance) => {
-      if (err || isEmpty(instance)) {
-        return reject(err || 'No users found');
-      }
+    User.find(
+      {
+        limit: 0,
+        skip: 0,
+        where: {}, // si vous avez besoin de filtres spécifiques
+        order: 'id ASC' // pour trier les résultats
+      },
+      (err, instance) => {
+        if (err || isEmpty(instance)) {
+          return reject(err || 'No users found');
+        }
 
-      return resolve(instance);
-    });
+        return resolve(instance);
+      }
+    );
   });
 }
 export function countUserDocuments(
