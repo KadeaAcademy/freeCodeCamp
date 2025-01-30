@@ -227,7 +227,7 @@ export function AllUserStates({ members }: Props) {
                 </tbody>
               </Table>
             ) : (
-              <p>Aucune donnée disponible.</p>
+              <p>0</p>
             )}
           </Panel>
         </Col>
@@ -258,7 +258,7 @@ export function AllUserStates({ members }: Props) {
                 </tbody>
               </Table>
             ) : (
-              <p>Aucune donnée disponible.</p>
+              <p>0</p>
             )}
           </Panel>
         </Col>
