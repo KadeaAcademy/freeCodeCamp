@@ -100,7 +100,7 @@
 
     "createAt": {
       "type": "date",
-      "defaultFn": "now"
+      "defaultFn": "null"
     },
     "codeTime": {
       "type": "string",
