@@ -141,7 +141,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   const getAllMembersForExport = async () => {
     const memberList = await getDatabaseResource<UserList>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `/all-users?limit=100000`
+      `/all-users?limit=100`
     );
     if (memberList != null && !('error' in memberList)) {
       const inverseMemberList = memberList.userList.reverse();

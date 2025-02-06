@@ -172,7 +172,8 @@ export function getAllUsers(
           {
             where: filter,
             skip: (page - 1) * limit,
-            limit: limit * 1
+            limit: limit * 1,
+            order: 'id DESC'
           },
           (err, instance) => {
             if (err || isEmpty(instance)) {
@@ -206,7 +207,7 @@ export function getAllOfUsers(User = loopback.getModelByType('User')) {
         limit: 0,
         skip: 0,
         where: {}, // si vous avez besoin de filtres spécifiques
-        order: 'id ASC' // pour trier les résultats
+        order: 'id DESC' // pour trier les résultats
       },
       (err, instance) => {
         if (err || isEmpty(instance)) {
