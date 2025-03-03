@@ -5,7 +5,7 @@ import {
   MoodleCoursesCatalogue
 } from '../show-courses';
 import { filterLogics } from '../../utils/routes';
-import { ProgramationCourses } from '../../utils/ajax';
+import { ProgramationCourses } from '../../redux/prop-types';
 import {
   keyWordCompute,
   keyWordDev,

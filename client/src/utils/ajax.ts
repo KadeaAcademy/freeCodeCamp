@@ -4,6 +4,8 @@ import envData from '../../../config/env.json';
 import type {
   ChallengeFile,
   CompletedChallenge,
+  ProgramationCourses,
+  RequestResponseModel,
   User
 } from '../redux/prop-types';
 import {
@@ -14,6 +16,7 @@ import {
 } from '../client-only-routes/show-courses';
 import { splitArray } from '../components/helpers';
 import sortCourses from '../components/helpers/sort-course';
+import { filterAndEnhanceCourses } from './filter-And-enchance-raven';
 
 const { apiLocation } = envData;
 
@@ -39,7 +42,7 @@ function getCSRFToken() {
 
 // TODO: Might want to handle flash messages as close to the request as possible
 // to make use of the Response object (message, status, etc)
-async function get<T>(path: string): Promise<T> {
+export async function get<T>(path: string): Promise<T> {
   return fetch(`${base}${path}`, defaultOptions).then<T>(res => res.json());
 }
 
@@ -94,27 +97,6 @@ export interface CourseDetails {
 
 //data structure for programation cours
 
-export interface ProgramationCourses {
-  isAvailable: boolean;
-  sameTab?: boolean;
-  external?: boolean;
-  description?: string;
-  title: string;
-  icon?: string;
-  sponsorIcon?: string;
-  badgeIcon?: string;
-  alt?: string;
-  buttonText?: string;
-  link?: string;
-  cardType?: string;
-  createAt?: Date | string | number;
-  duration: string | number;
-  language?: string;
-  level?: string;
-  type: string;
-  specification?: string;
-}
-
 export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'Responsive Web Design',
@@ -128,7 +110,9 @@ export const dataForprogramation: ProgramationCourses[] = [
       "Ce cours t'apprend les langages HTML pour le contenu et CSS pour la conception, ainsi que la création de pages Web adaptatives pour différentes tailles d'écran.",
     duration: 120,
     type: 'Cours',
-    specification: 'Responsive Web Design'
+    specification: 'Responsive Web Design',
+    enrolementCount: 0,
+    author: 'kadea'
   },
   {
     title: 'JavaScript Algorithms and Data Structures',
@@ -142,7 +126,9 @@ export const dataForprogramation: ProgramationCourses[] = [
       "Ce cours t'enseigne les bases de JavaScript pour rendre les pages interactives, ainsi que les algorithmes et structures de données en JavaScript, etc.",
     duration: 120,
     type: 'Cours',
-    specification: 'JavaScript Algorithms and Data Structures'
+    specification: 'JavaScript Algorithms and Data Structures',
+    enrolementCount: 0,
+    author: 'kadea'
   }
 ];
 
@@ -547,14 +533,6 @@ export async function getDatabaseResource<T>(urlEndPoint: string) {
   return response;
 }
 
-// interface RavenFetchCoursesDto {
-//   token: string;
-//   fromDate: string;
-//   // eslint-disable-next-line @typescript-eslint/naming-convention
-//   valid_to: string;
-//   apiKey?: string;
-//   currentPage?: number;
-// }
 export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
@@ -683,6 +661,25 @@ export async function getAwsPath() {
   return [];
 }
 
+export async function updateEnrollment(courseUrl: string): Promise<void> {
+  try {
+    const response: RequestResponseModel = await get(
+      `/update-enrolement-raven?courseUrl=${courseUrl.replace(
+        /^http:/,
+        'https:'
+      )}`
+    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    if (response.success) {
+      console.log('✅ Enrollement mis à jour avec succès !');
+    } else {
+      console.error('⚠️ Erreur:', response.message);
+    }
+  } catch (error) {
+    console.error('❌ Erreur lors de la mise à jour de l’enrollement:', error);
+  }
+}
+
 //fonction permettant la combinaison de tous les cours notamment moodle et raven
 export const getAllRessources = async (): Promise<CombinedCourses[]> => {
   const moodleCourses = await getMoodleCourses();
@@ -775,29 +772,60 @@ export async function getDataFromDb() {
 
     const courses = response.data as RavenCourse[];
 
-    const coursesFilterByLanguage = courses
-      .filter(course => {
-        return course.category?.some(cat =>
-          cat.tags?.some(
-            tag => tag.title.match(/English/) || tag.title.match(/French/)
-          )
-        );
-      })
-      .map(course => {
-        const enhancedCourse = { ...course };
-        const skillLevelCategory = course.category?.find(cat =>
-          cat.tags?.some(tag => tag.title === 'Skill Level')
-        );
-        enhancedCourse.skill_level =
-          skillLevelCategory?.tags?.[0]?.title || 'Fundamental';
+    return filterAndEnhanceCourses(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
 
-        const domain = course.category?.[1]?.tags?.[0]?.title || '';
-        enhancedCourse.roles = domain;
+export async function saveKadeaCoursesOnDb() {
+  try {
+    const response = await get<ResponseRaven>(`/save-kadea-courses`);
 
-        return enhancedCourse;
-      });
+    if (response.success) {
+      console.log('Data saved successfully:', response);
+    } else {
+      console.error(
+        "Erreur lors de l'enregistrement des données",
+        response.error
+      );
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'enregistrement des données", error);
+  }
+}
 
-    return coursesFilterByLanguage;
+export async function getPopularRavenCourses() {
+  try {
+    const response = await get<ResponseRaven>('/get-populare-cours');
+
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+    }
+
+    const courses = response.data as RavenCourse[];
+
+    return filterAndEnhanceCourses(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+export async function getKadeaCourses() {
+  try {
+    const response = await get<ResponseRaven>('/get-kadea-courses');
+
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+      throw new Error(response.error);
+    }
+
+    const courses = response.data as ProgramationCourses[];
+    console.log(courses);
+
+    return courses;
   } catch (error) {
     console.error('Error fetching courses:', error);
     throw error;

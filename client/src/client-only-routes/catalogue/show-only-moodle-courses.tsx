@@ -1,12 +1,12 @@
 import React from 'react';
 import CourseCard from '../../components/CourseCard/course-card';
 import { RavenCourse, MoodleCourse } from '../show-courses';
-import { ProgramationCourses } from '../../utils/ajax';
 import { renderCourseCardSkeletons } from '../../components/helpers';
 import PhBookBookmark from '../../assets/images/ph-book-bookmark-thin.svg';
 
 import { convertTimestampToTime } from '../../utils/allFunctions';
 import envData from '../../../../config/env.json';
+import { ProgramationCourses } from '../../redux/prop-types';
 
 // Unification des types pour les cours
 type Course = RavenCourse | MoodleCourse | ProgramationCourses;

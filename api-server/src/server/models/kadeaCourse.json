@@ -1,51 +1,56 @@
 {
-  "name": "RavenCourse",
-  "plural": "RavenCourses",
+  "name": "KadeaCourse",
+  "plural": "KadeaCourses",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "learningobjectid": {
+    "title": {
       "type": "string",
       "required": true
-    },
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "display_name": {
-      "type": "string"
     },
     "description": {
-      "type": "string"
-    },
-    "launch_url": {
       "type": "string"
     },
     "short_description": {
       "type": "string"
     },
+    "language": {
+      "type": "string",
+      "default": "French"
+    },
+    "level": {
+      "type": "string",
+      "default": "debutant"
+    },
+    "sponsorIcon": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "default": true
+    },
+    "link": {
+      "type": "string"
+    },
     "duration": {
+      "type": "number"
+    },
+    "type": {
       "type": "string"
     },
-    "createddate": {
+    "specification": {
       "type": "string"
     },
-    "updateddate": {
+    "createdDate": {
       "type": "string"
     },
-    "content_type": {
-      "type": "string"
-    },
-    "last_modified_date": {
-      "type": "string"
-    },
-    "long_description": {
-      "type": "string"
-    },
-    "skill_level": {
+    "updatedDate": {
       "type": "string"
     },
     "category": {
@@ -55,6 +60,9 @@
     "enrolementCount": {
       "type": "number",
       "default": 0
+    },
+    "author": {
+      "type": "string"
     }
   },
   "validations": [],

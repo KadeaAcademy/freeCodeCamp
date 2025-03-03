@@ -12,3 +12,19 @@ hr {
   background-color: var(--primary-background);
   opacity: 0.4;
 }
+
+.liste-None {
+  list-style-type: none;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.padding-12 {
+  padding: 1.2rem;
+}
+
+.colore-red-text {
+  color: red;
+}

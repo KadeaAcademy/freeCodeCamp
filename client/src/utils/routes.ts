@@ -2,7 +2,7 @@
 
 import { domainKeywords } from '../client-only-routes/catalogue/keyword-for-courses-category';
 import { MoodleCourse, RavenCourse } from '../client-only-routes/show-courses';
-import { ProgramationCourses } from './ajax';
+import { ProgramationCourses } from '../redux/prop-types';
 import { convertTimeForFilter } from './allFunctions';
 
 //rendre les objects immuables car on ne veut pas que ces propriétés change de valeurs.

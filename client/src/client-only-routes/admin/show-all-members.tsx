@@ -223,7 +223,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     <>
       <Helmet title={`Tableau de bord - Membres | Kadea Online`} />
 
-      <div className=''>
+      <div className='p-6'>
         <Row>
           <Col md={12} sm={12} xs={12}>
             <div className=''>
@@ -231,7 +231,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
                 className='big-subheading'
                 style={{ overflowWrap: 'break-word' }}
               >
-                {!selectedMember ? 'Membres' : 'Détail membre'}
+                {!selectedMember ? '' : 'Détail membre'}
               </h1>
             </div>
           </Col>

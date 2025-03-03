@@ -1,7 +1,7 @@
 import React from 'react';
 import { RavenCourse, MoodleCourse } from '../show-courses';
-import { ProgramationCourses } from '../../utils/ajax';
 import { renderCourseCardSkeletons } from '../../components/helpers';
+import { ProgramationCourses } from '../../redux/prop-types';
 import SwhowIaCourses from './show-ia-courses';
 import ShowOnlyRavenCouses from './show-only-raven-courses';
 import ShowOnlyMoodleCourses from './show-only-moodle-courses';

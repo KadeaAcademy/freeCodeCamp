@@ -534,3 +534,39 @@ export interface AddUserParams {
   countMemberGroupUpdate: number;
   setupdating: (status: { isAddedStatus: boolean; message: string }) => void;
 }
+
+export interface ProgramationCourses {
+  isAvailable: boolean;
+  sameTab?: boolean;
+  external?: boolean;
+  description?: string;
+  title: string;
+  icon?: string;
+  sponsorIcon?: string;
+  badgeIcon?: string;
+  alt?: string;
+  buttonText?: string;
+  link?: string;
+  cardType?: string;
+  createAt?: Date | string | number;
+  duration: string | number;
+  language?: string;
+  level?: string;
+  type: string;
+  specification?: string;
+  enrolementCount?: number;
+  author?: string;
+  asset: string;
+}
+
+export type RequestResponseModel = {
+  success: boolean;
+  message: string;
+  request: string;
+};
+
+export interface ResponseRaven {
+  success: boolean;
+  data: [];
+  error: string;
+}

@@ -4,8 +4,8 @@ import {
   MoodleCoursesCatalogue,
   RavenCourse
 } from '../client-only-routes/show-courses';
-import { ProgramationCourses } from '../utils/ajax';
 import rootReducer from './rootReducer';
+import { ProgramationCourses } from './prop-types';
 import { MainApp } from '.';
 
 export interface State {

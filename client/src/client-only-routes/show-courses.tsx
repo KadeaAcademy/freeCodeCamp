@@ -23,14 +23,13 @@ import {
   hardGoTo as navigate
 } from '../redux';
 
-import { User } from '../redux/prop-types';
+import { ProgramationCourses, User } from '../redux/prop-types';
 import {
   dataForprogramation,
   getAwsPath,
   getDataFromDb,
   getExternalResource,
-  getMoodleCourses,
-  ProgramationCourses
+  getMoodleCourses
 } from '../utils/ajax';
 import { paginate } from '../utils/allFunctions';
 
@@ -120,6 +119,7 @@ export type RavenCourse = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   skill_level: string;
   roles: string;
+  enrolementCount: number;
 };
 
 type Tag = {

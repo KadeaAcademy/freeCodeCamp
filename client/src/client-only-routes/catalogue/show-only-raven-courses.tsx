@@ -2,11 +2,11 @@ import React from 'react';
 import CourseCard from '../../components/CourseCard/course-card';
 import PathCard from '../../components/PathCard/path-card';
 import { RavenCourse, MoodleCourse } from '../show-courses';
-import { ProgramationCourses } from '../../utils/ajax';
 import { renderCourseCardSkeletons } from '../../components/helpers';
 import awsLogo from '../../assets/images/aws-logo.png';
 import { convertTime, formatDescription } from '../../utils/allFunctions';
 import { allQuery } from '../../utils/routes';
+import { ProgramationCourses } from '../../redux/prop-types';
 
 // Unification des types pour les cours
 type Course = RavenCourse | MoodleCourse | ProgramationCourses;

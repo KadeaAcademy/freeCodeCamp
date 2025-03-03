@@ -4,8 +4,9 @@ import {
   MoodleCoursesCatalogue,
   RavenCourse
 } from '../client-only-routes/show-courses';
-import { ProgramationCourses, RavenTokenData } from '../utils/ajax';
+import { RavenTokenData } from '../utils/ajax';
 import { UnifiedCourse } from './types';
+import { ProgramationCourses } from './prop-types';
 // import { MoodleCourseCategory, MoodleCoursesCatalogue } from '../client-only-routes/show-courses';
 
 // Effet pour synchroniser l'état avec le localStorage
@@ -52,6 +53,13 @@ export const valueOfTypeCourse = atom<string | null>({
   default: '',
   // eslint-disable-next-line @typescript-eslint/naming-convention
   effects_UNSTABLE: [localStorageEffect('valueOfTypeCourse')]
+});
+
+export const coursesUrl = atom<string | null>({
+  key: 'coursesUrl',
+  default: '',
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  effects_UNSTABLE: [localStorageEffect(' coursesUrl')]
 });
 
 //atom pour la valeur du level des contenu

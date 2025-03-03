@@ -2,7 +2,6 @@ import React from 'react';
 import CourseCard from '../../components/CourseCard/course-card';
 import PathCard from '../../components/PathCard/path-card';
 import { RavenCourse, MoodleCourse } from '../show-courses';
-import { ProgramationCourses } from '../../utils/ajax';
 import { renderCourseCardSkeletons } from '../../components/helpers';
 import awsLogo from '../../assets/images/aws-logo.png';
 import { convertTime, formatDescription } from '../../utils/allFunctions';
@@ -11,6 +10,7 @@ import { allQuery } from '../../utils/routes';
 type Course = RavenCourse | MoodleCourse | ProgramationCourses;
 import AlgoIcon from '../../assets/images/algorithmIcon.svg';
 import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
+import { ProgramationCourses } from '../../redux/prop-types';
 
 interface CourseListProps {
   courses: Course[];

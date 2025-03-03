@@ -207,7 +207,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   return (
     <>
       <>
-        <AllUserStates members={allUsersData} />
+        <div className='p-6'>
+          <AllUserStates members={allUsersData} />
+        </div>
       </>
       <Row>
         <Col md={4} sm={12} xs={12}>

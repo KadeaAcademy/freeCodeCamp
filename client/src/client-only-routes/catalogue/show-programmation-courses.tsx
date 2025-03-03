@@ -1,10 +1,10 @@
 import React from 'react';
 import CourseCard from '../../components/CourseCard/course-card';
 import { RavenCourse, MoodleCourse } from '../show-courses';
-import { ProgramationCourses } from '../../utils/ajax';
 import { renderCourseCardSkeletons } from '../../components/helpers';
 import AlgoIcon from '../../assets/images/algorithmIcon.svg';
 import LaediesActIcon from '../../assets/images/partners/we-act-logo.png';
+import { ProgramationCourses } from '../../redux/prop-types';
 
 // Unification des types pour les cours
 type Course = RavenCourse | MoodleCourse | ProgramationCourses;

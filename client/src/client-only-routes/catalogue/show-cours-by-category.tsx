@@ -11,8 +11,7 @@ import {
   dataForprogramation,
   getAwsPath,
   getDataFromDb,
-  getMoodleCourses,
-  ProgramationCourses
+  getMoodleCourses
 } from '../../utils/ajax';
 import {
   Loader,
@@ -28,7 +27,7 @@ import {
   userSelector,
   hardGoTo as navigate
 } from '../../redux';
-import { User } from '../../redux/prop-types';
+import { ProgramationCourses, User } from '../../redux/prop-types';
 import { createFlashMessage } from '../../components/Flash/redux';
 import {
   allDataCourses,

@@ -95,14 +95,16 @@ function Formations() {
   };
 
   const allCourses = [
-    ...(ravenCourses?.splice(0, 5) || []),
+    ...(ravenCourses || []),
     ...(moodleCourses?.result ? moodleCourses.result.flat() : [])
   ];
 
   const AllPopularCourses = [
     ...popularCourses,
-    ...(ravenCourses?.splice(Math.floor(Math.random() * (1 - 300) + 1), 2) ||
-      []), // Prend les deux premiers RavenCourse
+    ...(ravenCourses?.splice(
+      Math.floor(Math.random() * (1 - ravenCourses.length) + 1),
+      2
+    ) || []), // Prend les deux premiers RavenCourse
     ...(moodleCourses?.result
       ? moodleCourses.result
           .flat()
