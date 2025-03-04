@@ -120,7 +120,10 @@ export function AllUserStates({ members }: Props) {
         const createDate = new Date(member.createAt);
         console.log('currentMonth', currentMonth);
 
-        return createDate.getMonth() === currentMonth;
+        return (
+          createDate.getMonth() === currentMonth &&
+          createDate.getFullYear() === dateNow.getFullYear()
+        );
       }) || [];
 
     setMonthEnrolementMember(currentMonthMembers);
