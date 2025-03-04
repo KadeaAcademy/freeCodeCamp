@@ -9,6 +9,7 @@ import {
   Panel
 } from '@freecodecamp/react-bootstrap';
 import { CurrentSuperBlock } from '../../redux/prop-types';
+import ShowMonthEnrollementMember from './show-month-enrollement-member';
 
 // Types
 type Member = {
@@ -43,6 +44,13 @@ export function AllUserStates({ members }: Props) {
     new Date().getFullYear()
   );
 
+  const [monthEnrolementMember, setMonthEnrolementMember] = useState<Member[]>(
+    []
+  );
+
+  const dateNow = new Date();
+  const currentMonth = dateNow.getMonth();
+
   // Fonction pour calculer les statistiques d'inscription par période de date
   const calculateEnrollmentStats = () => {
     const stats: {
@@ -54,6 +62,7 @@ export function AllUserStates({ members }: Props) {
 
     members?.forEach(member => {
       const createDate = new Date(member.createAt);
+
       if (createDate >= rangeStart) {
         const period = `${createDate.getFullYear()}-${
           createDate.getMonth() + 1
@@ -105,8 +114,19 @@ export function AllUserStates({ members }: Props) {
 
   useEffect(() => {
     calculateEnrollmentStats();
+
+    const currentMonthMembers =
+      members?.filter(member => {
+        const createDate = new Date(member.createAt);
+        console.log('currentMonth', currentMonth);
+
+        return createDate.getMonth() === currentMonth;
+      }) || [];
+
+    setMonthEnrolementMember(currentMonthMembers);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members, dateRange]);
+  }, [members, dateRange, currentMonth]);
 
   // Options de plage de dates
   const renderDateRangeOptions = () => (
@@ -374,6 +394,7 @@ export function AllUserStates({ members }: Props) {
                 </tbody>
               </Table>
             </Panel>
+            <ShowMonthEnrollementMember members={monthEnrolementMember} />
           </div>
         </Row>
       </div>
