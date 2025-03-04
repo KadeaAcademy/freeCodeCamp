@@ -55,7 +55,7 @@ const MonthlyEnrollmentStats = ({
         </thead>
         <tbody className='bg-white divide-y divide-gray-200'>
           <tr className='bg-gray-900 text-white font-bold'>
-            <td className='px-6 py-4'>
+            <td className='px-6 py-4 text-bold'>
               {members.length === 0
                 ? "Pas d'inscriptions pour ce mois"
                 : members.length}
