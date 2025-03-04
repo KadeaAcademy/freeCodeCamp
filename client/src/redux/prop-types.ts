@@ -570,3 +570,17 @@ export interface ResponseRaven {
   data: [];
   error: string;
 }
+
+export interface EnrollmentStat {
+  period: string;
+  count: number;
+  year: number;
+  month: number;
+}
+
+export interface YearFilterProps {
+  filteredYear: number;
+  onYearChange: (year: number) => void;
+  startYear?: number;
+  numberOfYears?: number;
+}
