@@ -31,8 +31,8 @@ const MonthlyEnrollmentStats = ({
                     fill='none'
                     viewBox='0 0 24 24'
                     stroke='currentColor'
-                    width={50}
-                    height={50}
+                    width={40}
+                    height={40}
                   >
                     <path
                       strokeLinecap='round'
