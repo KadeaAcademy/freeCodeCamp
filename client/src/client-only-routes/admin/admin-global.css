@@ -180,3 +180,11 @@
 .gap-2rem {
   gap: 2rem;
 }
+
+.colorsDetails {
+  background-color: red;
+}
+
+.colorsDetails:hover {
+  background-color: black;
+}
