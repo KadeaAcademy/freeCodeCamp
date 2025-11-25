@@ -4,47 +4,70 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+// eslint-disable-next-line import/no-unresolved
+import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Spacer } from '../../components/helpers';
+import { Loader, Spacer } from '../../components/helpers';
 
 import {
   signInLoadingSelector,
   userSelector,
-  isSignedInSelector
+  isSignedInSelector,
+  hardGoTo as navigate
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const { apiLocation, homeLocation } = envData;
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
 const mapDispatchToProps = {
-  createFlashMessage
+  createFlashMessage,
+  navigate
 };
 
-export function ShowAdminHome(): JSX.Element {
-  // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
-  // À NE PAS COMMITER - Retirer ces commentaires avant le push
-  // if (showLoading) {
-  //   return <Loader fullScreen={true} />;
-  // }
+interface ShowAdminHomeProps {
+  createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
+  navigate: (location: string) => void;
+  showLoading: boolean;
+  user: User;
+}
 
-  // if (!isSignedIn) {
-  //   navigate(`${apiLocation}/signin`);
-  //   return <Loader fullScreen={true} />;
-  // }
+export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
+  const { showLoading, isSignedIn, navigate, user } = props;
 
-  // if (!user.email.includes('Super-admin') || !user.email.includes('Admin')) {
-  //   navigate(`${homeLocation}`);
-  //   return <Loader fullScreen={true} />;
-  // }
+  if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
+
+  if (!isSignedIn) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
+  // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+  const isSuperAdmin = user.role === 'Super-admin';
+  const isAdmin = user.role === 'Admin';
+  const isJudahEmail = user.email === 'judah@kadea.co';
+
+  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${homeLocation}`);
+    return <Loader fullScreen={true} />;
+  }
 
   return (
     <>

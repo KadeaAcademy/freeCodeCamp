@@ -18,6 +18,10 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
+import validator from 'validator';
+// eslint-disable-next-line import/no-unresolved
+import envData from '../../../../config/env.json';
+
 import {
   createUserGroup,
   updateMemberGroup,
@@ -26,30 +30,44 @@ import {
 } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Spacer } from '../../components/helpers';
+import { Loader, Spacer } from '../../components/helpers';
 
 import {
   signInLoadingSelector,
   userSelector,
-  isSignedInSelector
+  isSignedInSelector,
+  hardGoTo as navigate
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
 import './admin-global.css';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const { apiLocation, homeLocation } = envData;
+
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
 const mapDispatchToProps = {
-  createFlashMessage
+  createFlashMessage,
+  navigate
 };
+
+interface ShowAllGroupsProps {
+  createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
+  navigate: (location: string) => void;
+  showLoading: boolean;
+  user: User;
+}
 
 type MemberGroup = {
   id: string;
@@ -70,7 +88,8 @@ interface UserGroupResponse {
   error: string | undefined;
 }
 
-export function ShowAllGroups(): JSX.Element {
+export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
+  const { showLoading, isSignedIn, navigate, user } = props;
   const [groupName, setGroupName] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [membersGroup, setMembersGroup] = useState<MemberGroup[]>();
@@ -236,23 +255,26 @@ export function ShowAllGroups(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, groupRecentlyTreated]);
 
-  // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
-  // À NE PAS COMMITER - Retirer ces commentaires avant le push
-  // if (showLoading) {
-  //   return <Loader fullScreen={true} />;
-  // }
+  if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
 
-  // if (!isSignedIn) {
-  //   navigate(`${apiLocation}/signin`);
-  //   return <Loader fullScreen={true} />;
-  // }
+  if (!isSignedIn) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
 
-  // if (!validator.equals(user.role, 'Super-admin')) {
-  //   if (!validator.equals(user.role, 'Admin')) {
-  //     navigate(`${homeLocation}`);
-  //     return <Loader fullScreen={true} />;
-  //   }
-  // }
+  // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  const isAdmin = validator.equals(user.role, 'Admin');
+  const isJudahEmail = user.email === 'judah@kadea.co';
+
+  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${homeLocation}`);
+    return <Loader fullScreen={true} />;
+  }
 
   return (
     <>

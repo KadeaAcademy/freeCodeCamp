@@ -57,8 +57,8 @@ const mapStateToProps = createSelector(
     isOnline,
     isServerOnline,
     fetchState,
-    theme: user.theme,
-    user
+    theme: user?.theme || 'default',
+    user: user || ({} as User)
   })
 );
 
@@ -136,18 +136,18 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
       useTheme = true
     } = this.props;
 
-    // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
-    // À NE PAS COMMITER - Retirer ces commentaires avant le push
-    // if (!isSignedIn) {
-    //   return <>{children}</>;
-    // }
+    if (!isSignedIn) {
+      return <>{children}</>;
+    }
 
-    // if (
-    //   !user.email.endsWith('@kinshasadigital.com') ||
-    //   !user.email.endsWith('@kadea.co')
-    // ) {
-    //   return <>{children}</>;
-    // }
+    // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+    const isSuperAdmin = user?.role === 'Super-admin';
+    const isAdmin = user?.role === 'Admin';
+    const isJudahEmail = user?.email === 'judah@kadea.co';
+
+    if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+      return <>{children}</>;
+    }
 
     return (
       <div className='page-wrapper'>

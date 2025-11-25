@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import validator from 'validator';
+// eslint-disable-next-line import/no-unresolved
+import envData from '../../../../config/env.json';
 
 import { addUserInGRoup, remoevUserInGRoup } from '../../utils/ajax';
 import { createFlashMessage } from '../../components/Flash/redux';
+import { Loader } from '../../components/helpers';
 import { Member, Group, User } from '../../redux/prop-types';
 
 import {
   signInLoadingSelector,
   userSelector,
-  isSignedInSelector
+  isSignedInSelector,
+  hardGoTo as navigate
 } from '../../redux';
 
 import './admin-global.css';
@@ -18,21 +23,35 @@ import { TableMembers } from './table-members';
 import { DetailMember } from './detail-members';
 import { getAllGroups, getMembers } from './all-server-request-members';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const { apiLocation, homeLocation } = envData;
+
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User) => ({
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
     showLoading,
-    user
+    user,
+    isSignedIn
   })
 );
 
 const mapDispatchToProps = {
-  createFlashMessage
+  createFlashMessage,
+  navigate
 };
 
-export function ShowAllMembers(): JSX.Element {
+interface ShowAllMembersProps {
+  createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
+  navigate: (location: string) => void;
+  showLoading: boolean;
+  user: User;
+}
+
+export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
+  const { showLoading, isSignedIn, navigate, user } = props;
   const [members, setMembers] = useState<Member[]>();
   const [allDataMembers, setAllDataMembers] = useState<Member[]>();
 
@@ -177,23 +196,26 @@ export function ShowAllMembers(): JSX.Element {
     })();
   };
 
-  // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
-  // À NE PAS COMMITER - Retirer ces commentaires avant le push
-  // if (showLoading) {
-  //   return <Loader fullScreen={true} />;
-  // }
+  if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
 
-  // if (!isSignedIn) {
-  //   navigate(`${apiLocation}/signin`);
-  //   return <Loader fullScreen={true} />;
-  // }
+  if (!isSignedIn) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
 
-  // if (!validator.equals(user.role, 'Super-admin')) {
-  //   if (!validator.equals(user.role, 'Admin')) {
-  //     navigate(`${homeLocation}`);
-  //     return <Loader fullScreen={true} />;
-  //   }
-  // }
+  // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  const isAdmin = validator.equals(user.role, 'Admin');
+  const isJudahEmail = user.email === 'judah@kadea.co';
+
+  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${homeLocation}`);
+    return <Loader fullScreen={true} />;
+  }
 
   return (
     <>
