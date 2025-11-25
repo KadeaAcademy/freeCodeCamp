@@ -158,15 +158,19 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   };
 
   const getAllMembersForExport = async () => {
-    const memberList = await getDatabaseResource<UserList>(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `/all-users?limit=100000`
-    );
-    if (memberList != null && !('error' in memberList)) {
-      const inverseMemberList = memberList.userList.reverse();
-
-      setMembersForExpot([...inverseMemberList]);
-    } else {
+    try {
+      const memberList = await getDatabaseResource<UserList>(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        `/all-users?limit=100000`
+      );
+      if (memberList != null && !('error' in memberList)) {
+        const inverseMemberList = memberList.userList.reverse();
+        setMembersForExpot([...inverseMemberList]);
+      } else {
+        setMembersForExpot([]);
+      }
+    } catch (error) {
+      console.error('Error fetching members for export:', error);
       setMembersForExpot([]);
     }
   };
@@ -416,7 +420,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           }`}
           onClick={() => {
             const event = {
-              target: { value: 'all' }
+              target: { value: 'all' },
+              preventDefault: (): void => {
+                // Prevent default behavior
+              }
             } as React.ChangeEvent<HTMLInputElement>;
             handleChangeGroup(event);
           }}
@@ -433,7 +440,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               }`}
               onClick={() => {
                 const event = {
-                  target: { value: group.userGroupName }
+                  target: { value: group.userGroupName },
+                  preventDefault: (): void => {
+                    // Prevent default behavior
+                  }
                 } as React.ChangeEvent<HTMLInputElement>;
                 handleChangeGroup(event);
               }}
@@ -828,8 +838,14 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               className='modern-btn modern-btn-primary'
               disabled={!membersForExpot || membersForExpot.length === 0}
               onClick={() => {
-                if (membersForExpot) {
-                  exportUsers(membersForExpot);
+                try {
+                  if (membersForExpot && membersForExpot.length > 0) {
+                    exportUsers(membersForExpot);
+                  } else {
+                    console.warn('Aucun membre à exporter');
+                  }
+                } catch (error) {
+                  console.error('Error exporting members:', error);
                 }
               }}
             >
