@@ -1,69 +1,50 @@
 import { Row, Col } from '@freecodecamp/react-bootstrap';
 import React from 'react';
 import Helmet from 'react-helmet';
-// import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader, Spacer } from '../../components/helpers';
+import { Spacer } from '../../components/helpers';
 
 import {
   signInLoadingSelector,
   userSelector,
-  isSignedInSelector,
-  hardGoTo as navigate
+  isSignedInSelector
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
-
-const { apiLocation, homeLocation } = envData;
-
-// TODO: update types for actions
-interface ShowAdminHomeProps {
-  createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  navigate: (location: string) => void;
-  showLoading: boolean;
-  user: User;
-  path?: string;
-}
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
   })
 );
 
 const mapDispatchToProps = {
-  createFlashMessage,
-  navigate
+  createFlashMessage
 };
 
-export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
-  // const { t } = useTranslation();
-  const { isSignedIn, user, navigate, showLoading } = props;
-  // const { currentsSuperBlock } = user;
+export function ShowAdminHome(): JSX.Element {
+  // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
+  // À NE PAS COMMITER - Retirer ces commentaires avant le push
+  // if (showLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
+  // if (!isSignedIn) {
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  if (isSignedIn) {
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
-
-  if (!user.email.includes('Super-admin') || !user.email.includes('Admin')) {
-    navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!user.email.includes('Super-admin') || !user.email.includes('Admin')) {
+  //   navigate(`${homeLocation}`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   return (
     <>

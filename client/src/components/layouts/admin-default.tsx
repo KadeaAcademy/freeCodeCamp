@@ -5,9 +5,8 @@ import { TFunction, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
-import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
+import { Grid } from '@freecodecamp/react-bootstrap';
 import { isBrowser } from '../../../utils';
-import { Spacer } from '../../components/helpers';
 import {
   fetchUser,
   isSignedInSelector,
@@ -179,40 +178,62 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
             />
           </>
         ) : null}
-        <Grid fluid={true} className='bg-dark-gray margin-0'>
-          <main>
-            <div className=''>
-              <Row>
-                <Col md={2} sm={2} xs={2} className='text-light bg-dark-gray'>
-                  <SideBar fetchState={fetchState} user={user} />
-                </Col>
-                <Col md={10} sm={10} xs={10} className='bg-light'>
-                  <Row className='admin-profile-bar'>
-                    <Col md={6} sm={6} xs={6} className='padding-0'>
-                      <div></div>
-                    </Col>
-                    <Col
-                      md={6}
-                      sm={6}
-                      xs={6}
-                      className='padding-0 admin-profil-item'
-                    >
-                      <div className='profile-name'>
-                        {user.name?.length > 0 ? user.name : user.email}
-                      </div>
-                      <div>
-                        <img
-                          src={ProfilePlaceholder}
-                          alt='Profil'
-                          className='img-profile rounded-circle'
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className={`admin-default-layout`}>{children}</div>
-                  <Spacer />
-                </Col>
-              </Row>
+        <Grid
+          fluid={true}
+          className='margin-0'
+          style={{ background: '#f8f9fa', padding: 0 }}
+        >
+          <main style={{ display: 'flex', minHeight: '100vh' }}>
+            {/* Sidebar */}
+            <SideBar fetchState={fetchState} user={user} />
+
+            {/* Main Content */}
+            <div
+              style={{
+                marginLeft: '260px',
+                flex: 1,
+                width: 'calc(100% - 260px)'
+              }}
+            >
+              {/* Header Bar */}
+              <div
+                className='admin-profile-bar'
+                style={{
+                  background: '#ffffff',
+                  padding: '1rem 2rem',
+                  borderBottom: '1px solid #e5e7eb',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
+                }}
+              >
+                <div className='admin-profil-item'>
+                  <div
+                    className='profile-name'
+                    style={{ marginRight: '0.75rem' }}
+                  >
+                    {user.name?.length > 0 ? user.name : user.email}
+                  </div>
+                  <div>
+                    <img
+                      src={ProfilePlaceholder}
+                      alt='Profil'
+                      className='img-profile rounded-circle'
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Page Content */}
+              <div
+                className='admin-default-layout'
+                style={{
+                  background: '#f8f9fa',
+                  minHeight: 'calc(100vh - 73px)'
+                }}
+              >
+                {children}
+              </div>
             </div>
           </main>
         </Grid>

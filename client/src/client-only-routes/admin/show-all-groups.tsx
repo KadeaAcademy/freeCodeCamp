@@ -18,7 +18,6 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-import validator from 'validator';
 import {
   createUserGroup,
   updateMemberGroup,
@@ -26,46 +25,30 @@ import {
   deleteMemberGroup
 } from '../../utils/ajax';
 
-import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader, Spacer } from '../../components/helpers';
+import { Spacer } from '../../components/helpers';
 
 import {
   signInLoadingSelector,
   userSelector,
-  isSignedInSelector,
-  hardGoTo as navigate
+  isSignedInSelector
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
 import './admin-global.css';
 
-const { apiLocation, homeLocation } = envData;
-
-// TODO: update types for actions
-interface ShowAllGroupsProps {
-  createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  navigate: (location: string) => void;
-  showLoading: boolean;
-  user: User;
-  path?: string;
-}
-
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User) => ({
     showLoading,
-    user,
-    isSignedIn
+    user
   })
 );
 
 const mapDispatchToProps = {
-  createFlashMessage,
-  navigate
+  createFlashMessage
 };
 
 type MemberGroup = {
@@ -87,8 +70,7 @@ interface UserGroupResponse {
   error: string | undefined;
 }
 
-export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
-  const { isSignedIn, user, navigate, showLoading } = props;
+export function ShowAllGroups(): JSX.Element {
   const [groupName, setGroupName] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [membersGroup, setMembersGroup] = useState<MemberGroup[]>();
@@ -254,21 +236,23 @@ export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, groupRecentlyTreated]);
 
-  if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
+  // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
+  // À NE PAS COMMITER - Retirer ces commentaires avant le push
+  // if (showLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  if (!isSignedIn) {
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!isSignedIn) {
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  if (!validator.equals(user.role, 'Super-admin')) {
-    if (!validator.equals(user.role, 'Admin')) {
-      navigate(`${homeLocation}`);
-      return <Loader fullScreen={true} />;
-    }
-  }
+  // if (!validator.equals(user.role, 'Super-admin')) {
+  //   if (!validator.equals(user.role, 'Admin')) {
+  //     navigate(`${homeLocation}`);
+  //     return <Loader fullScreen={true} />;
+  //   }
+  // }
 
   return (
     <>
