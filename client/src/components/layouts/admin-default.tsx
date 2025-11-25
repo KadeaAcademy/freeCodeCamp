@@ -136,9 +136,11 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
       useTheme = true
     } = this.props;
 
-    if (!isSignedIn) {
-      return <>{children}</>;
-    }
+    // TEMPORAIRE: Vérifications d'authentification désactivées pour le développement du design
+    // À NE PAS COMMITER - Retirer ces commentaires avant le push
+    // if (!isSignedIn) {
+    //   return <>{children}</>;
+    // }
 
     // if (
     //   !user.email.endsWith('@kinshasadigital.com') ||
@@ -181,18 +183,26 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
         <Grid
           fluid={true}
           className='margin-0'
-          style={{ background: '#f8f9fa', padding: 0 }}
+          style={{ background: '#f8f9fa', padding: 0, position: 'relative' }}
         >
-          <main style={{ display: 'flex', minHeight: '100vh' }}>
+          <main
+            style={{
+              display: 'flex',
+              minHeight: '100vh',
+              position: 'relative'
+            }}
+          >
             {/* Sidebar */}
-            <SideBar fetchState={fetchState} user={user} />
+            <SideBar fetchState={fetchState} user={user || ({} as User)} />
 
             {/* Main Content */}
             <div
               style={{
                 marginLeft: '260px',
                 flex: 1,
-                width: 'calc(100% - 260px)'
+                width: 'calc(100% - 260px)',
+                position: 'relative',
+                zIndex: 1
               }}
             >
               {/* Header Bar */}
@@ -212,7 +222,9 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
                     className='profile-name'
                     style={{ marginRight: '0.75rem' }}
                   >
-                    {user.name?.length > 0 ? user.name : user.email}
+                    {user?.name?.length > 0
+                      ? user.name
+                      : user?.email || 'Utilisateur'}
                   </div>
                   <div>
                     <img

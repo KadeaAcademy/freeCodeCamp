@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 import {
   faChevronLeft,
@@ -15,8 +15,27 @@ import {
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Member, Group, UserList } from '../../redux/prop-types';
-import { getDatabaseResource } from '../../utils/ajax';
+import {
+  getDatabaseResource,
+  getKadeaCourses,
+  getMoodleCourses,
+  getAwsPath
+} from '../../utils/ajax';
+import { hardGoTo } from '../../redux';
 import './modern-admin.css';
+
+// Types pour les filtres de période
+type PeriodFilter =
+  | '30days'
+  | '2months'
+  | '3months'
+  | '4months'
+  | '6months'
+  | '1year'
+  | 'all';
+
+// Types pour les filtres de cours
+type CourseFilter = 'all' | 'kadea' | 'moodle' | 'aws';
 
 interface TableMembersProps {
   members?: Member[];
@@ -71,6 +90,17 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   );
 
   const [selectedGroupName, setSelectedGroupName] = useState<string>('');
+  const [activeMembersPeriod, setActiveMembersPeriod] =
+    useState<PeriodFilter>('30days');
+  const [progressMembersPeriod, setProgressMembersPeriod] =
+    useState<PeriodFilter>('30days');
+  const [courseFilter, setCourseFilter] = useState<CourseFilter>('all');
+  const [coursesData, setCoursesData] = useState<{
+    kadea: number;
+    moodle: number;
+    aws: number;
+    total: number;
+  }>({ kadea: 0, moodle: 0, aws: 0, total: 0 });
 
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -175,8 +205,116 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     download(csvConfig)(csv);
   };
 
+  // Fonctions utilitaires pour les calculs de dates
+  const getDateFromPeriod = (period: PeriodFilter): Date => {
+    const now = new Date();
+    const date = new Date();
+
+    switch (period) {
+      case '30days':
+        date.setDate(now.getDate() - 30);
+        break;
+      case '2months':
+        date.setMonth(now.getMonth() - 2);
+        break;
+      case '3months':
+        date.setMonth(now.getMonth() - 3);
+        break;
+      case '4months':
+        date.setMonth(now.getMonth() - 4);
+        break;
+      case '6months':
+        date.setMonth(now.getMonth() - 6);
+        break;
+      case '1year':
+        date.setFullYear(now.getFullYear() - 1);
+        break;
+      case 'all':
+        return new Date(0); // Date très ancienne pour inclure tout
+      default:
+        date.setDate(now.getDate() - 30);
+    }
+    return date;
+  };
+
+  // Vérifier si un membre est actif dans une période donnée
+  const isMemberActiveInPeriod = useCallback(
+    (member: Member, period: PeriodFilter): boolean => {
+      const periodDate = getDateFromPeriod(period);
+      const memberCreateDate = member.createAt
+        ? new Date(member.createAt)
+        : null;
+
+      if (!memberCreateDate) return false;
+
+      // Un membre est considéré actif s'il a complété au moins un défi
+      const hasCompletedChallenges = member.currentsSuperBlock.some(
+        superBlock =>
+          superBlock.totalCompletedChallenges &&
+          superBlock.totalCompletedChallenges > 0
+      );
+
+      // Si la période est "all", retourner tous les membres actifs
+      if (period === 'all') {
+        return hasCompletedChallenges;
+      }
+
+      // Sinon, vérifier si le membre a été créé dans la période
+      return (
+        hasCompletedChallenges &&
+        (memberCreateDate >= periodDate ||
+          member.currentsSuperBlock.some(
+            superBlock =>
+              superBlock.totalCompletedChallenges &&
+              superBlock.totalCompletedChallenges > 0
+          ))
+      );
+    },
+    []
+  );
+
+  // Vérifier si un membre a au moins 50% de progression
+  const hasProgress50Plus = useCallback((member: Member): boolean => {
+    return member.currentsSuperBlock.some(superBlock => {
+      if (superBlock.totalChallenges && superBlock.totalCompletedChallenges) {
+        const progress =
+          (superBlock.totalCompletedChallenges / superBlock.totalChallenges) *
+          100;
+        return progress >= 50;
+      }
+      return false;
+    });
+  }, []);
+
+  // Récupérer les cours
+  const fetchCoursesData = async () => {
+    try {
+      const [kadeaCourses, moodleCourses, awsCourses] = await Promise.all([
+        getKadeaCourses().catch(() => []),
+        getMoodleCourses().catch(() => []),
+        getAwsPath().catch(() => [])
+      ]);
+
+      const kadeaCount = Array.isArray(kadeaCourses) ? kadeaCourses.length : 0;
+      const moodleCount = Array.isArray(moodleCourses)
+        ? moodleCourses.length
+        : 0;
+      const awsCount = Array.isArray(awsCourses) ? awsCourses.length : 0;
+
+      setCoursesData({
+        kadea: kadeaCount,
+        moodle: moodleCount,
+        aws: awsCount,
+        total: kadeaCount + moodleCount + awsCount
+      });
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  };
+
   useEffect(() => {
     void getAllMembersForExport();
+    void fetchCoursesData();
   }, []);
 
   useEffect(() => {
@@ -189,59 +327,76 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   }, [currentGroupMembers, updatingMembersGroup]);
 
   // Calculate statistics for indicator cards
-  const calculateStats = () => {
+  const stats = useMemo(() => {
     const totalMembers = countUsers || 0;
+
+    // Carte 2: Membres actifs dans la période sélectionnée (tous cours confondus)
     const activeMembers =
-      members?.filter(m => {
-        const responsiveWebDesignBlock = m.currentsSuperBlock.find(
-          sb => sb.superBlockDashedName === 'responsive-web-design'
-        );
-        return (
-          responsiveWebDesignBlock &&
-          responsiveWebDesignBlock.totalCompletedChallenges &&
-          responsiveWebDesignBlock.totalCompletedChallenges > 0
-        );
-      }).length || 0;
+      members?.filter(m => isMemberActiveInPeriod(m, activeMembersPeriod))
+        .length || 0;
 
-    const avgProgress =
-      members?.reduce((acc, m) => {
-        const responsiveWebDesignBlock = m.currentsSuperBlock.find(
-          sb => sb.superBlockDashedName === 'responsive-web-design'
-        );
-        if (
-          responsiveWebDesignBlock &&
-          responsiveWebDesignBlock.totalChallenges &&
-          responsiveWebDesignBlock.totalCompletedChallenges
-        ) {
-          const progress = Math.floor(
-            (responsiveWebDesignBlock.totalCompletedChallenges /
-              responsiveWebDesignBlock.totalChallenges) *
-              100
-          );
-          return acc + progress;
-        }
-        return acc;
-      }, 0) || 0;
+    // Carte 3: Membres avec au moins 50% de progression pour n'importe quel cours
+    const membersWithProgress50Plus =
+      members?.filter(m => hasProgress50Plus(m)).length || 0;
 
-    const avgProgressPercentage =
-      members && members.length > 0
-        ? Math.floor(avgProgress / members.length)
-        : 0;
-
-    const membersWithGroups =
-      members?.filter(m => m.groups && m.groups.length > 0).length || 0;
-    const membersWithoutGroups = totalMembers - membersWithGroups;
+    // Carte 4: Total des cours selon le filtre
+    let totalCourses = 0;
+    switch (courseFilter) {
+      case 'kadea':
+        totalCourses = coursesData.kadea;
+        break;
+      case 'moodle':
+        totalCourses = coursesData.moodle;
+        break;
+      case 'aws':
+        totalCourses = coursesData.aws;
+        break;
+      case 'all':
+      default:
+        totalCourses = coursesData.total;
+    }
 
     return {
       totalMembers,
       activeMembers,
-      avgProgressPercentage,
-      membersWithGroups,
-      membersWithoutGroups
+      membersWithProgress50Plus,
+      totalCourses,
+      kadeaCourses: coursesData.kadea,
+      moodleCourses: coursesData.moodle,
+      awsCourses: coursesData.aws
     };
-  };
+  }, [
+    countUsers,
+    members,
+    activeMembersPeriod,
+    courseFilter,
+    coursesData,
+    isMemberActiveInPeriod,
+    hasProgress50Plus
+  ]);
 
-  const stats = calculateStats();
+  // Navigation vers les pages de détails
+  const handleCardClick = (cardType: string) => {
+    const basePath = '/admin/members';
+    switch (cardType) {
+      case 'total':
+        hardGoTo(`${basePath}/details/total`);
+        break;
+      case 'active':
+        hardGoTo(`${basePath}/details/active?period=${activeMembersPeriod}`);
+        break;
+      case 'progress':
+        hardGoTo(
+          `${basePath}/details/progress?period=${progressMembersPeriod}`
+        );
+        break;
+      case 'courses':
+        hardGoTo(`${basePath}/details/courses?filter=${courseFilter}`);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className='modern-admin-container'>
@@ -290,7 +445,20 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
       {/* Indicator Cards */}
       <div className='modern-indicators-grid'>
-        <div className='modern-indicator-card blue'>
+        {/* Carte 1: Total Membres */}
+        <div
+          className='modern-indicator-card blue'
+          onClick={() => handleCardClick('total')}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardClick('total');
+            }
+          }}
+          role='button'
+          tabIndex={0}
+          style={{ cursor: 'pointer' }}
+        >
           <div className='modern-indicator-header'>
             <div className='modern-indicator-title'>
               Total Membres
@@ -318,7 +486,20 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           </div>
         </div>
 
-        <div className='modern-indicator-card green'>
+        {/* Carte 2: Membres Actifs */}
+        <div
+          className='modern-indicator-card green'
+          onClick={() => handleCardClick('active')}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardClick('active');
+            }
+          }}
+          role='button'
+          tabIndex={0}
+          style={{ cursor: 'pointer' }}
+        >
           <div className='modern-indicator-header'>
             <div className='modern-indicator-title'>
               Membres Actifs
@@ -326,6 +507,24 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                 icon={faInfoCircle}
                 className='modern-indicator-icon'
               />
+            </div>
+            <div className='modern-indicator-filter'>
+              <select
+                value={activeMembersPeriod}
+                onChange={e =>
+                  setActiveMembersPeriod(e.target.value as PeriodFilter)
+                }
+                onClick={e => e.stopPropagation()}
+                className='modern-period-filter'
+              >
+                <option value='30days'>30 jours</option>
+                <option value='2months'>2 mois</option>
+                <option value='3months'>3 mois</option>
+                <option value='4months'>4 mois</option>
+                <option value='6months'>6 mois</option>
+                <option value='1year'>1 an</option>
+                <option value='all'>Tout</option>
+              </select>
             </div>
           </div>
           <div className='modern-indicator-value'>{stats.activeMembers}</div>
@@ -355,25 +554,56 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           </div>
         </div>
 
-        <div className='modern-indicator-card yellow'>
+        {/* Carte 3: Progrès 50%+ */}
+        <div
+          className='modern-indicator-card yellow'
+          onClick={() => handleCardClick('progress')}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardClick('progress');
+            }
+          }}
+          role='button'
+          tabIndex={0}
+          style={{ cursor: 'pointer' }}
+        >
           <div className='modern-indicator-header'>
             <div className='modern-indicator-title'>
-              Progrès Moyen
+              Progrès 50%+
               <FontAwesomeIcon
                 icon={faInfoCircle}
                 className='modern-indicator-icon'
               />
             </div>
+            <div className='modern-indicator-filter'>
+              <select
+                value={progressMembersPeriod}
+                onChange={e =>
+                  setProgressMembersPeriod(e.target.value as PeriodFilter)
+                }
+                onClick={e => e.stopPropagation()}
+                className='modern-period-filter'
+              >
+                <option value='30days'>30 jours</option>
+                <option value='2months'>2 mois</option>
+                <option value='3months'>3 mois</option>
+                <option value='4months'>4 mois</option>
+                <option value='6months'>6 mois</option>
+                <option value='1year'>1 an</option>
+                <option value='all'>Tout</option>
+              </select>
+            </div>
           </div>
           <div className='modern-indicator-value'>
-            {stats.avgProgressPercentage}%
+            {stats.membersWithProgress50Plus}
           </div>
           <div className='modern-indicator-change neutral'>
             <FontAwesomeIcon
               icon={faArrowRight}
               className='modern-indicator-change-arrow'
             />
-            <span>Responsive Web Design</span>
+            <span>Au moins 50% progression</span>
           </div>
           <div className='modern-indicator-graph'>
             {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
@@ -389,31 +619,58 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           </div>
         </div>
 
-        <div className='modern-indicator-card pink'>
+        {/* Carte 4: Total Cours */}
+        <div
+          className='modern-indicator-card pink'
+          onClick={() => handleCardClick('courses')}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardClick('courses');
+            }
+          }}
+          role='button'
+          tabIndex={0}
+          style={{ cursor: 'pointer' }}
+        >
           <div className='modern-indicator-header'>
             <div className='modern-indicator-title'>
-              Avec Groupe
+              Total Cours
               <FontAwesomeIcon
                 icon={faInfoCircle}
                 className='modern-indicator-icon'
               />
             </div>
+            <div className='modern-indicator-filter'>
+              <select
+                value={courseFilter}
+                onChange={e => setCourseFilter(e.target.value as CourseFilter)}
+                onClick={e => e.stopPropagation()}
+                className='modern-period-filter'
+              >
+                <option value='all'>Tous</option>
+                <option value='kadea'>Kadea</option>
+                <option value='moodle'>Moodle</option>
+                <option value='aws'>AWS</option>
+              </select>
+            </div>
           </div>
-          <div className='modern-indicator-value'>
-            {stats.membersWithGroups}
-          </div>
+          <div className='modern-indicator-value'>{stats.totalCourses}</div>
           <div className='modern-indicator-change positive'>
             <FontAwesomeIcon
               icon={faArrowUp}
               className='modern-indicator-change-arrow'
             />
             <span>
-              {stats.totalMembers > 0
-                ? Math.floor(
-                    (stats.membersWithGroups / stats.totalMembers) * 100
-                  )
-                : 0}
-              % assignés
+              {courseFilter === 'all' && (
+                <>
+                  K: {stats.kadeaCourses} | M: {stats.moodleCourses} | A:{' '}
+                  {stats.awsCourses}
+                </>
+              )}
+              {courseFilter === 'kadea' && 'Cours Kadea'}
+              {courseFilter === 'moodle' && 'Cours Moodle'}
+              {courseFilter === 'aws' && 'Cours AWS'}
             </span>
           </div>
           <div className='modern-indicator-graph'>

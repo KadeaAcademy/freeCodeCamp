@@ -5,12 +5,14 @@
   min-height: 100vh;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 1050 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Sidebar Header */

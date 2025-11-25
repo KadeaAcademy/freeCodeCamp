@@ -49,7 +49,18 @@ export const SideBarNavLinks = (props: SideBarNavLinksProps): JSX.Element => {
   };
 
   return (
-    <div className='modern-sidebar'>
+    <div
+      className='modern-sidebar'
+      style={{
+        display: 'flex',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        zIndex: 1050,
+        visibility: 'visible',
+        opacity: 1
+      }}
+    >
       {/* Header with Logo */}
       <div className='modern-sidebar-header'>
         <div className='modern-sidebar-logo'>
