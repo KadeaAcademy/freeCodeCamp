@@ -122,10 +122,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   };
 
   const handleChangeGroupName = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    event.preventDefault();
-    const groupMembersInput = event.target.value.slice();
+    const groupMembersInput = event.target.value;
     setSelectedGroupName(groupMembersInput);
   };
   const handleSelectedGroupMembers = (
@@ -745,12 +744,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               <select
                 id='group-select'
                 className='modern-form-select'
-                onChange={e => {
-                  const event = {
-                    target: { value: e.target.value }
-                  } as React.ChangeEvent<HTMLInputElement>;
-                  handleChangeGroupName(event);
-                }}
+                onChange={handleChangeGroupName}
                 value={selectedGroupName}
                 disabled={selectedGroupMembers.length === 0}
               >
