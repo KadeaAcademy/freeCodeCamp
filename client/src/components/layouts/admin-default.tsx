@@ -198,9 +198,9 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
             {/* Main Content */}
             <div
               style={{
-                marginLeft: '260px',
+                marginLeft: '220px',
                 flex: 1,
-                width: 'calc(100% - 260px)',
+                width: 'calc(100% - 220px)',
                 position: 'relative',
                 zIndex: 1
               }}
