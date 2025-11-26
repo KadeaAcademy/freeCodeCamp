@@ -205,6 +205,13 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
+  // Vérifier que l'utilisateur existe
+  if (!user) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
   // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
   const isSuperAdmin = validator.equals(user.role, 'Super-admin');
   const isAdmin = validator.equals(user.role, 'Admin');

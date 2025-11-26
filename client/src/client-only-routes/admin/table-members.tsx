@@ -14,6 +14,7 @@ import {
 
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { navigate } from '@reach/router';
 import { Member, Group, UserList } from '../../redux/prop-types';
 import {
   getDatabaseResource,
@@ -21,7 +22,6 @@ import {
   getMoodleCourses,
   getAwsPath
 } from '../../utils/ajax';
-import { hardGoTo } from '../../redux';
 import './modern-admin.css';
 
 // Types pour les filtres de période
@@ -380,21 +380,23 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   // Navigation vers les pages de détails
   const handleCardClick = (cardType: string) => {
-    const basePath = '/admin/members';
+    const basePath = '/admin/all-members';
     switch (cardType) {
       case 'total':
-        hardGoTo(`${basePath}/details/total`);
+        void navigate(`${basePath}/total-members`);
         break;
       case 'active':
-        hardGoTo(`${basePath}/details/active?period=${activeMembersPeriod}`);
+        void navigate(
+          `${basePath}/actif-members?period=${activeMembersPeriod}`
+        );
         break;
       case 'progress':
-        hardGoTo(
-          `${basePath}/details/progress?period=${progressMembersPeriod}`
+        void navigate(
+          `${basePath}/progression-by-member?period=${progressMembersPeriod}`
         );
         break;
       case 'courses':
-        hardGoTo(`${basePath}/details/courses?filter=${courseFilter}`);
+        void navigate(`${basePath}/total-courses?filter=${courseFilter}`);
         break;
       default:
         break;
@@ -423,7 +425,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               preventDefault: (): void => {
                 // Prevent default behavior
               }
-            } as React.ChangeEvent<HTMLInputElement>;
+            } as React.ChangeEvent<HTMLSelectElement>;
             handleChangeGroup(event);
           }}
         >
@@ -443,7 +445,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   preventDefault: (): void => {
                     // Prevent default behavior
                   }
-                } as React.ChangeEvent<HTMLInputElement>;
+                } as React.ChangeEvent<HTMLSelectElement>;
                 handleChangeGroup(event);
               }}
             >

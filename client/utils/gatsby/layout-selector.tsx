@@ -24,6 +24,7 @@ export default function layoutSelector({
     pathname === '/admin/admin-home' ||
     pathname === '/admin/all-members' ||
     pathname === '/admin/all-members/' ||
+    pathname.startsWith('/admin/all-members/') ||
     pathname === '/admin/all-groups' ||
     pathname === '/admin/all-groups/' ||
     pathname === '/admin/all-roles' ||
