@@ -19,6 +19,9 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import validator from 'validator';
+// eslint-disable-next-line import/no-unresolved
+import envData from '../../../../config/env.json';
+
 import {
   createUserRole,
   updateMemberRole,
@@ -26,7 +29,6 @@ import {
   deleteMemberRole
 } from '../../utils/ajax';
 
-import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
 import { Loader, Spacer } from '../../components/helpers';
 
@@ -40,23 +42,22 @@ import {
 import { User } from '../../redux/prop-types';
 import './admin-global.css';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const { apiLocation, homeLocation } = envData;
 
-// TODO: update types for actions
 interface ShowAllRolesProps {
   createFlashMessage: typeof createFlashMessage;
   isSignedIn: boolean;
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
-  path?: string;
 }
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
     showLoading,
     user,
     isSignedIn
@@ -88,7 +89,7 @@ interface UserRoleResponse {
 }
 
 export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
-  const { isSignedIn, user, navigate, showLoading } = props;
+  const { showLoading, isSignedIn, navigate, user } = props;
   const [RoleName, setRoleName] = useState<string>('');
   const [RoleId, setRoleId] = useState<string>('');
   const [membersRole, setMembersRole] = useState<MemberRole[]>();
@@ -259,15 +260,20 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
   }
 
   if (!isSignedIn) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 
-  if (!validator.equals(user.role, 'Super-admin')) {
-    if (!validator.equals(user.role, 'Admin')) {
-      navigate(`${homeLocation}`);
-      return <Loader fullScreen={true} />;
-    }
+  // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  const isAdmin = validator.equals(user.role, 'Admin');
+  const isJudahEmail = user.email === 'judah@kadea.co';
+
+  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${homeLocation}`);
+    return <Loader fullScreen={true} />;
   }
 
   return (

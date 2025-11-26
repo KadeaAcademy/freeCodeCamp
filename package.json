@@ -79,7 +79,7 @@
     "seed:certified-user": "cross-env DEBUG=fcc:* node ./tools/scripts/seed/seedAuthUser certUser",
     "serve:client": "cd ./client && npm run serve",
     "serve:client-ci": "cd ./client && npm run serve-ci",
-    "start": "npm-run-all create:config -p develop:server serve:client",
+    "start": "npm-run-all create:config -p develop:server develop:client",
     "start-ci": "npm-run-all create:config -p start:server serve:client-ci",
     "start:server": "cd ./api-server && npm start",
     "storybook": "cd ./tools/ui-components && npm run storybook",

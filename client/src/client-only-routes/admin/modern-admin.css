@@ -1,0 +1,475 @@
+/* Modern Admin Dashboard Styles - Inspired by Kadea Design System */
+
+/* Container Styles */
+.modern-admin-container {
+  padding: 2rem;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.modern-admin-header {
+  margin-bottom: 2rem;
+}
+
+.modern-admin-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.modern-admin-subtitle {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+/* Filter Buttons - Inspired by reference design */
+.modern-filter-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.modern-filter-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modern-filter-btn:hover {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.modern-filter-btn.active {
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+/* Indicator Cards - Inspired by reference design */
+.modern-indicators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.modern-indicator-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modern-indicator-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.modern-indicator-card.pink {
+  background: linear-gradient(135deg, #ffe5e5 0%, #ffcccc 100%);
+}
+
+.modern-indicator-card.green {
+  background: linear-gradient(135deg, #e5f5e5 0%, #ccffcc 100%);
+}
+
+.modern-indicator-card.yellow {
+  background: linear-gradient(135deg, #fff5e5 0%, #ffebcc 100%);
+}
+
+.modern-indicator-card.blue {
+  background: linear-gradient(135deg, #e5f0ff 0%, #cce5ff 100%);
+}
+
+.modern-indicator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.modern-indicator-filter {
+  margin-top: 0.25rem;
+}
+
+.modern-period-filter {
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.modern-period-filter:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.modern-period-filter:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
+}
+
+.modern-indicator-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-indicator-icon {
+  font-size: 1rem;
+  opacity: 0.7;
+  cursor: help;
+}
+
+.modern-indicator-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.modern-indicator-change {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.modern-indicator-change.positive {
+  color: #198754;
+}
+
+.modern-indicator-change.negative {
+  color: #dc3545;
+}
+
+.modern-indicator-change.neutral {
+  color: #6c757d;
+}
+
+.modern-indicator-change-arrow {
+  font-size: 0.75rem;
+}
+
+.modern-indicator-graph {
+  height: 40px;
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.modern-indicator-graph-bar {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+}
+
+/* Search and Filter Section */
+.modern-search-filter-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.modern-search-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.modern-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modern-form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.modern-form-input,
+.modern-form-select {
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+}
+
+.modern-form-input:focus,
+.modern-form-select:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.modern-search-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modern-search-input {
+  flex: 1;
+}
+
+.modern-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-btn-primary {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.modern-btn-primary:hover {
+  background: #333333;
+}
+
+.modern-btn-secondary {
+  background: #6c757d;
+  color: #ffffff;
+}
+
+.modern-btn-secondary:hover {
+  background: #5a6268;
+}
+
+.modern-btn-danger {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+.modern-btn-danger:hover {
+  background: #c82333;
+}
+
+.modern-btn-success {
+  background: #198754;
+  color: #ffffff;
+}
+
+.modern-btn-success:hover {
+  background: #157347;
+}
+
+.modern-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Table Styles */
+.modern-table-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modern-table thead {
+  background: #f8f9fa;
+}
+
+.modern-table th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.modern-table td {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #4a4a4a;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modern-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* Progress Bar */
+.modern-progress-bar {
+  width: 100%;
+  height: 24px;
+  background: #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modern-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #198754 0%, #20c997 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: width 0.3s ease;
+}
+
+/* Pagination */
+.modern-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.modern-pagination-btn {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modern-pagination-btn:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: #1a1a1a;
+}
+
+.modern-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modern-pagination-info {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Badge Styles */
+.modern-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.modern-badge-primary {
+  background: #e5f0ff;
+  color: #1a1a1a;
+}
+
+.modern-badge-success {
+  background: #e5f5e5;
+  color: #198754;
+}
+
+/* Action Buttons */
+.modern-action-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modern-action-btn-link {
+  background: transparent;
+  color: #1a1a1a;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.modern-action-btn-link:hover {
+  color: #333333;
+}
+
+/* Loading State */
+.modern-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: #6c757d;
+}
+
+/* Empty State */
+.modern-empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modern-admin-container {
+    padding: 1rem;
+  }
+
+  .modern-indicators-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modern-search-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modern-table-container {
+    overflow-x: auto;
+  }
+}

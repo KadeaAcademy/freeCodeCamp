@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from 'react';
 
-import './sidebar.css';
+import './modern-sidebar.css';
 import SideBarNavLinks from './components/side-bar-nav-links';
 
 export interface SideBarProps {
@@ -61,17 +61,10 @@ export class SideBar extends React.Component<
   render(): JSX.Element {
     return (
       <>
-        <header className='side-bar'>
-          <p
-            className='big-subheading text-light side-bar-title'
-            style={{ overflowWrap: 'break-word' }}
-          >
-            {'Dashboard'}
-          </p>
-          <p className='text-light'>Kadea Online</p>
-          <hr />
-          <SideBarNavLinks />
-        </header>
+        <SideBarNavLinks
+          fetchState={this.props.fetchState}
+          user={this.props.user}
+        />
       </>
     );
   }
