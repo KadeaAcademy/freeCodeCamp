@@ -117,10 +117,9 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
   };
 
   const handleChangeGroupMembers = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    event.preventDefault();
-    const groupMembersInput = event.target.value.slice();
+    const groupMembersInput = event.target.value;
     setGroupMembers(groupMembersInput);
     setCurrentPage(1);
     setTotalPages(1);
