@@ -47,7 +47,7 @@ interface TableMembersProps {
   currentGroupMembers: string;
   showMemberDetails: (member: Member) => void;
   navigateToPage: (forwardOrBackward: boolean | number) => void;
-  handleChangeGroup: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeGroup: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 
   searchMember: (memberName: string) => void;
   addUsers: (
