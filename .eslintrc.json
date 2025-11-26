@@ -116,6 +116,12 @@
       }
     },
     {
+      "files": ["tools/ui-components/**/*"],
+      "parserOptions": {
+        "project": "./tools/ui-components/tsconfig.json"
+      }
+    },
+    {
       "files": [
         "./tools/ui-components/**/*.test.[jt]s?(x)",
         "./client/**/*.test.[jt]s?(x)"
@@ -134,8 +140,8 @@
       }
     },
     {
-      "files": ["gatsby-node.js"],
-      "parser": "eslint-plugin-babel",
+      "files": ["**/gatsby-node.js"],
+      "parser": "babel-eslint",
       "rules": {
         "@typescript-eslint/await-thenable": "off",
         "@typescript-eslint/no-unsafe-call": "off",

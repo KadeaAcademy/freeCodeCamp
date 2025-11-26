@@ -58,6 +58,13 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
+  // Vérifier que l'utilisateur existe
+  if (!user) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
   // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
   const isSuperAdmin = user.role === 'Super-admin';
   const isAdmin = user.role === 'Admin';
