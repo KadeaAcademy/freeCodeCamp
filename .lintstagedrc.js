@@ -20,7 +20,7 @@ module.exports = {
       completedStages.add('js');
       return [
         'eslint --max-warnings=0 --cache --fix ' + lintableFiles.join(' '),
-        ...files.map(filename => `prettier --write '${filename}'`)
+        ...lintableFiles.map(filename => `prettier --write '${filename}'`)
       ];
     } else {
       return files.map(filename => `prettier --write '${filename}'`);
