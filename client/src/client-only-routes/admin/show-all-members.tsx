@@ -11,6 +11,11 @@ import './admin-global.css';
 import { TableMembers } from './table-members';
 import { DetailMember } from './detail-members';
 import { getAllGroups, getMembers } from './all-server-request-members';
+import {
+  ExportMembersModal,
+  ExportConfig,
+  ExportHistoryItem
+} from './export-members-modal';
 
 const mapStateToProps = createSelector(() => ({}));
 
@@ -50,6 +55,10 @@ export function ShowAllMembers(_props: ShowAllMembersProps): JSX.Element {
   const [countMemberGroupUpdate, setCountMemberGroupUpdate] =
     useState<number>(1);
   const [isLoadingMember, setIsLoadingMember] = useState<boolean>(false);
+
+  // Export modal state
+  const [showExportModal, setShowExportModal] = useState<boolean>(false);
+  const [exportHistory, setExportHistory] = useState<ExportHistoryItem[]>([]);
   // const data={
   //   id:"64d39b958b1fd17adc0e8f28",
   //   userGroup:"C3"
@@ -178,6 +187,92 @@ export function ShowAllMembers(_props: ShowAllMembersProps): JSX.Element {
     })();
   };
 
+  // Export functions
+  const handleExport = (exportConfig: ExportConfig): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      try {
+        // TODO: Implémenter la logique d'export réelle
+        // Pour l'instant, on simule l'export
+        const exportItem: ExportHistoryItem = {
+          id: Date.now().toString(),
+          date: new Date(),
+          memberCount: 0, // Sera calculé dans le modal
+          filters: exportConfig.filters,
+          format: exportConfig.format.type,
+          fileName: `members_export_${Date.now()}.${exportConfig.format.type}`
+        };
+
+        setExportHistory(prev => [exportItem, ...prev]);
+
+        // Afficher une notification de succès
+        _props.createFlashMessage({
+          type: 'success',
+          message: `Export réussi ! ${exportItem.memberCount} membres exportés.`
+        });
+
+        // TODO: Implémenter le téléchargement réel du fichier
+        console.log('Export config:', exportConfig);
+        resolve();
+      } catch (error) {
+        console.error('Export error:', error);
+        _props.createFlashMessage({
+          type: 'error',
+          message: "Erreur lors de l'export. Veuillez réessayer."
+        });
+        reject(error);
+      }
+    });
+  };
+
+  const handleQuickExport = (): void => {
+    // Export rapide avec les filtres actuels
+    const quickConfig: ExportConfig = {
+      filters: {
+        status: 'all',
+        groups: groupMembers !== 'all' ? [groupMembers] : [],
+        roles: [],
+        progress: 'all',
+        registrationPeriod: 'all'
+      },
+      fields: {
+        personal: {
+          name: true,
+          email: true,
+          phone: true,
+          whatsapp: false,
+          location: false,
+          registrationDate: true
+        },
+        account: {
+          role: true,
+          groups: true,
+          status: true
+        },
+        progress: {
+          globalProgress: true,
+          kadeaProgress: false,
+          moodleProgress: false,
+          awsProgress: false,
+          totalCompleted: false,
+          totalInProgress: false
+        },
+        activity: {
+          lastConnection: false,
+          lastActivity: false,
+          connectionsCount: false
+        }
+      },
+      format: {
+        type: 'csv',
+        includeHeaders: true,
+        csvSeparator: ',',
+        encoding: 'utf-8'
+      }
+    };
+
+    void handleExport(quickConfig);
+  };
+
   // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
   // TODO: Réactiver les restrictions avant le passage en staging
 
@@ -220,23 +315,37 @@ export function ShowAllMembers(_props: ShowAllMembersProps): JSX.Element {
       <Helmet title={`Tableau de bord - Membres | Kadea Online`} />
 
       {!selectedMember ? (
-        <TableMembers
-          members={members}
-          groups={groups}
-          countUsers={countUsers}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          navigateToPage={navigateToPage}
-          showMemberDetails={showMemberDetails}
-          handleChangeGroup={handleChangeGroupMembers}
-          searchMember={searchMember}
-          addUsers={addUser}
-          removeUsers={removeUser}
-          currentGroupMembers={groupMembers}
-          updatingMembersGroup={updating}
-          isLoadingMemberState={isLoadingMember}
-          allListMembers={allDataMembers}
-        />
+        <>
+          <TableMembers
+            members={members}
+            groups={groups}
+            countUsers={countUsers}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            navigateToPage={navigateToPage}
+            showMemberDetails={showMemberDetails}
+            handleChangeGroup={handleChangeGroupMembers}
+            searchMember={searchMember}
+            addUsers={addUser}
+            removeUsers={removeUser}
+            currentGroupMembers={groupMembers}
+            updatingMembersGroup={updating}
+            isLoadingMemberState={isLoadingMember}
+            allListMembers={allDataMembers}
+            onQuickExport={handleQuickExport}
+            onCustomExport={() => {
+              setShowExportModal(true);
+            }}
+          />
+          <ExportMembersModal
+            show={showExportModal}
+            onHide={() => setShowExportModal(false)}
+            members={allDataMembers || []}
+            groups={groups}
+            onExport={handleExport}
+            exportHistory={exportHistory}
+          />
+        </>
       ) : (
         <div className='modern-admin-container'>
           <div className='modern-admin-header'>

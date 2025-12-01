@@ -1,0 +1,234 @@
+/* Export Members Modal Styles */
+
+.export-modal-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.export-tab {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.export-tab:hover {
+  color: #1a1a1a;
+}
+
+.export-tab.active {
+  color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+  font-weight: 600;
+}
+
+.export-config {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.export-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.export-section:last-child {
+  border-bottom: none;
+}
+
+.export-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.export-filter-group {
+  margin-bottom: 1rem;
+}
+
+.export-filter-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.export-filter-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.export-filter-group select[multiple] {
+  min-height: 100px;
+}
+
+.export-filter-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
+.export-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.export-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.export-checkboxes input[type='checkbox'] {
+  cursor: pointer;
+}
+
+.custom-date-range {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.custom-date-range input[type='date'] {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.export-fields-group {
+  margin-bottom: 1.5rem;
+}
+
+.export-fields-group h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.export-fields-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.export-fields-group input[type='checkbox'] {
+  cursor: pointer;
+}
+
+.export-radio-group {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.export-radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.export-radio-group input[type='radio'] {
+  cursor: pointer;
+}
+
+.export-preview {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.export-preview-info {
+  text-align: center;
+}
+
+.export-preview-info.error {
+  color: #dc3545;
+}
+
+.export-limit-warning {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  color: #856404;
+  font-size: 0.875rem;
+}
+
+/* Export History */
+.export-history {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.export-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.export-history-table thead {
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+}
+
+.export-history-table th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.export-history-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.export-history-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.export-history-download {
+  padding: 0.25rem 0.75rem;
+  background: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.2s ease;
+}
+
+.export-history-download:hover {
+  background: #333333;
+}

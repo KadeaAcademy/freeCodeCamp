@@ -63,6 +63,8 @@ interface TableMembersProps {
   updatingMembersGroup?: { isAddedStatus: boolean; message: string };
 
   isLoadingMemberState: boolean;
+  onQuickExport?: () => void;
+  onCustomExport?: () => void;
 }
 
 export function TableMembers(props: TableMembersProps): JSX.Element {
@@ -81,7 +83,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     removeUsers,
     updatingMembersGroup,
 
-    isLoadingMemberState
+    isLoadingMemberState,
+    onQuickExport,
+    onCustomExport
   } = props;
 
   const [memberName, setMemberName] = useState<string>('');
@@ -407,10 +411,53 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     <div className='modern-admin-container'>
       {/* Header Section */}
       <div className='modern-admin-header'>
-        <h1 className='modern-admin-title'>Membres</h1>
-        <p className='modern-admin-subtitle'>
-          Gérez tous les membres de la plateforme
-        </p>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start'
+          }}
+        >
+          <div>
+            <h1 className='modern-admin-title'>Membres</h1>
+            <h2
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 600,
+                color: '#1a1a1a',
+                marginTop: '0.5rem'
+              }}
+            >
+              All Members
+            </h2>
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {onQuickExport && (
+              <button
+                className='modern-btn modern-btn-secondary'
+                onClick={onQuickExport}
+                style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+              >
+                Quick Export
+              </button>
+            )}
+            {onCustomExport && (
+              <button
+                className='modern-btn'
+                onClick={onCustomExport}
+                style={{
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.875rem',
+                  background: '#1a1a1a',
+                  color: '#ffffff',
+                  border: 'none'
+                }}
+              >
+                Custom Export
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Filter Buttons */}
