@@ -92,6 +92,14 @@
   background: linear-gradient(135deg, #e5f0ff 0%, #cce5ff 100%);
 }
 
+.modern-indicator-card.purple {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+}
+
+.modern-indicator-card.orange {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+}
+
 .modern-indicator-header {
   display: flex;
   justify-content: space-between;
@@ -209,12 +217,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .modern-form-label {
   font-size: 0.875rem;
   font-weight: 600;
   color: #1a1a1a;
+  text-align: center;
 }
 
 .modern-form-input,
@@ -224,6 +235,8 @@
   border-radius: 8px;
   font-size: 0.875rem;
   transition: border-color 0.2s ease;
+  max-width: 500px;
+  width: 100%;
 }
 
 .modern-form-input:focus,
@@ -235,10 +248,12 @@
 .modern-search-input-group {
   display: flex;
   gap: 0.5rem;
+  max-width: 100%;
 }
 
 .modern-search-input {
   flex: 1;
+  max-width: 100%;
 }
 
 .modern-btn {

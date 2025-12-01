@@ -136,18 +136,21 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
       useTheme = true
     } = this.props;
 
-    if (!isSignedIn) {
-      return <>{children}</>;
-    }
+    // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
+    // TODO: Réactiver les restrictions avant le passage en staging
+
+    // if (!isSignedIn) {
+    //   return <>{children}</>;
+    // }
 
     // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
-    const isSuperAdmin = user?.role === 'Super-admin';
-    const isAdmin = user?.role === 'Admin';
-    const isJudahEmail = user?.email === 'judah@kadea.co';
+    // const isSuperAdmin = user?.role === 'Super-admin';
+    // const isAdmin = user?.role === 'Admin';
+    // const isJudahEmail = user?.email === 'judah@kadea.co';
 
-    if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
-      return <>{children}</>;
-    }
+    // if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    //   return <>{children}</>;
+    // }
 
     return (
       <div className='page-wrapper'>

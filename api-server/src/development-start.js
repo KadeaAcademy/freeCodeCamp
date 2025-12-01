@@ -34,7 +34,8 @@ nodemon({
   watch: path.resolve(__dirname, './server'),
   spawn: true,
   env: {
-    DEBUG: 'fcc*'
+    DEBUG: 'fcc*',
+    NODE_OPTIONS: '--no-deprecation --no-warnings'
   }
 });
 

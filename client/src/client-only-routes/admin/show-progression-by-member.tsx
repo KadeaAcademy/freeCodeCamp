@@ -2,24 +2,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import validator from 'validator';
 import { navigate } from '@reach/router';
-// eslint-disable-next-line import/no-unresolved
-import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader } from '../../components/helpers';
-import { Member, User } from '../../redux/prop-types';
-import {
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector
-} from '../../redux';
+import { Member } from '../../redux/prop-types';
 import { getMembers } from './all-server-request-members';
 import './admin-global.css';
 import './modern-admin.css';
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-const { apiLocation, homeLocation } = envData;
 
 // Types pour les filtres de période
 type PeriodFilter =
@@ -31,16 +19,7 @@ type PeriodFilter =
   | '1year'
   | 'all';
 
-const mapStateToProps = createSelector(
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
-    showLoading,
-    user,
-    isSignedIn
-  })
-);
+const mapStateToProps = createSelector(() => ({}));
 
 const mapDispatchToProps = {
   createFlashMessage
@@ -48,9 +27,6 @@ const mapDispatchToProps = {
 
 interface ShowProgressionByMemberProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  showLoading: boolean;
-  user: User;
   period?: string;
   path?: string;
   location?: { search: string };
@@ -72,9 +48,8 @@ const hasProgress50Plus = (member: Member): boolean => {
 export function ShowProgressionByMember(
   props: ShowProgressionByMemberProps
 ): JSX.Element {
-  const { showLoading, isSignedIn, user, period, location } = props;
+  const { period, location } = props;
   const [allMembers, setAllMembers] = useState<Member[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Extraire le paramètre period de l'URL si présent
   const urlParams = new URLSearchParams(location?.search || '');
@@ -91,7 +66,6 @@ export function ShowProgressionByMember(
   useEffect(() => {
     const fetchAllMembers = async () => {
       try {
-        setIsLoading(true);
         await getMembers({
           currentPage: 1,
           groupMembers: 'all',
@@ -102,7 +76,8 @@ export function ShowProgressionByMember(
           setAllDataMembers: setAllMembers,
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           setCountUsers: () => {},
-          setIsLoadingMember: setIsLoading,
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          setIsLoadingMember: () => {},
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           setTotalPages: () => {},
           // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -112,32 +87,38 @@ export function ShowProgressionByMember(
       } catch (error) {
         console.error('Error fetching members:', error);
         setAllMembers([]);
-      } finally {
-        setIsLoading(false);
       }
     };
     void fetchAllMembers();
   }, []);
 
-  if (showLoading || isLoading) {
-    return <Loader fullScreen={true} />;
-  }
+  // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
+  // TODO: Réactiver les restrictions avant le passage en staging
 
-  if (!isSignedIn) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    void navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (showLoading || isLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
-  const isAdmin = validator.equals(user.role, 'Admin');
-  const isJudahEmail = user.email === 'judah@kadea.co';
+  // DÉSACTIVÉ : Permettre l'accès même pendant le chargement
+  // if (isLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
 
-  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    void navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!isSignedIn) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   void navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
+
+  // const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  // const isAdmin = validator.equals(user.role, 'Admin');
+  // const isJudahEmail = user.email === 'judah@kadea.co';
+
+  // if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   void navigate(`${homeLocation}`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   // Calculer le pourcentage de progression pour chaque membre
   const getMemberProgress = (member: Member): number => {

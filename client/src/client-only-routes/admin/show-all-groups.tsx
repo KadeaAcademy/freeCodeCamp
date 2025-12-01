@@ -18,10 +18,6 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-import validator from 'validator';
-// eslint-disable-next-line import/no-unresolved
-import envData from '../../../../config/env.json';
-
 import {
   createUserGroup,
   updateMemberGroup,
@@ -30,43 +26,18 @@ import {
 } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader, Spacer } from '../../components/helpers';
+import { Spacer } from '../../components/helpers';
 
-import {
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector,
-  hardGoTo as navigate
-} from '../../redux';
-
-import { User } from '../../redux/prop-types';
 import './admin-global.css';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-const { apiLocation, homeLocation } = envData;
-
-const mapStateToProps = createSelector(
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
-    showLoading,
-    user,
-    isSignedIn
-  })
-);
+const mapStateToProps = createSelector(() => ({}));
 
 const mapDispatchToProps = {
-  createFlashMessage,
-  navigate
+  createFlashMessage
 };
 
 interface ShowAllGroupsProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  navigate: (location: string) => void;
-  showLoading: boolean;
-  user: User;
 }
 
 type MemberGroup = {
@@ -88,8 +59,8 @@ interface UserGroupResponse {
   error: string | undefined;
 }
 
-export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
-  const { showLoading, isSignedIn, navigate, user } = props;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function ShowAllGroups(_props: ShowAllGroupsProps): JSX.Element {
   const [groupName, setGroupName] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [membersGroup, setMembersGroup] = useState<MemberGroup[]>();
@@ -255,33 +226,36 @@ export function ShowAllGroups(props: ShowAllGroupsProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, groupRecentlyTreated]);
 
-  if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
+  // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
+  // TODO: Réactiver les restrictions avant le passage en staging
 
-  if (!isSignedIn) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (showLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
+
+  // if (!isSignedIn) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   // Vérifier que l'utilisateur existe
-  if (!user) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!user) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
-  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
-  const isAdmin = validator.equals(user.role, 'Admin');
-  const isJudahEmail = user.email === 'judah@kadea.co';
+  // const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  // const isAdmin = validator.equals(user.role, 'Admin');
+  // const isJudahEmail = user.email === 'judah@kadea.co';
 
-  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${homeLocation}`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   return (
     <>

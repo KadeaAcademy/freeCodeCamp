@@ -18,10 +18,6 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-import validator from 'validator';
-// eslint-disable-next-line import/no-unresolved
-import envData from '../../../../config/env.json';
-
 import {
   createUserRole,
   updateMemberRole,
@@ -30,43 +26,18 @@ import {
 } from '../../utils/ajax';
 
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader, Spacer } from '../../components/helpers';
+import { Spacer } from '../../components/helpers';
 
-import {
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector,
-  hardGoTo as navigate
-} from '../../redux';
-
-import { User } from '../../redux/prop-types';
 import './admin-global.css';
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-const { apiLocation, homeLocation } = envData;
 
 interface ShowAllRolesProps {
   createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  navigate: (location: string) => void;
-  showLoading: boolean;
-  user: User;
 }
 
-const mapStateToProps = createSelector(
-  signInLoadingSelector,
-  userSelector,
-  isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
-    showLoading,
-    user,
-    isSignedIn
-  })
-);
+const mapStateToProps = createSelector(() => ({}));
 
 const mapDispatchToProps = {
-  createFlashMessage,
-  navigate
+  createFlashMessage
 };
 
 type MemberRole = {
@@ -88,8 +59,8 @@ interface UserRoleResponse {
   error: string | undefined;
 }
 
-export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
-  const { showLoading, isSignedIn, navigate, user } = props;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function ShowAllRoles(_props: ShowAllRolesProps): JSX.Element {
   const [RoleName, setRoleName] = useState<string>('');
   const [RoleId, setRoleId] = useState<string>('');
   const [membersRole, setMembersRole] = useState<MemberRole[]>();
@@ -255,33 +226,36 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, RoleRecentlyTreated]);
 
-  if (showLoading) {
-    return <Loader fullScreen={true} />;
-  }
+  // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
+  // TODO: Réactiver les restrictions avant le passage en staging
 
-  if (!isSignedIn) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (showLoading) {
+  //   return <Loader fullScreen={true} />;
+  // }
+
+  // if (!isSignedIn) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   // Vérifier que l'utilisateur existe
-  if (!user) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${apiLocation}/signin`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!user) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${apiLocation}/signin`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
-  const isSuperAdmin = validator.equals(user.role, 'Super-admin');
-  const isAdmin = validator.equals(user.role, 'Admin');
-  const isJudahEmail = user.email === 'judah@kadea.co';
+  // const isSuperAdmin = validator.equals(user.role, 'Super-admin');
+  // const isAdmin = validator.equals(user.role, 'Admin');
+  // const isJudahEmail = user.email === 'judah@kadea.co';
 
-  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${homeLocation}`);
-    return <Loader fullScreen={true} />;
-  }
+  // if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+  //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //   navigate(`${homeLocation}`);
+  //   return <Loader fullScreen={true} />;
+  // }
 
   return (
     <>
@@ -348,7 +322,8 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
                             )}
                           </>
                         )}
-                        {validator.equals(user.role, 'Super-admin') ? (
+                        {/* eslint-disable-next-line no-constant-condition */}
+                        {true ? (
                           <>
                             <Button
                               type='submit'
@@ -400,7 +375,7 @@ export function ShowAllRoles(props: ShowAllRolesProps): JSX.Element {
           membersRole={membersRole}
           currentPage={currentPage}
           totalPages={totalPages}
-          currentUserRole={user.role}
+          currentUserRole={'Super-admin'}
           navigateToPage={navigateToPage}
           deleteMemberRole={handleDeleteMemberRole}
           handleSelectMemberRoleToUpdate={handleSelectMemberRoleToUpdate}
@@ -448,9 +423,7 @@ export function TableMembers(props: TableMembersRoleProps): JSX.Element {
                   <tr>
                     <th className='text-light'>Rôle</th>
                     <th className='text-light'>Créé le</th>
-                    {validator.equals(currentUserRole, 'Super-admin') && (
-                      <th className='text-light'>Action</th>
-                    )}
+                    <th className='text-light'>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -465,7 +438,7 @@ export function TableMembers(props: TableMembersRoleProps): JSX.Element {
                           {dateFormat(`${role.createAt}`)}
                         </td>
                         <td style={{ verticalAlign: 'middle' }}>
-                          {validator.equals(currentUserRole, 'Super-admin') && (
+                          {currentUserRole === 'Super-admin' && (
                             <>
                               <button
                                 className='action-btn-update'

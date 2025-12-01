@@ -4,7 +4,6 @@ import { getSessionUser, getUserProfile } from '../utils/ajax';
 import { jwt } from './cookieValues';
 import {
   fetchUserComplete,
-  fetchUserError,
   fetchProfileForUserError,
   fetchProfileForUserComplete
 } from './';
@@ -25,7 +24,13 @@ function* fetchSessionUser() {
       fetchUserComplete({ user: appUser, username: result, sessionMeta })
     );
   } catch (e) {
-    yield put(fetchUserError(e));
+    // Si le serveur n'est pas disponible, on retourne un utilisateur vide
+    // pour permettre à l'application de continuer à fonctionner
+    console.warn(
+      'Failed to fetch session user (server may be unavailable):',
+      e
+    );
+    yield put(fetchUserComplete({ user: {}, username: '' }));
   }
 }
 

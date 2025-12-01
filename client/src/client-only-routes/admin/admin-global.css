@@ -225,3 +225,72 @@
 .highlight-row:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* Styles pour les champs de formulaire - Largeur réduite et centrés */
+form input[type='text'],
+form input[type='email'],
+form input[type='password'],
+form input[type='number'],
+form input[type='date'],
+form textarea,
+.form-control,
+.FormControl {
+  max-width: 500px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* Centrer les groupes de formulaires */
+.form-group,
+.FormGroup {
+  max-width: 500px;
+  margin: 0 auto 1rem auto;
+  display: block;
+}
+
+/* Centrer les labels */
+.form-group label,
+.FormGroup label,
+.ControlLabel {
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+/* Centrer les conteneurs de formulaires */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Exception pour la barre de recherche qui doit rester large */
+.modern-search-input-group,
+.modern-search-input {
+  max-width: 100% !important;
+}
+
+/* Exception pour les selects dans les filtres */
+.modern-form-select {
+  max-width: 100% !important;
+}
+
+/* Styles spécifiques pour les textareas */
+textarea,
+.form-control[type='textarea'],
+textarea.form-control {
+  max-width: 500px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Centrer les conteneurs de formulaires avec textarea */
+.form-group textarea,
+.FormGroup textarea {
+  margin: 0 auto;
+}

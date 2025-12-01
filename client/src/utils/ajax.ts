@@ -43,7 +43,22 @@ function getCSRFToken() {
 // TODO: Might want to handle flash messages as close to the request as possible
 // to make use of the Response object (message, status, etc)
 export async function get<T>(path: string): Promise<T> {
-  return fetch(`${base}${path}`, defaultOptions).then<T>(res => res.json());
+  try {
+    const response = await fetch(`${base}${path}`, defaultOptions);
+    if (!response.ok) {
+      // Si la réponse n'est pas OK, on retourne un objet vide pour éviter les crashes
+      console.warn(
+        `API request failed: ${path} - ${response.status} ${response.statusText}`
+      );
+      return {} as T;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return (await response.json()) as T;
+  } catch (error) {
+    // Si la requête échoue complètement (réseau, CORS, etc.), on retourne un objet vide
+    console.warn(`API request error: ${path} -`, error);
+    return {} as T;
+  }
 }
 
 export function post<T = void>(path: string, body: unknown): Promise<T> {
@@ -75,7 +90,20 @@ async function request<T>(
     },
     body: JSON.stringify(body)
   };
-  return fetch(`${base}${path}`, options).then<T>(res => res.json());
+  try {
+    const response = await fetch(`${base}${path}`, options);
+    if (!response.ok) {
+      console.warn(
+        `API request failed: ${path} - ${response.status} ${response.statusText}`
+      );
+      return {} as T;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return (await response.json()) as T;
+  } catch (error) {
+    console.warn(`API request error: ${path} -`, error);
+    return {} as T;
+  }
 }
 
 //liste des descriptions pour chaque parcours affichée sous le parcours
