@@ -83,6 +83,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     removeUsers,
     updatingMembersGroup,
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isLoadingMemberState,
     onQuickExport,
     onCustomExport
@@ -900,11 +901,13 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       </div>
       {/* Table Section */}
       <div className='modern-table-container'>
-        {isLoadingMemberState ? (
+        {/* TEMPORAIRE : Désactiver le blocage de chargement pour permettre l'accès */}
+        {/* {isLoadingMemberState ? (
           <div className='modern-loading'>
             <p>Chargement des utilisateurs en cours...</p>
           </div>
-        ) : members && members.length > 0 ? (
+        ) : */}
+        {members && members.length > 0 ? (
           <>
             <table className='modern-table'>
               <thead>
