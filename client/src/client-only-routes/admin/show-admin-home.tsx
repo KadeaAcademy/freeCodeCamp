@@ -253,7 +253,7 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
             totalPages: 1
           });
         } catch (error) {
-          console.error('Error fetching members:', error);
+          // Error fetching members - silently fail
         }
 
         // Calculate metrics based on period
@@ -479,7 +479,7 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
           sparklineData: generateSparkline(totalCoursesCount, coursesPrevious)
         });
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        // Error fetching dashboard data - silently fail
       } finally {
         setIsLoading(false);
       }
@@ -488,20 +488,6 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
     void fetchData();
   }, [periodFilter, courseFilter]);
 
-  // Debug: Afficher toutes les informations de l'utilisateur connecté
-  if (typeof window !== 'undefined' && user) {
-    console.log('=== ShowAdminHome - User Information ===');
-    console.log('Full user object:', JSON.stringify(user, null, 2));
-
-    console.log('User email:', user.email);
-    console.log('User name:', user.name);
-    console.log('User role:', user.role);
-    console.log('User role type:', typeof user.role);
-    console.log('Is signed in:', isSignedIn);
-    console.log('Show loading:', showLoading);
-    console.log('==========================================');
-  }
-
   // Vérifications d'accès - attendre que le chargement soit terminé
   if (showLoading) {
     return <Loader fullScreen={true} />;
@@ -509,7 +495,6 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
 
   // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
   if (!isSignedIn) {
-    console.warn('ShowAdminHome - User not signed in');
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     void navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
@@ -517,7 +502,6 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
 
   // Si l'utilisateur n'existe pas après le chargement, rediriger
   if (!user) {
-    console.warn('ShowAdminHome - User object is null or undefined');
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     void navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
@@ -527,28 +511,8 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
   const isSuperAdmin = user.role === 'Super-admin';
   const isAdmin = user.role === 'Admin';
 
-  // Debug: vérifier le rôle de l'utilisateur
-  if (typeof window !== 'undefined') {
-    console.log('ShowAdminHome - User access check:', {
-      userRole: user.role,
-      isSuperAdmin,
-      isAdmin,
-      email: user.email,
-      roleComparison: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'Super-admin': user.role === 'Super-admin',
-        Admin: user.role === 'Admin',
-        actualRole: user.role
-      }
-    });
-  }
-
   // Si l'utilisateur n'est ni Super-admin ni Admin, rediriger vers la page d'accueil
   if (!isSuperAdmin && !isAdmin) {
-    console.warn('ShowAdminHome - Access denied:', {
-      userRole: user.role,
-      email: user.email
-    });
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     void navigate(`${homeLocation}`);
     return <Loader fullScreen={true} />;
@@ -809,18 +773,16 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
             }}
           >
             <span>{title}</span>
-            <span
+            <FontAwesomeIcon
+              icon={faInfoCircle}
               className='modern-indicator-icon'
               style={{
-                fontSize: '12px',
-                color: '#6A6A6A',
-                opacity: 0.7,
+                fontSize: '0.9rem',
+                color: '#6B7280',
                 cursor: 'help'
               }}
               title={title}
-            >
-              ℹ️
-            </span>
+            />
           </div>
         </div>
 
@@ -1037,41 +999,48 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
             </div>
           </div>
           <div style={{ marginTop: '0.5rem' }}>
-            <button
+            <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.375rem',
-                padding: '0.125rem 0.375rem',
-                background: '#E0F2FE',
-                border: 'none',
-                borderRadius: '9999px',
-                fontSize: '1rem',
-                fontWeight: 500,
-                color: '#0369A1',
-                cursor: 'pointer',
-                fontFamily:
-                  "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                transition: 'all 0.2s ease',
                 width: 'fit-content'
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = '#BAE6FD';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = '#E0F2FE';
-              }}
             >
-              <span>{t.legend}</span>
+              <button
+                style={{
+                  padding: '0.125rem 0.375rem',
+                  background: '#E0F2FE',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                  color: '#0369A1',
+                  cursor: 'pointer',
+                  fontFamily:
+                    "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                  transition: 'all 0.2s ease',
+                  display: 'inline-block'
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = '#BAE6FD';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = '#E0F2FE';
+                }}
+              >
+                {t.legend}
+              </button>
               <FontAwesomeIcon
                 icon={faInfoCircle}
                 className='legend-icon'
                 style={{
                   fontSize: '0.9rem',
-                  color: '#6B7280'
+                  color: '#6B7280',
+                  background: 'transparent'
                 }}
               />
-            </button>
+            </div>
           </div>
         </div>
 
