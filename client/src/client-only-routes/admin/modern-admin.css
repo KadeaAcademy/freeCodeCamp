@@ -1,15 +1,41 @@
 /* Modern Admin Dashboard Styles - Inspired by Kadea Design System */
 
+/* Typography - Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap');
+
 /* Container Styles */
 .modern-admin-container {
   padding: 2rem;
   background: #f8f9fa;
   min-height: 100vh;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
 }
 
 /* Header Section */
 .modern-admin-header {
   margin-bottom: 2rem;
+}
+
+/* Indicators Title */
+.modern-admin-container h3 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+/* Legend button icon - Force size */
+.modern-admin-container button .legend-icon,
+.modern-admin-container button .legend-icon svg,
+.modern-admin-container button .legend-icon.svg-inline--fa {
+  font-size: 0.9rem !important;
+  width: 0.9rem !important;
+  height: 0.9rem !important;
+}
+
+.modern-admin-container button .legend-icon.svg-inline--fa {
+  font-size: 0.9rem !important;
 }
 
 .modern-admin-title {
@@ -69,6 +95,9 @@
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .modern-indicator-card:hover {
@@ -137,26 +166,53 @@
   box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
 }
 
+.modern-indicator-title-container {
+  margin-bottom: 0.5rem;
+}
+
 .modern-indicator-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #4a4a4a;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1c1c1c;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .modern-indicator-icon {
-  font-size: 1rem;
+  font-size: 12px;
+  color: #6a6a6a;
   opacity: 0.7;
   cursor: help;
 }
 
 .modern-indicator-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
+  font-size: 48px;
+  font-weight: 900;
+  color: #1c1c1c;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.modern-indicator-trendline {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.modern-indicator-trendline svg {
+  width: 100%;
+  height: 40px;
+  overflow: visible;
+}
+
+.modern-indicator-trendline path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .modern-indicator-change {
@@ -471,6 +527,18 @@
 }
 
 /* Responsive */
+@media (max-width: 1400px) {
+  .modern-indicators-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .modern-indicators-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .modern-admin-container {
     padding: 1rem;

@@ -213,13 +213,24 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
                 className='admin-profile-bar'
                 style={{
                   background: '#ffffff',
-                  padding: '1rem 2rem',
+                  padding: '0.4375rem 2rem',
                   borderBottom: '1px solid #e5e7eb',
                   display: 'flex',
-                  justifyContent: 'flex-end',
+                  justifyContent: 'space-between',
                   alignItems: 'center'
                 }}
               >
+                <span
+                  style={{
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: '#1a1a1a',
+                    fontFamily:
+                      "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+                  }}
+                >
+                  Home
+                </span>
                 <div className='admin-profil-item'>
                   <div
                     className='profile-name'

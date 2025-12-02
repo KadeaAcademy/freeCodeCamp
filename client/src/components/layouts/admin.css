@@ -1,5 +1,7 @@
 .admin-profile-bar {
   margin: 0;
+  padding-top: 0.4375rem !important;
+  padding-bottom: 0.4375rem !important;
 }
 
 .margin-0 {
