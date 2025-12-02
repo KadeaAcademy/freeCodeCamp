@@ -634,7 +634,8 @@ export async function getAwsPath() {
   }
   // return response;
   //cette partie permet notamment de filtrer les parcours pour ne retenir que ceux en français où en anglais.
-  if (response) {
+  // Check if response is valid and is an array
+  if (response && Array.isArray(response) && response.length > 0) {
     interface Tag {
       title: string;
     }
@@ -652,29 +653,45 @@ export async function getAwsPath() {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const filterCourses = (response: unknown): Course[] => {
+      // Ensure response is an array before processing
+      if (!Array.isArray(response)) {
+        return [];
+      }
+
       const courses = response as Course[];
 
       const coursesFilter = courses
         .filter(
           course =>
+            course &&
+            typeof course === 'object' &&
             course.category &&
+            Array.isArray(course.category) &&
             course.category.some(
               cat =>
+                cat &&
                 cat.tags &&
+                Array.isArray(cat.tags) &&
                 cat.tags.some(
                   tag =>
-                    tag.title.includes('English') ||
-                    tag.title.includes('French')
+                    tag &&
+                    tag.title &&
+                    (tag.title.includes('English') ||
+                      tag.title.includes('French'))
                 )
             )
         )
         .map(course => {
           // Extraire le skill level
           const skillLevelCategory = course.category?.find(
-            cat => cat.title === 'Skill Level'
+            cat => cat && cat.title === 'Skill Level'
           );
-          if (skillLevelCategory && skillLevelCategory.tags) {
-            course.skill_level = skillLevelCategory.tags[0]?.title;
+          if (
+            skillLevelCategory &&
+            skillLevelCategory.tags &&
+            Array.isArray(skillLevelCategory.tags)
+          ) {
+            course.skill_level = skillLevelCategory.tags[0]?.title || '';
           }
           return course;
         });
@@ -793,9 +810,22 @@ export async function getDataFromDb() {
       '/get-kinshasa-digital-raven-courses'
     );
 
+    // Check if response is valid and has the expected structure
+    if (!response || typeof response !== 'object' || !('success' in response)) {
+      console.log('Error fetching courses: Invalid response structure');
+      return [];
+    }
+
     if (!response.success) {
-      console.log('Error fetching courses:', response.error);
-      throw new Error(response.error);
+      const errorMessage = response.error || 'Unknown error occurred';
+      console.log('Error fetching courses:', errorMessage);
+      return [];
+    }
+
+    // Check if data exists and is an array
+    if (!response.data || !Array.isArray(response.data)) {
+      console.log('Error fetching courses: Invalid data format');
+      return [];
     }
 
     const courses = response.data as RavenCourse[];
@@ -803,7 +833,7 @@ export async function getDataFromDb() {
     return filterAndEnhanceCourses(courses);
   } catch (error) {
     console.error('Error fetching courses:', error);
-    throw error;
+    return [];
   }
 }
 
@@ -811,12 +841,21 @@ export async function saveKadeaCoursesOnDb() {
   try {
     const response = await get<ResponseRaven>(`/save-kadea-courses`);
 
+    // Check if response is valid and has the expected structure
+    if (!response || typeof response !== 'object' || !('success' in response)) {
+      console.error(
+        "Erreur lors de l'enregistrement des données: Invalid response structure"
+      );
+      return;
+    }
+
     if (response.success) {
       console.log('Data saved successfully:', response);
     } else {
+      const errorMessage = response.error || 'Unknown error occurred';
       console.error(
         "Erreur lors de l'enregistrement des données",
-        response.error
+        errorMessage
       );
     }
   } catch (error) {
@@ -828,8 +867,16 @@ export async function getPopularRavenCourses() {
   try {
     const response = await get<ResponseRaven>('/get-populare-cours');
 
+    // Check if response is valid and has the expected structure
+    if (!response || typeof response !== 'object' || !('success' in response)) {
+      console.log('Error fetching courses: Invalid response structure');
+      return [];
+    }
+
     if (!response.success) {
-      console.log('Error fetching courses:', response.error);
+      const errorMessage = response.error || 'Unknown error occurred';
+      console.log('Error fetching courses:', errorMessage);
+      return [];
     }
 
     const courses = response.data as RavenCourse[];
@@ -837,7 +884,7 @@ export async function getPopularRavenCourses() {
     return filterAndEnhanceCourses(courses);
   } catch (error) {
     console.error('Error fetching courses:', error);
-    throw error;
+    return [];
   }
 }
 
@@ -845,9 +892,16 @@ export async function getKadeaCourses() {
   try {
     const response = await get<ResponseRaven>('/get-kadea-courses');
 
+    // Check if response is valid and has the expected structure
+    if (!response || typeof response !== 'object' || !('success' in response)) {
+      console.log('Error fetching courses: Invalid response structure');
+      throw new Error('Invalid response from server');
+    }
+
     if (!response.success) {
-      console.log('Error fetching courses:', response.error);
-      throw new Error(response.error);
+      const errorMessage = response.error || 'Unknown error occurred';
+      console.log('Error fetching courses:', errorMessage);
+      throw new Error(errorMessage);
     }
 
     const courses = response.data as ProgramationCourses[];

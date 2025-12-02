@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { navigate } from '@reach/router';
 import { Loader } from '../../components/helpers';
 
+// eslint-disable-next-line import/no-unresolved
+import envData from '../../../../config/env.json';
 import { User, Member } from '../../redux/prop-types';
-import { userSelector } from '../../redux';
+import {
+  userSelector,
+  signInLoadingSelector,
+  isSignedInSelector
+} from '../../redux';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const { apiLocation, homeLocation } = envData;
 import {
   getKadeaCourses,
   getMoodleCourses,
@@ -15,12 +25,21 @@ import { getMembers } from './all-server-request-members';
 import './admin-global.css';
 import './modern-admin.css';
 
-const mapStateToProps = createSelector(userSelector, (user: User) => ({
-  user
-}));
+const mapStateToProps = createSelector(
+  signInLoadingSelector,
+  userSelector,
+  isSignedInSelector,
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
+    showLoading,
+    user,
+    isSignedIn
+  })
+);
 
 interface ShowAdminHomeProps {
+  showLoading: boolean;
   user: User;
+  isSignedIn: boolean;
 }
 
 type PeriodFilter = '30j' | '2months' | '3months' | '6months' | '1year' | 'all';
@@ -34,9 +53,9 @@ interface MetricData {
 }
 
 export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
-  const { user } = props;
+  const { user, showLoading, isSignedIn } = props;
 
-  // State for filters
+  // State for filters - All hooks must be called before any conditional returns
   const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('30j');
   const [courseFilter, setCourseFilter] = useState<CourseFilter>('all');
 
@@ -72,7 +91,7 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
   const [newUsers30Days, setNewUsers30Days] = useState<number>(0);
   const [activeUsersThisMonth, setActiveUsersThisMonth] = useState<number>(0);
 
-  // Calculate period dates
+  // Calculate period dates - must be defined before useEffect
   const getPeriodDates = (period: PeriodFilter) => {
     const now = new Date();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -121,7 +140,7 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
     };
   };
 
-  // Fetch all data
+  // Fetch all data - useEffect must be called before conditional returns
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -322,6 +341,72 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
 
     void fetchData();
   }, [periodFilter, courseFilter]);
+
+  // Debug: Afficher toutes les informations de l'utilisateur connecté
+  if (typeof window !== 'undefined' && user) {
+    console.log('=== ShowAdminHome - User Information ===');
+    console.log('Full user object:', JSON.stringify(user, null, 2));
+
+    console.log('User email:', user.email);
+    console.log('User name:', user.name);
+    console.log('User role:', user.role);
+    console.log('User role type:', typeof user.role);
+    console.log('Is signed in:', isSignedIn);
+    console.log('Show loading:', showLoading);
+    console.log('==========================================');
+  }
+
+  // Vérifications d'accès - attendre que le chargement soit terminé
+  if (showLoading) {
+    return <Loader fullScreen={true} />;
+  }
+
+  // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+  if (!isSignedIn) {
+    console.warn('ShowAdminHome - User not signed in');
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    void navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
+  // Si l'utilisateur n'existe pas après le chargement, rediriger
+  if (!user) {
+    console.warn('ShowAdminHome - User object is null or undefined');
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    void navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
+  // Vérifier l'accès : Super-admin ou Admin
+  const isSuperAdmin = user.role === 'Super-admin';
+  const isAdmin = user.role === 'Admin';
+
+  // Debug: vérifier le rôle de l'utilisateur
+  if (typeof window !== 'undefined') {
+    console.log('ShowAdminHome - User access check:', {
+      userRole: user.role,
+      isSuperAdmin,
+      isAdmin,
+      email: user.email,
+      roleComparison: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        'Super-admin': user.role === 'Super-admin',
+        Admin: user.role === 'Admin',
+        actualRole: user.role
+      }
+    });
+  }
+
+  // Si l'utilisateur n'est ni Super-admin ni Admin, rediriger vers la page d'accueil
+  if (!isSuperAdmin && !isAdmin) {
+    console.warn('ShowAdminHome - Access denied:', {
+      userRole: user.role,
+      email: user.email
+    });
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    void navigate(`${homeLocation}`);
+    return <Loader fullScreen={true} />;
+  }
 
   // TEMPORAIRE : Toutes les restrictions d'accès désactivées pour le développement
   // TODO: Réactiver les restrictions avant le passage en staging
