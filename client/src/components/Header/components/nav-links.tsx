@@ -174,20 +174,21 @@ export const NavLinks = (props: NavLinksProps): JSX.Element => {
           </Fragment>
         )}
 
-        {role == 'Admin' ||
-          (role == 'Super-admin' && (
-            <li className='nav-item'>
-              <a
-                onClick={stockerUrlCourante}
-                className=''
-                href={`/admin/all-members`}
-                key='dashbord'
-                ref={innerRef}
-              >
-                {'Back office'}
-              </a>
-            </li>
-          ))}
+        {(role === 'Admin' || role === 'Super-admin') && (
+          <li className='nav-item' key='admin-links'>
+            <Link
+              onClick={handleIsDropdown}
+              className=''
+              key='administration'
+              sameTab={false}
+              to={`/admin/admin-home`}
+              ref={innerRef}
+              activeClassName='active'
+            >
+              {'Administration'}
+            </Link>
+          </li>
+        )}
 
         {!username && (
           <li className='nav-item'>
