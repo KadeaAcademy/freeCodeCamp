@@ -1,10 +1,10 @@
 import { Row, Col } from '@freecodecamp/react-bootstrap';
 import React from 'react';
 import Helmet from 'react-helmet';
-// import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+// eslint-disable-next-line import/no-unresolved
 import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
 import { Loader, Spacer } from '../../components/helpers';
@@ -18,23 +18,14 @@ import {
 
 import { User } from '../../redux/prop-types';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const { apiLocation, homeLocation } = envData;
-
-// TODO: update types for actions
-interface ShowAdminHomeProps {
-  createFlashMessage: typeof createFlashMessage;
-  isSignedIn: boolean;
-  navigate: (location: string) => void;
-  showLoading: boolean;
-  user: User;
-  path?: string;
-}
 
 const mapStateToProps = createSelector(
   signInLoadingSelector,
   userSelector,
   isSignedInSelector,
-  (showLoading: boolean, user: User, isSignedIn) => ({
+  (showLoading: boolean, user: User, isSignedIn: boolean) => ({
     showLoading,
     user,
     isSignedIn
@@ -46,21 +37,41 @@ const mapDispatchToProps = {
   navigate
 };
 
+interface ShowAdminHomeProps {
+  createFlashMessage: typeof createFlashMessage;
+  isSignedIn: boolean;
+  navigate: (location: string) => void;
+  showLoading: boolean;
+  user: User;
+}
+
 export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
-  // const { t } = useTranslation();
-  const { isSignedIn, user, navigate, showLoading } = props;
-  // const { currentsSuperBlock } = user;
+  const { showLoading, isSignedIn, navigate, user } = props;
 
   if (showLoading) {
     return <Loader fullScreen={true} />;
   }
 
-  if (isSignedIn) {
+  if (!isSignedIn) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     navigate(`${apiLocation}/signin`);
     return <Loader fullScreen={true} />;
   }
 
-  if (!user.email.includes('Super-admin') || !user.email.includes('Admin')) {
+  // Vérifier que l'utilisateur existe
+  if (!user) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${apiLocation}/signin`);
+    return <Loader fullScreen={true} />;
+  }
+
+  // Vérifier l'accès : Super-admin, Admin, ou judah@kadea.co
+  const isSuperAdmin = user.role === 'Super-admin';
+  const isAdmin = user.role === 'Admin';
+  const isJudahEmail = user.email === 'judah@kadea.co';
+
+  if (!isSuperAdmin && !isAdmin && !isJudahEmail) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     navigate(`${homeLocation}`);
     return <Loader fullScreen={true} />;
   }

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import PlayIcon from '../../assets/images/play.svg';
 import clockIcon from '../../assets/icons/clock.svg';
 import levelIcon from '../../assets/icons/level.svg';
@@ -7,6 +8,8 @@ import Map from '../Map/index';
 import { Link } from '../helpers';
 
 import './course-card.css';
+import { updateEnrollment } from '../../utils/ajax';
+import { updateProgrammationEnrolement } from '../../utils/update-enrolement-programation-course';
 
 // const { apiLocation } = envData;
 
@@ -52,6 +55,8 @@ const CourseCard = ({
   language,
   level
 }: LandingDetailsProps): JSX.Element => {
+  const [courseLink, setCourseLink] = useState<string | null>('');
+
   const isLessThan30DaysOld = (date: string): boolean => {
     const dateObjet = new Date(date);
     const dateDuJour = new Date();
@@ -60,10 +65,30 @@ const CourseCard = ({
     const differenceEnJours = differenceEnMillisecondes / (1000 * 60 * 60 * 24);
     return differenceEnJours <= 30;
   };
+
+  const handleClick = () => {
+    if (link) {
+      setCourseLink(link);
+    }
+  };
+
+  useEffect(() => {
+    if (courseLink) {
+      if (courseLink.includes('cloud.contentraven.com/awspartners')) {
+        void updateEnrollment(courseLink);
+      }
+      if (courseLink.includes('/learn/')) {
+        console.log('courseLink', courseLink);
+
+        void updateProgrammationEnrolement(courseLink);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courseLink]);
   return (
     <div className='card-course-detail-back standard-radius-5 card-outlin-border'>
       <div className='card-course-detail-unit position-relative'>
-        <Link to={link ? link : ''} className='link'>
+        <Link to={link ? link : ''} className='link' onClick={handleClick}>
           <div className='card-outlin-border bg-light standard-radius-5'>
             {cardType && cardType == CardStyle.Path ? (
               <div className='bg-pretty-dark'>
@@ -166,6 +191,7 @@ const CourseCard = ({
                         external={external ? true : false}
                         state={{ description: description }}
                         className='link-course text-love-light fw-semi-bold text-responsive'
+                        onClick={handleClick}
                       >
                         <div className='row-link'>
                           <div className='row-link-text'>{buttonText}</div>

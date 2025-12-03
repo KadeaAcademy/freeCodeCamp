@@ -4,6 +4,8 @@ import envData from '../../../config/env.json';
 import type {
   ChallengeFile,
   CompletedChallenge,
+  ProgramationCourses,
+  RequestResponseModel,
   User
 } from '../redux/prop-types';
 import {
@@ -14,6 +16,7 @@ import {
 } from '../client-only-routes/show-courses';
 import { splitArray } from '../components/helpers';
 import sortCourses from '../components/helpers/sort-course';
+import { filterAndEnhanceCourses } from './filter-And-enchance-raven';
 
 const { apiLocation } = envData;
 
@@ -39,7 +42,7 @@ function getCSRFToken() {
 
 // TODO: Might want to handle flash messages as close to the request as possible
 // to make use of the Response object (message, status, etc)
-async function get<T>(path: string): Promise<T> {
+export async function get<T>(path: string): Promise<T> {
   return fetch(`${base}${path}`, defaultOptions).then<T>(res => res.json());
 }
 
@@ -94,26 +97,6 @@ export interface CourseDetails {
 
 //data structure for programation cours
 
-export interface ProgramationCourses {
-  isAvailable: boolean;
-  sameTab?: boolean;
-  external?: boolean;
-  description?: string;
-  title: string;
-  icon?: string;
-  sponsorIcon?: string;
-  badgeIcon?: string;
-  alt?: string;
-  buttonText?: string;
-  link?: string;
-  cardType?: string;
-  createAt?: Date | string | number;
-  duration: string | number;
-  language?: string;
-  level?: string;
-  type: string;
-}
-
 export const dataForprogramation: ProgramationCourses[] = [
   {
     title: 'Responsive Web Design',
@@ -126,7 +109,10 @@ export const dataForprogramation: ProgramationCourses[] = [
     description:
       "Ce cours t'apprend les langages HTML pour le contenu et CSS pour la conception, ainsi que la création de pages Web adaptatives pour différentes tailles d'écran.",
     duration: 120,
-    type: 'Cours'
+    type: 'Cours',
+    specification: 'Responsive Web Design',
+    enrolementCount: 0,
+    author: 'kadea'
   },
   {
     title: 'JavaScript Algorithms and Data Structures',
@@ -139,7 +125,10 @@ export const dataForprogramation: ProgramationCourses[] = [
     description:
       "Ce cours t'enseigne les bases de JavaScript pour rendre les pages interactives, ainsi que les algorithmes et structures de données en JavaScript, etc.",
     duration: 120,
-    type: 'Cours'
+    type: 'Cours',
+    specification: 'JavaScript Algorithms and Data Structures',
+    enrolementCount: 0,
+    author: 'kadea'
   }
 ];
 
@@ -528,8 +517,6 @@ export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
 export async function generateRavenTokenAcces(): Promise<unknown> {
   try {
     const response = await get('/generate-raven-token');
-    console.log(response);
-
     return response;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
@@ -546,14 +533,6 @@ export async function getDatabaseResource<T>(urlEndPoint: string) {
   return response;
 }
 
-interface RavenFetchCoursesDto {
-  token: string;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-  apiKey?: string;
-  currentPage?: number;
-}
 export const getRavenToken = async () => {
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
 
@@ -594,61 +573,34 @@ export const getRavenToken = async () => {
 
 //add for test
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 export const getRavenResources = async () => {
   const getReveanCourses = await getAwsCourses();
   return getReveanCourses;
 };
 export const getRavenPathResources = async () => {
-  const getReveanPathCourses = await getAwsPath();
+  const getReveanPathCourses = await getDataFromDb();
   return getReveanPathCourses;
 };
 
 //end getRavenResources
 
 export async function getAwsCourses() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
-  };
-  let response: unknown | RavenCourse[];
-
   try {
-    response = await get(
-      `/get-raven-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    const response = await get(`/get-raven-courses`);
+    console.log(response);
   } catch (error) {
-    response = null;
+    return [];
   }
 
-  return response;
+  return [];
 }
 export async function getAwsPath() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
-  };
-
   let response: unknown | RavenCourse[];
 
   try {
-    response = await get(
-      `/get-raven-path?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    response = await get(`/get-raven-path`);
   } catch (error) {
     response = null;
   }
@@ -709,6 +661,25 @@ export async function getAwsPath() {
   return [];
 }
 
+export async function updateEnrollment(courseUrl: string): Promise<void> {
+  try {
+    const response: RequestResponseModel = await get(
+      `/update-enrolement-raven?courseUrl=${courseUrl.replace(
+        /^http:/,
+        'https:'
+      )}`
+    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    if (response.success) {
+      console.log('✅ Enrollement mis à jour avec succès !');
+    } else {
+      console.error('⚠️ Erreur:', response.message);
+    }
+  } catch (error) {
+    console.error('❌ Erreur lors de la mise à jour de l’enrollement:', error);
+  }
+}
+
 //fonction permettant la combinaison de tous les cours notamment moodle et raven
 export const getAllRessources = async (): Promise<CombinedCourses[]> => {
   const moodleCourses = await getMoodleCourses();
@@ -740,83 +711,84 @@ export async function getAwsUserCoursesProgress(
   return response;
 }
 
-//test fetch
+//cette partie permet de récupérer les cours de l'utilisateur,
+//il y'a encore les érreurs qui reviennes, du coup il m'est judicieux de
+// mettre en commentaire pour eviter des erreur en production
 
-// Fonction pour obtenir un cookie par son nom
-function getCookie(name: string): string | undefined {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-
-  if (parts.length === 2) {
-    let token = parts.pop()?.split(';').shift() ?? undefined;
-    if (token) {
-      // Nettoyer le token en retirant 's%3A' si présent
-      token = token.replace('s%3A', '');
-      // Prendre seulement les trois premières parties du JWT
-      const tokenParts = token.split('.');
-      token = tokenParts.slice(0, 3).join('.');
-    }
-    return token;
-  }
-
-  return undefined;
-}
-
-interface CsrfResponse {
-  csrfToken: string;
+interface ResponseRaven {
+  success: boolean;
+  message: string;
+  coursesCount: number;
+  coourses?: RavenCourse[];
 }
 
 export async function saveDataOnDb() {
   try {
-    // Première étape : récupérer le token CSRF
-    const csrfResponse = await fetch('http://localhost:3000/csrf-token', {
-      credentials: 'include' // Important pour les cookies
-    });
-    const csrfData = (await csrfResponse.json()) as CsrfResponse;
-
-    const { csrfToken } = csrfData;
-
     const token = (await getRavenToken()) as RavenTokenData;
     const fromDate = '01-01-2023';
     const toDate = '11-11-2024';
 
-    const jwtToken = getCookie('jwt_access_token');
-    if (!jwtToken) {
-      console.error("Le JWT n'est pas disponible dans les cookies");
-      return;
-    }
+    if (token.token) {
+      // Construction de l'URL avec les paramètres de requête
+      const queryParams = new URLSearchParams({
+        awstoken: token.token,
+        fromdate: fromDate,
+        todate: toDate
+      });
 
-    const response = await fetch(
-      `http://localhost:3000/save-rave-courses?awstoken=${token.token}&fromdate=${fromDate}&todate=${toDate}`,
-      {
-        method: 'POST',
-        credentials: 'include', // Important pour les cookies
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'Content-Type': 'application/json',
-          Authorization: jwtToken,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'CSRF-Token': csrfToken, // Ajouter le token CSRF
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'X-CSRF-Token': csrfToken // Certaines implémentations utilisent cet en-tête
-        },
-        body: JSON.stringify({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          from_date: fromDate,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          to_date: toDate,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          _csrf: csrfToken // Inclure aussi dans le body
-        })
+      const response = await get<ResponseRaven>(
+        `/save-rave-courses?${queryParams.toString()}`
+      );
+
+      if (response.success) {
+        console.log('Data saved successfully:', response);
+      } else {
+        console.error(
+          "Erreur lors de l'enregistrement des données",
+          response.message
+        );
       }
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'enregistrement des données", error);
+  }
+}
+interface ResponseRaven {
+  success: boolean;
+  data: [];
+  error: string;
+}
+
+export async function getDataFromDb() {
+  try {
+    const response = await get<ResponseRaven>(
+      '/get-kinshasa-digital-raven-courses'
     );
 
-    if (response.ok) {
-      console.log('Data saved successfully:', response.json());
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+      throw new Error(response.error);
+    }
+
+    const courses = response.data as RavenCourse[];
+
+    return filterAndEnhanceCourses(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+export async function saveKadeaCoursesOnDb() {
+  try {
+    const response = await get<ResponseRaven>(`/save-kadea-courses`);
+
+    if (response.success) {
+      console.log('Data saved successfully:', response);
     } else {
       console.error(
-        "Erreur lors de l'enregistrement des données :",
-        response.statusText
+        "Erreur lors de l'enregistrement des données",
+        response.error
       );
     }
   } catch (error) {
@@ -824,14 +796,43 @@ export async function saveDataOnDb() {
   }
 }
 
-export async function getDataFromDb() {
-  // try {
-  //   const response = await get('/raven-get-course');
-  //   console.log(response);
-  // } catch (Error) {
-  //   console.error('Erreur lors de la récupération des données :', Error);
-  // }
+export async function getPopularRavenCourses() {
+  try {
+    const response = await get<ResponseRaven>('/get-populare-cours');
+
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+    }
+
+    const courses = response.data as RavenCourse[];
+
+    return filterAndEnhanceCourses(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
 }
+
+export async function getKadeaCourses() {
+  try {
+    const response = await get<ResponseRaven>('/get-kadea-courses');
+
+    if (!response.success) {
+      console.log('Error fetching courses:', response.error);
+      throw new Error(response.error);
+    }
+
+    const courses = response.data as ProgramationCourses[];
+    console.log(courses);
+
+    return courses;
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+//Elle finit ici
 
 ('/get-raven-user-progress');
 
@@ -942,6 +943,12 @@ export async function createUserRole(
 }
 
 /** PUT **/
+
+export async function getAOfUsersData() {
+  const response = await get('/get-all-users-data');
+
+  return response;
+}
 
 interface MyAbout {
   name: string;

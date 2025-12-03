@@ -172,7 +172,8 @@ export function getAllUsers(
           {
             where: filter,
             skip: (page - 1) * limit,
-            limit: limit * 1
+            limit: limit * 1,
+            order: 'id DESC'
           },
           (err, instance) => {
             if (err || isEmpty(instance)) {
@@ -198,6 +199,26 @@ export function getAllUsers(
   });
 }
 
+export function getAllOfUsers(User = loopback.getModelByType('User')) {
+  return new Promise((resolve, reject) => {
+    console.log('reception des données');
+    User.find(
+      {
+        limit: 0,
+        skip: 0,
+        where: {}, // si vous avez besoin de filtres spécifiques
+        order: 'id DESC' // pour trier les résultats
+      },
+      (err, instance) => {
+        if (err || isEmpty(instance)) {
+          return reject(err || 'No users found');
+        }
+
+        return resolve(instance);
+      }
+    );
+  });
+}
 export function countUserDocuments(
   filter,
   User = loopback.getModelByType('User')

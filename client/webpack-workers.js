@@ -57,9 +57,15 @@ module.exports = (env = {}) => {
               ]
             }
           }
+        },
+        {
+          test: /\.json$/,
+          loader: 'json-loader',
+          type: 'javascript/auto'
         }
       ]
     },
+
     plugins: [
       new CopyWebpackPlugin({
         patterns: ['../node_modules/sass.js/dist/sass.sync.js']
@@ -69,6 +75,12 @@ module.exports = (env = {}) => {
       }),
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer']
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+          // Add other environment variables here
+        }
       })
     ],
     resolve: {

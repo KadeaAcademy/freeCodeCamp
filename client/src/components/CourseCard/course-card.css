@@ -24,7 +24,7 @@
 }
 
 img {
-  width: 100%;
+  width: 25%;
   display: block;
 }
 
@@ -71,6 +71,7 @@ img {
   flex-direction: row;
   align-items: flex-start;
   gap: 0.3rem;
+  padding-top: 3%;
 }
 
 .level-card-parcours {
@@ -104,7 +105,7 @@ img {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 30.6rem;
+  /* height: 30.6rem; */
   align-items: stretch;
   justify-content: space-between;
 }
@@ -126,7 +127,7 @@ img {
   display: flex;
   align-items: center;
   align-items: stretch;
-  padding: 5%;
+  padding: 1%;
 }
 
 .card-course-detail-header {
@@ -138,6 +139,7 @@ img {
   align-items: center;
 
   height: auto;
+  padding: 0.5rem;
 }
 
 .card-course-detail-footer {
@@ -146,8 +148,9 @@ img {
 }
 
 .card-course-detail-logo {
-  width: 25%;
+  width: 80%;
   padding: 5%;
+  justify-content: start;
 }
 
 .clock {
@@ -327,6 +330,7 @@ img {
 
   .card-course-detail-item {
     line-height: normal !important;
+    padding: 1%;
   }
 
   .level-card-parcours {
@@ -354,6 +358,8 @@ img {
   .push {
     width: 17rem;
     gap: 6px;
+    display: flex;
+    padding-bottom: 0%;
   }
 
   .push__card {
@@ -396,6 +402,7 @@ p {
   flex-grow: 1;
 
   height: 20%;
+  padding: 0.5rem;
 }
 
 @media (max-width: 376px) {

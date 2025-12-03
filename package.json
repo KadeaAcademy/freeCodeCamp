@@ -79,7 +79,7 @@
     "seed:certified-user": "cross-env DEBUG=fcc:* node ./tools/scripts/seed/seedAuthUser certUser",
     "serve:client": "cd ./client && npm run serve",
     "serve:client-ci": "cd ./client && npm run serve-ci",
-    "start": "npm-run-all create:config -p develop:server serve:client",
+    "start": "npm-run-all create:config -p develop:server develop:client",
     "start-ci": "npm-run-all create:config -p start:server serve:client-ci",
     "start:server": "cd ./api-server && npm start",
     "storybook": "cd ./tools/ui-components && npm run storybook",
@@ -104,7 +104,9 @@
     "invariant": "2.2.4",
     "npm-run-all": "^4.1.5",
     "react-player": "^2.11.0",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "source-map": "^0.7.4",
+    "yoga-layout-prebuilt": "^1.10.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.17.0",

@@ -449,3 +449,138 @@ export interface UserFetchState {
   errored: boolean;
   error: string | null;
 }
+
+export type Member = {
+  id: string;
+  email: string;
+  name: string;
+  gender: string;
+  currentsSuperBlock: CurrentSuperBlock[];
+  groups: string[];
+  createAt: string;
+  phone: string;
+  whatsapp: string;
+  location: string;
+  role: string;
+};
+
+export type UserList = {
+  userList: Member[];
+  totalPages: number;
+  currentPage: number;
+  countUsers: number;
+};
+export type Group = {
+  id: string;
+  userGroupName: string;
+};
+export type GroupList = {
+  userGroupList: Group[];
+  totalPages: number;
+  currentPage: number;
+  countUsers: number;
+};
+
+export interface MemberProps {
+  member?: Member;
+  returnToTable: () => void;
+}
+
+export type MoodleUser = {
+  id: number;
+  email: string;
+};
+
+export type MoodleCourse = {
+  id: number;
+  displayname: string;
+  progress: number;
+};
+
+export type UserRole = {
+  id: string;
+  userRoleName: string;
+};
+export type RoleList = {
+  userRoleList: UserRole[];
+  totalPages: number;
+  currentPage: number;
+  countUsers: number;
+};
+
+export interface GetMembersParams {
+  currentPage: number;
+  groupMembers: string;
+  memberNameToSearch: string;
+  setMembers: (members: Member[]) => void;
+  setAllDataMembers: (allData: Member[]) => void;
+  setCountUsers: (count: number) => void;
+  setIsLoadingMember: (isLoading: boolean) => void;
+  setTotalPages: (totalPages: number) => void;
+  setCurrentPage: (currentPage: number) => void;
+  totalPages: number;
+}
+
+export interface GetAllGroupsParams {
+  currentPage: number;
+  setGroups: (groups: { id: string; userGroupName: string }[]) => void;
+}
+
+export interface AddUserParams {
+  event: React.ChangeEvent<HTMLInputElement>;
+  groupName: string;
+  userId: string[];
+  setCountMemberGroupUpdate: (count: number) => void;
+  countMemberGroupUpdate: number;
+  setupdating: (status: { isAddedStatus: boolean; message: string }) => void;
+}
+
+export interface ProgramationCourses {
+  isAvailable: boolean;
+  sameTab?: boolean;
+  external?: boolean;
+  description?: string;
+  title: string;
+  icon?: string;
+  sponsorIcon?: string;
+  badgeIcon?: string;
+  alt?: string;
+  buttonText?: string;
+  link?: string;
+  cardType?: string;
+  createAt?: Date | string | number;
+  duration: string | number;
+  language?: string;
+  level?: string;
+  type: string;
+  specification?: string;
+  enrolementCount?: number;
+  author?: string;
+  asset: string;
+}
+
+export type RequestResponseModel = {
+  success: boolean;
+  message: string;
+  request: string;
+};
+
+export interface ResponseRaven {
+  success: boolean;
+  data: [];
+  error: string;
+}
+
+export interface EnrollmentStat {
+  period: string;
+  count: number;
+  year: number;
+  month: number;
+}
+
+export interface YearFilterProps {
+  filteredYear: number;
+  onYearChange: (year: number) => void;
+  startYear?: number;
+  numberOfYears?: number;
+}

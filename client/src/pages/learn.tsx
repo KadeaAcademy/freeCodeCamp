@@ -14,12 +14,15 @@ import '../components/landing/landing.css';
 import { LearnLayout } from '../components/layouts';
 import Hero from '../components/landing/hero/hero';
 import VodacomBranding from '../components/landing/vodacom-branding-section/vodacom-branding';
-import RegistrationToAcademy from '../components/landing/components/registration-to-academy';
-import WhatWillYouLearn from '../components/landing/what-will-you-learn/what-will-you-learn';
-import HowWillYouLearn from '../components/landing/how-will-you-learn/how-will-you-learn';
-import WhatCanYouDo from '../components/landing/whatCanYouDo/what-can-you-do';
-import StartCOding from '../components/landing/start-coding/start-coding';
-import Partners from '../components/landing/partners/partners';
+// import RegistrationToAcademy from '../components/landing/components/registration-to-academy';
+// import WhatWillYouLearn from '../components/landing/what-will-you-learn/what-will-you-learn';
+// import HowWillYouLearn from '../components/landing/how-will-you-learn/how-will-you-learn';
+// import WhatCanYouDo from '../components/landing/whatCanYouDo/what-can-you-do';
+// import StartCOding from '../components/landing/start-coding/start-coding';
+// import Partners from '../components/landing/partners/partners';
+import LandingSignupForm from '../components/landing/signup-form/landing-signup-form';
+import LandingCampusTrainings from '../components/landing/campus-trainings/campus-trainings';
+import Formations from '../components/landing/formations/formations';
 
 interface FetchState {
   pending: boolean;
@@ -83,19 +86,31 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
           </Grid>
         </div>
 
-        <div className='as-seen-in'>
+        <div className=''>
           <Grid>
-            <RegistrationToAcademy />
+            <Formations />
           </Grid>
         </div>
 
-        <div className='dotted-bg'>
+        {/* <div className='dotted-bg'>
           <Grid>
             <WhatWillYouLearn isSignedIn={isSignedIn} />
           </Grid>
+        </div> */}
+
+        <div>
+          <Grid>
+            <LandingSignupForm />
+          </Grid>
         </div>
 
-        <HowWillYouLearn />
+        <div>
+          <Grid>
+            <LandingCampusTrainings />
+          </Grid>
+        </div>
+
+        {/* <HowWillYouLearn />
 
         <div className=''>
           <Grid>
@@ -103,13 +118,13 @@ function LearnPage({ isSignedIn }: LearnPageProps) {
           </Grid>
         </div>
 
-        <StartCOding isSignedIn={isSignedIn} />
+        <StartCOding isSignedIn={isSignedIn} /> */}
 
-        <div className=''>
+        {/* <div className=''>
           <Grid>
             <Partners />
           </Grid>
-        </div>
+        </div> */}
       </main>
     </LearnLayout>
   );

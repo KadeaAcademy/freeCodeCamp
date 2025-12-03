@@ -182,7 +182,7 @@ const CourseFilter = ({
                   style={{
                     display:
                       category.categoryId == -2 && valueOfTokenRaven == null
-                        ? 'none'
+                        ? 'block'
                         : 'block'
                   }}
                   disabled={currentCurrent == category.categoryId}

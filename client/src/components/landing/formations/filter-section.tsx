@@ -7,18 +7,18 @@ import {
   RavenCourse
 } from '../../../client-only-routes/show-courses';
 import {
-  dataForprogramation,
-  getAwsCourses,
+  getAwsPath,
+  getDataFromDb,
   getExternalResource,
   getMoodleCourses,
+  getPopularRavenCourses,
   getRavenPathResources,
-  getRavenToken,
-  ProgramationCourses
+  getRavenToken
 } from '../../../utils/ajax';
 import { splitArray } from '../../helpers';
 import sortCourses from '../../helpers/sort-course';
 import {
-  centraliseProgramationCours,
+  allDataCourses,
   centraliseRavenData,
   myDataMoodle,
   tokenRaven
@@ -63,9 +63,7 @@ const CoursesFilterSection = ({
   const [tokeFromRaven, setTokenFromRaven] = useRecoilState(tokenRaven);
   const setGetAllRavenData = useSetRecoilState(centraliseRavenData);
   const setGetAllDataMoodle = useSetRecoilState(myDataMoodle);
-  const setGetAllProgrammationCourses = useSetRecoilState(
-    centraliseProgramationCours
-  );
+  const setAllDataOfCourses = useSetRecoilState(allDataCourses);
 
   const getAllMoodleCourses = async () => {
     const moodleCatalogue = await getExternalResource<MoodleCourse[]>(
@@ -91,6 +89,7 @@ const CoursesFilterSection = ({
       setMoodleCourses(null);
     }
   };
+
   const filterByCategory = async (categoryId: number) => {
     setIsDataOnLoading(true);
     const moodleCourseFiltered: MoodleCoursesFiltered | null =
@@ -116,59 +115,47 @@ const CoursesFilterSection = ({
   };
   const getRavenResources = async () => {
     setIsDataOnLoading(true);
-    await getRavenToken();
+    const getReveanCourses = await getPopularRavenCourses();
 
-    const getReveanCourses = await getAwsCourses();
-    setRavenCourses(getReveanCourses as RavenCourse[]);
+    const ravenDataWhenEmptyDb = await getAwsPath();
+    setRavenCourses(
+      getReveanCourses.length > 0
+        ? (getReveanCourses.slice(0, 5) as unknown as RavenCourse[])
+        : (ravenDataWhenEmptyDb.slice(0, 5) as unknown as RavenCourse[])
+    );
     setIsDataOnLoading(false);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const storedProgrammationData =
-          localStorage.getItem('programmationData');
-        const storedMoodleData = localStorage.getItem('moodleData');
-        const storedRavenData = localStorage.getItem('ravenData');
-
-        if (storedProgrammationData) {
-          setGetAllProgrammationCourses(
-            JSON.parse(storedProgrammationData) as ProgramationCourses[]
-          );
+        const pathRavenCourses =
+          (await getDataFromDb()) as unknown as RavenCourse[];
+        const ravenDataWhenEmptyDb =
+          (await getAwsPath()) as unknown as RavenCourse[];
+        if (pathRavenCourses.length > 0) {
+          setGetAllRavenData(pathRavenCourses);
         } else {
-          const programmationData = dataForprogramation;
-          setGetAllProgrammationCourses(programmationData);
-          localStorage.setItem(
-            'programmationData',
-            JSON.stringify(programmationData)
-          );
+          setGetAllRavenData(ravenDataWhenEmptyDb);
+        }
+        const [moodleData, ravenData] = await Promise.all([
+          getMoodleCourses(),
+          getDataFromDb(),
+          getRavenPathResources()
+        ]);
+
+        if (moodleData) {
+          setGetAllDataMoodle(moodleData);
+          setAllDataOfCourses(moodleData);
         }
 
-        if (storedMoodleData && storedRavenData) {
-          setGetAllDataMoodle(
-            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
-          );
-          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
-        } else {
-          const [moodleData, ravenData, ravenPathData] = await Promise.all([
-            getMoodleCourses(),
-            getAwsCourses(),
-            getRavenPathResources()
-          ]);
+        if (ravenData) {
+          const unifiedRavenData = [
+            ...((ravenData as unknown as RavenCourse[]) || [])
+          ];
 
-          if (moodleData) {
-            setGetAllDataMoodle(moodleData);
-            localStorage.setItem('moodleData', JSON.stringify(moodleData));
-          }
-
-          if (ravenData || ravenPathData) {
-            const unifiedRavenData = [
-              ...((ravenData as RavenCourse[]) || []),
-              ...(ravenPathData || [])
-            ];
-            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
-            localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
-          }
+          setGetAllRavenData(unifiedRavenData);
+          setAllDataOfCourses(unifiedRavenData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -176,6 +163,8 @@ const CoursesFilterSection = ({
         setIsDataOnLoading(false);
       }
     };
+    void getDataFromDb();
+    void getPopularRavenCourses();
 
     void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -188,7 +177,6 @@ const CoursesFilterSection = ({
         id: 'popular',
         onClick: () => {
           setCurrentCategory('popular');
-          setMoodleCourses(null);
           void getRavenResources();
           void getAllMoodleCourses();
         }
@@ -219,8 +207,6 @@ const CoursesFilterSection = ({
     const getRaveToken = async () => {
       try {
         const ravenToken = await getRavenToken();
-        console.log(ravenToken);
-
         setTokenFromRaven(ravenToken as RavenTokenData);
         setValueOfToken(ravenToken as RavenTokenData);
       } catch (error) {
@@ -245,7 +231,7 @@ const CoursesFilterSection = ({
             currentCategory == topic.id ? 'active' : ''
           } ${
             topic.title == 'AWS' && memorizedToken == null
-              ? 'hide__category'
+              ? 'hide__categoryyt'
               : ''
           }`}
           key={i.valueOf()}

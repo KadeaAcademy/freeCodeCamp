@@ -41,7 +41,8 @@ module.exports = {
           '/unsubscribed/*',
           '/user/*',
           '/settings/*',
-          '/n/*'
+          '/n/*',
+          '/admin/*'
         ]
       }
     },

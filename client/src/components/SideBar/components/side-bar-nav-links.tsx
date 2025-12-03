@@ -12,16 +12,25 @@
 import React from 'react';
 import { TFunction, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faHome,
+  faFileAlt,
+  faUsers,
+  faUserFriends,
+  faUserShield,
+  faSignOutAlt,
+  faPlay
+} from '@fortawesome/free-solid-svg-icons';
 import { hardGoTo as navigate } from '../../../redux';
 import { Link } from '../../helpers';
 
-import './universal-nav-side-bar.css';
-import { saveDataOnDb } from '../../../utils/ajax';
+import '../modern-sidebar.css';
 
 export interface SideBarNavLinksProps {
   fetchState?: { pending: boolean };
-  i18n: Object;
-  t: TFunction;
+  i18n?: Object;
+  t?: TFunction;
   user?: Record<string, unknown>;
   navigate?: (location: string) => void;
 }
@@ -30,92 +39,182 @@ const mapDispatchToProps = {
   navigate
 };
 
-export const SideBarNavLinks = (): JSX.Element => {
-  const hundleUpdatedCourses = async () => {
-    try {
-      await saveDataOnDb();
-    } catch (error) {
-      console.error(
-        'erreur lors de la sauvegarde des données dans la bd:',
-        error.message,
-        error.name,
-        error.status
-      );
-    }
+export const SideBarNavLinks = (props: SideBarNavLinksProps): JSX.Element => {
+  const { navigate } = props;
+  const location =
+    typeof window !== 'undefined' ? window.location.pathname : '';
+
+  const isActive = (path: string): boolean => {
+    return location.includes(path);
   };
 
   return (
-    <div className=''>
-      <ul className='side-bar-nav-list'>
-        {/* <li className='side-bar-nav-item'>
-          <Link
-            className=''
-            key='admin-home'
-            to={'/admin/admin-home'}
-            activeClassName='active'
-          >
-            {'Accueil'}
-          </Link>
-        </li> */}
+    <div
+      className='modern-sidebar'
+      style={{
+        display: 'flex',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        zIndex: 1050,
+        visibility: 'visible',
+        opacity: 1
+      }}
+    >
+      {/* Header with Logo */}
+      <div className='modern-sidebar-header'>
+        <div className='modern-sidebar-logo'>
+          <FontAwesomeIcon icon={faPlay} />
+        </div>
+        <h1 className='modern-sidebar-title'>Kadea Online</h1>
+      </div>
 
-        <li className='side-bar-nav-item'>
-          <Link
-            className=''
-            key='admin-members'
-            to='/admin/all-members'
-            partiallyActive={true}
-            activeClassName='active'
-          >
-            {'Membres'}
-          </Link>
-        </li>
+      {/* Navigation */}
+      <nav className='modern-sidebar-nav'>
+        {/* General Navigation Section */}
+        <div className='modern-nav-section'>
+          <h2 className='modern-nav-section-title'>General Navigation</h2>
+          <ul className='modern-nav-list'>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/admin-home'
+                className={`modern-nav-link ${
+                  isActive('/admin/admin-home') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faHome} />
+                </span>
+                <span>Home</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-members'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-members') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUsers} />
+                </span>
+                <span>Membres</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-groups'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-groups') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUserFriends} />
+                </span>
+                <span>Groupes</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-roles'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-roles') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUserShield} />
+                </span>
+                <span>Rôles</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-        <li className='side-bar-nav-item'>
-          <Link
-            className=''
-            key='admin-home'
-            to={'/admin/all-groups'}
-            activeClassName='active'
-          >
-            {'Groupes'}
-          </Link>
-        </li>
-        <li className='side-bar-nav-item'>
-          <Link
-            className=''
-            key='admin-home'
-            to={'/admin/all-roles'}
-            activeClassName='active'
-          >
-            {'Rôles'}
-          </Link>
-        </li>
-      </ul>
-      <hr />
-      <ul className='side-bar-nav-list'>
-        <li className='side-bar-nav-item'>
-          <Link
-            className=''
-            key='kadea-online-home'
-            to='/'
-            activeClassName='active'
-          >
-            {'Kadea online app'}
-          </Link>
-        </li>
-        <li>
-          <button onClick={() => void hundleUpdatedCourses()}>
-            Update Courses
-          </button>
-        </li>
-      </ul>
+        {/* ADMIN Section */}
+        <div className='modern-nav-section'>
+          <h2 className='modern-nav-section-title'>ADMIN</h2>
+          <ul className='modern-nav-list'>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/admin-home'
+                className={`modern-nav-link ${
+                  isActive('/admin/admin-home') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faFileAlt} />
+                </span>
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-members'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-members') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUsers} />
+                </span>
+                <span>Users</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-groups'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-groups') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUserFriends} />
+                </span>
+                <span>Cohorts</span>
+              </Link>
+            </li>
+            <li className='modern-nav-item'>
+              <Link
+                to='/admin/all-roles'
+                className={`modern-nav-link ${
+                  isActive('/admin/all-roles') ? 'active' : ''
+                }`}
+              >
+                <span className='modern-nav-icon'>
+                  <FontAwesomeIcon icon={faUserShield} />
+                </span>
+                <span>Roles</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      {/* Footer with Logout */}
+      <div className='modern-sidebar-footer'>
+        <button
+          className='modern-logout-btn'
+          onClick={() => {
+            if (navigate) {
+              navigate('/');
+            }
+          }}
+        >
+          <span className='modern-logout-icon'>
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </span>
+          <span>Logout</span>
+        </button>
+      </div>
     </div>
   );
 };
 
 SideBarNavLinks.displayName = 'SideBarNavLinks';
 
-export default connect(
+const ConnectedSideBarNavLinks = connect(
   null,
   mapDispatchToProps
 )(withTranslation()(SideBarNavLinks));
+
+export default ConnectedSideBarNavLinks;

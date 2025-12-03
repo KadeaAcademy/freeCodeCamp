@@ -15,14 +15,15 @@ module.exports = {
       files.map(file => cli.isPathIgnored(file))
     );
     const lintableFiles = files.filter((_, i) => !ignoredIds[i]);
-    if (files.length > 10) {
+    // Always lint only the staged files, not the entire project
+    if (lintableFiles.length > 0) {
       completedStages.add('js');
-      return ['eslint --max-warnings=0 --cache --fix .', 'prettier --write .'];
-    } else {
       return [
         'eslint --max-warnings=0 --cache --fix ' + lintableFiles.join(' '),
         ...files.map(filename => `prettier --write '${filename}'`)
       ];
+    } else {
+      return files.map(filename => `prettier --write '${filename}'`);
     }
   },
   '*.!(js|ts|tsx)': files => {

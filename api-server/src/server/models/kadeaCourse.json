@@ -1,0 +1,85 @@
+{
+  "name": "KadeaCourse",
+  "plural": "KadeaCourses",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "short_description": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "default": "French"
+    },
+    "level": {
+      "type": "string",
+      "default": "debutant"
+    },
+    "sponsorIcon": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "default": true
+    },
+    "link": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "number"
+    },
+    "type": {
+      "type": "string"
+    },
+    "specification": {
+      "type": "string"
+    },
+    "createdDate": {
+      "type": "string"
+    },
+    "updatedDate": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "default": []
+    },
+    "enrolementCount": {
+      "type": "number",
+      "default": 0
+    },
+    "author": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "publicAccess",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

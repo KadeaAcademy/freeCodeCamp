@@ -32,6 +32,13 @@ const getRavenTokenRE = /^\/generate-raven-token/;
 const getRavenCourseRE = /^\/get-raven-courses/;
 const getRavenPathRE = /^\/get-raven-path/;
 const getRavenProgressRE = /^\/get-raven-user-progress/;
+//
+const getRavenDataFromDBRE = /^\/get-kinshasa-digital-raven-courses/;
+const enrolementAcountBRE = /^\/update-enrolement-raven/;
+const getPopularCoursesRE = /^\/get-populare-cours/;
+const getSavedKadeaCoursesRE = /^\/save-kadea-courses/;
+const getKadeaCoursesRE = /^\/get-kadea-courses/;
+const updateKadeaEnrolementRE = /^\/update-enrolement-kadea/;
 
 const _pathsAllowedREs = [
   authRE,
@@ -51,7 +58,13 @@ const _pathsAllowedREs = [
   getRavenTokenRE,
   getRavenCourseRE,
   getRavenPathRE,
-  getRavenProgressRE
+  getRavenProgressRE,
+  getRavenDataFromDBRE,
+  enrolementAcountBRE,
+  getPopularCoursesRE,
+  getSavedKadeaCoursesRE,
+  getKadeaCoursesRE,
+  updateKadeaEnrolementRE
 ];
 
 export function isAllowedPath(path, pathsAllowedREs = _pathsAllowedREs) {
