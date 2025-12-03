@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
@@ -13,13 +13,17 @@ interface PaginationProps {
   onNavigateToPage: (page: number) => void;
 }
 
-const PaginationControls: React.FC<PaginationProps> = ({
+// 1. Correction TS : On retire "React.FC" et on type directement les props
+const PaginationControls = ({
   currentPage,
   totalPages,
   onNavigateForward,
   onNavigueteBackward,
   onNavigateToPage
-}) => {
+}: PaginationProps) => {
+  // 2. Référence pour cibler le bouton actif
+  const activePageRef = useRef<HTMLSpanElement>(null);
+
   const maxVisiblePages = 10;
   const halfWindow = Math.floor(maxVisiblePages / 2);
 
@@ -34,6 +38,18 @@ const PaginationControls: React.FC<PaginationProps> = ({
     { length: endPage - startPage + 1 },
     (_, index) => startPage + index
   );
+
+  // 3. useEffect avec délai pour gérer le chargement et le changement via flèches
+  useEffect(() => {
+    // On attend 100ms pour être sûr que le re-render est fini
+    const timer = setTimeout(() => {
+      if (activePageRef.current) {
+        activePageRef.current.focus();
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [currentPage]);
 
   return (
     <div className='pagination-container'>
@@ -68,6 +84,8 @@ const PaginationControls: React.FC<PaginationProps> = ({
       {pages.map(page => (
         <span
           key={page}
+          // 4. IMPORTANT : On attache la ref ici
+          ref={currentPage === page ? activePageRef : null}
           role='button'
           tabIndex={0}
           className={`pagination__number ${

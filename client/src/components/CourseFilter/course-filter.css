@@ -74,6 +74,11 @@
   color: red;
 }
 
+.pagination__number:focus {
+  outline: 2px solid #e60000;
+  outline-offset: 2px;
+}
+
 .pagination-chevron {
   margin-left: 10px;
   cursor: pointer;
