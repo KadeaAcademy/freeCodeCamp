@@ -514,7 +514,8 @@ Table.responsive {
   height: 44px;
 }
 .upload-btn:hover {
-  background: #f9fafb;
+  background: #fff;
+  color: var(--text);
 }
 
 .table-wrapper {

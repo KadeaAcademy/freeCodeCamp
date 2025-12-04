@@ -313,6 +313,80 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     | 'date-desc'
   >('name-asc');
 
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      // Parse CSV/Excel file
+      const text = await file.text();
+      const lines = text.split('\n');
+
+      if (lines.length < 2) {
+        console.error('File is empty or has no data');
+        return;
+      }
+
+      // Parse header row
+      const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const emailIndex = header.indexOf('email');
+
+      if (emailIndex === -1) {
+        console.error('Email column is required');
+        return;
+      }
+
+      // Parse data rows
+      const userIds: string[] = [];
+      const userRole = 'user';
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        const values = line.split(',').map(v => v.trim());
+        const email = values[emailIndex];
+
+        if (!email || !validator.isEmail(email)) continue;
+
+        userIds.push(email);
+      }
+
+      // Send users to server
+      if (userIds.length > 0) {
+        const data = {
+          ids: userIds,
+          userRole: userRole
+        };
+        try {
+          const res = await addUserInRole(data);
+          if (res && res.isAdded) {
+            searchMember('');
+          }
+        } catch (err) {
+          console.error('Error adding users:', err);
+        }
+      }
+    } catch (err) {
+      console.error('Error processing file:', err);
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     searchMember(memberName);
@@ -1126,9 +1200,19 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               <Button
                 type='button'
                 className='standard-radius-5 btn-light upload-btn'
+                onClick={handleUploadClick}
               >
                 {'Upload (CSV/Excel)'}
               </Button>
+              <input
+                ref={fileInputRef}
+                type='file'
+                accept='.csv,.xlsx,.xls'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  void handleFileUpload(e);
+                }}
+                style={{ display: 'none' }}
+              />
             </div>
           </div>
         </form>
