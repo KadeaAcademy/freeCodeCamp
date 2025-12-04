@@ -396,7 +396,8 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   const [timeRange, setTimeRange] = useState<'4weeks' | 'alltime'>('4weeks');
   const [courseSource, setCourseSource] = useState<'all' | 'kadea' | 'moodle' | 'aws'>('all');
-  const groupSelectRef = React.useRef<HTMLSelectElement | null>(null);
+  // groupSelectRef removed: the inline chooser/select handles selection now
+  const [rolesList, setRolesList] = useState<UserRole[]>([]);
 
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -539,6 +540,17 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         }
       } catch (e) {
         // ignore failures; this is best-effort
+      }
+    })();
+    // preload roles when the component mounts so chooser opens instantly
+    void (async () => {
+      try {
+        const rolesResp = await getDatabaseResource<RoleList>(`/all-users-roles?page=1&limit=100`);
+        if (rolesResp && rolesResp.userRoleList) {
+          setRolesList(rolesResp.userRoleList);
+        }
+      } catch (e) {
+        // ignore
       }
     })();
   }, []);
@@ -817,7 +829,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         </div>
         <div className='filters-right'>
           <div className='filter-buttons' style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <div className='filter-group'>
+              <div className='filter-group'>
               <Button
                 className={timeRange === '4weeks' ? 'btn-black' : 'btn-light'}
                 onClick={() => setTimeRange('4weeks')}
@@ -835,22 +847,47 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                 onClick={() => {
                   try {
                     handleChangeGroup({ target: { value: 'all' } } as unknown as React.ChangeEvent<HTMLInputElement>);
-                    if (groupSelectRef.current) groupSelectRef.current.focus();
                   } catch (e) {
                     /* ignore */
                   }
                 }}
               >
-                {'All cohorts'}
+                {'All groups'}
               </Button>
-              <Button
-                className={'btn-light'}
-                onClick={() => {
-                  if (groupSelectRef.current) groupSelectRef.current.focus();
-                }}
-              >
-                {'My cohorts'}
-              </Button>
+
+              <div style={{ minWidth: 160 }}>
+                <FormControl
+                  componentClass='select'
+                  className='standard-radius-5'
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    const val = e.target.value;
+                    if (val) {
+                      handleChangeGroup({ target: { value: val } } as unknown as React.ChangeEvent<HTMLInputElement>);
+                    }
+                  }}
+                  style={{ background: '#f5f5f5', padding: '6px 8px' }}
+                >
+                  <option value=''>{'Choose group'}</option>
+                  {groups && groups.length > 0 && (
+                    <optgroup label='Groupes'>
+                      {groups.map(g => (
+                        <option key={`group-${g.userGroupName}`} value={g.userGroupName}>
+                          {g.userGroupName}
+                        </option>
+                      ))}
+                    </optgroup>
+                  )}
+                  {rolesList && rolesList.length > 0 && (
+                    <optgroup label='Rôles'>
+                      {rolesList.map(r => (
+                        <option key={`role-${r.userRoleName}`} value={r.userRoleName}>
+                          {r.userRoleName}
+                        </option>
+                      ))}
+                    </optgroup>
+                  )}
+                </FormControl>
+              </div>
             </div>
 
             <div style={{ width: 12 }} />
@@ -884,25 +921,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           </div>
         </div>
 
-        <div style={{ minWidth: 220 }}>
-          <FormControl
-            componentClass='select'
-            inputRef={(el: HTMLSelectElement) => {
-              groupSelectRef.current = el;
-            }}
-            onChange={handleChangeGroup}
-            value={currentGroupMembers}
-            className='standard-radius-5'
-          >
-            {groups.length !== 0 &&
-              groups.map(group => (
-                <option key={group.userGroupName} value={group.userGroupName}>
-                  {group.userGroupName === 'all' ? 'All groups' : group.userGroupName}
-                </option>
-              ))}
-          </FormControl>
-        </div>
+        {/* right-side all-groups select removed per UX request */}
       </div>
+
+      {/* chooser modal removed; choose-group is now an inline select in the filter bar */}
 
       <div className='stat-grid' style={{ marginBottom: '18px' }}>
         <div className='stat-card-tile accent-1'>
