@@ -553,7 +553,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         const d = new Date(member.createAt);
         if (!Number.isNaN(d.getTime())) {
           if (d.getFullYear() === nowYear) {
-            const month = d.toLocaleString(undefined, { month: 'short' });
+            const month = d.toLocaleString(undefined, {
+              month: 'short',
+              year: 'numeric'
+            });
             monthCounts[month] = (monthCounts[month] || 0) + 1;
           }
         }
@@ -585,7 +588,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         if (member.createAt) {
           const d = new Date(member.createAt);
           if (!Number.isNaN(d.getTime())) {
-            const month = d.toLocaleString(undefined, { month: 'short' });
+            const month = d.toLocaleString(undefined, {
+              month: 'short',
+              year: 'numeric'
+            });
             monthCounts[month] = (monthCounts[month] || 0) + 1;
           }
         }
@@ -808,7 +814,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               : ''}{' '}
             {renderTrendArrow(dashboardTrend.totalUsers)}
           </div>
-          <div className='prev'>{`Année: ${new Date().getFullYear()}`}</div>
+          <div className='prev' />
           <span
             className='pill'
             style={{
@@ -843,7 +849,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               : ''}{' '}
             {renderTrendArrow(dashboardTrend.totalUsers)}
           </div>
-          <div className='prev'>{`Année: ${new Date().getFullYear()}`}</div>
+          <div className='prev' />
           <span
             className='pill'
             style={{
