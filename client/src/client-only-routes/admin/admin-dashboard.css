@@ -73,6 +73,46 @@
   color: var(--text);
 }
 
+/* Filter buttons (time range, course source) */
+.filter-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0; /* we overlap borders so no visual gap */
+}
+.filter-buttons .btn {
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+  border: 1px solid #e6e9ef;
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+  /* overlap adjacent borders so they visually join */
+  margin-left: -1px;
+}
+.filter-buttons .btn:first-child {
+  margin-left: 0;
+}
+.filter-buttons .btn.btn-black {
+  background: var(--accent-dark);
+  color: #fff;
+}
+.filter-buttons .btn:hover {
+  /* only change background on hover; keep text color */
+  background-color: #f3f4f6;
+  color: inherit;
+}
+.filter-buttons .btn:focus {
+  outline: none;
+  box-shadow: 0 4px 14px rgba(2,6,23,0.08);
+}
+
+/* When buttons are grouped, make rounded ends look joined */
+.filter-buttons .btn:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.filter-buttons .btn:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+
 /* Stat cards grid */
 .stat-grid {
   display: flex;
@@ -90,6 +130,64 @@
   border-radius: 12px;
   box-shadow: var(--card-shadow);
   background: var(--accent-1);
+}
+
+/* Filter buttons styling */
+.filter-buttons {
+  display: flex;
+  align-items: center;
+}
+.filter-group {
+  display: inline-flex;
+  align-items: center;
+}
+.filter-group .btn {
+  /* Remove gap and make borders touch by overlapping 1px */
+  margin-left: -1px;
+  border-radius: 0;
+  border: 1px solid rgba(15,23,32,0.08);
+  background: #ffffff;
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(15, 23, 32, 0.06);
+  padding: 8px 12px;
+}
+.filter-group .btn:first-child {
+  margin-left: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.filter-group .btn:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.filter-group .btn:hover {
+  /* Do not change text color on hover, only visual background effect */
+  color: inherit;
+  background: rgba(255,255,255,0.95);
+}
+/* Selected variant: keep existing .btn-black but ensure text stays white */
+.filter-group .btn-black {
+  background: var(--accent-dark) !important;
+  color: #fff !important;
+}
+
+/* Small separator between groups already handled in inline JSX, ensure it doesn't collapse */
+.filter-buttons > div[style] { flex: none; }
+
+/* Header layout for indicators and filters */
+.filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filters-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.group-controls .group-select {
+  min-width: 180px;
 }
 .stat-card-tile .label {
   font-size: 0.9rem;

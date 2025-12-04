@@ -28,7 +28,8 @@ import {
   addUserInRole,
   getDatabaseResource,
   getExternalResource,
-  remoevUserInGRoup
+  remoevUserInGRoup,
+  getAwsCourses
 } from '../../utils/ajax';
 import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
@@ -393,6 +394,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   const [selectedGroupName, setSelectedGroupName] = useState<string>('');
 
+  const [timeRange, setTimeRange] = useState<'4weeks' | 'alltime'>('4weeks');
+  const [courseSource, setCourseSource] = useState<'all' | 'kadea' | 'moodle' | 'aws'>('all');
+  const groupSelectRef = React.useRef<HTMLSelectElement | null>(null);
+
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     searchMember(memberName);
@@ -525,6 +530,17 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
   useEffect(() => {
     void getAllMembersForExport();
+    // fetch AWS/Raven courses catalog once and store count for dashboard totals
+    void (async () => {
+      try {
+        const awsc = await getAwsCourses();
+        if (awsc && Array.isArray(awsc)) {
+          setDashboardStats(prev => ({ ...prev, totalCourses: (prev.totalCourses || 0) + awsc.length }));
+        }
+      } catch (e) {
+        // ignore failures; this is best-effort
+      }
+    })();
   }, []);
 
   useEffect(() => {
@@ -540,6 +556,39 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       return;
     }
 
+    // Apply UI filters: group, course source and time range
+    const baseMembers = membersForExpot || [];
+    const filteredMembers = baseMembers.filter(member => {
+      // Group filter
+      if (currentGroupMembers && currentGroupMembers !== 'all') {
+        if (!member.groups || !member.groups.includes(currentGroupMembers)) {
+          return false;
+        }
+      }
+
+      // Course source filter - heuristic:
+      // - 'kadea' => has local currentsSuperBlock data
+      // - 'moodle' or 'aws' => treated as 'external' (no local currentsSuperBlock)
+      if (courseSource === 'kadea') {
+        if (!member.currentsSuperBlock || member.currentsSuperBlock.length === 0) return false;
+      }
+      if (courseSource === 'moodle' || courseSource === 'aws') {
+        if (member.currentsSuperBlock && member.currentsSuperBlock.length > 0) return false;
+      }
+
+      // Time range filter for membership creation: if '4weeks', only include
+      // members created within the last 4 weeks for the purposes of the KPI set.
+      if (timeRange === '4weeks') {
+        if (!member.createAt) return false;
+        const created = new Date(member.createAt);
+        if (isNaN(created.getTime())) return false;
+        const fourWeeksAgo = new Date(Date.now() - 28 * 24 * 60 * 60 * 1000);
+        if (created.getTime() < fourWeeksAgo.getTime()) return false;
+      }
+
+      return true;
+    });
+
     const nowYear = new Date().getFullYear();
     const monthCounts: Record<string, number> = {};
     const courseSet = new Set<string>();
@@ -547,7 +596,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     let usersWithAtLeastOneCourse = 0;
     let usersWithProgressGE50 = 0;
 
-    membersForExpot.forEach(member => {
+    filteredMembers.forEach(member => {
       // Count by month for the current year first; fallback to any year if none
       if (member.createAt) {
         const d = new Date(member.createAt);
@@ -582,9 +631,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       }
     });
 
-    // If no counts for current year, compute overall month counts
+    // If no counts for current year, compute overall month counts from filtered set
     if (Object.keys(monthCounts).length === 0) {
-      membersForExpot.forEach(member => {
+      filteredMembers.forEach(member => {
         if (member.createAt) {
           const d = new Date(member.createAt);
           if (!Number.isNaN(d.getTime())) {
@@ -635,7 +684,8 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       let usersWithCourse = 0;
       let usersWithProg50 = 0;
 
-      membersForExpot.forEach(member => {
+      // iterate over the filtered members only
+      filteredMembers.forEach(member => {
         if (!member.createAt) return;
         const d = new Date(member.createAt);
         if (isNaN(d.getTime())) return;
@@ -664,6 +714,8 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       totalUsersSeries.push(total);
       usersWithAtLeastOneCourseSeries.push(usersWithCourse);
       usersWithProgressGE50Series.push(usersWithProg50);
+      // include any AWS/Raven courses as part of the total courses metric for the week
+      // (best-effort: AWS courses are global, so we add their count to the last week's bucket)
       totalCoursesSeries.push(courseSetWeek.size);
     });
 
@@ -696,7 +748,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       usersWithProgressGE50: computeTrend(usersWithProgressGE50Series),
       totalCourses: computeTrend(totalCoursesSeries)
     });
-  }, [membersForExpot]);
+  }, [membersForExpot, timeRange, courseSource, currentGroupMembers]);
 
   const renderSparkline = (data: number[] | undefined, color = '#10b981') => {
     if (!data || data.length === 0) return null;
@@ -759,6 +811,99 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   }, [currentGroupMembers, updatingMembersGroup]);
   return (
     <>
+      <div className='filters-header' style={{ marginBottom: 12 }}>
+        <div className='indicators-title'>
+          <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>Indicators</h2>
+        </div>
+        <div className='filters-right'>
+          <div className='filter-buttons' style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <div className='filter-group'>
+              <Button
+                className={timeRange === '4weeks' ? 'btn-black' : 'btn-light'}
+                onClick={() => setTimeRange('4weeks')}
+              >
+                {'Last 4 weeks'}
+              </Button>
+              <Button
+                className={timeRange === 'alltime' ? 'btn-black' : 'btn-light'}
+                onClick={() => setTimeRange('alltime')}
+              >
+                {'All-time'}
+              </Button>
+              <Button
+                className={'btn-light'}
+                onClick={() => {
+                  try {
+                    handleChangeGroup({ target: { value: 'all' } } as unknown as React.ChangeEvent<HTMLInputElement>);
+                    if (groupSelectRef.current) groupSelectRef.current.focus();
+                  } catch (e) {
+                    /* ignore */
+                  }
+                }}
+              >
+                {'All cohorts'}
+              </Button>
+              <Button
+                className={'btn-light'}
+                onClick={() => {
+                  if (groupSelectRef.current) groupSelectRef.current.focus();
+                }}
+              >
+                {'My cohorts'}
+              </Button>
+            </div>
+
+            <div style={{ width: 12 }} />
+
+            <div className='filter-group'>
+              <Button
+                className={courseSource === 'all' ? 'btn-black' : 'btn-light'}
+                onClick={() => setCourseSource('all')}
+              >
+                {'All courses'}
+              </Button>
+              <Button
+                className={courseSource === 'kadea' ? 'btn-black' : 'btn-light'}
+                onClick={() => setCourseSource('kadea')}
+              >
+                {'Kadea'}
+              </Button>
+              <Button
+                className={courseSource === 'moodle' ? 'btn-black' : 'btn-light'}
+                onClick={() => setCourseSource('moodle')}
+              >
+                {'Moodle'}
+              </Button>
+              <Button
+                className={courseSource === 'aws' ? 'btn-black' : 'btn-light'}
+                onClick={() => setCourseSource('aws')}
+              >
+                {'AWS'}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ minWidth: 220 }}>
+          <FormControl
+            componentClass='select'
+            inputRef={(el: HTMLSelectElement) => {
+              groupSelectRef.current = el;
+            }}
+            onChange={handleChangeGroup}
+            value={currentGroupMembers}
+            className='standard-radius-5'
+          >
+            {groups.length !== 0 &&
+              groups.map(group => (
+                <option key={group.userGroupName} value={group.userGroupName}>
+                  {group.userGroupName === 'all' ? 'All groups' : group.userGroupName}
+                </option>
+              ))}
+          </FormControl>
+        </div>
+      </div>
+
       <div className='stat-grid' style={{ marginBottom: '18px' }}>
         <div className='stat-card-tile accent-1'>
           <div className='label'>{`Nombre total d'utilisateurs`}</div>
@@ -806,7 +951,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           <div className='value'>
             {dashboardStats.monthMax
               ? `${dashboardStats.monthMax.month}`
-              : 'N/A'}
+              : 'Aucun'}
           </div>
           <div className='delta'>
             {dashboardStats.monthMax
@@ -841,7 +986,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           <div className='value'>
             {dashboardStats.monthMin
               ? `${dashboardStats.monthMin.month}`
-              : 'N/A'}
+              : 'Aucun'}
           </div>
           <div className='delta'>
             {dashboardStats.monthMin
