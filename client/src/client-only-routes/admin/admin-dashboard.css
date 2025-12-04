@@ -420,10 +420,7 @@ Table.responsive {
 /* List section under cards */
 .list-section {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
   padding: 16px;
-  box-shadow: var(--card-shadow);
 }
 
 .pagination-bar {
@@ -514,7 +511,6 @@ Table.responsive {
   color: var(--text);
   font-weight: 700;
   padding: 10px 12px;
-  box-shadow: var(--card-shadow);
   height: 44px;
 }
 .upload-btn:hover {
@@ -522,8 +518,6 @@ Table.responsive {
 }
 
 .table-wrapper {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
   overflow: hidden;
 }
 .simple-table {
@@ -549,15 +543,22 @@ Table.responsive {
   color: var(--muted-text);
   font-size: 0.9rem;
 }
-.edit-link {
-  background: none;
-  border: none;
-  color: var(--info);
-  font-weight: 700;
-  cursor: pointer;
+.text-link-button {
+  background: none !important;
+  border: none !important;
+  color: var(--info) !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  text-decoration: none !important;
 }
-.edit-link:hover {
-  text-decoration: none;
+.text-link-button:hover,
+.text-link-button:focus,
+.text-link-button:active {
+  background: none !important;
+  color: var(--info) !important;
+  text-decoration: none !important;
+  outline: none !important;
 }
 .table-loading,
 .table-empty {

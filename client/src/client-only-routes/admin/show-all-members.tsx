@@ -355,6 +355,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   ) => {
     const memberNameInputValue = event.target.value;
     setMemberName(memberNameInputValue);
+    searchMember(memberNameInputValue);
   };
 
   const getAllMembersForExport = async () => {
@@ -1168,7 +1169,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                       <td>{creationDate}</td>
                       <td>
                         <button
-                          className='edit-link'
+                          className='text-link-button'
                           type='button'
                           onClick={() => showMemberDetails(member)}
                         >
