@@ -17,7 +17,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faSearch,
-  faXmark,
   faCircleInfo
 } from '@fortawesome/free-solid-svg-icons';
 import validator from 'validator';
@@ -350,11 +349,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   }>({});
 
   type Trend = { dir: 'up' | 'down' | 'flat'; pct: number };
-
-  const handleClearSearchMemberInput = () => {
-    setMemberName('');
-    searchMember('');
-  };
 
   const handleChangeSearchMemberInput = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -1081,13 +1075,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   className='standard-radius-5 btn-black search-btn'
                 >
                   <FontAwesomeIcon icon={faSearch} />
-                </Button>
-                <Button
-                  type='button'
-                  className='standard-radius-5 btn-red search-btn'
-                  onClick={handleClearSearchMemberInput}
-                >
-                  <FontAwesomeIcon icon={faXmark} />
                 </Button>
               </div>
             </div>
