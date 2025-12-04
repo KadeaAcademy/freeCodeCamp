@@ -328,29 +328,11 @@ Table.responsive {
   border: none;
 }
 .btn-red {
-  background: var(--danger);
-  color: #fff;
-  border: none;
+  display: flex;
+  align-items: center;
+  margin: 12px 0 20px;
 }
 
-/* Pagination chevron */
-.pagination-chevron {
-  cursor: pointer;
-  color: var(--muted-text);
-  font-size: 1rem;
-}
-
-/* Responsive: wrap/stack stat cards on narrower screens */
-@media (max-width: 1200px) {
-  .stat-grid {
-    flex-wrap: wrap;
-  }
-  .stat-card-tile {
-    flex: 1 1 45%;
-    max-width: none;
-    min-width: 200px;
-  }
-}
 @media (max-width: 800px) {
   .stat-grid {
     flex-direction: column;
@@ -371,6 +353,49 @@ Table.responsive {
 .text-error {
   color: var(--danger);
 }
+
+/* Legend chip and spacing between header/legend/cards */
+.legend-row {
+  display: flex;
+  align-items: center;
+}
+.legend-text-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 99, 235, 0.08); /* light blue */
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.legend-text {
+  font-size: 1rem;
+  color: var(--info);
+  font-weight: 700;
+}
+.legend-icon-wrap {
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.legend-icon-bg {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #ffffff; /* white background behind icon */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.legend-icon {
+  color: #6b7280; /* gray icon color */
+  font-size: 12px; /* smaller icon */
+}
+
+/* Add breathing room between the three major rows */
+.filters-header { margin-bottom: 2rem; }
+.legend-row { margin-bottom: 2rem; }
+.stat-grid { margin-top: 0; }
 
 /* Role select tweaks */
 .select-role .role-input {

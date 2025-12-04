@@ -19,7 +19,8 @@ import {
   faChevronLeft,
   faChevronRight,
   faSearch,
-  faXmark
+  faXmark,
+  faCircleInfo
 } from '@fortawesome/free-solid-svg-icons';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import validator from 'validator';
@@ -924,9 +925,19 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         {/* right-side all-groups select removed per UX request */}
       </div>
 
-      {/* chooser modal removed; choose-group is now an inline select in the filter bar */}
+        {/* Legend above stat cards: text and icon are separate siblings */}
+        <div className='legend-row'>
+          <div className='legend-text-chip'>
+            <span className='legend-text'>{'Legend'}</span>
+          </div>
+          <div className='legend-icon-wrap' aria-hidden>
+            <div className='legend-icon-bg'>
+              <FontAwesomeIcon icon={faCircleInfo} className='legend-icon' />
+            </div>
+          </div>
+        </div>
 
-      <div className='stat-grid' style={{ marginBottom: '18px' }}>
+        <div className='stat-grid' style={{ marginBottom: '18px' }}>
         <div className='stat-card-tile accent-1'>
           <div className='label'>{`Nombre total d'utilisateurs`}</div>
           {renderSparkline(
