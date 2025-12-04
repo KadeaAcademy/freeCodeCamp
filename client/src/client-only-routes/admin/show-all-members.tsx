@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
-  faUsers,
   faSearch,
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
@@ -45,6 +44,7 @@ import {
 
 import { CurrentSuperBlock, User } from '../../redux/prop-types';
 import './admin-global.css';
+import './admin-dashboard.css';
 const { apiLocation, homeLocation, moodleApiBaseUrl, moodleApiToken } = envData;
 
 // TODO: update types for actions
@@ -399,6 +399,36 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   };
 
   const [membersForExpot, setMembersForExpot] = useState<Member[]>();
+  const [dashboardStats, setDashboardStats] = useState<{
+    totalUsers: number;
+    monthMax: { month: string; count: number } | null;
+    monthMin: { month: string; count: number } | null;
+    usersWithAtLeastOneCourse: number;
+    usersWithProgressGE50: number;
+    totalCourses: number;
+    series?: {
+      totalUsers: number[];
+      usersWithAtLeastOneCourse: number[];
+      usersWithProgressGE50: number[];
+      totalCourses: number[];
+    };
+  }>({
+    totalUsers: 0,
+    monthMax: null,
+    monthMin: null,
+    usersWithAtLeastOneCourse: 0,
+    usersWithProgressGE50: 0,
+    totalCourses: 0
+  });
+
+  const [dashboardTrend, setDashboardTrend] = useState<{
+    totalUsers?: { dir: 'up' | 'down' | 'flat'; pct: number };
+    usersWithAtLeastOneCourse?: { dir: 'up' | 'down' | 'flat'; pct: number };
+    usersWithProgressGE50?: { dir: 'up' | 'down' | 'flat'; pct: number };
+    totalCourses?: { dir: 'up' | 'down' | 'flat'; pct: number };
+  }>({});
+
+  type Trend = { dir: 'up' | 'down' | 'flat'; pct: number };
 
   const handleClearSearchMemberInput = () => {
     setMemberName('');
@@ -498,6 +528,222 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   }, []);
 
   useEffect(() => {
+    if (!membersForExpot || membersForExpot.length === 0) {
+      setDashboardStats({
+        totalUsers: 0,
+        monthMax: null,
+        monthMin: null,
+        usersWithAtLeastOneCourse: 0,
+        usersWithProgressGE50: 0,
+        totalCourses: 0
+      });
+      return;
+    }
+
+    const nowYear = new Date().getFullYear();
+    const monthCounts: Record<string, number> = {};
+    const courseSet = new Set<string>();
+
+    let usersWithAtLeastOneCourse = 0;
+    let usersWithProgressGE50 = 0;
+
+    membersForExpot.forEach(member => {
+      // Count by month for the current year first; fallback to any year if none
+      if (member.createAt) {
+        const d = new Date(member.createAt);
+        if (!Number.isNaN(d.getTime())) {
+          if (d.getFullYear() === nowYear) {
+            const month = d.toLocaleString(undefined, { month: 'short' });
+            monthCounts[month] = (monthCounts[month] || 0) + 1;
+          }
+        }
+      }
+
+      if (member.currentsSuperBlock && member.currentsSuperBlock.length > 0) {
+        usersWithAtLeastOneCourse += 1;
+        member.currentsSuperBlock.forEach(sb => {
+          if (sb.superBlockName) courseSet.add(sb.superBlockName);
+          if (
+            sb.totalChallenges &&
+            sb.totalCompletedChallenges &&
+            sb.totalChallenges > 0
+          ) {
+            const pct = sb.totalCompletedChallenges / sb.totalChallenges;
+            if (pct >= 0.5) {
+              usersWithProgressGE50 += 1;
+              // break out: count member once only
+              return;
+            }
+          }
+        });
+      }
+    });
+
+    // If no counts for current year, compute overall month counts
+    if (Object.keys(monthCounts).length === 0) {
+      membersForExpot.forEach(member => {
+        if (member.createAt) {
+          const d = new Date(member.createAt);
+          if (!Number.isNaN(d.getTime())) {
+            const month = d.toLocaleString(undefined, { month: 'short' });
+            monthCounts[month] = (monthCounts[month] || 0) + 1;
+          }
+        }
+      });
+    }
+
+    // Determine max/min months
+    let monthMax: { month: string; count: number } | null = null;
+    let monthMin: { month: string; count: number } | null = null;
+    Object.keys(monthCounts).forEach(m => {
+      const c = monthCounts[m];
+      if (!monthMax || c > monthMax.count) monthMax = { month: m, count: c };
+      if (!monthMin || c < monthMin.count) monthMin = { month: m, count: c };
+    });
+
+    setDashboardStats({
+      totalUsers: membersForExpot.length,
+      monthMax,
+      monthMin,
+      usersWithAtLeastOneCourse,
+      usersWithProgressGE50,
+      totalCourses: courseSet.size
+    });
+
+    // compute last 4 weeks series (cumulative snapshot at week end)
+    const now = new Date();
+    const seriesWeeks: Date[] = [];
+    for (let i = 3; i >= 0; i--) {
+      const d = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000);
+      seriesWeeks.push(d);
+    }
+
+    const totalUsersSeries: number[] = [];
+    const usersWithAtLeastOneCourseSeries: number[] = [];
+    const usersWithProgressGE50Series: number[] = [];
+    const totalCoursesSeries: number[] = [];
+
+    seriesWeeks.forEach(weekEnd => {
+      let total = 0;
+      const courseSetWeek = new Set<string>();
+      let usersWithCourse = 0;
+      let usersWithProg50 = 0;
+
+      membersForExpot.forEach(member => {
+        if (!member.createAt) return;
+        const d = new Date(member.createAt);
+        if (isNaN(d.getTime())) return;
+        if (d.getTime() <= weekEnd.getTime()) {
+          total += 1;
+          if (
+            member.currentsSuperBlock &&
+            member.currentsSuperBlock.length > 0
+          ) {
+            usersWithCourse += 1;
+            member.currentsSuperBlock.forEach(sb => {
+              if (sb.superBlockName) courseSetWeek.add(sb.superBlockName);
+              if (
+                sb.totalChallenges &&
+                sb.totalCompletedChallenges &&
+                sb.totalChallenges > 0
+              ) {
+                const pct = sb.totalCompletedChallenges / sb.totalChallenges;
+                if (pct >= 0.5) usersWithProg50 += 1;
+              }
+            });
+          }
+        }
+      });
+
+      totalUsersSeries.push(total);
+      usersWithAtLeastOneCourseSeries.push(usersWithCourse);
+      usersWithProgressGE50Series.push(usersWithProg50);
+      totalCoursesSeries.push(courseSetWeek.size);
+    });
+
+    setDashboardStats(prev => ({
+      ...prev,
+      series: {
+        totalUsers: totalUsersSeries,
+        usersWithAtLeastOneCourse: usersWithAtLeastOneCourseSeries,
+        usersWithProgressGE50: usersWithProgressGE50Series,
+        totalCourses: totalCoursesSeries
+      }
+    }));
+
+    const computeTrend = (arr: number[]): Trend => {
+      if (arr.length < 2) return { dir: 'flat', pct: 0 };
+      const last = arr[arr.length - 1];
+      const prev = arr[arr.length - 2];
+      if (prev === 0) {
+        return { dir: last > 0 ? 'up' : 'flat', pct: last === 0 ? 0 : 100 };
+      }
+      const pct = Math.round(((last - prev) / prev) * 100);
+      if (last > prev) return { dir: 'up', pct };
+      if (last < prev) return { dir: 'down', pct };
+      return { dir: 'flat', pct: 0 };
+    };
+
+    setDashboardTrend({
+      totalUsers: computeTrend(totalUsersSeries),
+      usersWithAtLeastOneCourse: computeTrend(usersWithAtLeastOneCourseSeries),
+      usersWithProgressGE50: computeTrend(usersWithProgressGE50Series),
+      totalCourses: computeTrend(totalCoursesSeries)
+    });
+  }, [membersForExpot]);
+
+  const renderSparkline = (data: number[] | undefined, color = '#10b981') => {
+    if (!data || data.length === 0) return null;
+    const w = 80;
+    const h = 28;
+    const max = Math.max(...data);
+    const min = Math.min(...data);
+    const range = max - min || 1;
+    const points = data.map((v, i) => {
+      const x = (i / (data.length - 1)) * w;
+      const y = h - ((v - min) / range) * h;
+      return `${x},${y}`;
+    });
+    const path = `M${points.join(' L ')}`;
+    return (
+      <svg width={w} height={h} className='sparkline' aria-hidden='true'>
+        <path
+          d={path}
+          fill='none'
+          stroke={color}
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </svg>
+    );
+  };
+
+  const renderTrendArrow = (
+    trend: { dir: 'up' | 'down' | 'flat'; pct: number } | undefined
+  ) => {
+    if (!trend) return null;
+    const { dir, pct } = trend;
+    let color = '#f97316';
+    if (dir === 'up') color = '#10b981';
+    if (dir === 'down') color = '#ef4444';
+    const rotate = dir === 'up' ? '0' : dir === 'down' ? '180' : '90';
+    return (
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <svg
+          width='12'
+          height='12'
+          viewBox='0 0 24 24'
+          style={{ transform: `rotate(${rotate}deg)`, color }}
+        >
+          <path d='M12 5l7 7H5z' fill={color} />
+        </svg>
+        <small style={{ color }}>{dir === 'flat' ? '0%' : `${pct}%`}</small>
+      </span>
+    );
+  };
+
+  useEffect(() => {
     return;
   }, [selectedGroupMembers]);
 
@@ -507,21 +753,199 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
   }, [currentGroupMembers, updatingMembersGroup]);
   return (
     <>
-      <Row>
-        <Col md={4} sm={12} xs={12}>
-          <div className='section-block-padding bg-secondary stat-card'>
-            <p>
-              <span className='fw-bold'>{`Nombre total d'utilisateurs`}</span>
-              <br />
-              <span className='h1 fw-bold'>{countUsers}</span>
-            </p>
-            <p>
-              <FontAwesomeIcon icon={faUsers} className='icon-big' />
-            </p>
+      <div className='stat-grid' style={{ marginBottom: '18px' }}>
+        <div className='stat-card-tile accent-1'>
+          <div className='label'>{`Nombre total d'utilisateurs`}</div>
+          {renderSparkline(
+            dashboardStats.series?.totalUsers,
+            dashboardTrend.totalUsers?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.totalUsers?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>
+            {dashboardStats.totalUsers || countUsers || 0}
           </div>
-          <Spacer size={1} />
-        </Col>
-      </Row>
+          <div className='delta'>
+            {`Total utilisateurs récupérés`}{' '}
+            {renderTrendArrow(dashboardTrend.totalUsers)}
+          </div>
+          <div className='prev'>{`Affiché: ${
+            countUsers ?? '-'
+          } utilisateurs / page`}</div>
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.totalUsers?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.totalUsers?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+
+        <div className='stat-card-tile accent-2'>
+          <div className='label'>{`Mois avec le plus d'inscriptions`}</div>
+          {renderSparkline(
+            dashboardStats.series?.totalUsers,
+            dashboardTrend.totalUsers?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.totalUsers?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>
+            {dashboardStats.monthMax
+              ? `${dashboardStats.monthMax.month}`
+              : 'N/A'}
+          </div>
+          <div className='delta'>
+            {dashboardStats.monthMax
+              ? ` ${dashboardStats.monthMax.count} inscrits`
+              : ''}{' '}
+            {renderTrendArrow(dashboardTrend.totalUsers)}
+          </div>
+          <div className='prev'>{`Année: ${new Date().getFullYear()}`}</div>
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.totalUsers?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.totalUsers?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+
+        <div className='stat-card-tile accent-3'>
+          <div className='label'>{`Mois avec le moins d'inscriptions`}</div>
+          {renderSparkline(
+            dashboardStats.series?.totalUsers,
+            dashboardTrend.totalUsers?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.totalUsers?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>
+            {dashboardStats.monthMin
+              ? `${dashboardStats.monthMin.month}`
+              : 'N/A'}
+          </div>
+          <div className='delta'>
+            {dashboardStats.monthMin
+              ? ` ${dashboardStats.monthMin.count} inscrits`
+              : ''}{' '}
+            {renderTrendArrow(dashboardTrend.totalUsers)}
+          </div>
+          <div className='prev'>{`Année: ${new Date().getFullYear()}`}</div>
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.totalUsers?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.totalUsers?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+
+        <div className='stat-card-tile accent-4'>
+          <div className='label'>{`Utilisateurs ayant suivi ≥1 cours`}</div>
+          {renderSparkline(
+            dashboardStats.series?.usersWithAtLeastOneCourse,
+            dashboardTrend.usersWithAtLeastOneCourse?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.usersWithAtLeastOneCourse?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>
+            {dashboardStats.usersWithAtLeastOneCourse}
+          </div>
+          <div className='delta'>
+            {`Utilisateurs totaux ayant au moins un cours`}{' '}
+            {renderTrendArrow(dashboardTrend.usersWithAtLeastOneCourse)}
+          </div>
+          <div className='prev' />
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.usersWithAtLeastOneCourse?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.usersWithAtLeastOneCourse?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+
+        <div className='stat-card-tile accent-5'>
+          <div className='label'>{`Utilisateurs ≥50% progression`}</div>
+          {renderSparkline(
+            dashboardStats.series?.usersWithProgressGE50,
+            dashboardTrend.usersWithProgressGE50?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.usersWithProgressGE50?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>{dashboardStats.usersWithProgressGE50}</div>
+          <div className='delta'>
+            {`Progression >= 50% (Kadea)`}{' '}
+            {renderTrendArrow(dashboardTrend.usersWithProgressGE50)}
+          </div>
+          <div className='prev' />
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.usersWithProgressGE50?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.usersWithProgressGE50?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+
+        <div className='stat-card-tile accent-1'>
+          <div className='label'>{`Nombre total de cours (distincts)`}</div>
+          {renderSparkline(
+            dashboardStats.series?.totalCourses,
+            dashboardTrend.totalCourses?.dir === 'up'
+              ? '#10b981'
+              : dashboardTrend.totalCourses?.dir === 'down'
+              ? '#ef4444'
+              : '#f97316'
+          )}
+          <div className='value'>{dashboardStats.totalCourses}</div>
+          <div className='delta'>
+            {`Cours uniques trouvés`}{' '}
+            {renderTrendArrow(dashboardTrend.totalCourses)}
+          </div>
+          <div className='prev' />
+          <span
+            className='pill'
+            style={{
+              background:
+                dashboardTrend.totalCourses?.dir === 'up'
+                  ? '#10b981'
+                  : dashboardTrend.totalCourses?.dir === 'down'
+                  ? '#ef4444'
+                  : '#f97316'
+            }}
+          />
+        </div>
+      </div>
       <Row>
         <Col md={6} sm={12} xs={12}>
           <div className=''>

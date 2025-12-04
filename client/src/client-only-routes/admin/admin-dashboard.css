@@ -1,0 +1,245 @@
+:root {
+  /* Palette inspired by dashboard image */
+  --bg: #ffffff;
+  --muted: #f6f7fb;
+  --text: #0f1720;
+  --muted-text: #6b7280;
+  --card-radius: 12px;
+  --card-shadow: 0 6px 18px rgba(15, 23, 32, 0.06);
+  --accent-dark: #0b1220; /* buttons */
+  --accent-1: #fde8ec; /* pink */
+  --accent-2: #e6fbf2; /* mint */
+  --accent-3: #fff7e6; /* yellow */
+  --accent-4: #fff0f4; /* light salmon */
+  --accent-5: #f7f7fb; /* neutral */
+  --success: #16a34a;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+
+/* General layout tweaks for admin dashboard area */
+.section-block-padding.bg-secondary.stat-card {
+  background: linear-gradient(180deg, var(--accent-5), var(--accent-5));
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 20px 18px;
+  color: var(--text);
+}
+
+.stat-card p {
+  margin: 0;
+}
+.stat-card .h1 {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* Dashboard header */
+.big-subheading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px 0;
+}
+
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Top pill buttons */
+.pill-buttons {
+  display: flex;
+  gap: 10px;
+}
+.pill-buttons .btn {
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: none;
+}
+.pill-buttons .btn-black {
+  background: var(--accent-dark);
+  color: #fff;
+  border: none;
+}
+.pill-buttons .btn-black:hover {
+  opacity: 0.95;
+}
+.pill-buttons .btn-light {
+  background: #fff;
+  border: 1px solid #e6e9ef;
+  color: var(--text);
+}
+
+/* Stat cards grid */
+.stat-grid {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.stat-card-tile {
+  flex: 1 1 240px;
+  min-width: 200px;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  background: var(--accent-1);
+}
+.stat-card-tile .label {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  margin-bottom: 6px;
+}
+.stat-card-tile .value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.stat-card-tile .delta {
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+.stat-card-tile .prev {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  margin-top: 6px;
+}
+
+/* Individual card colors (override backgrounds) */
+.stat-card-tile.accent-1 {
+  background: var(--accent-1);
+}
+.stat-card-tile.accent-2 {
+  background: var(--accent-2);
+}
+.stat-card-tile.accent-3 {
+  background: var(--accent-3);
+}
+.stat-card-tile.accent-4 {
+  background: var(--accent-4);
+}
+.stat-card-tile.accent-5 {
+  background: linear-gradient(180deg, #f7f7fb, #ffffff);
+}
+
+.stat-card-tile .sparkline {
+  height: 28px;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+.stat-card-tile .pill {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  float: right;
+}
+
+/* Search bar */
+.search-bar {
+  gap: 8px;
+}
+.search-bar .standard-radius-5 {
+  border-radius: 8px;
+}
+.Export-section {
+  margin-top: 12px;
+}
+
+/* Table tweaks */
+Table.responsive {
+  background: transparent;
+}
+.action-btn-detail {
+  background: transparent;
+  border: none;
+  color: var(--info);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.action-btn-detail:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+/* Progress bars */
+.progress-bar-wrap {
+  background: #f3f4f6;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  padding: 4px;
+}
+.progress-bar-background {
+  color: var(--muted-text);
+  padding: 8px 10px;
+}
+.progress-bar-percent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.progress-bar-foreground {
+  padding-left: 8px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Buttons group in add/remove */
+.btn-group .btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.btn-black {
+  background: var(--accent-dark);
+  color: #fff;
+  border: none;
+}
+.btn-red {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+}
+
+/* Pagination chevron */
+.pagination-chevron {
+  cursor: pointer;
+  color: var(--muted-text);
+  font-size: 1rem;
+}
+
+/* Responsive: stack stat cards on narrow screens */
+@media (max-width: 800px) {
+  .stat-grid {
+    flex-direction: column;
+  }
+}
+
+/* Minor helpers to keep compatibility with existing classes */
+.none-help-block {
+  display: none;
+}
+.text-success {
+  color: var(--success);
+}
+.text-error {
+  color: var(--danger);
+}
+
+/* Role select tweaks */
+.select-role .role-input {
+  width: auto;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Export button style */
+.Export-section .btn-black {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
