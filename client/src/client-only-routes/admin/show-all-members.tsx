@@ -3,13 +3,12 @@ import {
   Col,
   Table,
   FormGroup,
-  ControlLabel,
   FormControl,
   HelpBlock,
   Button
   // InputGroup
 } from '@freecodecamp/react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Helmet from 'react-helmet';
 // import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -17,19 +16,15 @@ import { createSelector } from 'reselect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
-  faChevronRight,
   faSearch,
   faXmark,
   faCircleInfo
 } from '@fortawesome/free-solid-svg-icons';
-import { mkConfig, generateCsv, download } from 'export-to-csv';
 import validator from 'validator';
 import {
-  addUserInGRoup,
   addUserInRole,
   getDatabaseResource,
   getExternalResource,
-  remoevUserInGRoup,
   getAwsCourses
 } from '../../utils/ajax';
 import envData from '../../../../config/env.json';
@@ -117,10 +112,6 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
   const [memberNameToSearch, setMemberNameToSearch] = useState<string>('');
   const [groupMembers, setGroupMembers] = useState<string>('all');
   const [groups, setGroups] = useState<Group[]>([]);
-  const [updating, setupdating] =
-    useState<{ isAddedStatus: boolean; message: string }>();
-  const [countMemberGroupUpdate, setCountMemberGroupUpdate] =
-    useState<number>(1);
   const [isLoadingMember, setIsLoadingMember] = useState<boolean>(false);
   // const data={
   //   id:"64d39b958b1fd17adc0e8f28",
@@ -206,71 +197,6 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
 
   // };
 
-  const addUser = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    groupName: string,
-    userId: string[]
-  ) => {
-    event.preventDefault();
-    const data = {
-      ids: userId,
-      userGroup: groupName
-    };
-
-    if (userId.length !== 0) {
-      let res;
-      void (async () => {
-        res = await addUserInGRoup(data);
-
-        if (res && res.isAdded) {
-          setCountMemberGroupUpdate(countMemberGroupUpdate + 1);
-
-          setupdating({
-            isAddedStatus: res.isAdded,
-            message: res.message
-          });
-          setTimeout(() => {
-            setupdating({
-              isAddedStatus: false,
-              message: ''
-            });
-          }, 5000);
-        }
-      })();
-    }
-  };
-
-  const removeUser = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    userIds: string[],
-    groupName: string
-  ) => {
-    event.preventDefault();
-    const data = {
-      ids: userIds,
-      userGroup: groupName
-    };
-
-    let res;
-    void (async () => {
-      res = await remoevUserInGRoup(data);
-      setCountMemberGroupUpdate(countMemberGroupUpdate + 1);
-
-      if (res && res.isRemoved) {
-        setupdating({
-          isAddedStatus: res.isRemoved,
-          message: res.message
-        });
-        setTimeout(() => {
-          setupdating({
-            isAddedStatus: false,
-            message: ''
-          });
-        }, 5000);
-      }
-    })();
-  };
-
   useEffect(() => {
     void getAllGroups();
 
@@ -280,7 +206,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
       // setGroupMembers('all');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, groupMembers, memberNameToSearch, countMemberGroupUpdate]);
+  }, [currentPage, groupMembers, memberNameToSearch]);
 
   if (showLoading) {
     return <Loader fullScreen={true} />;
@@ -327,10 +253,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
             showMemberDetails={showMemberDetails}
             handleChangeGroup={handleChangeGroupMembers}
             searchMember={searchMember}
-            addUsers={addUser}
-            removeUsers={removeUser}
             currentGroupMembers={groupMembers}
-            updatingMembersGroup={updating}
             isLoadingMemberState={isLoadingMember}
           />
         ) : (
@@ -354,17 +277,6 @@ interface TableMembersProps {
   handleChangeGroup: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
   searchMember: (memberName: string) => void;
-  addUsers: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    groupName: string,
-    userId: string[]
-  ) => void;
-  removeUsers: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    userIds: string[],
-    groupName: string
-  ) => void;
-  updatingMembersGroup?: { isAddedStatus: boolean; message: string };
 
   isLoadingMemberState: boolean;
 }
@@ -381,24 +293,26 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     showMemberDetails,
     handleChangeGroup,
     searchMember,
-    addUsers,
-    removeUsers,
-    updatingMembersGroup,
-
     isLoadingMemberState
   } = props;
 
   const [memberName, setMemberName] = useState<string>('');
-  const [selectedGroupMembers, setSelectedGroupMembers] = useState<string[]>(
-    []
-  );
-
-  const [selectedGroupName, setSelectedGroupName] = useState<string>('');
 
   const [timeRange, setTimeRange] = useState<'4weeks' | 'alltime'>('4weeks');
-  const [courseSource, setCourseSource] = useState<'all' | 'kadea' | 'moodle' | 'aws'>('all');
+  const [courseSource, setCourseSource] = useState<
+    'all' | 'kadea' | 'moodle' | 'aws'
+  >('all');
   // groupSelectRef removed: the inline chooser/select handles selection now
   const [rolesList, setRolesList] = useState<UserRole[]>([]);
+  const [roleFilter, setRoleFilter] = useState<string>('all');
+  const [sortOption, setSortOption] = useState<
+    | 'name-asc'
+    | 'name-desc'
+    | 'role-asc'
+    | 'role-desc'
+    | 'date-asc'
+    | 'date-desc'
+  >('name-asc');
 
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -449,42 +363,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     setMemberName(memberNameInputValue);
   };
 
-  const handleChangeGroupName = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const groupMembersInput = event.target.value.slice();
-    setSelectedGroupName(groupMembersInput);
-  };
-  const handleSelectedGroupMembers = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const isMemberCheked = selectedGroupMembers.find(
-      selectedGroupMemberId =>
-        selectedGroupMemberId == event.target.value.slice()
-    );
-    if (isMemberCheked) {
-      const selectedGroupMembersFiltered = selectedGroupMembers.filter(
-        selectedGroupMember => {
-          return selectedGroupMember != event.target.value.slice();
-        }
-      );
-      setSelectedGroupMembers([...selectedGroupMembersFiltered]);
-    } else {
-      setSelectedGroupMembers([
-        ...selectedGroupMembers,
-        event.target.value.slice()
-      ]);
-    }
-  };
-
-  const isMemberCheked = (memberId: string): boolean => {
-    const isMemberCheked = selectedGroupMembers.find(
-      selectedGroupMemberId => selectedGroupMemberId == memberId
-    );
-    return isMemberCheked ? true : false;
-  };
-
   const getAllMembersForExport = async () => {
     const memberList = await getDatabaseResource<UserList>(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -501,35 +379,6 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     return date.toLocaleString();
   };
 
-  const exportUsers = (members: Member[]) => {
-    const csvConfig = mkConfig({ useKeysAsHeaders: true });
-    const mockData = members.map(member => {
-      return {
-        Email: member.email,
-        Nom: member.name,
-        Telephone: member.phone,
-        Whatsapp: member.whatsapp,
-        Genre: member.gender,
-        Ville: member.location,
-        DateInscription:
-          new Date(member.createAt) > new Date(new Date().getTime() - 120000)
-            ? ''
-            : dateFormat(member.createAt),
-        coursSuivis:
-          member.currentsSuperBlock.length > 0
-            ? member.currentsSuperBlock
-                .map(currentSuperBlock => {
-                  return currentSuperBlock.superBlockName;
-                })
-                .join(',')
-            : 'Aucun'
-      };
-    });
-
-    const csv = generateCsv(csvConfig)(mockData);
-    download(csvConfig)(csv);
-  };
-
   useEffect(() => {
     void getAllMembersForExport();
     // fetch AWS/Raven courses catalog once and store count for dashboard totals
@@ -537,7 +386,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       try {
         const awsc = await getAwsCourses();
         if (awsc && Array.isArray(awsc)) {
-          setDashboardStats(prev => ({ ...prev, totalCourses: (prev.totalCourses || 0) + awsc.length }));
+          setDashboardStats(prev => ({
+            ...prev,
+            totalCourses: (prev.totalCourses || 0) + awsc.length
+          }));
         }
       } catch (e) {
         // ignore failures; this is best-effort
@@ -546,7 +398,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     // preload roles when the component mounts so chooser opens instantly
     void (async () => {
       try {
-        const rolesResp = await getDatabaseResource<RoleList>(`/all-users-roles?page=1&limit=100`);
+        const rolesResp = await getDatabaseResource<RoleList>(
+          `/all-users-roles?page=1&limit=100`
+        );
         if (rolesResp && rolesResp.userRoleList) {
           setRolesList(rolesResp.userRoleList);
         }
@@ -583,10 +437,15 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       // - 'kadea' => has local currentsSuperBlock data
       // - 'moodle' or 'aws' => treated as 'external' (no local currentsSuperBlock)
       if (courseSource === 'kadea') {
-        if (!member.currentsSuperBlock || member.currentsSuperBlock.length === 0) return false;
+        if (
+          !member.currentsSuperBlock ||
+          member.currentsSuperBlock.length === 0
+        )
+          return false;
       }
       if (courseSource === 'moodle' || courseSource === 'aws') {
-        if (member.currentsSuperBlock && member.currentsSuperBlock.length > 0) return false;
+        if (member.currentsSuperBlock && member.currentsSuperBlock.length > 0)
+          return false;
       }
 
       // Time range filter for membership creation: if '4weeks', only include
@@ -814,23 +673,59 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     );
   };
 
-  useEffect(() => {
-    return;
-  }, [selectedGroupMembers]);
-
-  useEffect(() => {
-    setSelectedGroupMembers([]);
-    setSelectedGroupName('');
-  }, [currentGroupMembers, updatingMembersGroup]);
+  const displayedMembers = useMemo(() => {
+    if (!members) return [];
+    let list = [...members];
+    if (roleFilter !== 'all') {
+      list = list.filter(
+        m => (m.role || '').toLowerCase() === roleFilter.toLowerCase()
+      );
+    }
+    const cmpStr = (a: string, b: string) =>
+      (a || '').localeCompare(b || '', undefined, { sensitivity: 'base' });
+    const cmpDate = (a?: string, b?: string) => {
+      const da = a ? new Date(a).getTime() : 0;
+      const db = b ? new Date(b).getTime() : 0;
+      return da - db;
+    };
+    switch (sortOption) {
+      case 'name-asc':
+        list.sort((a, b) => cmpStr(a.name, b.name));
+        break;
+      case 'name-desc':
+        list.sort((a, b) => cmpStr(b.name, a.name));
+        break;
+      case 'role-asc':
+        list.sort((a, b) => cmpStr(a.role, b.role));
+        break;
+      case 'role-desc':
+        list.sort((a, b) => cmpStr(b.role, a.role));
+        break;
+      case 'date-asc':
+        list.sort((a, b) => cmpDate(a.createAt, b.createAt));
+        break;
+      case 'date-desc':
+        list.sort((a, b) => cmpDate(b.createAt, a.createAt));
+        break;
+      default:
+        break;
+    }
+    return list;
+  }, [members, roleFilter, sortOption]);
   return (
     <>
       <div className='filters-header' style={{ marginBottom: 12 }}>
         <div className='indicators-title'>
-          <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>Indicators</h2>
+          <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>
+            Indicators
+          </h2>
         </div>
         <div className='filters-right'>
-          <div className='filter-buttons' style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <div className='filter-group'>
+          <div
+            className='filter-buttons'
+            style={{ display: 'flex', gap: 8, alignItems: 'center' }}
+          >
+            <div className='filter-group'>
               <Button
                 className={timeRange === '4weeks' ? 'btn-black' : 'btn-light'}
                 onClick={() => setTimeRange('4weeks')}
@@ -847,7 +742,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                 className={'btn-light'}
                 onClick={() => {
                   try {
-                    handleChangeGroup({ target: { value: 'all' } } as unknown as React.ChangeEvent<HTMLInputElement>);
+                    handleChangeGroup({
+                      target: { value: 'all' }
+                    } as unknown as React.ChangeEvent<HTMLInputElement>);
                   } catch (e) {
                     /* ignore */
                   }
@@ -863,7 +760,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                     const val = e.target.value;
                     if (val) {
-                      handleChangeGroup({ target: { value: val } } as unknown as React.ChangeEvent<HTMLInputElement>);
+                      handleChangeGroup({
+                        target: { value: val }
+                      } as unknown as React.ChangeEvent<HTMLInputElement>);
                     }
                   }}
                   style={{ background: '#f5f5f5', padding: '6px 8px' }}
@@ -872,7 +771,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   {groups && groups.length > 0 && (
                     <optgroup label='Groupes'>
                       {groups.map(g => (
-                        <option key={`group-${g.userGroupName}`} value={g.userGroupName}>
+                        <option
+                          key={`group-${g.userGroupName}`}
+                          value={g.userGroupName}
+                        >
                           {g.userGroupName}
                         </option>
                       ))}
@@ -881,7 +783,10 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                   {rolesList && rolesList.length > 0 && (
                     <optgroup label='Rôles'>
                       {rolesList.map(r => (
-                        <option key={`role-${r.userRoleName}`} value={r.userRoleName}>
+                        <option
+                          key={`role-${r.userRoleName}`}
+                          value={r.userRoleName}
+                        >
                           {r.userRoleName}
                         </option>
                       ))}
@@ -907,7 +812,9 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                 {'Kadea'}
               </Button>
               <Button
-                className={courseSource === 'moodle' ? 'btn-black' : 'btn-light'}
+                className={
+                  courseSource === 'moodle' ? 'btn-black' : 'btn-light'
+                }
                 onClick={() => setCourseSource('moodle')}
               >
                 {'Moodle'}
@@ -925,19 +832,19 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
         {/* right-side all-groups select removed per UX request */}
       </div>
 
-        {/* Legend above stat cards: text and icon are separate siblings */}
-        <div className='legend-row'>
-          <div className='legend-text-chip'>
-            <span className='legend-text'>{'Legend'}</span>
-          </div>
-          <div className='legend-icon-wrap' aria-hidden>
-            <div className='legend-icon-bg'>
-              <FontAwesomeIcon icon={faCircleInfo} className='legend-icon' />
-            </div>
+      {/* Legend above stat cards: text and icon are separate siblings */}
+      <div className='legend-row'>
+        <div className='legend-text-chip'>
+          <span className='legend-text'>{'Legend'}</span>
+        </div>
+        <div className='legend-icon-wrap' aria-hidden>
+          <div className='legend-icon-bg'>
+            <FontAwesomeIcon icon={faCircleInfo} className='legend-icon' />
           </div>
         </div>
+      </div>
 
-        <div className='stat-grid' style={{ marginBottom: '18px' }}>
+      <div className='stat-grid' style={{ marginBottom: '18px' }}>
         <div className='stat-card-tile accent-1'>
           <div className='label'>{`Nombre total d'utilisateurs`}</div>
           {renderSparkline(
@@ -1130,453 +1037,169 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           />
         </div>
       </div>
-      <Row>
-        <Col md={6} sm={12} xs={12}>
-          <div className=''>
-            <div>
-              <form>
-                <FormGroup controlId='class-room-filter'>
-                  <ControlLabel>
-                    <strong>{'Groupe'}</strong>
-                  </ControlLabel>
-                  <FormControl
-                    componentClass='select'
-                    onChange={handleChangeGroup}
-                    value={currentGroupMembers}
-                    className='standard-radius-5'
+      <div className='list-section'>
+        <div className='pagination-bar'>
+          <div className='page-info'>
+            {`Page ${currentPage} / ${totalPages}`} ·{' '}
+            {`${members?.length ?? 0} sur ${
+              countUsers ?? members?.length ?? 0
+            } résultats`}
+          </div>
+          <div className='page-actions'>
+            <Button
+              className='btn-light page-btn'
+              disabled={currentPage <= 1}
+              onClick={() => navigateToPage(false)}
+            >
+              {'< Back'}
+            </Button>
+            <Button
+              className='btn-light page-btn'
+              disabled={currentPage >= totalPages}
+              onClick={() => navigateToPage(true)}
+            >
+              {'Next >'}
+            </Button>
+          </div>
+        </div>
+
+        <form onSubmit={handleSearchMember}>
+          <div className='filter-row'>
+            <div className='filter-field wide'>
+              <label>{'Search users'}</label>
+              <div className='search-input-group'>
+                <FormControl
+                  type='search'
+                  placeholder='Search by name or email'
+                  className='standard-radius-5 search-input'
+                  name='memberName'
+                  value={memberName}
+                  onChange={handleChangeSearchMemberInput}
+                />
+                <Button
+                  type='submit'
+                  className='standard-radius-5 btn-black search-btn'
+                >
+                  <FontAwesomeIcon icon={faSearch} />
+                </Button>
+                <Button
+                  type='button'
+                  className='standard-radius-5 btn-red search-btn'
+                  onClick={handleClearSearchMemberInput}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </Button>
+              </div>
+            </div>
+
+            <div className='filter-field'>
+              <label>{'Role'}</label>
+              <FormControl
+                componentClass='select'
+                className='standard-radius-5'
+                value={roleFilter}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setRoleFilter(e.target.value || 'all');
+                }}
+              >
+                <option value='all'>{'All roles'}</option>
+                {rolesList.map(r => (
+                  <option
+                    key={`role-filter-${r.userRoleName}`}
+                    value={r.userRoleName}
                   >
-                    {' '}
-                    {/* <option value='all'>Tout les membres</option> */}
-                    {groups.length !== 0 &&
-                      groups.map(group => {
-                        return (
-                          <option
-                            key={group.userGroupName}
-                            value={group.userGroupName}
-                          >
-                            {group.userGroupName == 'all'
-                              ? 'Tout les membres'
-                              : group.userGroupName}
-                          </option>
-                        );
-                      })}
-                    {/* <option value='dev-web-c1'>Dev web c1</option>
-                    <option value='dev-web-c2'>Dev web c2</option>
-                    <option value='smd-classe-a-matin'>
-                      Smd classe a matin
-                    </option>
-                    <option value='smd-classe-a-midi'>Smd classe a midi</option> */}
-                  </FormControl>
-                  <HelpBlock className='none-help-block'>{'none'}</HelpBlock>
+                    {r.userRoleName}
+                  </option>
+                ))}
+              </FormControl>
+            </div>
 
-                  <div className='add-group-section'>
-                    {selectedGroupMembers.length == 0 ? (
-                      <FormControl
-                        componentClass='select'
-                        className='standard-radius-5'
-                        disabled
-                      >
-                        <option value=''>Selecltionnez un groupe</option>
-                      </FormControl>
-                    ) : (
-                      <FormControl
-                        componentClass='select'
-                        className='standard-radius-5'
-                        onChange={handleChangeGroupName}
-                      >
-                        <option value=''>Selecltionnez un groupe</option>
+            <div className='filter-field'>
+              <label>{'Sort'}</label>
+              <FormControl
+                componentClass='select'
+                className='standard-radius-5'
+                value={sortOption}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setSortOption(e.target.value as typeof sortOption);
+                }}
+              >
+                <option value='name-asc'>{'Name (asc)'}</option>
+                <option value='name-desc'>{'Name (desc)'}</option>
+                <option value='role-asc'>{'Role (asc)'}</option>
+                <option value='role-desc'>{'Role (desc)'}</option>
+                <option value='date-asc'>{'Date (asc)'}</option>
+                <option value='date-desc'>{'Date (desc)'}</option>
+              </FormControl>
+            </div>
 
-                        {groups.length !== 0 &&
-                          groups.map(group => {
-                            return (
-                              <>
-                                {group.userGroupName !== 'all' && (
-                                  <option
-                                    key={group.userGroupName}
-                                    value={group.userGroupName}
-                                  >
-                                    {group.userGroupName}
-                                  </option>
-                                )}
-                              </>
-                            );
-                          })}
-                      </FormControl>
-                    )}
-
-                    <div className='btn-group'>
-                      {selectedGroupMembers.length == 0 ||
-                      selectedGroupName == '' ||
-                      currentGroupMembers == selectedGroupName ? (
-                        <Button
-                          disabled
-                          type='submit'
-                          className='standard-radius-5 btn-black'
-                        >
-                          {' '}
-                          Ajouter
-                        </Button>
-                      ) : (
-                        <Button
-                          type='submit'
-                          className='standard-radius-5 btn-black'
-                          onClick={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            addUsers(
-                              event,
-                              selectedGroupName,
-                              selectedGroupMembers
-                            );
-                          }}
-                        >
-                          Ajouter
-                        </Button>
-                      )}
-                      &nbsp;&nbsp;&nbsp;
-                      {selectedGroupMembers.length == 0 ||
-                      // selectedGroupName !== '' ||
-                      groups.length <= 1 ||
-                      currentGroupMembers == 'all' ? (
-                        <Button
-                          disabled
-                          type='submit'
-                          className='standard-radius-5 btn-red'
-                        >
-                          Retirer
-                        </Button>
-                      ) : currentGroupMembers == selectedGroupName ? (
-                        <Button
-                          type='submit'
-                          className='standard-radius-5 btn-red'
-                          onClick={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                          ) =>
-                            removeUsers(
-                              event,
-                              selectedGroupMembers,
-                              currentGroupMembers
-                            )
-                          }
-                        >
-                          Retirer
-                        </Button>
-                      ) : (
-                        <Button
-                          type='submit'
-                          className='standard-radius-5 btn-red'
-                          onClick={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                          ) =>
-                            removeUsers(
-                              event,
-                              selectedGroupMembers,
-                              currentGroupMembers
-                            )
-                          }
-                        >
-                          Retirer
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                  {updatingMembersGroup?.isAddedStatus ? (
-                    <>
-                      {' '}
-                      {!updatingMembersGroup ||
-                      updatingMembersGroup.message.length == 0 ? (
-                        <HelpBlock className='none-help-block'>
-                          {`none`}
-                        </HelpBlock>
-                      ) : (
-                        <HelpBlock className='text-success'>
-                          {`${updatingMembersGroup.message}`}
-                        </HelpBlock>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {' '}
-                      {!updatingMembersGroup ||
-                      updatingMembersGroup.message.length == 0 ? (
-                        <HelpBlock className='none-help-block'>
-                          {`none`}
-                        </HelpBlock>
-                      ) : (
-                        <HelpBlock className='text-error'>
-                          {`${updatingMembersGroup.message}`}
-                        </HelpBlock>
-                      )}
-                    </>
-                  )}
-                </FormGroup>
-              </form>
+            <div className='filter-field upload-field'>
+              <label>{'Upload users'}</label>
+              <Button
+                type='button'
+                className='standard-radius-5 btn-light upload-btn'
+              >
+                {'Upload (CSV/Excel)'}
+              </Button>
             </div>
           </div>
-        </Col>
-        <Col md={6} sm={12} xs={12}>
-          <div className=''>
-            <div>
-              <form onSubmit={handleSearchMember}>
-                <FormGroup controlId='class-room-filter'>
-                  <ControlLabel>
-                    <strong>{'Membre'}</strong>
-                  </ControlLabel>
-                  <div className='d-flex search-bar'>
-                    <FormControl
-                      type='search'
-                      placeholder='Rechercher un membre'
-                      className='standard-radius-5'
-                      name='memberName'
-                      value={memberName}
-                      onChange={handleChangeSearchMemberInput}
-                    />
-                    <Button
-                      type='submit'
-                      className='standard-radius-5 btn-black'
-                      id='button-addon2'
-                    >
-                      <FontAwesomeIcon icon={faSearch} />
-                    </Button>
-                    <Button
-                      className='standard-radius-5 btn-red'
-                      id='button-addon2'
-                      onClick={handleClearSearchMemberInput}
-                    >
-                      <FontAwesomeIcon icon={faXmark} />
-                    </Button>
-                  </div>
-                </FormGroup>
-              </form>
-            </div>
+        </form>
 
-            <div className='Export-section'>
-              {membersForExpot?.length !== 0 ? (
-                <Button
-                  type='submit'
-                  className='standard-radius-5 btn-black'
-                  onClick={() => {
-                    exportUsers(membersForExpot as Member[]);
-                  }}
-                >
-                  Exporter les utilisateurs
-                </Button>
-              ) : (
-                <Button
-                  type='submit'
-                  className='standard-radius-5 btn-black'
-                  disabled
-                >
-                  Exporter les utilisateurs
-                </Button>
-              )}
-            </div>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={12} sm={12} xs={12}>
-          <div className=''>
-            {members && members.length > 0 ? (
-              <Table responsive hover>
-                <thead className='bg-dark-gray'>
-                  <tr>
-                    <th className='text-light'></th>
-                    <th className='text-light'>Email</th>
-                    <th className='text-light'>Nom</th>
-                    <th className='text-light'>
-                      Responsive Web Design Progrès
-                    </th>
-                    <th className='text-light'>{`Date d'inscription`}</th>
-                    <th className='text-light'>Groupe(s)</th>
-                    <th className='text-light'>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {members.map((member, index) => {
-                    const responsiveWebDesignBlock =
-                      member.currentsSuperBlock.find(superBlock => {
-                        return (
-                          superBlock.superBlockDashedName ==
-                          'responsive-web-design'
-                        );
-                      });
+        <div className='table-wrapper'>
+          {displayedMembers && displayedMembers.length > 0 ? (
+            <Table responsive hover className='simple-table'>
+              <thead>
+                <tr>
+                  <th>{'#'}</th>
+                  <th>{'Nom'}</th>
+                  <th>{'Rôle'}</th>
+                  <th>{`Date d'inscription`}</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedMembers.map((member, index) => {
+                  const rowNumber = (currentPage - 1) * 10 + index + 1;
+                  const creationDate =
+                    new Date(member.createAt) <
+                    new Date(new Date().getTime() - 120000)
+                      ? dateFormat(`${member.createAt}`)
+                      : 'Pas de date';
 
-                    const percentageCompleted: number =
-                      responsiveWebDesignBlock &&
-                      responsiveWebDesignBlock.totalCompletedChallenges &&
-                      responsiveWebDesignBlock.totalChallenges
-                        ? Math.floor(
-                            (responsiveWebDesignBlock.totalCompletedChallenges /
-                              responsiveWebDesignBlock.totalChallenges) *
-                              100
-                          )
-                        : 0;
-
-                    return (
-                      <tr key={index}>
-                        <td style={{ verticalAlign: 'middle' }}>
-                          <div className='form-check'>
-                            <input
-                              className='form-check-input'
-                              type='checkbox'
-                              checked={isMemberCheked(member.id)}
-                              value={`${member.id}`}
-                              id={`${index}`}
-                              name={`${index}`}
-                              onChange={handleSelectedGroupMembers}
-                            />
+                  return (
+                    <tr key={member.id}>
+                      <td>{rowNumber}</td>
+                      <td>
+                        <div className='user-cell'>
+                          <div className='user-name'>
+                            {member.name || 'Sans nom'}
                           </div>
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }}>
-                          {member.email}
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }}>
-                          {member.name}
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }}>
-                          {responsiveWebDesignBlock ? (
-                            <div
-                              className='progress-bar-wrap custom-progress-bloc standard-radius-5'
-                              aria-label={`${percentageCompleted}`}
-                            >
-                              <div
-                                className='progress-bar-background custom-progress-bloc standard-radius-5'
-                                aria-hidden='true'
-                              >
-                                {`${percentageCompleted}%`}
-                              </div>
-                              <div
-                                aria-hidden='true'
-                                className='progress-bar-percent custom-progress-bloc standard-radius-5'
-                                data-testid='fcc-progress-bar-percent'
-                                style={{ width: `${percentageCompleted}%` }}
-                              >
-                                <div className='progress-bar-foreground custom-progress-bloc'>
-                                  {`${percentageCompleted}%`}
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            <div
-                              className='progress-bar-wrap custom-progress-bloc standard-radius-5'
-                              aria-label={`${percentageCompleted}`}
-                            >
-                              <div
-                                className='progress-bar-background custom-progress-bloc standard-radius-5'
-                                aria-hidden='true'
-                              >
-                                {`${percentageCompleted}%`}
-                              </div>
-                              <div
-                                aria-hidden='true'
-                                className='progress-bar-percent custom-progress-bloc standard-radius-5'
-                                data-testid='fcc-progress-bar-percent'
-                                style={{ width: `${percentageCompleted}%` }}
-                              >
-                                <div className='progress-bar-foreground custom-progress-bloc'>
-                                  {`${percentageCompleted}%`}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }}>
-                          {new Date(member.createAt) <
-                          new Date(new Date().getTime() - 120000)
-                            ? dateFormat(`${member.createAt}`)
-                            : 'Pas de date'}
-                        </td>
-                        {member.groups ? (
-                          <td style={{ verticalAlign: 'middle' }}>
-                            {member.groups.map(group => group).join(', ')}
-                          </td>
-                        ) : (
-                          <td style={{ verticalAlign: 'middle' }}>{'Aucun'}</td>
-                        )}
-
-                        <td style={{ verticalAlign: 'middle' }}>
-                          <button
-                            className='action-btn-detail'
-                            onClick={() => {
-                              showMemberDetails(member);
-                            }}
-                          >
-                            Voir plus
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
-            ) : isLoadingMemberState ? (
-              <Table striped responsive hover>
-                <thead className='bg-dark-gray'>
-                  <tr>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    {/* <th className='text-light'></th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>{`Chargement d'utilisateurs en cours ...`}</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </Table>
-            ) : (
-              <Table striped responsive hover>
-                <thead className='bg-dark-gray'>
-                  <tr>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    <th className='text-light'></th>
-                    {/* <th className='text-light'></th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>{"Pas d'utilisateurs"}</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-          </div>
-        </Col>
-        <Col md={12} sm={12} xs={12}>
-          {currentPage > 1 && (
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className='pagination-chevron'
-              onClick={() => {
-                navigateToPage(false);
-              }}
-            />
+                          <div className='user-email'>{member.email}</div>
+                        </div>
+                      </td>
+                      <td>{member.role || 'Aucun'}</td>
+                      <td>{creationDate}</td>
+                      <td>
+                        <button
+                          className='edit-link'
+                          type='button'
+                          onClick={() => showMemberDetails(member)}
+                        >
+                          {'Edit'}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          ) : isLoadingMemberState ? (
+            <div className='table-loading'>{`Chargement d'utilisateurs en cours ...`}</div>
+          ) : (
+            <div className='table-empty'>{"Pas d'utilisateurs"}</div>
           )}
-          &nbsp;
-          {`  ${currentPage} sur ${totalPages}  `}
-          &nbsp;
-          {currentPage < totalPages && (
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className='pagination-chevron'
-              onClick={() => {
-                navigateToPage(true);
-              }}
-            />
-          )}
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   );
 }
