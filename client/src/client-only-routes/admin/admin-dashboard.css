@@ -262,12 +262,17 @@ h6,
   height: 28px;
   margin-bottom: 8px;
   opacity: 0.9;
+  cursor: crosshair;
+}
+
+.stat-card-tile .sparkline circle {
+  pointer-events: auto;
 }
 .stat-card-tile .pill {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  display: inline-block;
+  display: block;
   float: right;
 }
 

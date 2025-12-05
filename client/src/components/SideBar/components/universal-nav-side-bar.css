@@ -75,6 +75,7 @@
 .side-bar-utility-button:focus {
   background: #f5f5f5;
   border-color: #d1d5db;
+  color: #1f2933;
 }
 
 .side-bar-nav-wrapper {

@@ -701,11 +701,19 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     const points = data.map((v, i) => {
       const x = (i / (data.length - 1)) * w;
       const y = h - ((v - min) / range) * h;
-      return `${x},${y}`;
+      const pct = Math.round(((v - min) / range) * 100);
+      return { x, y, v, pct };
     });
-    const path = `M${points.join(' L ')}`;
+    const path = `M${points.map(p => `${p.x},${p.y}`).join(' L ')}`;
     return (
-      <svg width={w} height={h} className='sparkline' aria-hidden='true'>
+      <svg
+        width={w}
+        height={h}
+        className='sparkline'
+        role='img'
+        aria-label='Tendance'
+        style={{ cursor: 'crosshair' }}
+      >
         <path
           d={path}
           fill='none'
@@ -713,7 +721,28 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
           strokeWidth='2'
           strokeLinecap='round'
           strokeLinejoin='round'
+          style={{ pointerEvents: 'visibleStroke' }}
         />
+        {points.map((p, idx) => (
+          <g key={idx}>
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={3}
+              fill={color}
+              opacity={0.12}
+              style={{ pointerEvents: 'auto' }}
+            />
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={2}
+              fill={color}
+              style={{ pointerEvents: 'auto' }}
+            />
+            <title>{`${p.v} (${p.pct}%)`}</title>
+          </g>
+        ))}
       </svg>
     );
   };
