@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from 'react';
 
-import './modern-sidebar.css';
 import SideBarNavLinks from './components/side-bar-nav-links';
 
 export interface SideBarProps {

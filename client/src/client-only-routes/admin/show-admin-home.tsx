@@ -1,5 +1,4 @@
-import { Row, Col } from '@freecodecamp/react-bootstrap';
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -7,8 +6,7 @@ import { createSelector } from 'reselect';
 // eslint-disable-next-line import/no-unresolved
 import envData from '../../../../config/env.json';
 import { createFlashMessage } from '../../components/Flash/redux';
-import { Loader, Spacer } from '../../components/helpers';
-
+import { Loader } from '../../components/helpers';
 import {
   signInLoadingSelector,
   userSelector,
@@ -17,6 +15,8 @@ import {
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
+import { MembersTab } from './components/MembersTab';
+import { ProgressTab } from './components/ProgressTab';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const { apiLocation, homeLocation } = envData;
@@ -43,10 +43,13 @@ interface ShowAdminHomeProps {
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
+  path?: string;
 }
 
 export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
   const { showLoading, isSignedIn, navigate, user } = props;
+  const [activeTab, setActiveTab] = useState('Members');
+  // const [selectedGroup, setSelectedGroup] = useState('All');
 
   if (showLoading) {
     return <Loader fullScreen={true} />;
@@ -76,57 +79,61 @@ export function ShowAdminHome(props: ShowAdminHomeProps): JSX.Element {
     return <Loader fullScreen={true} />;
   }
 
+  const tabs = ['Members', 'Progress', 'Completions', 'Content', 'Usage'];
+
   return (
     <>
-      <Helmet title={`Tableau de bord | Kadea Online`} />
+      <Helmet title={`Reporting | Kadea Online`} />
 
-      <div className=''>
-        <Row>
-          <Col md={12} sm={12} xs={12}>
-            <div className=''>
-              <h1
-                className='big-subheading'
-                style={{ overflowWrap: 'break-word' }}
-              >
-                {'Dashboardhghhhh'}
-              </h1>
+      <div className='w-full'>
+        {/* Header Section */}
+        <div className='mb-6'>
+          <div className='flex justify-between items-baseline mb-4'>
+            <h1 className='text-2xl font-bold text-gray-900'>Reporting</h1>
+            <div className='text-sm text-gray-600'>
+              6 seats used, 0 seats remaining |{' '}
+              <button className='text-blue-600 hover:text-blue-800 hover:underline bg-transparent border-none p-0 cursor-pointer'>
+                Add seats
+              </button>
             </div>
-          </Col>
-        </Row>
-        <Spacer size={1} />
-        <Row>
-          <Col md={6} sm={6} xs={6}>
-            <div className=''>
-              <p
-                className='text-responsive'
-                style={{ overflowWrap: 'break-word' }}
-              >
-                {`
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Rem repellat excepturi itaque nulla optio quisquam quaerat
-                    iusto qui cumque, deleniti necessitatibus et magni ab
-                    tenetur amet in totam ut. Voluptatum?
-                    `}
-              </p>
+          </div>
+          {/* Navigation Tabs */}
+          <div className='border-b border-gray-200'>
+            <nav className='-mb-px flex space-x-8'>
+              {tabs.map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  type='button' // Bonne pratique pour éviter les submits involontaires
+                  className={`
+                    whitespace-nowrap py-4 px-1 border-0 border-b-2 font-medium text-sm
+                    bg-transparent focus:outline-none focus:ring-0
+                    transition-colors duration-200 ease-in-out hover:border-transparent hover:bg-transparent hover:text-gray-900
+                    ${
+                      activeTab === tab
+                        ? 'border-blue-600 text-gray-900'
+                        : 'border-transparent text-gray-500'
+                    }
+                  `}
+                >
+                  {tab}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        <div className='mt-6'>
+          {activeTab === 'Members' && <MembersTab />}
+          {activeTab === 'Progress' && <ProgressTab />}
+          {/* Placeholder for other tabs */}
+          {['Completions', 'Content', 'Usage'].includes(activeTab) && (
+            <div className='text-center py-10 text-gray-500'>
+              {activeTab} tab content coming soon...
             </div>
-          </Col>
-          <Col md={6} sm={6} xs={6}>
-            <div className=''>
-              <p
-                className='text-responsive'
-                style={{ overflowWrap: 'break-word' }}
-              >
-                {`
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Rem repellat excepturi itaque nulla optio quisquam quaerat
-                    iusto qui cumque, deleniti necessitatibus et magni ab
-                    tenetur amet in totam ut. Voluptatum?
-                    `}
-              </p>
-            </div>
-          </Col>
-        </Row>
-        <Spacer size={1} />
+          )}
+        </div>
       </div>
     </>
   );

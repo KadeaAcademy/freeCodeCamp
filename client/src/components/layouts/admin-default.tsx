@@ -5,7 +5,6 @@ import { TFunction, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
-import { Grid } from '@freecodecamp/react-bootstrap';
 import { isBrowser } from '../../../utils';
 import {
   fetchUser,
@@ -29,10 +28,10 @@ import ProfilePlaceholder from '../../assets/images/undraw_profile.svg';
 // import { Spacer } from '../helpers';
 
 // preload common fonts
-import './fonts.css';
-import './global.css';
-import './variables.css';
-import './admin.css';
+// import './fonts.css';
+// import './global.css';
+// import './variables.css';
+// import './admin.css';
 
 fontawesome.config.autoAddCss = false;
 
@@ -180,75 +179,39 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
             />
           </>
         ) : null}
-        <Grid
-          fluid={true}
-          className='margin-0'
-          style={{ background: '#f8f9fa', padding: 0, position: 'relative' }}
-        >
-          <main
-            style={{
-              display: 'flex',
-              minHeight: '100vh',
-              position: 'relative'
-            }}
-          >
+        <div className='min-h-screen bg-gray-50'>
+          <main className='flex min-h-screen relative'>
             {/* Sidebar */}
             <SideBar fetchState={fetchState} user={user || ({} as User)} />
 
             {/* Main Content */}
-            <div
-              style={{
-                marginLeft: '220px',
-                flex: 1,
-                width: 'calc(100% - 220px)',
-                position: 'relative',
-                zIndex: 1
-              }}
-            >
+            <div className='flex-1 relative z-0 min-w-0'>
               {/* Header Bar */}
-              <div
-                className='admin-profile-bar'
-                style={{
-                  background: '#ffffff',
-                  padding: '1rem 2rem',
-                  borderBottom: '1px solid #e5e7eb',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center'
-                }}
-              >
-                <div className='admin-profil-item'>
-                  <div
-                    className='profile-name'
-                    style={{ marginRight: '0.75rem' }}
-                  >
-                    {user?.name?.length > 0
-                      ? user.name
-                      : user?.email || 'Utilisateur'}
+              <div className='bg-white px-8 py-4 border-b border-gray-200 flex justify-end items-center h-[73px]'>
+                <div className='flex items-center gap-3'>
+                  <div className='text-right'>
+                    <div className='text-sm font-medium text-gray-900'>
+                      {user?.name?.length > 0
+                        ? user.name
+                        : user?.email || 'Utilisateur'}
+                    </div>
+                    <div className='text-xs text-gray-500'>
+                      {user?.role || 'Admin'}
+                    </div>
                   </div>
-                  <div>
-                    <img
-                      src={ProfilePlaceholder}
-                      alt='Profil'
-                      className='img-profile rounded-circle'
-                    />
-                  </div>
+                  <img
+                    src={ProfilePlaceholder}
+                    alt='Profil'
+                    className='w-10 h-10 rounded-full border border-gray-200'
+                  />
                 </div>
               </div>
 
               {/* Page Content */}
-              <div
-                className='admin-default-layout'
-                style={{
-                  background: '#f8f9fa',
-                  minHeight: 'calc(100vh - 73px)'
-                }}
-              >
-                {children}
-              </div>
+              <div className='p-8'>{children}</div>
             </div>
           </main>
-        </Grid>
+        </div>
       </div>
     );
   }

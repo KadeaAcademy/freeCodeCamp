@@ -267,6 +267,17 @@ exports.onCreatePage = async ({ page, actions }) => {
     // Update the page.
     createPage(page);
   }
+  // Route pour la gestion des membres de l'admin
+  if (page.path.match(/^\/admin\/all-members/)) {
+    page.matchPath = '/admin/all-members/*';
+    createPage(page);
+  }
+
+  if (page.path.match(/^\/admin\/all-groups/)) {
+    page.matchPath = '/admin/all-groups/*';
+    createPage(page);
+  }
+
   if (page.path.match(/^\/aws-courses\/learning-path/)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.

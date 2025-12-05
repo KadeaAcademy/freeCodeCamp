@@ -18,7 +18,7 @@ import {
   hardGoTo as navigate
 } from '../../redux';
 
-import './admin-global.css';
+// import './admin-global.css';
 import { TableMembers } from './table-members';
 import { DetailMember } from './detail-members';
 import { getAllGroups, getMembers } from './all-server-request-members';
@@ -48,6 +48,8 @@ interface ShowAllMembersProps {
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
+
+  path?: string;
 }
 
 export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {

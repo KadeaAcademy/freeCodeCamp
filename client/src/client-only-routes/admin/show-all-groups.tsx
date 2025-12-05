@@ -40,7 +40,7 @@ import {
 } from '../../redux';
 
 import { User } from '../../redux/prop-types';
-import './admin-global.css';
+// import './admin-global.css';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const { apiLocation, homeLocation } = envData;
@@ -67,6 +67,8 @@ interface ShowAllGroupsProps {
   navigate: (location: string) => void;
   showLoading: boolean;
   user: User;
+
+  path?: string;
 }
 
 type MemberGroup = {

@@ -1,23 +1,6 @@
-/* Modern Sidebar Styles - Inspired by Kadea Design System */
-
+/* This file is deprecated. Styles are now handled via TailwindCSS in the component. */
+/* Sidebar Container */
 .modern-sidebar {
-  width: 220px;
-  min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  display: flex !important;
-  flex-direction: column;
-  position: fixed !important;
-  left: 0 !important;
-  top: 0 !important;
-  z-index: 1050 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Sidebar Header */
-.modern-sidebar-header {
-  padding: 1rem 0.875rem;
   border-bottom: 1px solid #e5e7eb;
   display: flex;
   align-items: center;

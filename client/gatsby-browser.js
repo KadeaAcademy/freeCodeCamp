@@ -1,3 +1,4 @@
+import './src/styles/tailwind.css';
 import cookies from 'browser-cookies';
 import PropTypes from 'prop-types';
 import React from 'react';
