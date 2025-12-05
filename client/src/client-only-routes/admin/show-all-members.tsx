@@ -22,6 +22,7 @@ import {
 import validator from 'validator';
 import {
   addUserInRole,
+  bulkImportUsers,
   getDatabaseResource,
   getExternalResource,
   getAwsCourses
@@ -330,7 +331,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     try {
       // Parse CSV/Excel file
       const text = await file.text();
-      const lines = text.split('\n');
+      const lines = text.split(/\r?\n/);
 
       if (lines.length < 2) {
         console.error('File is empty or has no data');
@@ -339,16 +340,44 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
       // Parse header row
       const header = lines[0].split(',').map(h => h.trim().toLowerCase());
-      const emailIndex = header.indexOf('email');
+      const findIndex = (...candidates: string[]) => {
+        for (const c of candidates) {
+          const idx = header.indexOf(c.toLowerCase());
+          if (idx !== -1) return idx;
+        }
+        return -1;
+      };
+
+      const emailIndex = findIndex('email', 'email (from learner)');
+      const cohortIndex = findIndex('cohorts', 'cohort', 'classroom', 'group');
+      const nameIndex = findIndex('name', 'full name');
+      const firstNameIndex = findIndex(
+        'first name',
+        'first name (from learner)'
+      );
+      const lastNameIndex = findIndex('last name', 'last name (from learner)');
+      const genderIndex = findIndex('gender', 'gender (from learner)');
+      const phoneIndex = findIndex(
+        'phone number',
+        'phone number (from learner)'
+      );
+      const whatsappIndex = findIndex('whatsapp');
 
       if (emailIndex === -1) {
         console.error('Email column is required');
         return;
       }
 
-      // Parse data rows
-      const userIds: string[] = [];
-      const userRole = 'user';
+      const bulkUsers: {
+        email: string;
+        name?: string;
+        firstName?: string;
+        lastName?: string;
+        gender?: string;
+        phone?: string;
+        whatsapp?: string;
+        cohort?: string;
+      }[] = [];
 
       for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
@@ -356,26 +385,40 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
 
         const values = line.split(',').map(v => v.trim());
         const email = values[emailIndex];
-
         if (!email || !validator.isEmail(email)) continue;
 
-        userIds.push(email);
+        const record: {
+          email: string;
+          name?: string;
+          firstName?: string;
+          lastName?: string;
+          gender?: string;
+          phone?: string;
+          whatsapp?: string;
+          cohort?: string;
+        } = { email };
+
+        if (nameIndex !== -1) record.name = values[nameIndex];
+        if (firstNameIndex !== -1) record.firstName = values[firstNameIndex];
+        if (lastNameIndex !== -1) record.lastName = values[lastNameIndex];
+        if (genderIndex !== -1) record.gender = values[genderIndex];
+        if (phoneIndex !== -1) record.phone = values[phoneIndex];
+        if (whatsappIndex !== -1) record.whatsapp = values[whatsappIndex];
+        if (cohortIndex !== -1) record.cohort = values[cohortIndex];
+
+        bulkUsers.push(record);
       }
 
-      // Send users to server
-      if (userIds.length > 0) {
-        const data = {
-          ids: userIds,
-          userRole: userRole
-        };
-        try {
-          const res = await addUserInRole(data);
-          if (res && res.isAdded) {
-            searchMember('');
-          }
-        } catch (err) {
-          console.error('Error adding users:', err);
-        }
+      if (bulkUsers.length === 0) {
+        console.error('No valid emails found in file');
+        return;
+      }
+
+      try {
+        await bulkImportUsers(bulkUsers, 'user');
+        searchMember('');
+      } catch (err) {
+        console.error('Error adding users:', err);
       }
     } catch (err) {
       console.error('Error processing file:', err);

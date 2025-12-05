@@ -8,11 +8,11 @@
   --card-radius: 12px;
   --card-shadow: 0 6px 18px rgba(15, 23, 32, 0.06);
   --accent-dark: #0b1220; /* buttons */
-  --accent-1: #fde8ec; /* pink */
-  --accent-2: #e6fbf2; /* mint */
-  --accent-3: #fff7e6; /* yellow */
-  --accent-4: #fff0f4; /* light salmon */
-  --accent-5: #f7f7fb; /* neutral */
+  --accent-1: #f9d4dd; /* pink with stronger tint */
+  --accent-2: #d4f5e5; /* mint with stronger tint */
+  --accent-3: #ffe7c0; /* yellow with stronger tint */
+  --accent-4: #ffd6e3; /* light salmon with stronger tint */
+  --accent-5: #ececf6; /* neutral with stronger tint */
   --success: #16a34a;
   --danger: #dc2626;
   --info: #2563eb;

@@ -153,7 +153,7 @@ export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
     titre: 'Design',
     summury: `Apprends les bases du design : typographie, théorie des couleurs, mise en page. Utilise Figma et Adobe XD pour créer des prototypes de qualité.`,
     description: `Dans ce parcours, tu apprendras les principes fondamentaux du design, y compris la typographie, la théorie des couleurs, et la mise en page.
-    Tu utiliseras des outils tels que Figma et Adobe XD pour créer des maquettes et des prototypes de haute qualité. 
+    Tu utiliseras des outils tels que Figma et Adobe XD pour créer des maquettes et des prototypes de haute qualité.
     En outre, tu apprendras à collaborer avec des développeurs pour transformer tes conceptions en produits réels.`
   },
   Bureautique: {
@@ -939,6 +939,32 @@ export async function createUserRole(
       error: error.message
     };
   }
+}
+
+interface BulkImportUserInput {
+  email: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  phone?: string;
+  whatsapp?: string;
+  cohort?: string;
+  role?: string;
+}
+
+interface BulkImportResponse {
+  success: boolean;
+  createdOrUpdated: number;
+  grouped: number;
+  errors: { email?: string; message: string }[];
+}
+
+export async function bulkImportUsers(
+  users: BulkImportUserInput[],
+  defaultRole = 'user'
+): Promise<BulkImportResponse> {
+  return post('/user/bulk-import', { users, defaultRole });
 }
 
 /** PUT **/
