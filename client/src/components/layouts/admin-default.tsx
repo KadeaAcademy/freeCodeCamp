@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
 import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { isBrowser } from '../../../utils';
 import { Spacer } from '../../components/helpers';
 import {
@@ -26,7 +28,7 @@ import { flashMessageSelector, removeFlashMessage } from '../Flash/redux';
 // import Footer from '../FooterNew/footer';
 import SideBar from '../SideBar';
 import OfflineWarning from '../OfflineWarning';
-import ProfilePlaceholder from '../../assets/images/undraw_profile.svg';
+import envData from '../../../../config/env.json';
 // import { Spacer } from '../helpers';
 
 // preload common fonts
@@ -34,6 +36,8 @@ import './fonts.css';
 import './global.css';
 import './variables.css';
 import './admin.css';
+
+const { apiLocation } = envData;
 
 fontawesome.config.autoAddCss = false;
 
@@ -87,8 +91,23 @@ interface AdminDefaultLayoutProps extends StateProps, DispatchProps {
   useTheme?: boolean;
 }
 
-class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
+interface AdminDefaultLayoutState {
+  isDropdownOpen: boolean;
+}
+
+class AdminDefaultLayout extends Component<
+  AdminDefaultLayoutProps,
+  AdminDefaultLayoutState
+> {
   static displayName = 'AdminDefaultLayout';
+  private dropdownRef = React.createRef<HTMLDivElement>();
+
+  constructor(props: AdminDefaultLayoutProps) {
+    super(props);
+    this.state = {
+      isDropdownOpen: false
+    };
+  }
 
   componentDidMount() {
     const { isSignedIn, fetchUser, pathname, executeGA } = this.props;
@@ -99,6 +118,7 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
 
     window.addEventListener('online', this.updateOnlineStatus);
     window.addEventListener('offline', this.updateOnlineStatus);
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   componentDidUpdate(prevProps: AdminDefaultLayoutProps) {
@@ -112,7 +132,21 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
   componentWillUnmount() {
     window.removeEventListener('online', this.updateOnlineStatus);
     window.removeEventListener('offline', this.updateOnlineStatus);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
+
+  toggleDropdown = () => {
+    this.setState(prevState => ({ isDropdownOpen: !prevState.isDropdownOpen }));
+  };
+
+  handleClickOutside = (event: MouseEvent) => {
+    if (
+      this.dropdownRef.current &&
+      !this.dropdownRef.current.contains(event.target as Node)
+    ) {
+      this.setState({ isDropdownOpen: false });
+    }
+  };
 
   updateOnlineStatus = () => {
     const { onlineStatusChange } = this.props;
@@ -197,18 +231,48 @@ class AdminDefaultLayout extends Component<AdminDefaultLayoutProps> {
                       xs={6}
                       className='padding-0 admin-profil-item'
                     >
-                      <div className='profile-name'>
-                        {user.name?.length > 0 ? user.name : user.email}
-                      </div>
-                      <div>
-                        <img
-                          src={ProfilePlaceholder}
-                          alt='Profil'
-                          className='img-profile rounded-circle'
-                        />
+                      <div className='profile-dropdown' ref={this.dropdownRef}>
+                        <button
+                          className='profile-badge'
+                          onClick={this.toggleDropdown}
+                          type='button'
+                        >
+                          <div className='profile-name'>
+                            {user.name?.length > 0 ? user.name : user.email}
+                          </div>
+                          <div className='profile-avatar'>
+                            {user.picture ? (
+                              <img
+                                src={user.picture}
+                                alt='Profil'
+                                className='img-profile'
+                              />
+                            ) : (
+                              (user.email?.[0] || 'U').toUpperCase()
+                            )}
+                          </div>
+                          <FontAwesomeIcon
+                            icon={faChevronDown}
+                            className='profile-chevron'
+                          />
+                        </button>
+                        {this.state.isDropdownOpen && (
+                          <div className='profile-dropdown-menu'>
+                            <div className='profile-dropdown-email'>
+                              {user.email}
+                            </div>
+                            <a
+                              href={`${apiLocation}/signout`}
+                              className='profile-dropdown-logout'
+                            >
+                              Logout
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </Col>
                   </Row>
+                  <div className='admin-content-separator' />
                   <div className={`admin-default-layout`}>{children}</div>
                   <Spacer />
                 </Col>

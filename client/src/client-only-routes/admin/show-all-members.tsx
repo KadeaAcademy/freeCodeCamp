@@ -233,7 +233,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
             <div className=''>
               <h1
                 className='big-subheading'
-                style={{ overflowWrap: 'break-word' }}
+                style={{ overflowWrap: 'break-word', marginTop: '2rem' }}
               >
                 {!selectedMember ? 'Membres' : 'Détail membre'}
               </h1>
