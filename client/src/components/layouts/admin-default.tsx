@@ -5,7 +5,6 @@ import { TFunction, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { createSelector } from 'reselect';
-import { Grid, Row, Col } from '@freecodecamp/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { isBrowser } from '../../../utils';
@@ -213,83 +212,56 @@ class AdminDefaultLayout extends Component<
             />
           </>
         ) : null}
-        <Grid fluid={true} className='margin-0 admin-grid'>
-          <main>
-            <div className='admin-main-row-wrapper'>
-              <Row>
-                <Col
-                  md={2}
-                  sm={2}
-                  xs={2}
-                  className='padding-0 admin-sidebar-col'
-                >
-                  <SideBar fetchState={fetchState} user={user} />
-                </Col>
-                <Col
-                  md={10}
-                  sm={10}
-                  xs={10}
-                  className='bg-light admin-content-col'
-                >
-                  <Row className='admin-profile-bar'>
-                    <Col md={6} sm={6} xs={6} className='padding-0'>
-                      <div></div>
-                    </Col>
-                    <Col
-                      md={6}
-                      sm={6}
-                      xs={6}
-                      className='padding-0 admin-profil-item'
-                    >
-                      <div className='profile-dropdown' ref={this.dropdownRef}>
-                        <button
-                          className='profile-badge'
-                          onClick={this.toggleDropdown}
-                          type='button'
-                        >
-                          <div className='profile-name'>
-                            {user.name?.length > 0 ? user.name : user.email}
-                          </div>
-                          <div className='profile-avatar'>
-                            {user.picture ? (
-                              <img
-                                src={user.picture}
-                                alt='Profil'
-                                className='img-profile'
-                              />
-                            ) : (
-                              (user.email?.[0] || 'U').toUpperCase()
-                            )}
-                          </div>
-                          <FontAwesomeIcon
-                            icon={faChevronDown}
-                            className='profile-chevron'
-                          />
-                        </button>
-                        {this.state.isDropdownOpen && (
-                          <div className='profile-dropdown-menu'>
-                            <div className='profile-dropdown-email'>
-                              {user.email}
-                            </div>
-                            <a
-                              href={`${apiLocation}/signout`}
-                              className='profile-dropdown-logout'
-                            >
-                              Logout
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className='admin-content-separator' />
-                  <div className={`admin-default-layout`}>{children}</div>
-                  <Spacer />
-                </Col>
-              </Row>
+        <div className='admin-layout-wrapper'>
+          <SideBar fetchState={fetchState} user={user} />
+          <main className='admin-main-content'>
+            <div className='admin-profile-bar'>
+              <div className='admin-profile-left'></div>
+              <div className='admin-profil-item'>
+                <div className='profile-dropdown' ref={this.dropdownRef}>
+                  <button
+                    className='profile-badge'
+                    onClick={this.toggleDropdown}
+                    type='button'
+                  >
+                    <div className='profile-name'>
+                      {user.name?.length > 0 ? user.name : user.email}
+                    </div>
+                    <div className='profile-avatar'>
+                      {user.picture ? (
+                        <img
+                          src={user.picture}
+                          alt='Profil'
+                          className='img-profile'
+                        />
+                      ) : (
+                        (user.email?.[0] || 'U').toUpperCase()
+                      )}
+                    </div>
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className='profile-chevron'
+                    />
+                  </button>
+                  {this.state.isDropdownOpen && (
+                    <div className='profile-dropdown-menu'>
+                      <div className='profile-dropdown-email'>{user.email}</div>
+                      <a
+                        href={`${apiLocation}/signout`}
+                        className='profile-dropdown-logout'
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
+            <div className='admin-content-separator' />
+            <div className={`admin-default-layout`}>{children}</div>
+            <Spacer />
           </main>
-        </Grid>
+        </div>
       </div>
     );
   }
