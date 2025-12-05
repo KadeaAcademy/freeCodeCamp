@@ -1,9 +1,9 @@
 .side-bar {
   min-height: 100vh;
   width: 260px;
-  background: #f7f9fc;
+  background: #ffffff;
   color: #1f2933;
-  border-right: none;
+  border-right: 1px solid #d1d5db;
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  border-radius: 12px;
+  border-radius: 0;
   text-decoration: none;
   color: #1f2933;
   transition: background-color 0.2s ease;
@@ -34,7 +34,7 @@
 
 .side-bar__brand:hover,
 .side-bar__brand:focus {
-  background: #eef1f5;
+  background: #f5f5f5;
   color: #1f2933;
 }
 

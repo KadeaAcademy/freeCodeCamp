@@ -127,7 +127,7 @@ export const SideBarNavLinks = (): JSX.Element => {
         type='button'
       >
         <FontAwesomeIcon icon={faRotateRight} className='side-bar-icon' />
-        <span>Mettre à jour les cours</span>
+        <span>Update Courses</span>
       </button>
 
       <div className='side-bar__footer'>
