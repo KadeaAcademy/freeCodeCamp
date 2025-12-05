@@ -4,6 +4,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from 'react';
 
+import { Link } from '../helpers';
+import Logo from '../../assets/images/logo/kadea-triangle.svg';
+
 import './sidebar.css';
 import SideBarNavLinks from './components/side-bar-nav-links';
 
@@ -62,13 +65,14 @@ export class SideBar extends React.Component<
     return (
       <>
         <header className='side-bar'>
-          <p
-            className='big-subheading text-light side-bar-title'
-            style={{ overflowWrap: 'break-word' }}
-          >
-            {'Dashboard'}
-          </p>
-          <p className='text-light'>Kadea Online</p>
+          <Link to='/' className='side-bar__brand'>
+            <img src={Logo} alt='Logo Kadea' className='side-bar__logo' />
+            <span className='side-bar__brand-text'>
+              <span className='side-bar__brand-title'>Kadeaonline</span>
+              <span className='side-bar__brand-subtitle'>Dashboard</span>
+            </span>
+          </Link>
+          <div className='side-bar__spacer' />
           <hr />
           <SideBarNavLinks />
         </header>

@@ -213,14 +213,24 @@ class AdminDefaultLayout extends Component<
             />
           </>
         ) : null}
-        <Grid fluid={true} className='bg-dark-gray margin-0'>
+        <Grid fluid={true} className='margin-0 admin-grid'>
           <main>
-            <div className=''>
+            <div className='admin-main-row-wrapper'>
               <Row>
-                <Col md={2} sm={2} xs={2} className='text-light bg-dark-gray'>
+                <Col
+                  md={2}
+                  sm={2}
+                  xs={2}
+                  className='padding-0 admin-sidebar-col'
+                >
                   <SideBar fetchState={fetchState} user={user} />
                 </Col>
-                <Col md={10} sm={10} xs={10} className='bg-light'>
+                <Col
+                  md={10}
+                  sm={10}
+                  xs={10}
+                  className='bg-light admin-content-col'
+                >
                   <Row className='admin-profile-bar'>
                     <Col md={6} sm={6} xs={6} className='padding-0'>
                       <div></div>

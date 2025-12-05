@@ -22,6 +22,34 @@
   padding-right: 0px;
 }
 
+.admin-grid {
+  background: #f7f9fc;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.admin-main-row-wrapper {
+  display: flex;
+}
+
+.admin-sidebar-col {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  border-right: none;
+  padding: 0 !important;
+}
+
+.admin-content-col {
+  margin-left: 260px;
+  border-left: none !important;
+  border-right: none !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
 .admin-profil-item {
   display: flex;
   flex-direction: row;
