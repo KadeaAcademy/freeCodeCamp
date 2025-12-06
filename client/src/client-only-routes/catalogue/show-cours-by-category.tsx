@@ -138,6 +138,13 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
         } else if (valueOfUrl == 'amazon web service') {
           courses = filteredRavenCourses;
           category = 'aws';
+          console.log('=== AWS FILTERING (show-cours-by-category) ===');
+          console.log('valueOfUrl:', valueOfUrl);
+          console.log('filteredRavenCourses:', filteredRavenCourses);
+          console.log(
+            'filteredRavenCourses length:',
+            filteredRavenCourses?.length
+          );
         } else {
           courses = filteredMoodleCourses?.result
             .flatMap(
@@ -150,7 +157,10 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           category = 'moodle';
         }
 
-        if (!courses) return [];
+        if (!courses) {
+          console.log('No courses found for category:', category);
+          return [];
+        }
 
         switch (category) {
           case 'programation':
@@ -175,14 +185,19 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
                 )
             );
 
-          case 'aws':
-            return courses.filter(
+          case 'aws': {
+            const awsFiltered = courses.filter(
               course =>
                 filterLogics.aws.language(course as RavenCourse, currentUrl) &&
                 filterLogics.aws.type(course as RavenCourse, currentUrl) &&
                 filterLogics.aws.level(course as RavenCourse, currentUrl) &&
                 filterLogics.aws.duration(course as RavenCourse, currentUrl)
             );
+            console.log('AWS filtered courses length:', awsFiltered.length);
+            console.log('AWS filtered courses:', awsFiltered);
+            console.log('==============================================');
+            return awsFiltered;
+          }
 
           case 'moodle':
             return courses.filter(
@@ -256,11 +271,19 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           );
           setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
         } else {
-          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+          const results = await Promise.all([
             getMoodleCourses(),
             getAwsCourses(),
             getRavenPathResources()
           ]);
+          const moodleData = results[0];
+          const ravenData = results[1];
+          const ravenPathData = results[2];
+
+          console.log('=== FETCHED DATA (show-cours-by-category) ===');
+          console.log('Moodle courses:', moodleData);
+          console.log('AWS Raven courses:', ravenData);
+          console.log('AWS Raven paths:', ravenPathData);
 
           if (moodleData) {
             setGetAllDataMoodle(moodleData);
@@ -268,13 +291,16 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
           }
 
           if (ravenData || ravenPathData) {
-            const unifiedRavenData = [
-              ...((ravenData as RavenCourse[]) || []),
+            const unifiedRavenData: RavenCourse[] = [
+              ...(ravenData || []),
               ...(ravenPathData || [])
             ];
-            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            console.log('Unified Raven data length:', unifiedRavenData.length);
+            console.log('Unified Raven data:', unifiedRavenData);
+            setGetAllRavenData(unifiedRavenData);
             localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
           }
+          console.log('============================================');
         }
       } catch (error) {
         console.error('Error fetching data:', error);

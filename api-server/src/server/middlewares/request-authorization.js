@@ -32,6 +32,7 @@ const getRavenTokenRE = /^\/generate-raven-token/;
 const getRavenCourseRE = /^\/get-raven-courses/;
 const getRavenPathRE = /^\/get-raven-path/;
 const getRavenProgressRE = /^\/get-raven-user-progress/;
+const getRavenCoursesFromDBRE = /^\/raven-get-course/;
 
 const _pathsAllowedREs = [
   authRE,
@@ -51,7 +52,8 @@ const _pathsAllowedREs = [
   getRavenTokenRE,
   getRavenCourseRE,
   getRavenPathRE,
-  getRavenProgressRE
+  getRavenProgressRE,
+  getRavenCoursesFromDBRE
 ];
 
 export function isAllowedPath(path, pathsAllowedREs = _pathsAllowedREs) {

@@ -526,13 +526,15 @@ export function getRavenTokenDataFromLocalStorage(): RavenTokenData | null {
 }
 
 export async function generateRavenTokenAcces(): Promise<unknown> {
+  console.log('=== CLIENT: generateRavenTokenAcces ===');
   try {
     const response = await get('/generate-raven-token');
-    console.log(response);
+    console.log('Token generation response:', response);
 
     return response;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
+    console.error('Token generation error:', error);
     return null;
   }
 }
@@ -546,24 +548,21 @@ export async function getDatabaseResource<T>(urlEndPoint: string) {
   return response;
 }
 
-interface RavenFetchCoursesDto {
-  token: string;
-  fromDate: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  valid_to: string;
-  apiKey?: string;
-  currentPage?: number;
-}
 export const getRavenToken = async () => {
+  console.log('=== CLIENT: getRavenToken ===');
   const ravenTokenData = getRavenTokenDataFromLocalStorage();
+  console.log('Token from localStorage:', ravenTokenData);
 
   if (ravenTokenData === null) {
+    console.log('No token in localStorage, generating new one...');
     const generateRavenToken = await generateRavenTokenAcces();
+    console.log('Generated token:', generateRavenToken);
 
     if (generateRavenToken) {
       addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
       return generateRavenToken;
     } else {
+      console.error('Failed to generate token');
       return null;
     }
   } else {
@@ -575,8 +574,16 @@ export const getRavenToken = async () => {
     const timeDifference =
       tokenExpirationTime.getTime() - currentTime.getTime();
 
+    console.log('Token expiration check:', {
+      expiresAt: tokenExpirationTime,
+      now: currentTime,
+      timeDifferenceHours: timeDifference / (60 * 60 * 1000),
+      needsRefresh: timeDifference <= oneHourInMillis
+    });
+
     if (timeDifference <= oneHourInMillis) {
       // Le token a expiré d'une heure ou plus, donc le supprimer et générer un nouveau
+      console.log('Token expired or expiring soon, refreshing...');
       removeRavenTokenFromLocalStorage();
       const generateRavenToken = await generateRavenTokenAcces();
 
@@ -584,9 +591,11 @@ export const getRavenToken = async () => {
         addRavenTokenToLocalStorage(generateRavenToken as RavenTokenData);
         return generateRavenToken; // Retourner le nouveau token
       } else {
+        console.error('Failed to refresh token');
         return null; // Retourner null si la génération a échoué
       }
     } else {
+      console.log('Using cached token');
       return ravenTokenData;
     }
   }
@@ -594,7 +603,7 @@ export const getRavenToken = async () => {
 
 //add for test
 
-const { moodleApiBaseUrl, moodleApiToken, ravenAwsApiKey } = envData;
+const { moodleApiBaseUrl, moodleApiToken } = envData;
 
 export const getRavenResources = async () => {
   const getReveanCourses = await getAwsCourses();
@@ -607,106 +616,40 @@ export const getRavenPathResources = async () => {
 
 //end getRavenResources
 
-export async function getAwsCourses() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
-
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
-  };
-  let response: unknown | RavenCourse[];
-
+export async function getAwsCourses(): Promise<RavenCourse[]> {
+  console.log('=== CLIENT: getAwsCourses from MongoDB ===');
   try {
-    response = await get(
-      `/get-raven-courses?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    const response = await get('/raven-get-course');
+    console.log('Courses from DB:', response);
+    interface RavenCoursesResponse {
+      success: boolean;
+      coursesCount: number;
+      courses: RavenCourse[];
+    }
+    return (response as RavenCoursesResponse)?.courses || [];
   } catch (error) {
-    response = null;
+    console.error('Error fetching AWS courses from DB:', error);
+    return [];
   }
-
-  return response;
 }
-export async function getAwsPath() {
-  const token = await getRavenToken();
-  const myRavenToken = token as RavenTokenData;
 
-  const ravenData: RavenFetchCoursesDto = {
-    apiKey: ravenAwsApiKey,
-    token: myRavenToken.token,
-
-    fromDate: '01-01-2023',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    valid_to: '11-11-2024'
-  };
-
-  let response: unknown | RavenCourse[];
-
+export async function getAwsPath(): Promise<RavenCourse[]> {
+  console.log('=== CLIENT: getAwsPath from MongoDB ===');
   try {
-    response = await get(
-      `/get-raven-path?awstoken=${ravenData.token}&fromdate=${ravenData.fromDate}&todate=${ravenData.valid_to}`
-    );
+    const response = await get('/raven-get-course');
+    console.log('Paths from DB:', response);
+    interface RavenCoursesResponse {
+      success: boolean;
+      coursesCount: number;
+      courses: RavenCourse[];
+    }
+    const courses = (response as RavenCoursesResponse)?.courses || [];
+    // Filter for paths (courses with long_description)
+    return courses.filter((c: RavenCourse) => c.long_description);
   } catch (error) {
-    response = null;
+    console.error('Error fetching AWS paths from DB:', error);
+    return [];
   }
-  // return response;
-  //cette partie permet notamment de filtrer les parcours pour ne retenir que ceux en français où en anglais.
-  if (response) {
-    interface Tag {
-      title: string;
-    }
-
-    interface Category {
-      tags?: Tag[];
-      title: string;
-    }
-
-    interface Course {
-      category?: Category[];
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      skill_level: string;
-      language: string;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const filterCourses = (response: unknown): Course[] => {
-      const courses = response as Course[];
-
-      const coursesFilter = courses
-        .filter(
-          course =>
-            course.category &&
-            course.category.some(
-              cat =>
-                cat.tags &&
-                cat.tags.some(
-                  tag =>
-                    tag.title.includes('English') ||
-                    tag.title.includes('French')
-                )
-            )
-        )
-        .map(course => {
-          // Extraire le skill level
-          const skillLevelCategory = course.category?.find(
-            cat => cat.title === 'Skill Level'
-          );
-          if (skillLevelCategory && skillLevelCategory.tags) {
-            course.skill_level = skillLevelCategory.tags[0]?.title;
-          }
-          return course;
-        });
-
-      return coursesFilter;
-    };
-
-    const filteredCourses = filterCourses(response);
-    return filteredCourses;
-  }
-
-  return [];
 }
 
 //fonction permettant la combinaison de tous les cours notamment moodle et raven

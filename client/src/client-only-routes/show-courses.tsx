@@ -275,16 +275,31 @@ export function Courses(props: CoursesProps): JSX.Element {
         }
 
         if (storedMoodleData && storedRavenData) {
-          setGetAllDataMoodle(
-            JSON.parse(storedMoodleData) as MoodleCoursesCatalogue
-          );
-          setGetAllRavenData(JSON.parse(storedRavenData) as RavenCourse[]);
+          const cachedMoodle = JSON.parse(
+            storedMoodleData
+          ) as MoodleCoursesCatalogue;
+          const cachedRaven = JSON.parse(storedRavenData) as RavenCourse[];
+          console.log('=== USING CACHED DATA (show-courses) ===');
+          console.log('Cached Moodle:', cachedMoodle);
+          console.log('Cached Raven length:', cachedRaven.length);
+          console.log('Cached Raven:', cachedRaven);
+          console.log('========================================');
+          setGetAllDataMoodle(cachedMoodle);
+          setGetAllRavenData(cachedRaven);
         } else {
-          const [moodleData, ravenData, ravenPathData] = await Promise.all([
+          const results = await Promise.all([
             getMoodleCourses(),
             getAwsCourses(),
             getRavenPathResources()
           ]);
+          const moodleData = results[0];
+          const ravenData = results[1];
+          const ravenPathData = results[2];
+
+          console.log('=== FETCHED DATA (show-courses) ===');
+          console.log('Moodle courses:', moodleData);
+          console.log('AWS Raven courses:', ravenData);
+          console.log('AWS Raven paths:', ravenPathData);
 
           if (moodleData) {
             setGetAllDataMoodle(moodleData);
@@ -292,13 +307,16 @@ export function Courses(props: CoursesProps): JSX.Element {
           }
 
           if (ravenData || ravenPathData) {
-            const unifiedRavenData = [
-              ...((ravenData as RavenCourse[]) || []),
+            const unifiedRavenData: RavenCourse[] = [
+              ...(ravenData || []),
               ...(ravenPathData || [])
             ];
-            setGetAllRavenData(unifiedRavenData as RavenCourse[]);
+            console.log('Unified Raven data length:', unifiedRavenData.length);
+            console.log('Unified Raven data:', unifiedRavenData);
+            setGetAllRavenData(unifiedRavenData);
             localStorage.setItem('ravenData', JSON.stringify(unifiedRavenData));
           }
+          console.log('===================================');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -402,10 +420,10 @@ export function Courses(props: CoursesProps): JSX.Element {
             <div className='card-filter-container'>
               {showFilter && (
                 <CourseFilter
-                  setRavenPath={setDataRavenPath}
+                  setRavenPath={value => setDataRavenPath(value)}
                   screenWidth={screenWidth}
-                  setRavenCourses={setDataRaven}
-                  setMoodleCourses={setDataMoodle}
+                  setRavenCourses={value => setDataRaven(value)}
+                  setMoodleCourses={value => setDataMoodle(value)}
                   setShowFilter={setShowFilter}
                   setIsDataOnLoading={setIsDataOnLoading}
                   courseCategories={courseCategories}
@@ -429,14 +447,14 @@ export function Courses(props: CoursesProps): JSX.Element {
 
                 <CoursesCategoryCard
                   courseCategories={courseCategories}
-                  setRavenPath={setDataRavenPath}
+                  setRavenPath={value => setDataRavenPath(value)}
                   setCurrentCategory={setCurrentCategory}
                   currentCategory={currentCategory}
                   screenWidth={screenWidth}
                   setCurrentPage={setCurrentPage}
                   setIsDataOnLoading={setIsDataOnLoading}
-                  setMoodleCourses={setDataMoodle}
-                  setRavenCourses={setDataRaven}
+                  setMoodleCourses={value => setDataMoodle(value)}
+                  setRavenCourses={value => setDataRaven(value)}
                 />
 
                 <div className='course__number'>

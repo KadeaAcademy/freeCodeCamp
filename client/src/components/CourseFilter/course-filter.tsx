@@ -14,6 +14,7 @@ import {
 import {
   MoodleCourseCategory,
   MoodleCoursesCatalogue,
+  RavenCourse,
   scrollTo
 } from '../../client-only-routes/show-courses';
 import { arrayOfCategory } from '../../utils/routes';
@@ -27,33 +28,16 @@ import FilterByType from './filter-by-type';
 import FilterByLevel from './filter-by-level';
 import FilterByDuration from './filter-by-duration';
 
-type RavenCourse = {
-  learningobjectid: number;
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  launch_url: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  short_description: string;
-  createddate: string;
-  updateddate: string;
-  contenttype: string;
-  duration: string;
-};
-
 const CourseFilter = ({
   setShowFilter,
   screenWidth
 }: {
-  setMoodleCourses: React.Dispatch<
-    React.SetStateAction<MoodleCoursesCatalogue | null | undefined>
-  >;
-  setRavenCourses: React.Dispatch<
-    React.SetStateAction<RavenCourse[] | null | undefined>
-  >;
+  setMoodleCourses: (value: MoodleCoursesCatalogue | null | undefined) => void;
+  setRavenCourses: (value: RavenCourse[] | null | undefined) => void;
 
   setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
-  setRavenPath: React.Dispatch<React.SetStateAction<RavenCourse[] | null>>;
+  setRavenPath: (value: RavenCourse[]) => void;
 
   // setProgrammingCategory: React.Dispatch<React.SetStateAction<boolean>>;
   screenWidth: number;

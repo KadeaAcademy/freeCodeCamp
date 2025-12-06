@@ -74,18 +74,25 @@ function bootUser(app) {
   api.get('/get-raven-user-progress', getRavenAwsUserProgress);
   api.post('/save-rave-courses', saveRavenCoursesToDB);
 
-  api.get('/raven-get-course', getRavenCoursesFromDB);
+  api.get('/raven-get-course', getRavenCoursesFromDB(app));
 
   app.use(api);
 }
 
 async function generateRavenToken(req, res) {
-  console.log('ca marche');
+  console.log('=== GENERATING RAVEN TOKEN ===');
   try {
     const apiKey = process.env.RAVEN_AWS_API_KEY;
     const clientId = process.env.RAVEN_AWS_CLIENT_ID;
     const clientSecret = process.env.RAVEN_AWS_CLIENT_SECRET_ID;
     const baseUrl = process.env.RAVEN_AWS_BASE_URL;
+
+    console.log('AWS Credentials:', {
+      apiKey: apiKey ? `${apiKey.substring(0, 10)}...` : 'MISSING',
+      clientId: clientId ? `${clientId.substring(0, 10)}...` : 'MISSING',
+      clientSecret: clientSecret ? 'SET' : 'MISSING',
+      baseUrl: baseUrl || 'MISSING'
+    });
 
     const requestBody = JSON.stringify({
       client_id: clientId,
@@ -100,7 +107,12 @@ async function generateRavenToken(req, res) {
     });
 
     const tokenData = await response;
-    console.log('les datas', tokenData.data);
+    console.log(
+      'Token generated successfully:',
+      tokenData.data?.data?.token ? 'YES' : 'NO'
+    );
+    console.log('Token data:', tokenData.data);
+    console.log('==============================');
     return res.json(tokenData.data.data);
   } catch (error) {
     console.log('Erreur lors de la récupération du token:', error);
@@ -112,13 +124,20 @@ async function getRavenAwsCatalogue(req, res) {
   const apiKey = process.env.RAVEN_AWS_API_KEY;
   const { awstoken } = req.query;
 
+  console.log('=== GET RAVEN CATALOGUE ===');
+  console.log(
+    'Received awstoken:',
+    awstoken ? `${awstoken.substring(0, 20)}...` : 'UNDEFINED/NULL'
+  );
+  console.log('Query params:', req.query);
+
   const baseUrl = process.env.RAVEN_AWS_BASE_URL;
   const requestBody = JSON.stringify({
     from_date: '01-01-2023',
-    to_date: '11-11-2024',
+    to_date: '12-31-2026',
     learningobject_type: 'content',
     page_index: 1,
-    page_size: 4
+    page_size: 100
   });
 
   try {
@@ -135,7 +154,12 @@ async function getRavenAwsCatalogue(req, res) {
       }
     );
 
-    console.log('les datas', ravenAwsCours.data.data);
+    console.log('=== AWS RAVEN COURSES ===');
+    console.log(
+      `Total courses fetched: ${ravenAwsCours.data.data?.length || 0}`
+    );
+    console.log('Courses:', JSON.stringify(ravenAwsCours.data.data, null, 2));
+    console.log('=========================');
     return res.json(ravenAwsCours.data.data);
   } catch (error) {
     console.error(
@@ -172,15 +196,15 @@ async function getRavenAwsUserProgress(req, res) {
   const baseUrl = process.env.RAVEN_AWS_BASE_URL;
   const requestBody = JSON.stringify({
     from_date: '01-01-2023',
-    to_date: '11-11-2024',
+    to_date: '12-31-2026',
     email_id: email
   });
   const requestBodycourses = JSON.stringify({
     from_date: '01-01-2023',
-    to_date: '11-11-2024',
+    to_date: '12-31-2026',
     learningobject_type: 'content',
     page_index: 1,
-    page_size: 4
+    page_size: 100
   });
 
   try {
@@ -235,12 +259,18 @@ async function getRavenAwsPathCatalogue(req, res) {
   const apiKey = process.env.RAVEN_AWS_API_KEY;
   const { awstoken } = req.query;
 
+  console.log('=== GET RAVEN PATH CATALOGUE ===');
+  console.log(
+    'Received awstoken:',
+    awstoken ? `${awstoken.substring(0, 20)}...` : 'UNDEFINED/NULL'
+  );
+
   const baseUrl = process.env.RAVEN_AWS_BASE_URL;
   const requestBody = JSON.stringify({
     from_date: '01-01-2023',
-    to_date: '06-24-2024',
+    to_date: '12-31-2026',
     page_index: 1,
-    page_size: 0
+    page_size: 100
   });
 
   try {
@@ -258,7 +288,10 @@ async function getRavenAwsPathCatalogue(req, res) {
     );
 
     const ravenAwsPath = response;
-    console.log('les datas', ravenAwsPath.data);
+    console.log('=== AWS RAVEN PATHS ===');
+    console.log(`Total paths fetched: ${ravenAwsPath.data.data?.length || 0}`);
+    console.log('Paths:', JSON.stringify(ravenAwsPath.data.data, null, 2));
+    console.log('=======================');
     return res.json(ravenAwsPath.data.data);
   } catch (error) {
     console.error(
@@ -513,25 +546,28 @@ export async function saveRavenCoursesToDB(app) {
   };
 }
 
-async function getRavenCoursesFromDB(app) {
+function getRavenCoursesFromDB(app) {
   const { RavenCourse } = app.models;
 
-  return async function getLocalRavenCourses(req, res) {
-    try {
-      const courses = await RavenCourse.find();
-      return res.json({
-        success: true,
-        coursesCount: courses.length,
-        courses
+  return function getLocalRavenCourses(req, res) {
+    console.log('=== FETCHING RAVEN COURSES FROM MONGODB ===');
+    RavenCourse.find()
+      .then(courses => {
+        console.log(`Found ${courses.length} courses in MongoDB`);
+        return res.json({
+          success: true,
+          coursesCount: courses.length,
+          courses
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching courses from DB:', error.message);
+        return res.status(500).json({
+          success: false,
+          message: 'Error fetching courses from database',
+          error: error.message
+        });
       });
-    } catch (error) {
-      console.error('Error fetching courses from DB:', error.message);
-      return res.status(500).json({
-        success: false,
-        message: 'Error fetching courses from database',
-        error: error.message
-      });
-    }
   };
 }
 

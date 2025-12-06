@@ -36,20 +36,16 @@ import {
 
 interface CourseFilterProps {
   screenWidth: number;
-  setRavenCourses: React.Dispatch<
-    React.SetStateAction<RavenCourse[] | null | undefined>
-  >;
-  setMoodleCourses: React.Dispatch<
-    React.SetStateAction<MoodleCoursesCatalogue | null | undefined>
-  >;
-  setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  setRavenCourses: (value: RavenCourse[] | null | undefined) => void;
+  setMoodleCourses: (value: MoodleCoursesCatalogue | null | undefined) => void;
+  setShowFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDataOnLoading: React.Dispatch<React.SetStateAction<boolean>>;
   courseCategories: MoodleCourseCategory[] | null | undefined;
   currentCategory: number | null;
   setCurrentCategory: React.Dispatch<React.SetStateAction<number | null>>;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  setRavenPath: React.Dispatch<React.SetStateAction<RavenCourse[] | null>>;
-  getRavenResourcesPath: RavenFetchCoursesDto;
+  setRavenPath: (value: RavenCourse[]) => void;
+  getRavenResourcesPath?: RavenFetchCoursesDto;
 }
 
 const CoursesCategoryCard = ({

@@ -63,6 +63,10 @@
     "dataSource": "db",
     "public": false
   },
+  "RavenCourse": {
+    "dataSource": "db",
+    "public": false
+  },
   "userGroup": {
     "dataSource": "db",
     "public": true
