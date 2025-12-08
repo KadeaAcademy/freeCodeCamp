@@ -1,21 +1,23 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React from 'react';
 import { Router } from '@reach/router';
 import { withPrefix } from 'gatsby';
-import React from 'react';
+
+// ON RETIRE L'IMPORT DU LAYOUT TEMPORAIREMENT
+// import { AdminDefaultLayout } from '../../components/layouts';
 
 import ShowAllRoles from '../../client-only-routes/admin/show-all-roles';
 import RedirectHome from '../../components/redirect-home';
 
-function AllRoles(): JSX.Element {
+const AllRolesPage = (): JSX.Element => {
+  // ON RETIRE LE WRAPPER <AdminDefaultLayout>
   return (
-    <Router>
-      <ShowAllRoles path={withPrefix('/admin/all-roles')} />
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    <Router basepath={withPrefix('/admin/all-roles')}>
+      <ShowAllRoles path='/' />
       {/* @ts-ignore */}
       <RedirectHome default={true} />
     </Router>
   );
-}
+};
 
-AllRoles.displayName = 'AllRoles';
-
-export default AllRoles;
+export default AllRolesPage;

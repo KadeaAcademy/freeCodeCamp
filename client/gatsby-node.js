@@ -273,6 +273,11 @@ exports.onCreatePage = async ({ page, actions }) => {
     createPage(page);
   }
 
+  if (page.path.match(/^\/admin\/all-roles/)) {
+    page.matchPath = '/admin/all-roles/*';
+    createPage(page);
+  }
+
   if (page.path.match(/^\/admin\/all-groups/)) {
     page.matchPath = '/admin/all-groups/*';
     createPage(page);
