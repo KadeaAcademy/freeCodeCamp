@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useState, useEffect } from 'react';
 import {
   faChevronLeft,
   faChevronRight,
@@ -7,35 +7,161 @@ import {
   faXmark,
   faAngleDoubleRight,
   faAngleDoubleLeft,
-  faInfoCircle,
-  faArrowUp,
-  faArrowRight
+  faEllipsisH,
+  faDownload,
+  faInfoCircle // Ajouté pour le composant Invitations
 } from '@fortawesome/free-solid-svg-icons';
 
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { navigate } from '@reach/router';
 import { Member, Group, UserList } from '../../redux/prop-types';
-import {
-  getDatabaseResource,
-  getKadeaCourses,
-  getMoodleCourses,
-  getAwsPath
-} from '../../utils/ajax';
-import './modern-admin.css';
+import { getDatabaseResource } from '../../utils/ajax';
 
-// Types pour les filtres de période
-type PeriodFilter =
-  | '30days'
-  | '2months'
-  | '3months'
-  | '4months'
-  | '6months'
-  | '1year'
-  | 'all';
+// === AJOUT DU COMPOSANT INVITATIONS ===
+interface InvitationsProps {
+  groups: Group[];
+}
 
-// Types pour les filtres de cours
-type CourseFilter = 'all' | 'kadea' | 'moodle' | 'aws';
+const Invitations = ({ groups }: InvitationsProps): JSX.Element => {
+  return (
+    <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6 font-sans'>
+      {/* Colonne Gauche : Add a member */}
+      <div className='bg-[#F5FAFF] p-8 rounded-sm'>
+        <h3 className='text-lg font-bold text-gray-900 mb-2'>Add a member</h3>
+        <p className='text-sm text-gray-600 mb-6'>
+          Update your plan to add more seats for paid members.
+        </p>
+
+        <form className='space-y-4'>
+          {/* Role */}
+          <div>
+            <label className='block text-sm font-bold text-gray-700 mb-1'>
+              Role *
+            </label>
+            <select className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm py-2 px-3 bg-white border'>
+              <option>Admin (dashboard only)</option>
+              <option>Member</option>
+            </select>
+          </div>
+
+          {/* Full Name */}
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>
+              Full name
+            </label>
+            <input
+              type='text'
+              className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm py-2 px-3 border'
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className='block text-sm font-bold text-gray-700 mb-1'>
+              Email *
+            </label>
+            <input
+              type='email'
+              placeholder='name@yourcompany.com'
+              className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm py-2 px-3 border'
+            />
+          </div>
+
+          {/* Group */}
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>
+              Group
+            </label>
+            <select className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm py-2 px-3 bg-white border text-gray-500'>
+              <option value=''>Select an option...</option>
+              {groups
+                .filter(g => g.userGroupName !== 'all')
+                .map(g => (
+                  <option key={g.userGroupName} value={g.userGroupName}>
+                    {g.userGroupName}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          <div className='pt-2'>
+            <button
+              type='button'
+              className='inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+            >
+              Send invite
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Colonne Droite : Add members in bulk */}
+      <div className='bg-[#F5FAFF] p-8 rounded-sm'>
+        <h3 className='text-lg font-bold text-gray-900 mb-2'>
+          Add members in bulk
+        </h3>
+        <p className='text-sm text-gray-600 mb-4'>
+          Add more seats to invite members in bulk.
+        </p>
+
+        <div className='mb-6'>
+          {/* <a
+            href='#'
+            className='text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium'
+          >
+            Download CSV template
+          </a> */}
+        </div>
+
+        <form className='space-y-4'>
+          {/* Upload File */}
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>
+              Upload file *
+            </label>
+            <div className='flex items-center border border-gray-300 rounded-md bg-gray-200'>
+              <label className='cursor-pointer bg-white text-gray-500 px-3 py-2 border-r border-gray-300 text-sm hover:bg-gray-50'>
+                Choose file
+                <input type='file' className='hidden' accept='.csv' />
+              </label>
+              <span className='px-3 text-sm text-gray-500'>No file chosen</span>
+            </div>
+          </div>
+
+          {/* Choose Group */}
+          <div>
+            <div className='flex justify-between items-center mb-1'>
+              <label className='block text-sm font-medium text-gray-500'>
+                Choose a group
+              </label>
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                className='text-gray-400 h-3 w-3'
+              />
+            </div>
+            <select
+              disabled
+              className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm py-2 px-3 bg-gray-200 border text-gray-500 cursor-not-allowed'
+            >
+              <option>Select an option...</option>
+            </select>
+          </div>
+
+          <div className='pt-2'>
+            <button
+              type='button'
+              disabled
+              className='inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-500 bg-gray-300 cursor-not-allowed'
+            >
+              Send invites
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+// ===================================
 
 interface TableMembersProps {
   members?: Member[];
@@ -80,34 +206,24 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     addUsers,
     removeUsers,
     updatingMembersGroup,
-
     isLoadingMemberState
   } = props;
 
+  const [activeTab, setActiveTab] = useState<'Members' | 'Invitations'>(
+    'Members'
+  ); // === AJOUT DU STATE TAB ===
   const [memberName, setMemberName] = useState<string>('');
   const [selectedGroupMembers, setSelectedGroupMembers] = useState<string[]>(
     []
   );
 
   const [selectedGroupName, setSelectedGroupName] = useState<string>('');
-  const [activeMembersPeriod, setActiveMembersPeriod] =
-    useState<PeriodFilter>('30days');
-  const [progressMembersPeriod, setProgressMembersPeriod] =
-    useState<PeriodFilter>('30days');
-  const [courseFilter, setCourseFilter] = useState<CourseFilter>('all');
-  const [coursesData, setCoursesData] = useState<{
-    kadea: number;
-    moodle: number;
-    aws: number;
-    total: number;
-  }>({ kadea: 0, moodle: 0, aws: 0, total: 0 });
+  const [membersForExport, setMembersForExport] = useState<Member[]>();
 
   const handleSearchMember = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     searchMember(memberName);
   };
-
-  const [membersForExpot, setMembersForExpot] = useState<Member[]>();
 
   const handleClearSearchMemberInput = () => {
     setMemberName('');
@@ -127,33 +243,22 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     const groupMembersInput = event.target.value;
     setSelectedGroupName(groupMembersInput);
   };
+
   const handleSelectedGroupMembers = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const isMemberCheked = selectedGroupMembers.find(
-      selectedGroupMemberId =>
-        selectedGroupMemberId == event.target.value.slice()
-    );
-    if (isMemberCheked) {
-      const selectedGroupMembersFiltered = selectedGroupMembers.filter(
-        selectedGroupMember => {
-          return selectedGroupMember != event.target.value.slice();
-        }
-      );
-      setSelectedGroupMembers([...selectedGroupMembersFiltered]);
+    const value = event.target.value;
+    const isChecked = selectedGroupMembers.includes(value);
+
+    if (isChecked) {
+      setSelectedGroupMembers(selectedGroupMembers.filter(id => id !== value));
     } else {
-      setSelectedGroupMembers([
-        ...selectedGroupMembers,
-        event.target.value.slice()
-      ]);
+      setSelectedGroupMembers([...selectedGroupMembers, value]);
     }
   };
 
-  const isMemberCheked = (memberId: string): boolean => {
-    const isMemberCheked = selectedGroupMembers.find(
-      selectedGroupMemberId => selectedGroupMemberId == memberId
-    );
-    return isMemberCheked ? true : false;
+  const isMemberChecked = (memberId: string): boolean => {
+    return selectedGroupMembers.includes(memberId);
   };
 
   const getAllMembersForExport = async () => {
@@ -164,24 +269,29 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
       );
       if (memberList != null && !('error' in memberList)) {
         const inverseMemberList = memberList.userList.reverse();
-        setMembersForExpot([...inverseMemberList]);
+        setMembersForExport([...inverseMemberList]);
       } else {
-        setMembersForExpot([]);
+        setMembersForExport([]);
       }
     } catch (error) {
       console.error('Error fetching members for export:', error);
-      setMembersForExpot([]);
+      setMembersForExport([]);
     }
   };
 
   const dateFormat = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleString();
+    // Format simple comme sur la maquette : 2/6/23
+    return date.toLocaleDateString('en-US', {
+      month: 'numeric',
+      day: 'numeric',
+      year: '2-digit'
+    });
   };
 
-  const exportUsers = (members: Member[]) => {
+  const exportUsers = (membersToExport: Member[]) => {
     const csvConfig = mkConfig({ useKeysAsHeaders: true });
-    const mockData = members.map(member => {
+    const mockData = membersToExport.map(member => {
       return {
         Email: member.email,
         Nom: member.name,
@@ -208,808 +318,469 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
     download(csvConfig)(csv);
   };
 
-  // Fonctions utilitaires pour les calculs de dates
-  const getDateFromPeriod = (period: PeriodFilter): Date => {
-    const now = new Date();
-    const date = new Date();
-
-    switch (period) {
-      case '30days':
-        date.setDate(now.getDate() - 30);
-        break;
-      case '2months':
-        date.setMonth(now.getMonth() - 2);
-        break;
-      case '3months':
-        date.setMonth(now.getMonth() - 3);
-        break;
-      case '4months':
-        date.setMonth(now.getMonth() - 4);
-        break;
-      case '6months':
-        date.setMonth(now.getMonth() - 6);
-        break;
-      case '1year':
-        date.setFullYear(now.getFullYear() - 1);
-        break;
-      case 'all':
-        return new Date(0); // Date très ancienne pour inclure tout
-      default:
-        date.setDate(now.getDate() - 30);
-    }
-    return date;
-  };
-
-  // Vérifier si un membre est actif dans une période donnée
-  const isMemberActiveInPeriod = useCallback(
-    (member: Member, period: PeriodFilter): boolean => {
-      const periodDate = getDateFromPeriod(period);
-      const memberCreateDate = member.createAt
-        ? new Date(member.createAt)
-        : null;
-
-      if (!memberCreateDate) return false;
-
-      // Un membre est considéré actif s'il a complété au moins un défi
-      const hasCompletedChallenges = member.currentsSuperBlock.some(
-        superBlock =>
-          superBlock.totalCompletedChallenges &&
-          superBlock.totalCompletedChallenges > 0
-      );
-
-      // Si la période est "all", retourner tous les membres actifs
-      if (period === 'all') {
-        return hasCompletedChallenges;
-      }
-
-      // Sinon, vérifier si le membre a été créé dans la période
-      return (
-        hasCompletedChallenges &&
-        (memberCreateDate >= periodDate ||
-          member.currentsSuperBlock.some(
-            superBlock =>
-              superBlock.totalCompletedChallenges &&
-              superBlock.totalCompletedChallenges > 0
-          ))
-      );
-    },
-    []
-  );
-
-  // Vérifier si un membre a au moins 50% de progression
-  const hasProgress50Plus = useCallback((member: Member): boolean => {
-    return member.currentsSuperBlock.some(superBlock => {
-      if (superBlock.totalChallenges && superBlock.totalCompletedChallenges) {
-        const progress =
-          (superBlock.totalCompletedChallenges / superBlock.totalChallenges) *
-          100;
-        return progress >= 50;
-      }
-      return false;
-    });
-  }, []);
-
-  // Récupérer les cours
-  const fetchCoursesData = async () => {
-    try {
-      const [kadeaCourses, moodleCourses, awsCourses] = await Promise.all([
-        getKadeaCourses().catch(() => []),
-        getMoodleCourses().catch(() => []),
-        getAwsPath().catch(() => [])
-      ]);
-
-      const kadeaCount = Array.isArray(kadeaCourses) ? kadeaCourses.length : 0;
-      const moodleCount = Array.isArray(moodleCourses)
-        ? moodleCourses.length
-        : 0;
-      const awsCount = Array.isArray(awsCourses) ? awsCourses.length : 0;
-
-      setCoursesData({
-        kadea: kadeaCount,
-        moodle: moodleCount,
-        aws: awsCount,
-        total: kadeaCount + moodleCount + awsCount
-      });
-    } catch (error) {
-      console.error('Error fetching courses:', error);
-    }
-  };
-
   useEffect(() => {
     void getAllMembersForExport();
-    void fetchCoursesData();
   }, []);
 
-  useEffect(() => {
-    return;
-  }, [selectedGroupMembers]);
-
+  // Reset la sélection quand on change de groupe ou qu'une action est finie
   useEffect(() => {
     setSelectedGroupMembers([]);
     setSelectedGroupName('');
   }, [currentGroupMembers, updatingMembersGroup]);
 
-  // Calculate statistics for indicator cards
-  const stats = useMemo(() => {
-    const totalMembers = countUsers || 0;
-
-    // Carte 2: Membres actifs dans la période sélectionnée (tous cours confondus)
-    const activeMembers =
-      members?.filter(m => isMemberActiveInPeriod(m, activeMembersPeriod))
-        .length || 0;
-
-    // Carte 3: Membres avec au moins 50% de progression pour n'importe quel cours
-    const membersWithProgress50Plus =
-      members?.filter(m => hasProgress50Plus(m)).length || 0;
-
-    // Carte 4: Total des cours selon le filtre
-    let totalCourses = 0;
-    switch (courseFilter) {
-      case 'kadea':
-        totalCourses = coursesData.kadea;
-        break;
-      case 'moodle':
-        totalCourses = coursesData.moodle;
-        break;
-      case 'aws':
-        totalCourses = coursesData.aws;
-        break;
-      case 'all':
-      default:
-        totalCourses = coursesData.total;
-    }
-
-    return {
-      totalMembers,
-      activeMembers,
-      membersWithProgress50Plus,
-      totalCourses,
-      kadeaCourses: coursesData.kadea,
-      moodleCourses: coursesData.moodle,
-      awsCourses: coursesData.aws
-    };
-  }, [
-    countUsers,
-    members,
-    activeMembersPeriod,
-    courseFilter,
-    coursesData,
-    isMemberActiveInPeriod,
-    hasProgress50Plus
-  ]);
-
-  // Navigation vers les pages de détails
-  const handleCardClick = (cardType: string) => {
-    const basePath = '/admin/all-members';
-    switch (cardType) {
-      case 'total':
-        void navigate(`${basePath}/total-members`);
-        break;
-      case 'active':
-        void navigate(
-          `${basePath}/actif-members?period=${activeMembersPeriod}`
-        );
-        break;
-      case 'progress':
-        void navigate(
-          `${basePath}/progression-by-member?period=${progressMembersPeriod}`
-        );
-        break;
-      case 'courses':
-        void navigate(`${basePath}/total-courses?filter=${courseFilter}`);
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
-    <div className='modern-admin-container'>
-      {/* Header Section */}
-      <div className='modern-admin-header'>
-        <h1 className='modern-admin-title'>Membres</h1>
-        <p className='modern-admin-subtitle'>
-          Gérez tous les membres de la plateforme
-        </p>
-      </div>
-
-      {/* Filter Buttons */}
-      <div className='modern-filter-buttons'>
-        <button
-          className={`modern-filter-btn ${
-            currentGroupMembers === 'all' ? 'active' : ''
-          }`}
-          onClick={() => {
-            const event = {
-              target: { value: 'all' },
-              preventDefault: (): void => {
-                // Prevent default behavior
-              }
-            } as React.ChangeEvent<HTMLSelectElement>;
-            handleChangeGroup(event);
-          }}
-        >
-          Tous les membres
-        </button>
-        {groups
-          .filter(g => g.userGroupName !== 'all')
-          .map(group => (
+    <div className='w-full bg-white p-6'>
+      {/* Top Header Section */}
+      <div className='flex justify-between items-center mb-8'>
+        <div>
+          <h1 className='text-2xl font-bold text-gray-900'>Members</h1>
+          <p className='text-sm text-gray-600 mt-1'>
+            {countUsers} seats used, 0 seats remaining |{' '}
+            <span className='text-blue-600 cursor-pointer hover:underline text-sm'>
+              Add seats
+            </span>
+          </p>
+        </div>
+        {/* On cache le bouton export si on est sur l'onglet Invitations */}
+        {activeTab === 'Members' && (
+          <div className='flex gap-2'>
             <button
-              key={group.userGroupName}
-              className={`modern-filter-btn ${
-                currentGroupMembers === group.userGroupName ? 'active' : ''
-              }`}
+              className='inline-flex items-center px-4 py-2 shadow-sm text-sm font-medium rounded-md
+         text-white bg-blue-500 hover:bg-blue-600 focus:outline-none
+         focus:ring-blue-500 border border-transparent disabled:opacity-50
+         transition-none '
+              disabled={!membersForExport || membersForExport.length === 0}
               onClick={() => {
-                const event = {
-                  target: { value: group.userGroupName },
-                  preventDefault: (): void => {
-                    // Prevent default behavior
-                  }
-                } as React.ChangeEvent<HTMLSelectElement>;
-                handleChangeGroup(event);
+                if (membersForExport && membersForExport.length > 0) {
+                  exportUsers(membersForExport);
+                }
               }}
             >
-              {group.userGroupName}
-            </button>
-          ))}
-      </div>
-
-      {/* Indicator Cards */}
-      <div className='modern-indicators-grid'>
-        {/* Carte 1: Total Membres */}
-        <div
-          className='modern-indicator-card blue'
-          onClick={() => handleCardClick('total')}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleCardClick('total');
-            }
-          }}
-          role='button'
-          tabIndex={0}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className='modern-indicator-header'>
-            <div className='modern-indicator-title'>
-              Total Membres
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className='modern-indicator-icon'
-              />
-            </div>
-          </div>
-          <div className='modern-indicator-value'>{stats.totalMembers}</div>
-          <div className='modern-indicator-change neutral'>
-            <span>Tous les groupes</span>
-          </div>
-          <div className='modern-indicator-graph'>
-            {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-              <div
-                key={i}
-                className='modern-indicator-graph-bar'
-                style={{
-                  height: `${Math.random() * 60 + 20}%`,
-                  background: 'rgba(26, 26, 26, 0.2)'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Carte 2: Membres Actifs */}
-        <div
-          className='modern-indicator-card green'
-          onClick={() => handleCardClick('active')}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleCardClick('active');
-            }
-          }}
-          role='button'
-          tabIndex={0}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className='modern-indicator-header'>
-            <div className='modern-indicator-title'>
-              Membres Actifs
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className='modern-indicator-icon'
-              />
-            </div>
-            <div className='modern-indicator-filter'>
-              <select
-                value={activeMembersPeriod}
-                onChange={e =>
-                  setActiveMembersPeriod(e.target.value as PeriodFilter)
-                }
-                onClick={e => e.stopPropagation()}
-                className='modern-period-filter'
-              >
-                <option value='30days'>30 jours</option>
-                <option value='2months'>2 mois</option>
-                <option value='3months'>3 mois</option>
-                <option value='4months'>4 mois</option>
-                <option value='6months'>6 mois</option>
-                <option value='1year'>1 an</option>
-                <option value='all'>Tout</option>
-              </select>
-            </div>
-          </div>
-          <div className='modern-indicator-value'>{stats.activeMembers}</div>
-          <div className='modern-indicator-change positive'>
-            <FontAwesomeIcon
-              icon={faArrowUp}
-              className='modern-indicator-change-arrow'
-            />
-            <span>
-              {stats.totalMembers > 0
-                ? Math.floor((stats.activeMembers / stats.totalMembers) * 100)
-                : 0}
-              % du total
-            </span>
-          </div>
-          <div className='modern-indicator-graph'>
-            {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-              <div
-                key={i}
-                className='modern-indicator-graph-bar'
-                style={{
-                  height: `${Math.random() * 60 + 20}%`,
-                  background: 'rgba(25, 135, 84, 0.3)'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Carte 3: Progrès 50%+ */}
-        <div
-          className='modern-indicator-card yellow'
-          onClick={() => handleCardClick('progress')}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleCardClick('progress');
-            }
-          }}
-          role='button'
-          tabIndex={0}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className='modern-indicator-header'>
-            <div className='modern-indicator-title'>
-              Progrès 50%+
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className='modern-indicator-icon'
-              />
-            </div>
-            <div className='modern-indicator-filter'>
-              <select
-                value={progressMembersPeriod}
-                onChange={e =>
-                  setProgressMembersPeriod(e.target.value as PeriodFilter)
-                }
-                onClick={e => e.stopPropagation()}
-                className='modern-period-filter'
-              >
-                <option value='30days'>30 jours</option>
-                <option value='2months'>2 mois</option>
-                <option value='3months'>3 mois</option>
-                <option value='4months'>4 mois</option>
-                <option value='6months'>6 mois</option>
-                <option value='1year'>1 an</option>
-                <option value='all'>Tout</option>
-              </select>
-            </div>
-          </div>
-          <div className='modern-indicator-value'>
-            {stats.membersWithProgress50Plus}
-          </div>
-          <div className='modern-indicator-change neutral'>
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className='modern-indicator-change-arrow'
-            />
-            <span>Au moins 50% progression</span>
-          </div>
-          <div className='modern-indicator-graph'>
-            {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-              <div
-                key={i}
-                className='modern-indicator-graph-bar'
-                style={{
-                  height: `${Math.random() * 60 + 20}%`,
-                  background: 'rgba(255, 193, 7, 0.3)'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Carte 4: Total Cours */}
-        <div
-          className='modern-indicator-card pink'
-          onClick={() => handleCardClick('courses')}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleCardClick('courses');
-            }
-          }}
-          role='button'
-          tabIndex={0}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className='modern-indicator-header'>
-            <div className='modern-indicator-title'>
-              Total Cours
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className='modern-indicator-icon'
-              />
-            </div>
-            <div className='modern-indicator-filter'>
-              <select
-                value={courseFilter}
-                onChange={e => setCourseFilter(e.target.value as CourseFilter)}
-                onClick={e => e.stopPropagation()}
-                className='modern-period-filter'
-              >
-                <option value='all'>Tous</option>
-                <option value='kadea'>Kadea</option>
-                <option value='moodle'>Moodle</option>
-                <option value='aws'>AWS</option>
-              </select>
-            </div>
-          </div>
-          <div className='modern-indicator-value'>{stats.totalCourses}</div>
-          <div className='modern-indicator-change positive'>
-            <FontAwesomeIcon
-              icon={faArrowUp}
-              className='modern-indicator-change-arrow'
-            />
-            <span>
-              {courseFilter === 'all' && (
-                <>
-                  K: {stats.kadeaCourses} | M: {stats.moodleCourses} | A:{' '}
-                  {stats.awsCourses}
-                </>
-              )}
-              {courseFilter === 'kadea' && 'Cours Kadea'}
-              {courseFilter === 'moodle' && 'Cours Moodle'}
-              {courseFilter === 'aws' && 'Cours AWS'}
-            </span>
-          </div>
-          <div className='modern-indicator-graph'>
-            {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-              <div
-                key={i}
-                className='modern-indicator-graph-bar'
-                style={{
-                  height: `${Math.random() * 60 + 20}%`,
-                  background: 'rgba(220, 53, 69, 0.2)'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Search and Filter Section */}
-      <div className='modern-search-filter-section'>
-        <div className='modern-search-filter-grid'>
-          <div className='modern-form-group'>
-            <label htmlFor='member-search' className='modern-form-label'>
-              Rechercher un membre
-            </label>
-            <form
-              onSubmit={handleSearchMember}
-              className='modern-search-input-group'
-            >
-              <input
-                id='member-search'
-                type='search'
-                placeholder='Nom ou email...'
-                className='modern-form-input modern-search-input'
-                value={memberName}
-                onChange={handleChangeSearchMemberInput}
-              />
-              <button type='submit' className='modern-btn modern-btn-primary'>
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
-              {memberName && (
-                <button
-                  type='button'
-                  className='modern-btn modern-btn-secondary'
-                  onClick={handleClearSearchMemberInput}
-                >
-                  <FontAwesomeIcon icon={faXmark} />
-                </button>
-              )}
-            </form>
-          </div>
-
-          <div className='modern-form-group'>
-            <label htmlFor='group-select' className='modern-form-label'>
-              Gestion des groupes
-            </label>
-            <div
-              style={{
-                display: 'flex',
-                gap: '0.5rem',
-                flexDirection: 'column'
-              }}
-            >
-              <select
-                id='group-select'
-                className='modern-form-select'
-                onChange={handleChangeGroupName}
-                value={selectedGroupName}
-                disabled={selectedGroupMembers.length === 0}
-              >
-                <option value=''>Sélectionnez un groupe</option>
-                {groups
-                  .filter(g => g.userGroupName !== 'all')
-                  .map(group => (
-                    <option
-                      key={group.userGroupName}
-                      value={group.userGroupName}
-                    >
-                      {group.userGroupName}
-                    </option>
-                  ))}
-              </select>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button
-                  className='modern-btn modern-btn-success'
-                  disabled={
-                    selectedGroupMembers.length === 0 ||
-                    selectedGroupName === '' ||
-                    currentGroupMembers === selectedGroupName
-                  }
-                  onClick={() => {
-                    const inputEvent = {
-                      target: { value: '' },
-                      preventDefault: (): void => {
-                        // Prevent default behavior
-                      }
-                    } as React.ChangeEvent<HTMLInputElement>;
-                    addUsers(
-                      inputEvent,
-                      selectedGroupName,
-                      selectedGroupMembers
-                    );
-                  }}
-                >
-                  Ajouter
-                </button>
-                <button
-                  className='modern-btn modern-btn-danger'
-                  disabled={
-                    selectedGroupMembers.length === 0 ||
-                    groups.length <= 1 ||
-                    currentGroupMembers === 'all'
-                  }
-                  onClick={() => {
-                    const inputEvent = {
-                      target: { value: '' },
-                      preventDefault: (): void => {
-                        // Prevent default behavior
-                      }
-                    } as React.ChangeEvent<HTMLInputElement>;
-                    removeUsers(
-                      inputEvent,
-                      selectedGroupMembers,
-                      currentGroupMembers
-                    );
-                  }}
-                >
-                  Retirer
-                </button>
-              </div>
-              {updatingMembersGroup?.message && (
-                <div
-                  className={
-                    updatingMembersGroup.isAddedStatus
-                      ? 'text-success'
-                      : 'text-error'
-                  }
-                  style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}
-                >
-                  {updatingMembersGroup.message}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className='modern-form-group'>
-            <label htmlFor='export-btn' className='modern-form-label'>
+              <FontAwesomeIcon icon={faDownload} className='mr-2' />
               Export
-            </label>
-            <button
-              id='export-btn'
-              className='modern-btn modern-btn-primary'
-              disabled={!membersForExpot || membersForExpot.length === 0}
-              onClick={() => {
-                try {
-                  if (membersForExpot && membersForExpot.length > 0) {
-                    exportUsers(membersForExpot);
-                  } else {
-                    console.warn('Aucun membre à exporter');
-                  }
-                } catch (error) {
-                  console.error('Error exporting members:', error);
-                }
-              }}
-            >
-              <FontAwesomeIcon icon={faSearch} />
-              Exporter les utilisateurs
             </button>
-          </div>
-        </div>
-      </div>
-      {/* Table Section */}
-      <div className='modern-table-container'>
-        {isLoadingMemberState ? (
-          <div className='modern-loading'>
-            <p>Chargement des utilisateurs en cours...</p>
-          </div>
-        ) : members && members.length > 0 ? (
-          <>
-            <table className='modern-table'>
-              <thead>
-                <tr>
-                  <th>
-                    <input
-                      type='checkbox'
-                      onChange={e => {
-                        if (e.target.checked) {
-                          setSelectedGroupMembers(members.map(m => m.id));
-                        } else {
-                          setSelectedGroupMembers([]);
-                        }
-                      }}
-                      checked={
-                        selectedGroupMembers.length === members.length &&
-                        members.length > 0
-                      }
-                    />
-                  </th>
-                  <th>Email</th>
-                  <th>Nom</th>
-                  <th>Progrès RWD</th>
-                  <th>Date d&apos;inscription</th>
-                  <th>Groupe(s)</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {members.map((member, index) => {
-                  const responsiveWebDesignBlock =
-                    member.currentsSuperBlock.find(
-                      superBlock =>
-                        superBlock.superBlockDashedName ===
-                        'responsive-web-design'
-                    );
-
-                  const percentageCompleted: number =
-                    responsiveWebDesignBlock &&
-                    responsiveWebDesignBlock.totalCompletedChallenges &&
-                    responsiveWebDesignBlock.totalChallenges
-                      ? Math.floor(
-                          (responsiveWebDesignBlock.totalCompletedChallenges /
-                            responsiveWebDesignBlock.totalChallenges) *
-                            100
-                        )
-                      : 0;
-
-                  return (
-                    <tr key={index}>
-                      <td>
-                        <input
-                          type='checkbox'
-                          checked={isMemberCheked(member.id)}
-                          value={member.id}
-                          onChange={handleSelectedGroupMembers}
-                        />
-                      </td>
-                      <td>{member.email}</td>
-                      <td>{member.name || 'N/A'}</td>
-                      <td>
-                        <div className='modern-progress-bar'>
-                          <div
-                            className='modern-progress-fill'
-                            style={{ width: `${percentageCompleted}%` }}
-                          >
-                            {percentageCompleted > 10
-                              ? `${percentageCompleted}%`
-                              : ''}
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        {member.createAt ? dateFormat(member.createAt) : 'N/A'}
-                      </td>
-                      <td>
-                        {member.groups && member.groups.length > 0 ? (
-                          <div
-                            style={{
-                              display: 'flex',
-                              gap: '0.5rem',
-                              flexWrap: 'wrap'
-                            }}
-                          >
-                            {member.groups.map((group, idx) => (
-                              <span
-                                key={idx}
-                                className='modern-badge modern-badge-primary'
-                              >
-                                {group}
-                              </span>
-                            ))}
-                          </div>
-                        ) : (
-                          <span className='modern-badge'>Aucun</span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          className='modern-action-btn modern-action-btn-link'
-                          onClick={() => showMemberDetails(member)}
-                        >
-                          Voir plus
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-
-            {/* Pagination */}
-            <div className='modern-pagination'>
-              <button
-                className='modern-pagination-btn'
-                disabled={currentPage === 1}
-                onClick={() => navigateToPage(1)}
-              >
-                <FontAwesomeIcon icon={faAngleDoubleLeft} />
-              </button>
-              <button
-                className='modern-pagination-btn'
-                disabled={currentPage === 1}
-                onClick={() => navigateToPage(currentPage - 1)}
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </button>
-              <span className='modern-pagination-info'>
-                {currentPage} sur {totalPages}
-              </span>
-              <button
-                className='modern-pagination-btn'
-                disabled={currentPage === totalPages}
-                onClick={() => navigateToPage(currentPage + 1)}
-              >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </button>
-              <button
-                className='modern-pagination-btn'
-                disabled={currentPage === totalPages}
-                onClick={() => navigateToPage(totalPages)}
-              >
-                <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className='modern-empty-state'>
-            <p>Aucun utilisateur trouvé</p>
           </div>
         )}
       </div>
+
+      {/* Tabs - MIS À JOUR AVEC LOGIQUE ET CLASSES */}
+      <div className='border-b border-gray-200 mb-6'>
+        <nav className='-mb-px flex space-x-8'>
+          <button
+            className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                bg-transparent focus:outline-none
+                transition-colors duration-200 ease-in-out
+                ${
+                  activeTab === 'Members'
+                    ? ' text-gray-900 border-b-blue-600 border-transparent'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-transparent'
+                }
+              `}
+            onClick={() => setActiveTab('Members')}
+            type='button'
+          >
+            Members
+          </button>
+          <button
+            className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                bg-transparent focus:outline-none
+                transition-colors duration-200 ease-in-out
+                ${
+                  activeTab === 'Invitations'
+                    ? 'text-gray-900 border-b-blue-600 border-transparent'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-transparent'
+                }
+              `}
+            onClick={() => setActiveTab('Invitations')}
+            type='button'
+          >
+            Invitations
+          </button>
+        </nav>
+      </div>
+
+      {/* === RENDU CONDITIONNEL === */}
+      {activeTab === 'Invitations' ? (
+        <Invitations groups={groups} />
+      ) : (
+        <>
+          {/* Filters Row */}
+          <div className='grid grid-cols-12 gap-6 mb-6 items-end'>
+            {/* Group Select */}
+            <div className='col-span-3'>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Group
+              </label>
+              <div className='relative'>
+                <select
+                  className='block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md  shadow-sm'
+                  value={currentGroupMembers}
+                  onChange={e => {
+                    const event = {
+                      target: { value: e.target.value },
+                      // eslint-disable-next-line @typescript-eslint/no-empty-function
+                      preventDefault: () => {}
+                    } as React.ChangeEvent<HTMLSelectElement>;
+                    handleChangeGroup(event);
+                  }}
+                >
+                  <option value='all'>All</option>
+                  {groups
+                    .filter(g => g.userGroupName !== 'all')
+                    .map(group => (
+                      <option
+                        key={group.userGroupName}
+                        value={group.userGroupName}
+                      >
+                        {group.userGroupName}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Member Search */}
+            <div className='col-span-3'>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Member
+              </label>
+              <div className='relative rounded-md shadow-sm'>
+                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                  <FontAwesomeIcon icon={faSearch} className='text-gray-400' />
+                </div>
+                <form onSubmit={handleSearchMember}>
+                  <input
+                    type='text'
+                    className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md border py-2'
+                    placeholder='Search members...'
+                    value={memberName}
+                    onChange={handleChangeSearchMemberInput}
+                  />
+                </form>
+                {memberName && (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+                  <div
+                    className='absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer'
+                    onClick={handleClearSearchMemberInput}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className='text-gray-400 hover:text-gray-600'
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Spacer to align Invitation status to the right (like mockup) or keep grid */}
+            <div className='col-span-3'></div>
+
+            {/* Invitation Status (Static for UI match) */}
+            <div className='col-span-3'>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Invitation status
+              </label>
+              <select
+                disabled
+                className='block w-full pl-3 pr-10 py-2 text-base border-gray-200 bg-gray-50 text-gray-400 sm:text-sm rounded-md border shadow-sm cursor-not-allowed'
+              >
+                <option>Select an option</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Groups Management Actions (Only shown when group selected) */}
+          <div className='mb-4 flex gap-2 items-center min-h-[40px]'>
+            {selectedGroupMembers.length > 0 && (
+              <>
+                <span className='text-sm text-gray-600 mr-2'>
+                  {selectedGroupMembers.length} selected
+                </span>
+                <div className='flex items-center gap-2'>
+                  <select
+                    className='text-sm border-gray-300 rounded-md border shadow-sm py-1.5 pl-2 pr-8'
+                    value={selectedGroupName}
+                    onChange={handleChangeGroupName}
+                  >
+                    <option value=''>Move to group...</option>
+                    {groups
+                      .filter(g => g.userGroupName !== 'all')
+                      .map(group => (
+                        <option
+                          key={group.userGroupName}
+                          value={group.userGroupName}
+                        >
+                          {group.userGroupName}
+                        </option>
+                      ))}
+                  </select>
+                  <button
+                    className='inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 disabled:opacity-50'
+                    disabled={
+                      !selectedGroupName ||
+                      selectedGroupName === currentGroupMembers
+                    }
+                    onClick={() => {
+                      // Adaptation pour respecter la signature de addUsers (event, groupName, userIds)
+                      const event = {
+                        target: { value: '' }
+                      } as React.ChangeEvent<HTMLInputElement>;
+                      addUsers(event, selectedGroupName, selectedGroupMembers);
+                    }}
+                  >
+                    Add
+                  </button>
+                  <button
+                    className='inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 disabled:opacity-50'
+                    disabled={
+                      groups.length <= 1 || currentGroupMembers === 'all'
+                    }
+                    onClick={() => {
+                      const event = {
+                        target: { value: '' }
+                      } as React.ChangeEvent<HTMLInputElement>;
+                      removeUsers(
+                        event,
+                        selectedGroupMembers,
+                        currentGroupMembers
+                      );
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+                {updatingMembersGroup?.message && (
+                  <span
+                    className={`text-sm ml-2 ${
+                      updatingMembersGroup.isAddedStatus
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    }`}
+                  >
+                    {updatingMembersGroup.message}
+                  </span>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Data Table */}
+          <div className='flex flex-col'>
+            <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+              <div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+                <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+                  <table className='min-w-full divide-y divide-gray-200'>
+                    <thead className='bg-white'>
+                      <tr>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider'
+                        >
+                          <div className='flex items-center gap-2'>
+                            <input
+                              type='checkbox'
+                              className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                              onChange={e => {
+                                if (e.target.checked && members) {
+                                  setSelectedGroupMembers(
+                                    members.map(m => m.id)
+                                  );
+                                } else {
+                                  setSelectedGroupMembers([]);
+                                }
+                              }}
+                              checked={
+                                members &&
+                                members.length > 0 &&
+                                selectedGroupMembers.length === members.length
+                              }
+                            />
+                            Email
+                          </div>
+                        </th>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider'
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider'
+                        >
+                          Role
+                        </th>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider'
+                        >
+                          Joined
+                        </th>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider'
+                        >
+                          Groups
+                        </th>
+                        <th scope='col' className='relative px-6 py-3'>
+                          <span className='sr-only'>Edit</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className='bg-white divide-y divide-gray-200'>
+                      {isLoadingMemberState ? (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className='px-6 py-4 text-center text-sm text-gray-500'
+                          >
+                            Loading members...
+                          </td>
+                        </tr>
+                      ) : !members || members.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className='px-6 py-4 text-center text-sm text-gray-500'
+                          >
+                            No members found.
+                          </td>
+                        </tr>
+                      ) : (
+                        members.map(member => (
+                          <tr
+                            key={member.id}
+                            className='hover:bg-gray-50 group'
+                          >
+                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600'>
+                              <div className='flex items-center gap-2'>
+                                <input
+                                  type='checkbox'
+                                  className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                                  checked={isMemberChecked(member.id)}
+                                  value={member.id}
+                                  onChange={handleSelectedGroupMembers}
+                                />
+                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+                                <span
+                                  className='cursor-pointer hover:underline'
+                                  onClick={() => showMemberDetails(member)}
+                                >
+                                  {member.email}
+                                </span>
+                              </div>
+                            </td>
+                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                              {member.name || '-'}
+                            </td>
+                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                              {/* Affichage du Rôle */}
+                              Admin
+                            </td>
+                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500 italic'>
+                              {member.createAt
+                                ? dateFormat(member.createAt)
+                                : 'Pending'}
+                            </td>
+                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                              {/* Correction pour l'affichage des groupes */}
+                              {member.groups && member.groups.length > 0
+                                ? Array.isArray(member.groups)
+                                  ? member.groups.join(', ')
+                                  : 'Groupes'
+                                : ''}
+                            </td>
+                            <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+                              <button
+                                className='text-blue-600 hover:text-blue-900 font-bold mr-4'
+                                onClick={() => showMemberDetails(member)}
+                              >
+                                Edit
+                              </button>
+                              <button className='text-gray-400 hover:text-gray-600'>
+                                <FontAwesomeIcon icon={faEllipsisH} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pagination */}
+          <div className='bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4'>
+            <div className='hidden sm:flex-1 sm:flex sm:items-center sm:justify-between'>
+              <div>
+                <p className='text-sm text-gray-700'>
+                  Showing page{' '}
+                  <span className='font-medium'>{currentPage}</span> of{' '}
+                  <span className='font-medium'>{totalPages}</span>
+                </p>
+              </div>
+              <div>
+                <nav
+                  className='relative z-0 inline-flex rounded-md shadow-sm -space-x-px'
+                  aria-label='Pagination'
+                >
+                  <button
+                    onClick={() => navigateToPage(1)}
+                    disabled={currentPage === 1}
+                    className='relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed'
+                  >
+                    <span className='sr-only'>First</span>
+                    <FontAwesomeIcon
+                      icon={faAngleDoubleLeft}
+                      className='h-3 w-3'
+                    />
+                  </button>
+                  <button
+                    onClick={() => navigateToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className='relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed'
+                  >
+                    <span className='sr-only'>Previous</span>
+                    <FontAwesomeIcon icon={faChevronLeft} className='h-3 w-3' />
+                  </button>
+
+                  {/* Current Page Indicator */}
+                  <span className='relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600'>
+                    {currentPage}
+                  </span>
+
+                  <button
+                    onClick={() => navigateToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className='relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed'
+                  >
+                    <span className='sr-only'>Next</span>
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className='h-3 w-3'
+                    />
+                  </button>
+                  <button
+                    onClick={() => navigateToPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className='relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed'
+                  >
+                    <span className='sr-only'>Last</span>
+                    <FontAwesomeIcon
+                      icon={faAngleDoubleRight}
+                      className='h-3 w-3'
+                    />
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

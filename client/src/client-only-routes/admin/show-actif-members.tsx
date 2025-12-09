@@ -15,8 +15,6 @@ import {
   isSignedInSelector
 } from '../../redux';
 import { getMembers } from './all-server-request-members';
-import './admin-global.css';
-import './modern-admin.css';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const { apiLocation, homeLocation } = envData;

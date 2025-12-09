@@ -132,12 +132,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     setMemberNameToSearch(memberName);
   };
 
-  const addUser = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    groupName: string,
-    userId: string[]
-  ) => {
-    event.preventDefault();
+  const addUser = (groupName: string, userId: string[]) => {
     const data = {
       ids: userId,
       userGroup: groupName
@@ -166,12 +161,7 @@ export function ShowAllMembers(props: ShowAllMembersProps): JSX.Element {
     }
   };
 
-  const removeUser = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    userIds: string[],
-    groupName: string
-  ) => {
-    event.preventDefault();
+  const removeUser = (userIds: string[], groupName: string) => {
     const data = {
       ids: userIds,
       userGroup: groupName
