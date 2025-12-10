@@ -415,7 +415,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
               </label>
               <div className='relative'>
                 <select
-                  className='block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md  shadow-sm'
+                  className='block w-full pl-3 pr-10 py-2 text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md  shadow-sm'
                   value={currentGroupMembers}
                   onChange={e => {
                     const event = {
@@ -500,7 +500,7 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                 </span>
                 <div className='flex items-center gap-2'>
                   <select
-                    className='text-sm border-gray-300 rounded-md border shadow-sm py-1.5 pl-2 pr-8'
+                    className='text-sm text-black border-gray-300 rounded-md border shadow-sm py-1.5 pl-2 pr-8'
                     value={selectedGroupName}
                     onChange={handleChangeGroupName}
                   >
@@ -694,12 +694,12 @@ export function TableMembers(props: TableMembersProps): JSX.Element {
                             </td>
                             <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
                               <button
-                                className='text-blue-600 hover:text-blue-900 font-bold mr-4'
+                                className='text-blue-600 hover:text-blue-900 font-bold mr-4 border-none hover:bg-gray-400 cursor-pointer'
                                 onClick={() => showMemberDetails(member)}
                               >
                                 Edit
                               </button>
-                              <button className='text-gray-400 hover:text-gray-600'>
+                              <button className='text-gray-400 hover:text-gray-600 border-none hover:bg-gray-400 cursor-pointe'>
                                 <FontAwesomeIcon icon={faEllipsisH} />
                               </button>
                             </td>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
   Row,
@@ -134,7 +135,7 @@ export function DetailMember(props: MemberProps): JSX.Element {
   return (
     <Row>
       <Col md={12} sm={12} xs={12}>
-        <div>
+        {/* <div>
           <button
             className='action-btn-detail'
             onClick={() => {
@@ -147,7 +148,7 @@ export function DetailMember(props: MemberProps): JSX.Element {
             />
             &nbsp; Retour sur la liste
           </button>
-        </div>
+        </div> */}
         <Spacer size={1} />
         <p>
           <span className='fw-bold'>{'Informations personnelles'}</span>
