@@ -112,7 +112,8 @@ export const dataForprogramation: ProgramationCourses[] = [
     type: 'Cours',
     specification: 'Responsive Web Design',
     enrolementCount: 0,
-    author: 'kadea'
+    author: 'kadea',
+    asset: ''
   },
   {
     title: 'JavaScript Algorithms and Data Structures',
@@ -128,7 +129,8 @@ export const dataForprogramation: ProgramationCourses[] = [
     type: 'Cours',
     specification: 'JavaScript Algorithms and Data Structures',
     enrolementCount: 0,
-    author: 'kadea'
+    author: 'kadea',
+    asset: ''
   }
 ];
 
@@ -142,7 +144,7 @@ export const courseDescriptions: Record<CourseCategoryTitle, CourseDetails> = {
     titre: 'Design',
     summury: `Apprends les bases du design : typographie, théorie des couleurs, mise en page. Utilise Figma et Adobe XD pour créer des prototypes de qualité.`,
     description: `Dans ce parcours, tu apprendras les principes fondamentaux du design, y compris la typographie, la théorie des couleurs, et la mise en page.
-    Tu utiliseras des outils tels que Figma et Adobe XD pour créer des maquettes et des prototypes de haute qualité. 
+    Tu utiliseras des outils tels que Figma et Adobe XD pour créer des maquettes et des prototypes de haute qualité.
     En outre, tu apprendras à collaborer avec des développeurs pour transformer tes conceptions en produits réels.`
   },
   Bureautique: {
