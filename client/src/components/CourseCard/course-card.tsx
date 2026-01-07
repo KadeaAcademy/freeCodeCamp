@@ -90,7 +90,7 @@ const CourseCard = ({
 
   return (
     // .card-course-detail-back
-    <div className='w-[95%] md:w-[46%] xl:w-[31%] mb-[5%] h-auto border border-[#2b292b] flex flex-col items-stretch justify-between rounded-[5px]'>
+    <div className='w-[95%] md:w-[46%] xl:w-[31%] mb-[5%] h-auto  flex flex-col items-stretch justify-between rounded-[5px] hover:border border-[#2b292b] '>
       {/* .card-course-detail-unit .position-relative */}
       <div className='relative -top-[15px] -left-[15px] m-0 p-0 min-h-max flex flex-row w-full h-full'>
         <Link

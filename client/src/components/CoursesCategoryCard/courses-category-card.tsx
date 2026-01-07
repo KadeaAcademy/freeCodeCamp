@@ -11,7 +11,7 @@ import { Link } from '@reach/router';
 //   return doc.body.textContent || '';
 // };
 
-import './courses-category-card.css';
+// import './courses-category-card.css'; // Supprimé
 import { navigate } from 'gatsby';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import devIcon from '../../assets/icons/dev-icon.svg';
@@ -124,71 +124,92 @@ const CoursesCategoryCard = ({
     await navigate(url);
   };
 
-  return (
-    <div className='main'>
-      <div className='categories-wrapper'>
-        <p className='big-subheading'>Sujets tendance</p>
+  // Styles communs pour éviter la répétition
+  const cardBaseClasses =
+    'flex justify-between items-center p-4 rounded-xl border-none box-border cursor-pointer transition-colors duration-200 min-w-[200px] md:flex-none md:max-w-[230px] lg:max-w-[250px] w-full';
+  const cardSelectedClasses = 'bg-[#e5203d] text-white';
+  const cardDefaultClasses = 'bg-black text-white hover:bg-[#e5203d]';
 
-        <div className='chevron'>
+  return (
+    <div className='flex flex-col gap-8 mb-8 w-full max-w-full'>
+      <div className='flex flex-col'>
+        <p className='text-2xl font-semibold mb-4'>Sujets tendance</p>
+
+        <div className='flex self-end justify-end mb-2 gap-1'>
           <button
-            className='scroll-button left'
+            className='flex bg-white border border-black text-black text-xl px-4 py-1 font-extrabold rounded-lg cursor-pointer hover:bg-[#e5203d] hover:text-white mr-4'
             onClick={() => scrollLeft(containerRef1)}
           >
             ‹
           </button>
           <button
-            className='scroll-button right'
+            className='flex bg-white border border-black text-black text-xl px-4 py-1 font-extrabold rounded-lg cursor-pointer hover:bg-[#e5203d] hover:text-white'
             onClick={() => scrollRight(containerRef1)}
           >
             ›
           </button>
         </div>
-        <div className='categories-container' ref={containerRef1}>
+
+        {/* Container avec scroll horizontal caché */}
+        <div
+          className='flex gap-4 overflow-x-auto overflow-y-hidden whitespace-nowrap max-w-full lg:max-w-[72vw] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'
+          ref={containerRef1}
+        >
           <button
-            className={`category-card `}
+            className={`${cardBaseClasses} ${cardDefaultClasses}`}
             onClick={() => {
               setCurrent(-1);
               setValueOfButton(' Programmation');
               void navigate(routes.catalogue.programmation);
-              //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
             }}
           >
             {/* <span className='card-title'>Explorer tout</span> */}
-            <div className='card-content'>
-              <p className='category-name'>Programmation</p>
+            <div className='flex justify-between items-center gap-4 w-full text-white'>
+              <p className='text-white font-bold text-left w-full p-0 m-0 text-base md:text-[20px]'>
+                Programmation
+              </p>
 
-              <img src={programmationIcon} className='img-icon' alt='icon' />
+              <img
+                src={programmationIcon}
+                className='w-[25px] h-[25px] md:w-[32%] lg:w-[80px] lg:h-[80px] object-contain'
+                alt='icon'
+              />
             </div>
           </button>
           <button
-            className={
-              valueDeToken == null ? 'category-card' : 'category-card '
-            }
+            className={`${cardBaseClasses} ${
+              valueDeToken == null ? cardDefaultClasses : cardDefaultClasses
+            }`}
             onClick={() => {
               setCurrent(-2);
               setValueOfButton('Amazon Web Service');
               void navigate(routes.catalogue.aws);
-              //  navigate(`${routes.catalogue.catalogueTitle}/${e.target.value}`)
             }}
             // onKeyPress={event => handleKeyPress(event, -2)}
             tabIndex={0}
           >
             {/* <span className='card-title '>Explorer tout</span> */}
-            <div className='card-content '>
+            <div className='flex justify-between items-center gap-4 w-full text-white'>
               <p
-                className='category-name'
+                className='text-white font-bold text-left w-full p-0 m-0 text-base md:text-[20px]'
                 // Makes the element focusable
               >
                 Amazon Web Service
               </p>
-              <img src={devIcon} className='img-icon' alt='icon' />
+              <img
+                src={devIcon}
+                className='w-[25px] h-[25px] md:w-[32%] lg:w-[80px] lg:h-[80px] object-contain'
+                alt='icon'
+              />
             </div>
           </button>
           {courseCategories?.map(categorie => (
             <button
               key={categorie.id}
-              className={`category-card ${
-                isSelected === categorie.id ? 'selecte__card category-card' : ''
+              className={`${cardBaseClasses} ${
+                isSelected === categorie.id
+                  ? cardSelectedClasses
+                  : cardDefaultClasses
               }`}
               onClick={() => {
                 void setValueOfButton(
@@ -212,8 +233,8 @@ const CoursesCategoryCard = ({
               tabIndex={0} // rendre l'élément focusable via le clavier et l'inclure dans la tabulation
             >
               {/* <span className='card-title'>Explorer tout</span> */}
-              <div className='card-content'>
-                <p className='category-name'>
+              <div className='flex justify-between items-center gap-4 w-full text-white'>
+                <p className='text-white font-bold text-left w-full p-0 m-0 text-base md:text-[20px]'>
                   {categorie.name.includes('amp')
                     ? 'Marketing & Communication'
                     : categorie.name.includes('artificielle')
@@ -222,7 +243,7 @@ const CoursesCategoryCard = ({
                 </p>
                 <img
                   src={getCourseIcon(categorie.name)}
-                  className='img-icon'
+                  className='w-[25px] h-[25px] md:w-[32%] lg:w-[80px] lg:h-[80px] object-contain'
                   alt={`${categorie.name} icon`}
                 />
               </div>
@@ -230,13 +251,22 @@ const CoursesCategoryCard = ({
           ))}
         </div>
       </div>
-      <div className='categories-container-banner'>
-        <Link to='/learning-path/developpement-web' className='link-reset'>
+
+      {/* Banner Section */}
+      <div className='w-full p-4 sm:p-8 md:px-12 md:py-4 lg:p-8 border border-black rounded-[10px] flex flex-col gap-2 flex-grow box-border'>
+        <Link
+          to='/learning-path/developpement-web'
+          className='no-underline text-inherit hover:text-black hover:no-underline'
+        >
           <div>
-            <h2 className='ti'>Nouveau Parcours</h2>
+            <h2 className='text-white bg-[#e5203d] rounded-2xl inline-block w-[11rem] p-[0.33rem] text-center text-[0.5rem] sm:text-base cursor-pointer'>
+              Nouveau Parcours
+            </h2>
           </div>
-          <h2 className='path-title'>Découvre le parcours Programmation</h2>
-          <p className='path-description'>
+          <h2 className='text-black cursor-pointer text-xl font-bold mt-2'>
+            Découvre le parcours Programmation
+          </h2>
+          <p className='text-black cursor-pointer'>
             {/* {getDescriptionByCategory(categoryDescrTitle || '')}  on utilisera cette ligne lorsque l'on voudra que les shrot description viennent tous de la structure des données*/}
             Dans ce parcours, tu apprendras à créer des pages Web avec HTML pour
             le contenu, CSS pour la conception, et JavaScript pour rendre les

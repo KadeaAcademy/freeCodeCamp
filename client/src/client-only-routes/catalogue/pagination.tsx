@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
@@ -20,7 +20,27 @@ const PaginationControls: React.FC<PaginationProps> = ({
   onNavigueteBackward,
   onNavigateToPage
 }) => {
-  const maxVisiblePages = 10;
+  // État pour gérer le nombre de pages visibles selon la taille de l'écran
+  const [maxVisiblePages, setMaxVisiblePages] = useState(5);
+
+  // useEffect pour ajuster le nombre de pages visibles au redimensionnement
+  useEffect(() => {
+    const handleResize = () => {
+      // Sur mobile (< 640px), on affiche 5 pages max, sinon 10
+      if (window.innerWidth < 640) {
+        setMaxVisiblePages(5);
+      } else {
+        setMaxVisiblePages(10);
+      }
+    };
+
+    // Appel initial
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const halfWindow = Math.floor(maxVisiblePages / 2);
 
   let startPage = Math.max(1, currentPage - halfWindow);
@@ -35,12 +55,26 @@ const PaginationControls: React.FC<PaginationProps> = ({
     (_, index) => startPage + index
   );
 
+  // Styles
+  const baseNumberStyle =
+    'px-3 py-1 mx-1 border rounded-md cursor-pointer transition-colors duration-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-400';
+  const activeStyle = 'bg-red-600 text-white border-red-600 hover:bg-red-700';
+  const inactiveStyle =
+    'bg-white text-gray-700 border-gray-300 hover:bg-gray-100 hover:text-gray-900';
+  const dotsStyle = 'px-2 text-gray-500';
+  const chevronStyle =
+    'text-gray-500 hover:text-red-600 cursor-pointer mx-2 focus:outline-none focus:text-red-600 transition-colors p-2';
+
   return (
-    <div className='pagination-container'>
+    // CORRECTION ICI :
+    // 1. mb-12 : Ajoute une marge en bas pour ne pas toucher le footer
+    // 2. flex-wrap : Permet aux chiffres de passer à la ligne sur très petits écrans
+    // 3. gap-y-4 : Espacement vertical si ça passe à la ligne
+    <div className='flex flex-wrap md:items-start md:justify-start items-center justify-center  mt-8 mb-16 gap-y-4 select-none w-full px-2'>
       {currentPage > 1 && (
         <FontAwesomeIcon
           icon={faChevronLeft}
-          className='pagination-chevron'
+          className={chevronStyle}
           onClick={() => onNavigueteBackward()}
           tabIndex={0}
           role='button'
@@ -52,7 +86,9 @@ const PaginationControls: React.FC<PaginationProps> = ({
       {startPage > 1 && (
         <>
           <span
-            className='pagination__number'
+            className={`${baseNumberStyle} ${
+              currentPage === 1 ? activeStyle : inactiveStyle
+            }`}
             role='button'
             tabIndex={0}
             onClick={() => onNavigateToPage(1)}
@@ -61,7 +97,7 @@ const PaginationControls: React.FC<PaginationProps> = ({
           >
             1
           </span>
-          {startPage > 2 && <span className='pagination__dots'>...</span>}
+          {startPage > 2 && <span className={dotsStyle}>...</span>}
         </>
       )}
 
@@ -70,8 +106,8 @@ const PaginationControls: React.FC<PaginationProps> = ({
           key={page}
           role='button'
           tabIndex={0}
-          className={`pagination__number ${
-            currentPage === page ? 'pagination__number--active' : ''
+          className={`${baseNumberStyle} ${
+            currentPage === page ? activeStyle : inactiveStyle
           }`}
           onClick={() => onNavigateToPage(page)}
           onKeyDown={e => e.key === 'Enter' && onNavigateToPage(page)}
@@ -83,11 +119,11 @@ const PaginationControls: React.FC<PaginationProps> = ({
 
       {endPage < totalPages && (
         <>
-          {endPage < totalPages - 1 && (
-            <span className='pagination__dots'>...</span>
-          )}
+          {endPage < totalPages - 1 && <span className={dotsStyle}>...</span>}
           <span
-            className='pagination__number'
+            className={`${baseNumberStyle} ${
+              currentPage === totalPages ? activeStyle : inactiveStyle
+            }`}
             role='button'
             tabIndex={0}
             onClick={() => onNavigateToPage(totalPages)}
@@ -102,7 +138,7 @@ const PaginationControls: React.FC<PaginationProps> = ({
       {currentPage < totalPages && (
         <FontAwesomeIcon
           icon={faChevronRight}
-          className='pagination-chevron'
+          className={chevronStyle}
           onClick={() => onNavigateForward()}
           tabIndex={0}
           role='button'
