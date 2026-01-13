@@ -18,6 +18,12 @@
   max-width: 70%;
 }
 
+@media (max-width: 600px) {
+  .vodacom__section h2 {
+    max-width: 100%;
+  }
+}
+
 .vodacom__marque {
   display: flex;
   gap: 1rem;

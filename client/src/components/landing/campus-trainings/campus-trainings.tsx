@@ -75,7 +75,7 @@ const bootcampTrainings = [
 
 export default function LandingCampusTrainings() {
   return (
-    <div className='w-full flex flex-col gap-md items-center'>
+    <div className='w-full flex flex-col gap-md items-center '>
       <Image
         src={campusImage}
         alt='Silikin Campus image'
@@ -110,7 +110,7 @@ export default function LandingCampusTrainings() {
       </div>
       <div className='rounded-md p-normal bootcamp-preview bg-blue w-full flex flex-col gap'>
         <div className='w-full p-normal rounded-md bootcamp-preview-hero bg-blue flex flex-col gap'>
-          <div className='w-full flex flex-col gap bootcamp-preview-hero-content'>
+          <div className='w-full flex flex-col gap bootcamp-preview-hero-content '>
             <h2 className='text-white'>Bootcamp Carrière</h2>
             <h4 className='text-white'>Formation professionnel</h4>
             <div className='w-full flex flex-col gap-xs'>
@@ -140,7 +140,7 @@ export default function LandingCampusTrainings() {
           </div>
           <div className='bootcamp-preview-hero-bg hide-bg-on-mobile'></div>
         </div>
-        <div className='grid grid-cols-1 md-grid-cols-2 gap'>
+        <div className='grid grid-rows-1 md-grid-cols-2 gap '>
           {bootcampTrainings.map((training, i) => (
             <div
               className='w-full flex bootcamp-training p-normal bg-white rounded-md'

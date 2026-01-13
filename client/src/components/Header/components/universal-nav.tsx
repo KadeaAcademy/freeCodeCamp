@@ -23,7 +23,7 @@ export const UniversalNav = ({
 }: UniversalNavProps): JSX.Element => {
   return (
     <nav className='nav-bar '>
-      <div className='container menu-bar'>
+      <div className='container menu-bar '>
         <Link className='link-logo' to='/'>
           <NavLogo />
         </Link>

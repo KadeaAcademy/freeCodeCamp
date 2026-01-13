@@ -95,7 +95,9 @@ function CourseByCatalogue(props: CoursesProps): JSX.Element {
 
   const currentUrl = window.location.href;
   const location = useLocation();
-  const valueOfUrl = location.pathname.split('/')[2].replace(/-/g, ' ');
+  const valueOfUrl = decodeURIComponent(
+    location.pathname.split('/')[2]
+  ).replace(/-/g, ' ');
 
   //utilisation de useCallback afin de mémoriser la fonction et éviter de la recréer à chaque rendu mais seulement au changement des dépendances
   const fetchCourses = useCallback(() => {

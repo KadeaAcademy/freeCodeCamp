@@ -1,14 +1,14 @@
 .nav-bar {
-  padding: 10px 1rem;
+  padding: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Centre le contenu globalement */
   align-items: center;
   background: #ffffff;
 }
 
 .link-logo,
 .link-logo:hover {
-  background: rgba(226, 217, 217, 0);
+  background: transparent;
 }
 
 .menu-bar {
@@ -17,6 +17,10 @@
   justify-content: space-between;
   align-items: center;
   background: #ffffff;
+  /* Modification ici : On passe de 65% à une largeur large mais contrainte pour correspondre à l'image 2 */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .container:before,
@@ -25,13 +29,12 @@
 }
 
 .container {
-  /* justify-content: space-between; */
   padding: 10px 1rem;
 }
+
 .logo img {
-  width: 140px;
+  width: 120px; /* Ajusté pour correspondre à la taille standard */
   color: #202020;
-  /* height: 40px; */
 }
 
 .nav-bar #show-menu,
@@ -45,12 +48,11 @@
 }
 
 .nav-bar .menu-icon {
-  color: var(--gray-00);
+  color: #202020;
   font-size: 18px;
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
-  color: #202020;
 }
 
 .nav-bar .nav-list {
@@ -67,55 +69,63 @@
 }
 
 .nav-list .nav-item {
+  /* Modification : Plus d'espace entre les liens */
   padding: 5px 8px;
 }
 
 .nav-list .nav-item a {
   padding: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 600; /* Un peu plus fin pour faire propre */
+  white-space: nowrap;
+  font-size: 16px; /* Taille fixe propre */
+  color: #202020; /* Noir par défaut */
   transition: all 0.3s ease;
 }
 
 .nav-list .nav-item a:hover,
 .nav-list .nav-item a:focus,
 .nav-list .nav-item .active {
-  color: var(--love-light);
+  color: #e30000; /* Rouge Kadea */
   background: none !important;
 }
 
+/* Bouton Sign In (si utilisé) */
 .nav-list .nav-item .nav-signin-btn {
-  padding: 0.5rem 1.875rem;
+  padding: 0.6rem 2rem;
   text-decoration: none;
-  color: var(--gray-00);
+  color: #202020;
   font-weight: 600;
-  background: var(--love-light);
-  border: solid 2px var(--love-light);
-  border-radius: 20px;
+  background: transparent;
+  border: solid 2px #e30000;
+  border-radius: 50px; /* Pill shape */
   transition: all 0.3s ease;
 }
 
 .nav-list .nav-item .nav-signin-btn:hover,
 .nav-list .nav-item .nav-signin-btn:focus {
-  border: 1px solid --love-light;
+  background: #e30000;
+  color: #ffffff;
 }
 
+/* Bouton Déconnexion (Cible principale) */
 .nav-list .nav-item .nav-signout-btn {
-  padding: 0.5rem 1.875rem;
+  padding: 10px 30px; /* Plus large comme sur l'image 2 */
   text-decoration: none;
-  color: var(--gray-00);
+  color: #ffffff; /* Texte Blanc */
   font-weight: 600;
-  background: var(--love-light);
-  border: solid 2px var(--love-light);
-  border-radius: 20px;
+  background: #e30000; /* Fond Rouge solide */
+  border: solid 2px #e30000;
+  border-radius: 50px; /* Arrondi parfait (Pill) */
   transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .nav-list .nav-item .nav-signout-btn:hover,
 .nav-list .nav-item .nav-signout-btn:focus {
-  color: var(--gray-00) !important;
-  background: var(--love-light) !important;
-  border: solid 2px var(--love-light);
+  color: #e30000 !important;
+  background: #ffffff !important;
+  border: solid 2px #e30000;
 }
 
 .dropdown-nav-link {
@@ -125,27 +135,29 @@
 
 .dropdown-nav-link:hover .nav-link-lang-dropdown,
 .dropdown-nav-link:active .nav-link-lang-dropdown {
-  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23000000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  /* SVG Flèche */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23e30000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
 }
 
 .nav-item:hover .nav-link-lang-dropdown,
 .nav-item:active .nav-link-lang-dropdown {
-  background-color: var(--gray-00);
-  color: var(--gray-90);
+  background-color: transparent;
+  color: #e30000;
   cursor: pointer;
 }
 
 .nav-link-lang-dropdown {
   padding: 0 15px;
-  color: var(--gray-00);
-  background-color: var(--gray-90);
+  color: #202020;
+  background-color: transparent;
   width: 100%;
   border: none;
   position: relative;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23ffffff%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23ffffff%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  /* SVG Flèche noire par défaut */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23000000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
   background-size: 10px;
   background-position: calc(100% - 15px) center;
   background-repeat: no-repeat;
@@ -163,7 +175,7 @@
 
 .avatar-nav-link:hover,
 .avatar-nav-link:focus {
-  background-color: var(--theme-color);
+  background-color: #f0f0f0;
 }
 
 .avatar-nav-link .avatar-container {
@@ -187,7 +199,7 @@
   }
 
   .nav-list .nav-item a {
-    font-size: medium;
+    font-size: 14px;
   }
 }
 
@@ -199,7 +211,6 @@
   /* For mobile: */
   .logo img {
     width: 120px;
-    /* height: 30px; */
   }
 
   .nav-bar .menu-icon {
@@ -215,7 +226,7 @@
     align-items: center;
     height: 100vh;
     width: 100vw;
-    top: 50;
+    top: 50px;
     right: 0;
     background: #fff;
     transition: all 0.5s ease-in-out;
@@ -227,7 +238,7 @@
   }
 
   .nav-list .nav-item a {
-    font-size: small;
+    font-size: 18px;
   }
 
   .nav-list .navatar {
@@ -247,6 +258,9 @@
 }
 
 @media (max-width: 800px) {
+  .menu-bar {
+    width: 100%;
+  }
   .container {
     justify-content: space-between;
     padding: 10px 1rem;
@@ -255,5 +269,6 @@
   }
   .menu-bar {
     padding: 0 0.2rem;
+    width: 100%; /* S'assurer qu'en mobile c'est plein écran */
   }
 }

@@ -15,8 +15,8 @@ html {
 body {
   height: 100%;
   font-family: 'Titillium Web', sans-serif !important;
-  color: var(--primary-color);
-  background: var(--primary-background);
+  color: #202020;
+  background: #ffffff;
 }
 
 h1,
@@ -28,10 +28,7 @@ h6 {
   font-family: 'Titillium Web', sans-serif !important;
 }
 
-#___gatsby {
-  height: 100%;
-}
-
+#___gatsby,
 #gatsby-focus-wrapper {
   height: 100%;
 }
@@ -53,29 +50,36 @@ h6 {
   border: 0px;
 }
 
+/* --- BOUTON ROUGE (Choisis ta formation) --- */
 .btn-cta-big {
   max-height: 100%;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   white-space: normal;
-  width: 100%;
-  max-width: 500px;
-  padding: 5px;
-  margin: 0 auto;
+  width: auto;
+  display: inline-block;
+  padding: 12px 30px;
+  margin: 0;
+  border-radius: 50px;
 }
 
-/*
-  Row from @freecodecamp/react-bootstrap adds some negative margin which causes
-  a little bit of horizontal overflow on certain pages. This eliminates that
-  for those pages.
-*/
 .overflow-fix {
   margin-right: 0;
   margin-left: 0;
 }
 
+/* --- CORRECTION ICI : ALIGNEMENT AVEC LA NAVBAR --- */
 .default-layout {
   flex: 1 0 auto;
   background: var(--primary-background);
+
+  /* Largeur à 100% mais contrainte à 1200px comme la navbar */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Padding identique à la navbar pour l'alignement vertical */
+  padding: 0 1rem;
 }
 
 .default-admin-warper {
@@ -90,36 +94,31 @@ h6 {
   padding-left: 50%;
   width: 80%;
   background: var(--primary-background);
-  /* padding: 1px 16px; */
-  /* height: 100%; */
 }
 
 h1 {
-  color: var(--secondary-color);
+  color: #202020;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0.6rem 0;
+  line-height: 1.2;
+}
+
+h2 {
+  color: #202020;
   font-weight: 700;
   font-size: 1.5rem;
   margin: 0.6rem 0;
 }
-h2 {
-  color: var(--secondary-color);
-  font-weight: 700;
-  font-size: 1.25rem;
-  margin: 0.6rem 0;
-}
-h3 {
-  color: var(--secondary-color);
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin: 0 0 0.6rem;
-}
 
+h3,
 h4,
 h5,
 h6,
 p,
 td,
 th {
-  color: var(--secondary-color);
+  color: #202020;
   font-weight: 400;
   font-size: 1rem;
   margin: 0 0 1.2rem;
@@ -135,31 +134,20 @@ p {
 }
 
 ::selection {
-  background-color: var(--selection-color);
+  background-color: #e30000;
+  color: white;
 }
 
 @media (max-width: 500px) {
   .big-heading {
-    font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
   }
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
-  h2 {
-    font-size: 1.2rem;
-  }
-  h3 {
-    font-size: 1.1rem;
-  }
-  .btn-cta,
   .btn-cta-big {
     font-size: 1rem;
-  }
-}
-
-@media (max-width: 1199px) {
-  .btn-cta-big {
-    font-size: 1.3rem;
+    width: 100%;
   }
 }
 
@@ -173,624 +161,151 @@ p {
 
 a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:hover,
 a:focus {
   text-decoration: none;
-  color: var(--tertiary-color);
-  background-color: var(--tertiary-background);
-}
-/* modal */
-
-.fcc-modal {
-  background-color: var(--secondary-background);
-  color: var(--secondary-color);
+  color: #e30000;
 }
 
-button.close {
-  color: inherit;
-  background-color: transparent;
-  font-size: 28px;
-  opacity: 0.5;
-  text-shadow: none;
-}
-
-button.close:hover,
-button.close:focus {
-  color: inherit;
-  opacity: 1;
-  background-color: transparent;
-}
-
-.modal-content {
-  background-color: var(--secondary-background);
-  border-radius: 0px;
-  border: 1px solid var(--secondary-color);
-}
-
-.modal-footer,
-.modal-header {
-  border-color: var(--secondary-color);
-}
-
+/* --- STYLES DES BOUTONS GLOBAUX --- */
 button,
 input[type='submit'],
 .btn {
-  background-color: var(--quaternary-background);
-  border-width: 3px;
-  border-color: var(--secondary-color);
-  color: var(--secondary-color);
-  border-radius: 0px;
+  background-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e30000;
+  color: #e30000;
+  border-radius: 50px;
   text-decoration: none;
-  white-space: pre-line;
+  white-space: nowrap;
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover,
 input[type='submit']:hover,
 .btn:hover,
-.btn-default.active:hover,
-.btn-default.active,
 .btn-primary:hover {
-  border-color: var(--secondary-color);
-  background-color: var(--secondary-color);
-  color: var(--secondary-background);
-  cursor: pointer;
+  border-color: #e30000;
+  background-color: #e30000;
+  color: #ffffff;
 }
 
-.btn:active,
-.btn-primary:active {
-  background-color: var(--secondary-background);
-}
-
-.btn:focus,
-.btn-primary:focus,
-.btn-primary.focus {
-  background-color: var(--quaternary-background);
-  color: var(--secondary-color);
-  border-color: var(--secondary-color);
-}
-
-.btn:active:hover,
-.btn-primary:hover,
-.btn-primary:active:hover,
-.btn-primary.active:hover,
-.open > .dropdown-toggle.btn-primary:hover,
-.btn-primary:active:focus,
-.btn-primary.active:focus,
-.open > .dropdown-toggle.btn-primary:focus,
-.btn-primary:active.focus,
-.btn-primary.active.focus,
-.open > .dropdown-toggle.btn-primary.focus {
-  background-color: var(--secondary-color);
-  color: var(--secondary-background);
-}
-
-.btn.disabled,
-.btn[disabled],
-fieldset[disabled] .btn,
-.btn-primary.disabled:hover,
-.btn-primary[disabled]:hover,
-fieldset[disabled] .btn-primary:hover,
-.btn-primary.disabled:focus,
-.btn-primary[disabled]:focus,
-fieldset[disabled] .btn-primary:focus,
-.btn-primary.disabled.focus,
-.btn-primary[disabled].focus,
-fieldset[disabled] .btn-primary.focus {
-  cursor: not-allowed;
-  background-color: var(--quaternary-background);
-  border-color: var(--quaternary-color);
-  color: var(--quaternary-color);
-}
-
+/* Bouton spécifique CTA (Le rouge plein) */
 .btn-cta {
-  background-color: var(--love-light);
-  border-width: 3px;
-  border-color: var(--love-light);
-  color: var(--gray-00) !important;
+  background-color: #e30000;
+  border: 1px solid #e30000;
+  color: #ffffff !important;
+  border-radius: 50px;
 }
+
 .btn-cta:hover,
-.btn-cta:focus,
-.btn-cta:active:hover {
-  background-color: var(--love-dark) !important;
-  border-width: 3px;
-  border-color: var(--love-dark);
-  color: var(--gray-00) !important;
+.btn-cta:focus {
+  background-color: #c00000 !important;
+  border-color: #c00000;
 }
-.btn-cta:active {
-  background-image: none;
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-.btn-link,
-.btn-link:focus,
-.btn-link:active {
-  color: inherit;
+
+.btn-link {
   border: none;
-  text-decoration: underline;
   background: transparent;
   padding: 0;
-  outline: 0;
-}
-.btn-link:hover,
-.btn-link:focus:active {
-  background: var(--tertiary-background);
-  text-decoration: none;
-  color: inherit;
+  text-decoration: underline;
 }
 
-.link-btn {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-size: 1rem;
-  text-align: left;
-}
-
-.link-btn.btn-lg svg {
-  height: 100%;
-  min-height: 20px;
-  min-width: 16px;
-  margin-left: 5px;
-}
-
-.link-btn:active {
-  background-color: var(--quaternary-background);
-}
-
-.link-btn:focus,
-.link-btn.btn-lg:focus svg {
-  fill: var(--quaternary-background);
-  background-color: var(--secondary-color);
-  border-color: var(--gray-45);
-  color: var(--secondary-background);
-}
-
-.link-btn:focus:not(:focus-visible),
-.link-btn.btn-lg:focus:not(:focus-visible) svg {
-  background-color: var(--quaternary-background);
-  border-color: var(--secondary-color);
-  color: var(--secondary-color);
-  fill: var(--primary-color);
-}
-
-.link-btn:hover,
-.link-btn.btn-lg:hover svg {
-  fill: var(--quaternary-background) !important;
-  background-color: var(--secondary-color) !important;
-  border-color: var(--secondary-color) !important;
-  color: var(--secondary-background) !important;
-}
-
-.link-btn.btn-lg svg,
-.map-icon,
-.cert-header-icon {
-  flex-shrink: 0;
-  fill: var(--primary-color);
-}
-
-.map-icon {
-  width: 35px;
-  max-height: 45px;
-  margin-right: 20px;
-}
-
-.cert-header-icon {
-  display: block;
-  width: 80px;
-  margin: auto;
-}
-
-@media (min-width: 700px) {
-  .link-btn {
-    font-size: 1.1rem;
-  }
-  .map-icon {
-    width: 45px;
-    max-height: 55px;
-  }
-  .cert-header-icon {
-    width: 100px;
-  }
-}
-
-@media (min-width: 1000px) {
-  .map-icon {
-    width: 50px;
-  }
-  .cert-header-icon {
-    width: 120px;
-  }
-}
-
-.button-group .btn:not(:last-child) {
-  margin-bottom: 10px;
-}
-strong {
-  color: var(--secondary-color);
-}
-
-.form-control {
-  color: var(--primary-color);
-  outline: none;
-  border-color: var(--quaternary-background);
-  background-color: var(--primary-background);
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  box-shadow: none !important;
-  border-radius: 0px;
-}
-
+/* --- INPUTS FORMULAIRES --- */
+.form-control,
 input {
+  color: #202020;
   outline: none;
-  border-color: var(--quaternary-background);
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  box-shadow: none !important;
-  border-radius: 0px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
 }
 
-textarea {
-  resize: vertical;
-}
-
-form {
-  margin-bottom: 5px;
-}
 .form-control:focus,
 input:focus {
-  border-color: var(--tertiary-color);
-}
-code {
-  background-color: var(--quaternary-background);
-  color: var(--tertiary-color);
-  border-radius: 0px;
-  /* font-family: 'Roboto Mono', monospace; */
-  overflow-wrap: anywhere;
+  border-color: #e30000;
 }
 
-.panel {
-  border-radius: 0;
-  background-color: transparent;
-}
-
-.help-block em {
-  font-size: 0.8rem;
-}
-
-hr {
-  border-top: 1px solid var(--quaternary-background);
-}
-
-.panel-default {
-  background: var(--secondary-background);
-}
-
-.btn-primary:active,
-.btn-primary.active,
-.open > .dropdown-toggle.btn-primary,
-.open > .dropdown-toggle.btn-primary:hover {
-  background-color: var(--secondary-color);
-  color: var(--secondary-background);
-}
-
-.open > .dropdown-menu {
-  border-radius: 0px;
-}
-
-.dropdown-menu {
-  background-color: var(--secondary-color);
-}
-
-.dropdown-menu > li > a {
-  color: var(--secondary-background);
-}
-
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-  color: var(--secondary-color);
-  background-color: var(--secondary-background);
-}
-
-.table-striped > tbody > tr:nth-child(2n + 1) > td,
-.table-striped > tbody > tr:nth-child(2n + 1) > th {
-  background-color: var(--tertiary-background);
-}
-
-.challenge-instructions table {
-  display: inline-block;
-  overflow: auto;
-}
-
-.challenge-instructions table thead {
-  display: table-header-group;
-  vertical-align: middle;
-  border-color: inherit;
-}
-
-.challenge-instructions table th {
+/* --- BADGE "ONLINE" --- */
+.text-love-light {
+  color: #ffffff;
+  background-color: #e30000;
+  font-size: 0.9rem;
   font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.challenge-instructions table th,
-.challenge-instructions table td {
-  padding: 6px 13px;
-  border: 1px solid var(--secondary-color);
-  text-align: center;
-}
-
-.help-block {
-  color: var(--quaternary-color);
-}
-
-.panel-default > .panel-heading {
-  background-color: transparent;
-}
-
-.challenge-output span {
-  font-size: 1rem;
-}
-
-.breadcrumb {
-  background: var(--tertiary-background);
-  border-radius: 0px;
-}
-
-code[class*='language-'],
-pre[class*='language-'] {
-  border-radius: 0px;
-}
-
-pre {
-  color: inherit;
-  background-color: inherit;
+.btn-light {
+  background: #f2f2f2;
+  color: #202020;
   border: none;
-  border-radius: 0;
-}
-
-.list-group-item {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-}
-
-.intro-toc .list-group-item:hover {
-  background-color: var(--tertiary-background) !important;
-  border-radius: 0;
-}
-
-.panel-primary > .panel-heading {
-  background-color: transparent;
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.solution-viewer,
-.solution-viewer pre {
-  margin-bottom: 0px;
-}
-
-.solution-viewer {
-  border-color: var(--primary-color);
-}
-
-.has-success .help-block,
-.has-success .control-label,
-.has-success .radio,
-.has-success .checkbox,
-.has-success .radio-inline,
-.has-success .checkbox-inline,
-.has-success.radio label,
-.has-success.checkbox label,
-.has-success.radio-inline label,
-.has-success.checkbox-inline label {
-  color: var(--highlight-color);
-}
-
-.has-error .help-block,
-.has-error .control-label,
-.has-error .radio,
-.has-error .checkbox,
-.has-error .radio-inline,
-.has-error .checkbox-inline,
-.has-error.radio label,
-.has-error.checkbox label,
-.has-error.radio-inline label,
-.has-error.checkbox-inline label {
-  color: var(--danger-color);
-}
-
-.has-error .form-control,
-.has-warning .form-control,
-.has-success .form-control {
-  border-color: var(--quaternary-background);
-}
-
-.has-error .form-control:focus,
-.has-warning .form-control:focus,
-.has-success .form-control:focus {
-  border-color: var(--tertiary-color);
-}
-
-.panel-primary {
-  border-color: var(--primary-color);
-}
-
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-  color: var(--secondary-background);
-}
-
-.nav-tabs > li > a {
-  border-radius: 0;
-}
-
-blockquote footer,
-blockquote small,
-blockquote .small {
-  color: var(--gray-45);
-}
-
-.alert {
-  border-radius: 0px;
-  overflow-wrap: break-word;
-}
-
-.alert .btn {
-  background-color: #d9edf7;
-  color: #31708f;
-  border-color: #31708f;
-}
-.alert .btn:hover,
-.alert .btn:focus,
-.alert a:hover,
-.alert a:hover {
-  background-color: #31708f;
-  color: #d9edf7;
-  border-color: #31708f;
-}
-
-/* gatsby 404 */
-#search {
-  background-color: var(--quaternary-background);
-  color: var(--primary-color);
-  border-color: var(--quaternary-color);
-  border-width: 2px;
-  border-style: outset;
-  border-color: buttonface;
-  border-image: initial;
-}
-
-#search::placeholder {
-  color: var(--secondary-color);
-}
-
-.none-help-block {
-  color: rgba(0, 0, 0, 0) !important;
-}
-
-.text-responsive {
-  font-size: 1rem;
-}
-
-@media (max-width: 769px) {
-  .text-responsive {
-    font-size: 1rem;
-  }
-}
-
-.text-normal {
-  font-weight: 400;
-}
-
-.fw-semi-bold {
+  border-radius: 50px;
   font-weight: 600;
 }
 
-.fw-bold {
-  font-weight: 700;
+.btn-light:hover {
+  background: #e0e0e0;
+  color: #000;
 }
 
+.bg-dark-gray {
+  background-color: #333;
+}
+
+/* La carte noire Vodacom */
+.bg-pretty-dark {
+  background: #202020;
+  color: white;
+  padding: 2rem;
+  border-radius: 20px;
+}
+.bg-pretty-dark h1,
+.bg-pretty-dark h2,
+.bg-pretty-dark p {
+  color: white;
+}
+.bg-pretty-dark .text-danger {
+  color: #e30000 !important;
+}
+
+/* --- CORRECTION ICI : FLEX & ALIGNEMENT DES BOUTONS --- */
 .d-flex {
   display: flex;
-  gap: 10%;
+  flex-wrap: wrap; /* Important : permet le retour à la ligne */
+  gap: 10px; /* Espace propre entre les éléments */
+  align-items: center;
+  justify-content: flex-start; /* Aligne tout à gauche */
 }
 
 .justify-content-center {
   justify-content: center;
 }
 
-.text-gray-90 {
-  color: var(--gray-90);
-}
-
-.text-danger {
-  color: var(--danger-color);
-}
-
-.text-love-light {
-  color: var(--love-light);
-  font-size: 1rem;
-  margin-bottom: 2rem;
-}
-
-.btn-light {
-  background: var(--gray-00);
-  color: var(--love-light);
-  border: solid 2px var(--gray-00);
-  transition: all 0.3s ease;
-}
-
-.btn-light:hover {
-  color: var(--gray-00);
-  background: rgba(255, 255, 255, 0);
-  border: solid 2px var(--gray-00);
-}
-
-.bg-dark-gray {
-  background-color: var(--gray-dark);
-}
-
-.bg-beige {
-  background-color: #faf3e9;
-}
-
-.bg-light-gray {
-  background-color: #f2f2f2;
-}
-
-.bg-love-light {
-  background: var(--love-light);
-}
-
-.bg-pretty-dark {
-  background: #202020;
-}
-
-.text-light {
-  color: var(--primary-background);
-}
-
-.mt-mb-5 {
-  margin: 5vh 0;
-}
-
-.p-3-2 {
-  padding: 3vh 2vw;
-}
-
 .standard-radius-5 {
   border-radius: 5px;
 }
 
-.standard-radius-5-top {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.standard-radius-5-bottom {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
 .standard-radius-20 {
   border-radius: 20px;
+  overflow: hidden;
 }
 
-.standard-radius-20-top {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+.mt-mb-5 {
+  margin: 3rem 0;
 }
 
-.standard-radius-20-bottom {
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.padding-bottom-0 {
-  padding-bottom: 0;
+.text-danger {
+  color: #e30000;
 }
